@@ -1,9 +1,9 @@
 import json
 
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.db import models
-from django.test import TestCase
-from django.test.utils import isolate_apps
+from django_orm.contrib.contenttypes.fields import GenericForeignKey
+from django_orm.db import models
+from django_orm.test import TestCase
+from django_orm.test.utils import isolate_apps
 
 from .models import Answer, Post, Question
 

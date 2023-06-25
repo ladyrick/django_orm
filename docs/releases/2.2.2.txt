@@ -15,10 +15,10 @@ value stored in the database, or a value provided as a URL query parameter
 payload, could result in an clickable JavaScript link.
 
 ``AdminURLFieldWidget`` now validates the provided value using
-:class:`~django.core.validators.URLValidator` before displaying the clickable
+:class:`~django_orm.core.validators.URLValidator` before displaying the clickable
 link. You may customize the validator by passing a ``validator_class`` kwarg to
 ``AdminURLFieldWidget.__init__()``, e.g. when using
-:attr:`~django.contrib.admin.ModelAdmin.formfield_overrides`.
+:attr:`~django_orm.contrib.admin.ModelAdmin.formfield_overrides`.
 
 Patched bundled jQuery for CVE-2019-11358: Prototype pollution
 --------------------------------------------------------------
@@ -41,14 +41,14 @@ Bugfixes
   ``Meta.ordering`` contains an expression (:ticket:`30463`).
 
 * Fixed a regression in Django 2.2.1 where
-  :class:`~django.contrib.postgres.search.SearchVector` generates SQL with a
+  :class:`~django_orm.contrib.postgres.search.SearchVector` generates SQL with a
   redundant ``Coalesce`` call (:ticket:`30488`).
 
 * Fixed a regression in Django 2.2 where auto-reloader doesn't detect changes
   in ``manage.py`` file when using ``StatReloader`` (:ticket:`30479`).
 
-* Fixed crash of :class:`~django.contrib.postgres.aggregates.ArrayAgg` and
-  :class:`~django.contrib.postgres.aggregates.StringAgg` with ``ordering``
+* Fixed crash of :class:`~django_orm.contrib.postgres.aggregates.ArrayAgg` and
+  :class:`~django_orm.contrib.postgres.aggregates.StringAgg` with ``ordering``
   argument when used in a ``Subquery`` (:ticket:`30315`).
 
 * Fixed a regression in Django 2.2 that caused a crash of auto-reloader when

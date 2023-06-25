@@ -1,9 +1,9 @@
 import hashlib
 import os
 
-from django.core.files.uploadedfile import UploadedFile
-from django.core.files.uploadhandler import TemporaryFileUploadHandler
-from django.http import HttpResponse, HttpResponseServerError, JsonResponse
+from django_orm.core.files.uploadedfile import UploadedFile
+from django_orm.core.files.uploadhandler import TemporaryFileUploadHandler
+from django_orm.http import HttpResponse, HttpResponseServerError, JsonResponse
 
 from .models import FileModel
 from .tests import UNICODE_FILENAME, UPLOAD_TO

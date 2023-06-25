@@ -1,10 +1,10 @@
-from django.contrib.auth.checks import check_models_permissions, check_user_model
-from django.contrib.auth.models import AbstractBaseUser
-from django.core import checks
-from django.db import models
-from django.db.models import Q, UniqueConstraint
-from django.test import SimpleTestCase, override_settings, override_system_checks
-from django.test.utils import isolate_apps
+from django_orm.contrib.auth.checks import check_models_permissions, check_user_model
+from django_orm.contrib.auth.models import AbstractBaseUser
+from django_orm.core import checks
+from django_orm.db import models
+from django_orm.db.models import Q, UniqueConstraint
+from django_orm.test import SimpleTestCase, override_settings, override_system_checks
+from django_orm.test.utils import isolate_apps
 
 from .models import CustomUserNonUniqueUsername
 

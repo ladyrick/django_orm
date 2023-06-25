@@ -123,13 +123,13 @@ be easily installed and used. Django itself is packaged very much like
 this. For a small app like polls, this process isn't too difficult.
 
 #. First, create a parent directory for ``polls``, outside of your Django
-   project. Call this directory ``django-polls``.
+   project. Call this directory ``django_orm-polls``.
 
    .. admonition::  Choosing a name for your app
 
        When choosing a name for your package, check resources like PyPI to avoid
        naming conflicts with existing packages. It's often useful to prepend
-       ``django-`` to your module name when creating a package to distribute.
+       ``django_orm-`` to your module name when creating a package to distribute.
        This helps others looking for Django apps identify your app as Django
        specific.
 
@@ -139,12 +139,12 @@ this. For a small app like polls, this process isn't too difficult.
        </ref/contrib/index>`, for example ``auth``, ``admin``, or
        ``messages``.
 
-#. Move the ``polls`` directory into the ``django-polls`` directory.
+#. Move the ``polls`` directory into the ``django_orm-polls`` directory.
 
-#. Create a file ``django-polls/README.rst`` with the following contents:
+#. Create a file ``django_orm-polls/README.rst`` with the following contents:
 
    .. code-block:: rst
-       :caption: ``django-polls/README.rst``
+       :caption: ``django_orm-polls/README.rst``
 
        =====
        Polls
@@ -176,7 +176,7 @@ this. For a small app like polls, this process isn't too difficult.
 
        5. Visit http://127.0.0.1:8000/polls/ to participate in the poll.
 
-#. Create a ``django-polls/LICENSE`` file. Choosing a license is beyond the
+#. Create a ``django_orm-polls/LICENSE`` file. Choosing a license is beyond the
    scope of this tutorial, but suffice it to say that code released publicly
    without a license is *useless*. Django and many Django-compatible apps are
    distributed under the BSD license; however, you're free to pick your own
@@ -187,22 +187,22 @@ this. For a small app like polls, this process isn't too difficult.
    which detail how to build and install the app. A full explanation of these
    files is beyond the scope of this tutorial, but the `setuptools
    documentation <https://setuptools.pypa.io/en/latest/>`_ has a good
-   explanation. Create the ``django-polls/pyproject.toml``,
-   ``django-polls/setup.cfg``, and ``django-polls/setup.py`` files with the
+   explanation. Create the ``django_orm-polls/pyproject.toml``,
+   ``django_orm-polls/setup.cfg``, and ``django_orm-polls/setup.py`` files with the
    following contents:
 
    .. code-block:: toml
-        :caption: ``django-polls/pyproject.toml``
+        :caption: ``django_orm-polls/pyproject.toml``
 
         [build-system]
         requires = ['setuptools>=40.8.0', 'wheel']
         build-backend = 'setuptools.build_meta:__legacy__'
 
    .. code-block:: ini
-        :caption: ``django-polls/setup.cfg``
+        :caption: ``django_orm-polls/setup.cfg``
 
         [metadata]
-        name = django-polls
+        name = django_orm-polls
         version = 0.1
         description = A Django app to conduct web-based polls.
         long_description = file: README.rst
@@ -233,7 +233,7 @@ this. For a small app like polls, this process isn't too difficult.
             Django >= X.Y  # Replace "X.Y" as appropriate
 
    .. code-block:: python
-        :caption: ``django-polls/setup.py``
+        :caption: ``django_orm-polls/setup.py``
 
         from setuptools import setup
 
@@ -243,11 +243,11 @@ this. For a small app like polls, this process isn't too difficult.
    include additional files, we'll need to create a ``MANIFEST.in`` file. The
    setuptools docs referred to in the previous step discuss this file in more
    detail. To include the templates, the ``README.rst`` and our ``LICENSE``
-   file, create a file ``django-polls/MANIFEST.in`` with the following
+   file, create a file ``django_orm-polls/MANIFEST.in`` with the following
    contents:
 
    .. code-block:: text
-       :caption: ``django-polls/MANIFEST.in``
+       :caption: ``django_orm-polls/MANIFEST.in``
 
        include LICENSE
        include README.rst
@@ -255,8 +255,8 @@ this. For a small app like polls, this process isn't too difficult.
        recursive-include polls/templates *
 
 #. It's optional, but recommended, to include detailed documentation with your
-   app. Create an empty directory ``django-polls/docs`` for future
-   documentation. Add an additional line to ``django-polls/MANIFEST.in``::
+   app. Create an empty directory ``django_orm-polls/docs`` for future
+   documentation. Add an additional line to ``django_orm-polls/MANIFEST.in``::
 
     recursive-include docs *
 
@@ -265,8 +265,8 @@ this. For a small app like polls, this process isn't too difficult.
    online through sites like `readthedocs.org <https://readthedocs.org>`_.
 
 #. Try building your package with ``python setup.py sdist`` (run from inside
-   ``django-polls``). This creates a directory called ``dist`` and builds your
-   new package, ``django-polls-0.1.tar.gz``.
+   ``django_orm-polls``). This creates a directory called ``dist`` and builds your
+   new package, ``django_orm-polls-0.1.tar.gz``.
 
 For more information on packaging, see Python's `Tutorial on Packaging and
 Distributing Projects
@@ -276,11 +276,11 @@ Using your own package
 ======================
 
 Since we moved the ``polls`` directory out of the project, it's no longer
-working. We'll now fix this by installing our new ``django-polls`` package.
+working. We'll now fix this by installing our new ``django_orm-polls`` package.
 
 .. admonition:: Installing as a user library
 
-   The following steps install ``django-polls`` as a user library. Per-user
+   The following steps install ``django_orm-polls`` as a user library. Per-user
    installs have a lot of advantages over installing the package system-wide,
    such as being usable on systems where you don't have administrator access
    as well as preventing the package from affecting system services and other
@@ -293,19 +293,19 @@ working. We'll now fix this by installing our new ``django-polls`` package.
 #. To install the package, use pip (you already :ref:`installed it
    <installing-reusable-apps-prerequisites>`, right?)::
 
-    python -m pip install --user django-polls/dist/django-polls-0.1.tar.gz
+    python -m pip install --user django_orm-polls/dist/django_orm-polls-0.1.tar.gz
 
 #. With luck, your Django project should now work correctly again. Run the
    server again to confirm this.
 
 #. To uninstall the package, use pip::
 
-    python -m pip uninstall django-polls
+    python -m pip uninstall django_orm-polls
 
 Publishing your app
 ===================
 
-Now that we've packaged and tested ``django-polls``, it's ready to share with
+Now that we've packaged and tested ``django_orm-polls``, it's ready to share with
 the world! If this wasn't just an example, you could now:
 
 * Email the package to a friend.

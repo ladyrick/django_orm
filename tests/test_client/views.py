@@ -2,22 +2,22 @@ import json
 from urllib.parse import urlencode
 from xml.dom.minidom import parseString
 
-from django.contrib.auth.decorators import login_required, permission_required
-from django.core import mail
-from django.core.exceptions import ValidationError
-from django.forms import fields
-from django.forms.forms import Form
-from django.http import (
+from django_orm.contrib.auth.decorators import login_required, permission_required
+from django_orm.core import mail
+from django_orm.core.exceptions import ValidationError
+from django_orm.forms import fields
+from django_orm.forms.forms import Form
+from django_orm.http import (
     HttpResponse,
     HttpResponseBadRequest,
     HttpResponseNotAllowed,
     HttpResponseNotFound,
     HttpResponseRedirect,
 )
-from django.shortcuts import render
-from django.template import Context, Template
-from django.test import Client
-from django.utils.decorators import method_decorator
+from django_orm.shortcuts import render
+from django_orm.template import Context, Template
+from django_orm.test import Client
+from django_orm.utils.decorators import method_decorator
 
 
 def get_view(request):

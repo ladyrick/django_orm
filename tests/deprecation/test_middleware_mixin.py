@@ -3,33 +3,33 @@ import threading
 
 from asgiref.sync import async_to_sync
 
-from django.contrib.admindocs.middleware import XViewMiddleware
-from django.contrib.auth.middleware import (
+from django_orm.contrib.admindocs.middleware import XViewMiddleware
+from django_orm.contrib.auth.middleware import (
     AuthenticationMiddleware,
     RemoteUserMiddleware,
 )
-from django.contrib.flatpages.middleware import FlatpageFallbackMiddleware
-from django.contrib.messages.middleware import MessageMiddleware
-from django.contrib.redirects.middleware import RedirectFallbackMiddleware
-from django.contrib.sessions.middleware import SessionMiddleware
-from django.contrib.sites.middleware import CurrentSiteMiddleware
-from django.db import connection
-from django.http.request import HttpRequest
-from django.http.response import HttpResponse
-from django.middleware.cache import (
+from django_orm.contrib.flatpages.middleware import FlatpageFallbackMiddleware
+from django_orm.contrib.messages.middleware import MessageMiddleware
+from django_orm.contrib.redirects.middleware import RedirectFallbackMiddleware
+from django_orm.contrib.sessions.middleware import SessionMiddleware
+from django_orm.contrib.sites.middleware import CurrentSiteMiddleware
+from django_orm.db import connection
+from django_orm.http.request import HttpRequest
+from django_orm.http.response import HttpResponse
+from django_orm.middleware.cache import (
     CacheMiddleware,
     FetchFromCacheMiddleware,
     UpdateCacheMiddleware,
 )
-from django.middleware.clickjacking import XFrameOptionsMiddleware
-from django.middleware.common import BrokenLinkEmailsMiddleware, CommonMiddleware
-from django.middleware.csrf import CsrfViewMiddleware
-from django.middleware.gzip import GZipMiddleware
-from django.middleware.http import ConditionalGetMiddleware
-from django.middleware.locale import LocaleMiddleware
-from django.middleware.security import SecurityMiddleware
-from django.test import SimpleTestCase
-from django.utils.deprecation import MiddlewareMixin
+from django_orm.middleware.clickjacking import XFrameOptionsMiddleware
+from django_orm.middleware.common import BrokenLinkEmailsMiddleware, CommonMiddleware
+from django_orm.middleware.csrf import CsrfViewMiddleware
+from django_orm.middleware.gzip import GZipMiddleware
+from django_orm.middleware.http import ConditionalGetMiddleware
+from django_orm.middleware.locale import LocaleMiddleware
+from django_orm.middleware.security import SecurityMiddleware
+from django_orm.test import SimpleTestCase
+from django_orm.utils.deprecation import MiddlewareMixin
 
 
 class MiddlewareMixinTests(SimpleTestCase):

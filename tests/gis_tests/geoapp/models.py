@@ -1,4 +1,4 @@
-from django.contrib.gis.db import models
+from django_orm.contrib.gis.db import models
 
 from ..utils import gisfield_may_be_null
 

@@ -31,15 +31,15 @@ Bugfixes
   :envvar:`DJANGO_ALLOW_ASYNC_UNSAFE` environment variable (:ticket:`31056`).
 
 * Fixed a regression in Django 3.0 where ``RegexPattern``, used by
-  :func:`~django.urls.re_path`, returned positional arguments to be passed to
+  :func:`~django_orm.urls.re_path`, returned positional arguments to be passed to
   the view when all optional named groups were missing (:ticket:`31061`).
 
 * Reallowed, following a regression in Django 3.0,
-  :class:`~django.db.models.expressions.Window` expressions to be used in
+  :class:`~django_orm.db.models.expressions.Window` expressions to be used in
   conditions outside of queryset filters, e.g. in
-  :class:`~django.db.models.expressions.When` conditions (:ticket:`31060`).
+  :class:`~django_orm.db.models.expressions.When` conditions (:ticket:`31060`).
 
 * Fixed a data loss possibility in
-  :class:`~django.contrib.postgres.forms.SplitArrayField`. When using with
+  :class:`~django_orm.contrib.postgres.forms.SplitArrayField`. When using with
   ``ArrayField(BooleanField())``, all values after the first ``True`` value
   were marked as checked instead of preserving passed values (:ticket:`31073`).

@@ -1,6 +1,6 @@
-from django.contrib import admin
-from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django_orm.contrib import admin
+from django_orm.db import models
+from django_orm.utils.translation import gettext_lazy as _
 
 
 class Site(models.Model):

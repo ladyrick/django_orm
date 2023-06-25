@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from django.core.exceptions import FieldError
-from django.db import DEFAULT_DB_ALIAS, connection
-from django.db.models import BooleanField, CharField, F, Q
-from django.db.models.expressions import (
+from django_orm.core.exceptions import FieldError
+from django_orm.db import DEFAULT_DB_ALIAS, connection
+from django_orm.db.models import BooleanField, CharField, F, Q
+from django_orm.db.models.expressions import (
     Col,
     Exists,
     ExpressionWrapper,
@@ -11,14 +11,14 @@ from django.db.models.expressions import (
     RawSQL,
     Value,
 )
-from django.db.models.fields.related_lookups import RelatedIsNull
-from django.db.models.functions import Lower
-from django.db.models.lookups import Exact, GreaterThan, IsNull, LessThan
-from django.db.models.sql.constants import SINGLE
-from django.db.models.sql.query import JoinPromoter, Query, get_field_names_from_opts
-from django.db.models.sql.where import OR
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
-from django.test.utils import register_lookup
+from django_orm.db.models.fields.related_lookups import RelatedIsNull
+from django_orm.db.models.functions import Lower
+from django_orm.db.models.lookups import Exact, GreaterThan, IsNull, LessThan
+from django_orm.db.models.sql.constants import SINGLE
+from django_orm.db.models.sql.query import JoinPromoter, Query, get_field_names_from_opts
+from django_orm.db.models.sql.where import OR
+from django_orm.test import SimpleTestCase, TestCase, skipUnlessDBFeature
+from django_orm.test.utils import register_lookup
 
 from .models import Author, Item, ObjectC, Ranking
 

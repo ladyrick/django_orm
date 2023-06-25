@@ -1,8 +1,8 @@
 ===========================
-``django.contrib.postgres``
+``django_orm.contrib.postgres``
 ===========================
 
-.. module:: django.contrib.postgres
+.. module:: django_orm.contrib.postgres
     :synopsis: PostgreSQL-specific fields and features
 
 PostgreSQL has a number of features which are not shared by the other databases

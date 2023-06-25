@@ -1,9 +1,9 @@
 from unittest import skipUnless
 
-from django.core import checks
-from django.db import connection, models
-from django.test import SimpleTestCase
-from django.test.utils import isolate_apps
+from django_orm.core import checks
+from django_orm.db import connection, models
+from django_orm.test import SimpleTestCase
+from django_orm.test.utils import isolate_apps
 
 
 @isolate_apps("invalid_models_tests")
@@ -68,7 +68,7 @@ class DeprecatedFieldsTests(SimpleTestCase):
 
     @skipUnless(connection.vendor == "postgresql", "PostgreSQL specific SQL")
     def test_postgres_jsonfield_deprecated(self):
-        from django.contrib.postgres.fields import JSONField
+        from django_orm.contrib.postgres.fields import JSONField
 
         class PostgresJSONFieldModel(models.Model):
             field = JSONField()
@@ -77,9 +77,9 @@ class DeprecatedFieldsTests(SimpleTestCase):
             PostgresJSONFieldModel.check(),
             [
                 checks.Error(
-                    "django.contrib.postgres.fields.JSONField is removed except "
+                    "django_orm.contrib.postgres.fields.JSONField is removed except "
                     "for support in historical migrations.",
-                    hint="Use django.db.models.JSONField instead.",
+                    hint="Use django_orm.db.models.JSONField instead.",
                     obj=PostgresJSONFieldModel._meta.get_field("field"),
                     id="fields.E904",
                 ),

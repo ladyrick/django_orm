@@ -8,17 +8,17 @@ from io import BytesIO, StringIO, TextIOWrapper
 from pathlib import Path
 from unittest import mock
 
-from django.core.files import File, locks
-from django.core.files.base import ContentFile
-from django.core.files.move import file_move_safe
-from django.core.files.temp import NamedTemporaryFile
-from django.core.files.uploadedfile import (
+from django_orm.core.files import File, locks
+from django_orm.core.files.base import ContentFile
+from django_orm.core.files.move import file_move_safe
+from django_orm.core.files.temp import NamedTemporaryFile
+from django_orm.core.files.uploadedfile import (
     InMemoryUploadedFile,
     SimpleUploadedFile,
     TemporaryUploadedFile,
     UploadedFile,
 )
-from django.test import override_settings
+from django_orm.test import override_settings
 
 try:
     from PIL import Image, features
@@ -28,7 +28,7 @@ except ImportError:
     Image = None
     HAS_WEBP = False
 else:
-    from django.core.files import images
+    from django_orm.core.files import images
 
 
 class FileTests(unittest.TestCase):
@@ -68,7 +68,7 @@ class FileTests(unittest.TestCase):
 
     def test_namedtemporaryfile_closes(self):
         """
-        The symbol django.core.files.NamedTemporaryFile is assigned as
+        The symbol django_orm.core.files.NamedTemporaryFile is assigned as
         a different class on different operating systems. In
         any case, the result should minimally mock some of the API of
         tempfile.NamedTemporaryFile from the Python standard library.
@@ -431,16 +431,16 @@ class FileMoveSafeTests(unittest.TestCase):
         try:
             # This exception is required to reach the copystat() call in
             # file_safe_move().
-            with mock.patch("django.core.files.move.os.rename", side_effect=OSError()):
+            with mock.patch("django_orm.core.files.move.os.rename", side_effect=OSError()):
                 # An error besides EPERM isn't ignored.
                 with mock.patch(
-                    "django.core.files.move.copystat", side_effect=copystat_EACCES_error
+                    "django_orm.core.files.move.copystat", side_effect=copystat_EACCES_error
                 ):
                     with self.assertRaises(PermissionError):
                         file_move_safe(self.file_a, self.file_b, allow_overwrite=True)
                 # EPERM is ignored.
                 with mock.patch(
-                    "django.core.files.move.copystat", side_effect=copystat_EPERM_error
+                    "django_orm.core.files.move.copystat", side_effect=copystat_EPERM_error
                 ):
                     self.assertIsNone(
                         file_move_safe(self.file_a, self.file_b, allow_overwrite=True)

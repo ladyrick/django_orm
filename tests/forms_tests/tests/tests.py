@@ -1,10 +1,10 @@
 import datetime
 
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.db import models
-from django.forms import CharField, FileField, Form, ModelForm
-from django.forms.models import ModelFormMetaclass
-from django.test import SimpleTestCase, TestCase
+from django_orm.core.files.uploadedfile import SimpleUploadedFile
+from django_orm.db import models
+from django_orm.forms import CharField, FileField, Form, ModelForm
+from django_orm.forms.models import ModelFormMetaclass
+from django_orm.test import SimpleTestCase, TestCase
 
 from ..models import (
     BoundaryModel,
@@ -261,7 +261,7 @@ class FormsModelTestCase(TestCase):
         self.assertEqual(instance_form.initial["def_date"], datetime.date(1969, 4, 4))
         self.assertEqual(instance_form.initial["value"], 12)
 
-        from django.forms import CharField
+        from django_orm.forms import CharField
 
         class ExcludingForm(ModelForm):
             name = CharField(max_length=255)

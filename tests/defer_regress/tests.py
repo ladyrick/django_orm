@@ -1,11 +1,11 @@
 from operator import attrgetter
 
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.sessions.backends.db import SessionStore
-from django.db import models
-from django.db.models import Count
-from django.test import TestCase, ignore_warnings, override_settings
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.contrib.sessions.backends.db import SessionStore
+from django_orm.db import models
+from django_orm.db.models import Count
+from django_orm.test import TestCase, ignore_warnings, override_settings
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from .models import (
     Base,
@@ -108,7 +108,7 @@ class DeferRegressionTest(TestCase):
 
     @ignore_warnings(category=RemovedInDjango50Warning)
     @override_settings(
-        SESSION_SERIALIZER="django.contrib.sessions.serializers.PickleSerializer"
+        SESSION_SERIALIZER="django_orm.contrib.sessions.serializers.PickleSerializer"
     )
     def test_ticket_12163(self):
         # Test for #12163 - Pickling error saving session with unsaved model

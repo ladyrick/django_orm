@@ -1,5 +1,5 @@
-from django.contrib.auth import models as auth
-from django.db import models
+from django_orm.contrib.auth import models as auth
+from django_orm.db import models
 
 
 # No related name is needed here, since symmetrical relations are not

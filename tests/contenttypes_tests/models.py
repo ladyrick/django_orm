@@ -1,9 +1,9 @@
 from urllib.parse import quote
 
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.sites.models import SiteManager
-from django.db import models
+from django_orm.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.contrib.sites.models import SiteManager
+from django_orm.db import models
 
 
 class Site(models.Model):

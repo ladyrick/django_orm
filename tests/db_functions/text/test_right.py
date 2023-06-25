@@ -1,6 +1,6 @@
-from django.db.models import IntegerField, Value
-from django.db.models.functions import Lower, Right
-from django.test import TestCase
+from django_orm.db.models import IntegerField, Value
+from django_orm.db.models.functions import Lower, Right
+from django_orm.test import TestCase
 
 from ..models import Author
 

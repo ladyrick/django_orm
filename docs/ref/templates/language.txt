@@ -34,7 +34,7 @@ or Jinja2_, you should feel right at home with Django's templates.
 Templates
 =========
 
-.. highlight:: html+django
+.. highlight:: html+django_orm
 
 A template is a text file. It can generate any text-based format (HTML, XML,
 CSV, etc.).
@@ -45,7 +45,7 @@ template is evaluated, and **tags**, which control the logic of the template.
 Below is a minimal template that illustrates a few basics. Each element will be
 explained later in this document.
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% extends "base_generic.html" %}
 
@@ -572,7 +572,7 @@ The auto-escaping tag passes its effect onto templates that extend the
 current one as well as templates included via the :ttag:`include` tag,
 just like all block tags. For example:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
     :caption: ``base.html``
 
     {% autoescape off %}
@@ -581,7 +581,7 @@ just like all block tags. For example:
     {% endblock %}
     {% endautoescape %}
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
     :caption: ``child.html``
 
     {% extends "base.html" %}
@@ -668,7 +668,7 @@ You can also access methods you've explicitly defined on your own models:
         def foo(self):
             return "bar"
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
     :caption: ``template.html``
 
     {{ task.foo }}
@@ -685,7 +685,7 @@ Custom tag and filter libraries
 
 Certain applications provide custom tag and filter libraries. To access them in
 a template, ensure the application is in :setting:`INSTALLED_APPS` (we'd add
-``'django.contrib.humanize'`` for this example), and then use the :ttag:`load`
+``'django_orm.contrib.humanize'`` for this example), and then use the :ttag:`load`
 tag in a template::
 
     {% load humanize %}
@@ -694,7 +694,7 @@ tag in a template::
 
 In the above, the :ttag:`load` tag loads the ``humanize`` tag library, which then
 makes the ``intcomma`` filter available for use. If you've enabled
-:mod:`django.contrib.admindocs`, you can consult the documentation area in your
+:mod:`django_orm.contrib.admindocs`, you can consult the documentation area in your
 admin to find the list of custom libraries in your installation.
 
 The :ttag:`load` tag can take multiple library names, separated by spaces.

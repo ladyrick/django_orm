@@ -1,4 +1,4 @@
-from django.test import override_settings
+from django_orm.test import override_settings
 
 from .cases import StaticFilesTestCase
 

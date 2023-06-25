@@ -1,7 +1,7 @@
-from django.conf.urls.i18n import i18n_patterns
-from django.urls import include, path, re_path
-from django.utils.translation import gettext_lazy as _
-from django.views.generic import TemplateView
+from django_orm.conf.urls.i18n import i18n_patterns
+from django_orm.urls import include, path, re_path
+from django_orm.utils.translation import gettext_lazy as _
+from django_orm.views.generic import TemplateView
 
 view = TemplateView.as_view(template_name="dummy.html")
 

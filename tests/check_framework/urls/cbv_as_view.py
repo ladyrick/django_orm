@@ -1,6 +1,6 @@
-from django.http import HttpResponse
-from django.urls import path
-from django.views import View
+from django_orm.http import HttpResponse
+from django_orm.urls import path
+from django_orm.views import View
 
 
 class EmptyCBV(View):

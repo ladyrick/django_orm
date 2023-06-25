@@ -1,6 +1,6 @@
-from django.contrib.auth.handlers.modwsgi import check_password, groups_for_user
-from django.contrib.auth.models import Group, User
-from django.test import TransactionTestCase, override_settings
+from django_orm.contrib.auth.handlers.modwsgi import check_password, groups_for_user
+from django_orm.contrib.auth.models import Group, User
+from django_orm.test import TransactionTestCase, override_settings
 
 from .models import CustomUser
 
@@ -13,8 +13,8 @@ class ModWsgiHandlerTestCase(TransactionTestCase):
     """
 
     available_apps = [
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
+        "django_orm.contrib.auth",
+        "django_orm.contrib.contenttypes",
         "auth_tests",
     ]
 

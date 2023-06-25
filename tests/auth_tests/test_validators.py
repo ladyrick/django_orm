@@ -1,8 +1,8 @@
 import os
 
-from django.contrib.auth import validators
-from django.contrib.auth.models import User
-from django.contrib.auth.password_validation import (
+from django_orm.contrib.auth import validators
+from django_orm.contrib.auth.models import User
+from django_orm.contrib.auth.password_validation import (
     CommonPasswordValidator,
     MinimumLengthValidator,
     NumericPasswordValidator,
@@ -14,18 +14,18 @@ from django.contrib.auth.password_validation import (
     password_validators_help_texts,
     validate_password,
 )
-from django.core.exceptions import ValidationError
-from django.db import models
-from django.test import SimpleTestCase, TestCase, override_settings
-from django.test.utils import isolate_apps
-from django.utils.html import conditional_escape
+from django_orm.core.exceptions import ValidationError
+from django_orm.db import models
+from django_orm.test import SimpleTestCase, TestCase, override_settings
+from django_orm.test.utils import isolate_apps
+from django_orm.utils.html import conditional_escape
 
 
 @override_settings(
     AUTH_PASSWORD_VALIDATORS=[
-        {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+        {"NAME": "django_orm.contrib.auth.password_validation.CommonPasswordValidator"},
         {
-            "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+            "NAME": "django_orm.contrib.auth.password_validation.MinimumLengthValidator",
             "OPTIONS": {
                 "min_length": 12,
             },
@@ -42,7 +42,7 @@ class PasswordValidationTest(SimpleTestCase):
 
     def test_get_password_validators_custom(self):
         validator_config = [
-            {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"}
+            {"NAME": "django_orm.contrib.auth.password_validation.CommonPasswordValidator"}
         ]
         validators = get_password_validators(validator_config)
         self.assertEqual(len(validators), 1)

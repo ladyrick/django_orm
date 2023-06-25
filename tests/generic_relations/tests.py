@@ -1,7 +1,7 @@
-from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import FieldError
-from django.db.models import Q
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.core.exceptions import FieldError
+from django_orm.db.models import Q
+from django_orm.test import SimpleTestCase, TestCase, skipUnlessDBFeature
 
 from .models import (
     AllowsNullGFK,

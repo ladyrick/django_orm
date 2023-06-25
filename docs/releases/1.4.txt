@@ -33,7 +33,7 @@ Other notable new features in Django 1.4 include:
   the ability to `bulk insert <#model-objects-bulk-create-in-the-orm>`_
   large datasets for improved performance, and
   `QuerySet.prefetch_related`_, a method to batch-load related objects
-  in areas where :meth:`~django.db.models.query.QuerySet.select_related`
+  in areas where :meth:`~django_orm.db.models.query.QuerySet.select_related`
   doesn't work.
 
 * Some nice security additions, including `improved password hashing`_
@@ -47,7 +47,7 @@ Other notable new features in Django 1.4 include:
 
 * `Support for in-browser testing frameworks`_ (like Selenium_).
 
-* ... and a whole lot more; `see below <#what-s-new-in-django-1-4>`_!
+* ... and a whole lot more; `see below <#what-s-new-in-django_orm-1-4>`_!
 
 Wherever possible we try to introduce new features in a backwards-compatible
 manner per :doc:`our API stability policy </misc/api-stability>` policy.
@@ -109,10 +109,10 @@ Support for in-browser testing frameworks
 -----------------------------------------
 
 Django 1.4 supports integration with in-browser testing frameworks like
-Selenium_. The new :class:`django.test.LiveServerTestCase` base class lets you
+Selenium_. The new :class:`django_orm.test.LiveServerTestCase` base class lets you
 test the interactions between your site's front and back ends more
 comprehensively. See the
-:class:`documentation<django.test.LiveServerTestCase>` for more details and
+:class:`documentation<django_orm.test.LiveServerTestCase>` for more details and
 concrete examples.
 
 .. _Selenium: https://www.selenium.dev/
@@ -139,7 +139,7 @@ The new recommended ``manage.py`` file should look like this::
     if __name__ == "__main__":
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "{{ project_name }}.settings")
 
-        from django.core.management import execute_from_command_line
+        from django_orm.core.management import execute_from_command_line
 
         execute_from_command_line(sys.argv)
 
@@ -193,13 +193,13 @@ or project template.
 For example, Django will use the ``/path/to/my_project_template`` directory
 when you run the following command::
 
-    django-admin.py startproject --template=/path/to/my_project_template myproject
+    django_orm-admin.py startproject --template=/path/to/my_project_template myproject
 
 You can also now provide a destination directory as the second
 argument to both :djadmin:`startapp` and :djadmin:`startproject`::
 
-    django-admin.py startapp myapp /path/to/new/app
-    django-admin.py startproject myproject /path/to/new/project
+    django_orm-admin.py startapp myapp /path/to/new/app
+    django_orm-admin.py startproject myproject /path/to/new/project
 
 For more information, see the :djadmin:`startapp` and :djadmin:`startproject`
 documentation.
@@ -225,13 +225,13 @@ callable configured via :setting:`WSGI_APPLICATION`.)
 -----------------------------
 
 Django 1.4 includes a :meth:`QuerySet.select_for_update()
-<django.db.models.query.QuerySet.select_for_update>` method, which generates a
+<django_orm.db.models.query.QuerySet.select_for_update>` method, which generates a
 ``SELECT ... FOR UPDATE`` SQL query. This will lock rows until the end of the
 transaction, meaning other transactions cannot modify or delete rows matched by
 a ``FOR UPDATE`` query.
 
 For more details, see the documentation for
-:meth:`~django.db.models.query.QuerySet.select_for_update`.
+:meth:`~django_orm.db.models.query.QuerySet.select_for_update`.
 
 ``Model.objects.bulk_create`` in the ORM
 ----------------------------------------
@@ -242,16 +242,16 @@ significant performance increases if you have many objects.
 Django makes use of this internally, meaning some operations (such as database
 setup for test suites) have seen a performance benefit as a result.
 
-See the :meth:`~django.db.models.query.QuerySet.bulk_create` docs for more
+See the :meth:`~django_orm.db.models.query.QuerySet.bulk_create` docs for more
 information.
 
 ``QuerySet.prefetch_related``
 -----------------------------
 
-Similar to :meth:`~django.db.models.query.QuerySet.select_related` but with a
+Similar to :meth:`~django_orm.db.models.query.QuerySet.select_related` but with a
 different strategy and broader scope,
-:meth:`~django.db.models.query.QuerySet.prefetch_related` has been added to
-:class:`~django.db.models.query.QuerySet`. This method returns a new
+:meth:`~django_orm.db.models.query.QuerySet.prefetch_related` has been added to
+:class:`~django_orm.db.models.query.QuerySet`. This method returns a new
 ``QuerySet`` that will prefetch each of the specified related lookups in a
 single batch as soon as the query begins to be evaluated. Unlike
 ``select_related``, it does the joins in Python, not in the database, and
@@ -263,7 +263,7 @@ each have many related objects that you also need to fetch.
 Improved password hashing
 -------------------------
 
-Django's auth system (``django.contrib.auth``) stores passwords using a one-way
+Django's auth system (``django_orm.contrib.auth``) stores passwords using a one-way
 algorithm. Django 1.3 uses the SHA1_ algorithm, but increasing processor speeds
 and theoretical attacks have revealed that SHA1 isn't as secure as we'd like.
 Thus, Django 1.4 introduces a new password storage system: by default Django now
@@ -288,32 +288,32 @@ templates to change the doctype.
 List filters in admin interface
 -------------------------------
 
-Prior to Django 1.4, the :mod:`~django.contrib.admin` app let you specify
+Prior to Django 1.4, the :mod:`~django_orm.contrib.admin` app let you specify
 change list filters by specifying a field lookup, but it didn't allow you to
 create custom filters. This has been rectified with a simple API (previously
 used internally and known as "FilterSpec"). For more details, see the
-documentation for :attr:`~django.contrib.admin.ModelAdmin.list_filter`.
+documentation for :attr:`~django_orm.contrib.admin.ModelAdmin.list_filter`.
 
 Multiple sort in admin interface
 --------------------------------
 
 The admin change list now supports sorting on multiple columns. It respects all
-elements of the :attr:`~django.contrib.admin.ModelAdmin.ordering` attribute, and
+elements of the :attr:`~django_orm.contrib.admin.ModelAdmin.ordering` attribute, and
 sorting on multiple columns by clicking on headers is designed to mimic the
 behavior of desktop GUIs. We also added a
-:meth:`~django.contrib.admin.ModelAdmin.get_ordering` method for specifying the
+:meth:`~django_orm.contrib.admin.ModelAdmin.get_ordering` method for specifying the
 ordering dynamically (i.e., depending on the request).
 
 New ``ModelAdmin`` methods
 --------------------------
 
-We added a :meth:`~django.contrib.admin.ModelAdmin.save_related` method to
-:mod:`~django.contrib.admin.ModelAdmin` to ease customization of how
+We added a :meth:`~django_orm.contrib.admin.ModelAdmin.save_related` method to
+:mod:`~django_orm.contrib.admin.ModelAdmin` to ease customization of how
 related objects are saved in the admin.
 
-Two other new :class:`~django.contrib.admin.ModelAdmin` methods,
-:meth:`~django.contrib.admin.ModelAdmin.get_list_display` and
-:meth:`~django.contrib.admin.ModelAdmin.get_list_display_links`
+Two other new :class:`~django_orm.contrib.admin.ModelAdmin` methods,
+:meth:`~django_orm.contrib.admin.ModelAdmin.get_list_display` and
+:meth:`~django_orm.contrib.admin.ModelAdmin.get_list_display_links`
 enable dynamic customization of fields and links displayed on the admin
 change list.
 
@@ -356,7 +356,7 @@ more information.
 New form wizard
 ---------------
 
-The previous ``FormWizard`` from ``django.contrib.formtools`` has been
+The previous ``FormWizard`` from ``django_orm.contrib.formtools`` has been
 replaced with a new implementation based on the class-based views
 introduced in Django 1.3. It features a pluggable storage API and doesn't
 require the wizard to pass around hidden fields for every previous step.
@@ -376,9 +376,9 @@ Translating URL patterns
 ------------------------
 
 Django can now look for a language prefix in the URLpattern when using the new
-:func:`~django.conf.urls.i18n.i18n_patterns` helper function.
+:func:`~django_orm.conf.urls.i18n.i18n_patterns` helper function.
 It's also now possible to define translatable URL patterns using
-``django.utils.translation.ugettext_lazy()``. See
+``django_orm.utils.translation.ugettext_lazy()``. See
 :ref:`url-internationalization` for more information about the language prefix
 and how to internationalize URL patterns.
 
@@ -394,10 +394,10 @@ Customizable ``SingleObjectMixin`` URLConf kwargs
 -------------------------------------------------
 
 Two new attributes,
-:attr:`pk_url_kwarg<django.views.generic.detail.SingleObjectMixin.pk_url_kwarg>`
+:attr:`pk_url_kwarg<django_orm.views.generic.detail.SingleObjectMixin.pk_url_kwarg>`
 and
-:attr:`slug_url_kwarg<django.views.generic.detail.SingleObjectMixin.slug_url_kwarg>`,
-have been added to :class:`~django.views.generic.detail.SingleObjectMixin` to
+:attr:`slug_url_kwarg<django_orm.views.generic.detail.SingleObjectMixin.slug_url_kwarg>`,
+have been added to :class:`~django_orm.views.generic.detail.SingleObjectMixin` to
 enable the customization of URLconf keyword arguments used for single
 object generic views.
 
@@ -426,7 +426,7 @@ number of positional or keyword arguments. For example::
 Then, in the template, any number of arguments may be passed to the template tag.
 For example:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% my_tag 123 "abcd" book.title warning=message|lower profile=user.profile %}
 
@@ -456,7 +456,7 @@ more details.
 ``static`` template tag
 -----------------------
 
-The :mod:`staticfiles<django.contrib.staticfiles>` contrib app has a new
+The :mod:`staticfiles<django_orm.contrib.staticfiles>` contrib app has a new
 ``static`` template tag to refer to files saved with the
 :setting:`STATICFILES_STORAGE` storage backend. It uses the storage backend's
 ``url`` method and therefore supports advanced features such as :ref:`serving
@@ -465,8 +465,8 @@ files from a cloud service<staticfiles-from-cdn>`.
 ``CachedStaticFilesStorage`` storage backend
 --------------------------------------------
 
-The :mod:`staticfiles<django.contrib.staticfiles>` contrib app now has a
-``django.contrib.staticfiles.storage.CachedStaticFilesStorage`` backend
+The :mod:`staticfiles<django_orm.contrib.staticfiles>` contrib app now has a
+``django_orm.contrib.staticfiles.storage.CachedStaticFilesStorage`` backend
 that caches the files it saves (when running the :djadmin:`collectstatic`
 management command) by appending the MD5 hash of the file's content to the
 filename. For example, the file ``css/styles.css`` would also be saved as
@@ -485,7 +485,7 @@ CSRF improvements
 -----------------
 
 We've made various improvements to our CSRF features, including the
-:func:`~django.views.decorators.csrf.ensure_csrf_cookie` decorator, which can
+:func:`~django_orm.views.decorators.csrf.ensure_csrf_cookie` decorator, which can
 help with AJAX-heavy sites; protection for PUT and DELETE requests; and the
 :setting:`CSRF_COOKIE_SECURE` and :setting:`CSRF_COOKIE_PATH` settings, which can
 improve the security and usefulness of CSRF protection. See the :doc:`CSRF
@@ -495,14 +495,14 @@ Error report filtering
 ----------------------
 
 We added two function decorators,
-:func:`~django.views.decorators.debug.sensitive_variables` and
-:func:`~django.views.decorators.debug.sensitive_post_parameters`, to allow
+:func:`~django_orm.views.decorators.debug.sensitive_variables` and
+:func:`~django_orm.views.decorators.debug.sensitive_post_parameters`, to allow
 designating the local variables and POST parameters that may contain sensitive
 information and should be filtered out of error reports.
 
 All POST parameters are now systematically filtered out of error reports for
 certain views (``login``, ``password_reset_confirm``, ``password_change`` and
-``add_view`` in :mod:`django.contrib.auth.views`, as well as
+``add_view`` in :mod:`django_orm.contrib.auth.views`, as well as
 ``user_change_password`` in the admin app) to prevent the leaking of sensitive
 information such as user passwords.
 
@@ -514,23 +514,23 @@ Extended IPv6 support
 ---------------------
 
 Django 1.4 can now better handle IPv6 addresses with the new
-:class:`~django.db.models.GenericIPAddressField` model field,
-:class:`~django.forms.GenericIPAddressField` form field and
-the validators :data:`~django.core.validators.validate_ipv46_address` and
-:data:`~django.core.validators.validate_ipv6_address`.
+:class:`~django_orm.db.models.GenericIPAddressField` model field,
+:class:`~django_orm.forms.GenericIPAddressField` form field and
+the validators :data:`~django_orm.core.validators.validate_ipv46_address` and
+:data:`~django_orm.core.validators.validate_ipv6_address`.
 
 HTML comparisons in tests
 -------------------------
 
-The base classes in :mod:`django.test` now have some helpers to
+The base classes in :mod:`django_orm.test` now have some helpers to
 compare HTML without tripping over irrelevant differences in whitespace,
 argument quoting/ordering and closing of self-closing tags. You can either
 compare HTML directly with the new
-:meth:`~django.test.SimpleTestCase.assertHTMLEqual` and
-:meth:`~django.test.SimpleTestCase.assertHTMLNotEqual` assertions, or use
+:meth:`~django_orm.test.SimpleTestCase.assertHTMLEqual` and
+:meth:`~django_orm.test.SimpleTestCase.assertHTMLNotEqual` assertions, or use
 the ``html=True`` flag with
-:meth:`~django.test.SimpleTestCase.assertContains` and
-:meth:`~django.test.SimpleTestCase.assertNotContains` to test whether the
+:meth:`~django_orm.test.SimpleTestCase.assertContains` and
+:meth:`~django_orm.test.SimpleTestCase.assertNotContains` to test whether the
 client's response contains a given HTML fragment. See the :ref:`assertions
 documentation <assertions>` for more.
 
@@ -568,13 +568,13 @@ Django 1.4 also includes several smaller improvements worth noting:
 
 * :doc:`Tablespace support </topics/db/tablespaces>` in PostgreSQL.
 
-* Customizable names for :meth:`~django.template.Library.simple_tag`.
+* Customizable names for :meth:`~django_orm.template.Library.simple_tag`.
 
 * In the documentation, a helpful :doc:`security overview </topics/security>`
   page.
 
-* The ``django.contrib.auth.models.check_password`` function has been moved
-  to the :mod:`django.contrib.auth.hashers` module. Importing it from the old
+* The ``django_orm.contrib.auth.models.check_password`` function has been moved
+  to the :mod:`django_orm.contrib.auth.hashers` module. Importing it from the old
   location will still work, but you should update your imports.
 
 * The :djadmin:`collectstatic` management command now has a ``--clear`` option
@@ -585,8 +585,8 @@ Django 1.4 also includes several smaller improvements worth noting:
   MySQL with the InnoDB database engine.
 
 * A new 403 response handler has been added as
-  ``'django.views.defaults.permission_denied'``. You can set your own handler by
-  setting the value of :data:`django.conf.urls.handler403`. See the
+  ``'django_orm.views.defaults.permission_denied'``. You can set your own handler by
+  setting the value of :data:`django_orm.conf.urls.handler403`. See the
   documentation about :ref:`the 403 (HTTP Forbidden) view<http_forbidden_view>`
   for more information.
 
@@ -631,7 +631,7 @@ Django 1.4 also includes several smaller improvements worth noting:
   fields. This is only supported in PostgreSQL.
 
   For more details, see the documentation for
-  :meth:`~django.db.models.query.QuerySet.distinct`.
+  :meth:`~django_orm.db.models.query.QuerySet.distinct`.
 
 * The admin login page will add a password reset link if you include a URL with
   the name ``'admin_password_reset'`` in your ``urls.py``, so plugging in the
@@ -648,12 +648,12 @@ Django 1.4 also includes several smaller improvements worth noting:
   forms, i.e. those which are not bound to an existing model instance.
 
 * The sitemaps framework can now handle HTTPS links using the new
-  :attr:`Sitemap.protocol <django.contrib.sitemaps.Sitemap.protocol>` class
+  :attr:`Sitemap.protocol <django_orm.contrib.sitemaps.Sitemap.protocol>` class
   attribute.
 
-* A new :class:`django.test.SimpleTestCase` subclass of
+* A new :class:`django_orm.test.SimpleTestCase` subclass of
   :class:`unittest.TestCase`
-  that's lighter than :class:`django.test.TestCase` and company. It can be
+  that's lighter than :class:`django_orm.test.TestCase` and company. It can be
   useful in tests that don't need to hit a database. See
   :ref:`testcase_hierarchy_diagram`.
 
@@ -676,12 +676,12 @@ will refuse to start. This is slightly accelerated from the usual deprecation
 path due to the severity of the consequences of running Django with no
 :setting:`SECRET_KEY`.
 
-``django.contrib.admin``
+``django_orm.contrib.admin``
 ------------------------
 
-The included administration app ``django.contrib.admin`` has for a long time
+The included administration app ``django_orm.contrib.admin`` has for a long time
 shipped with a default set of static files such as JavaScript, images and
-stylesheets. Django 1.3 added a new contrib app ``django.contrib.staticfiles``
+stylesheets. Django 1.3 added a new contrib app ``django_orm.contrib.staticfiles``
 to handle such files in a generic way and defined conventions for static
 files included in apps.
 
@@ -708,8 +708,8 @@ If your ``ADMIN_MEDIA_PREFIX`` is set to a specific domain (e.g.
 
     If you're implicitly relying on the path of the admin static files within
     Django's source code, you'll need to update that path. The files were moved
-    from :file:`django/contrib/admin/media/` to
-    :file:`django/contrib/admin/static/admin/`.
+    from :file:`django_orm/contrib/admin/media/` to
+    :file:`django_orm/contrib/admin/static/admin/`.
 
 Supported browsers for the admin
 --------------------------------
@@ -734,8 +734,8 @@ Removed admin icons
 
 As part of an effort to improve the performance and usability of the admin's
 change-list sorting interface and :attr:`horizontal
-<django.contrib.admin.ModelAdmin.filter_horizontal>` and :attr:`vertical
-<django.contrib.admin.ModelAdmin.filter_vertical>` "filter" widgets, some icon
+<django_orm.contrib.admin.ModelAdmin.filter_horizontal>` and :attr:`vertical
+<django_orm.contrib.admin.ModelAdmin.filter_vertical>` "filter" widgets, some icon
 files were removed and grouped into two sprite files.
 
 Specifically: ``selector-add.gif``, ``selector-addall.gif``,
@@ -827,11 +827,11 @@ instance:
     well with Django 1.4 and you won't have to roll back to 1.3, enable the new
     password hashes.
 
-``django.contrib.flatpages``
+``django_orm.contrib.flatpages``
 ----------------------------
 
 Starting in 1.4, the
-:class:`~django.contrib.flatpages.middleware.FlatpageFallbackMiddleware` only
+:class:`~django_orm.contrib.flatpages.middleware.FlatpageFallbackMiddleware` only
 adds a trailing slash and redirects if the resulting URL refers to an existing
 flatpage. For example, requesting ``/notaflatpageoravalidurl`` in a previous
 version would redirect to ``/notaflatpageoravalidurl/``, which would
@@ -839,7 +839,7 @@ subsequently raise a 404. Requesting ``/notaflatpageoravalidurl`` now will
 immediately raise a 404.
 
 Also, redirects returned by flatpages are now permanent (with 301 status code),
-to match the behavior of :class:`~django.middleware.common.CommonMiddleware`.
+to match the behavior of :class:`~django_orm.middleware.common.CommonMiddleware`.
 
 Serialization of :class:`~datetime.datetime` and :class:`~datetime.time`
 ------------------------------------------------------------------------
@@ -879,7 +879,7 @@ object, Django raises an exception.
 
 The MySQL backend historically has raised ``MySQLdb.OperationalError``
 when a query triggered an exception. We've fixed this bug, and we now raise
-:exc:`django.db.DatabaseError` instead. If you were testing for
+:exc:`django_orm.db.DatabaseError` instead. If you were testing for
 ``MySQLdb.OperationalError``, you'll need to update your ``except``
 clauses.
 
@@ -887,16 +887,16 @@ Database connection's thread-locality
 -------------------------------------
 
 ``DatabaseWrapper`` objects (i.e. the connection objects referenced by
-``django.db.connection`` and ``django.db.connections["some_alias"]``) used to
+``django_orm.db.connection`` and ``django_orm.db.connections["some_alias"]``) used to
 be thread-local. They are now global objects in order to be potentially shared
 between multiple threads. While the individual connection objects are now
-global, the ``django.db.connections`` dictionary referencing those objects is
+global, the ``django_orm.db.connections`` dictionary referencing those objects is
 still thread-local. Therefore if you just use the ORM or
 ``DatabaseWrapper.cursor()`` then the behavior is still the same as before.
-Note, however, that ``django.db.connection`` does not directly reference the
+Note, however, that ``django_orm.db.connection`` does not directly reference the
 default ``DatabaseWrapper`` object anymore and is now a proxy to access that
 object's attributes. If you need to access the actual ``DatabaseWrapper``
-object, use ``django.db.connections[DEFAULT_DB_ALIAS]`` instead.
+object, use ``django_orm.db.connections[DEFAULT_DB_ALIAS]`` instead.
 
 As part of this change, all underlying SQLite connections are now enabled for
 potential thread-sharing (by passing the ``check_same_thread=False`` attribute
@@ -921,8 +921,8 @@ from the feed class.
 If you rely on the feature and want to restore the old behavior, use a custom
 comment model manager to exclude the user group, like this::
 
-    from django.conf import settings
-    from django.contrib.comments.managers import CommentManager
+    from django_orm.conf import settings
+    from django_orm.contrib.comments.managers import CommentManager
 
     class BanningCommentManager(CommentManager):
         def get_query_set(self):
@@ -936,8 +936,8 @@ comment model manager to exclude the user group, like this::
 Save this model manager in your custom comment app (e.g., in
 ``my_comments_app/managers.py``) and add it your custom comment app model::
 
-    from django.db import models
-    from django.contrib.comments.models import Comment
+    from django_orm.db import models
+    from django_orm.contrib.comments.models import Comment
 
     from my_comments_app.managers import BanningCommentManager
 
@@ -999,27 +999,27 @@ If you're using PUT or DELETE methods in AJAX applications, please see the
 Password reset view now accepts ``subject_template_name``
 ---------------------------------------------------------
 
-The ``password_reset`` view in ``django.contrib.auth`` now accepts a
+The ``password_reset`` view in ``django_orm.contrib.auth`` now accepts a
 ``subject_template_name`` parameter, which is passed to the password save form
 as a keyword argument. If you are using this view with a custom password reset
 form, then you will need to ensure your form's ``save()`` method accepts this
 keyword argument.
 
-``django.core.template_loaders``
+``django_orm.core.template_loaders``
 --------------------------------
 
-This was an alias to ``django.template.loader`` since 2005, and we've removed it
+This was an alias to ``django_orm.template.loader`` since 2005, and we've removed it
 without emitting a warning due to the length of the deprecation. If your code
-still referenced this, please use ``django.template.loader`` instead.
+still referenced this, please use ``django_orm.template.loader`` instead.
 
-``django.db.models.fields.URLField.verify_exists``
+``django_orm.db.models.fields.URLField.verify_exists``
 --------------------------------------------------
 
 This functionality has been removed due to intractable performance and
 security issues. Any existing usage of ``verify_exists`` should be
 removed.
 
-``django.core.files.storage.Storage.open``
+``django_orm.core.files.storage.Storage.open``
 ------------------------------------------
 
 The ``open`` method of the base Storage class used to take an obscure parameter
@@ -1028,8 +1028,8 @@ returned file object. This has been removed. In the rare case you relied on the
 ``mixin`` parameter, you can easily achieve the same by overriding the ``open``
 method, like this::
 
-    from django.core.files import File
-    from django.core.files.storage import FileSystemStorage
+    from django_orm.core.files import File
+    from django_orm.core.files.storage import FileSystemStorage
 
     class Spam(File):
         """
@@ -1078,8 +1078,8 @@ wild, because they would confuse browsers too.
 -----------------------------------------------------------------------
 
 It's now possible to check whether a template was used within a block of
-code with :meth:`~django.test.SimpleTestCase.assertTemplateUsed` and
-:meth:`~django.test.SimpleTestCase.assertTemplateNotUsed`. And they
+code with :meth:`~django_orm.test.SimpleTestCase.assertTemplateUsed` and
+:meth:`~django_orm.test.SimpleTestCase.assertTemplateNotUsed`. And they
 can be used as a context manager::
 
     with self.assertTemplateUsed('index.html'):
@@ -1138,7 +1138,7 @@ The development server is now is multithreaded by default. Use the
 :option:`runserver --nothreading` option to disable the use of threading in the
 development server::
 
-    django-admin.py runserver --nothreading
+    django_orm-admin.py runserver --nothreading
 
 Attributes disabled in markdown when safe mode set
 --------------------------------------------------
@@ -1155,7 +1155,7 @@ FormMixin get_initial returns an instance-specific dictionary
 -------------------------------------------------------------
 
 In Django 1.3, the ``get_initial`` method of the
-:class:`django.views.generic.edit.FormMixin` class was returning the
+:class:`django_orm.views.generic.edit.FormMixin` class was returning the
 class ``initial`` dictionary. This has been fixed to return a copy of this
 dictionary, so form instances can modify their initial data without messing
 with the class variable.
@@ -1168,7 +1168,7 @@ Features deprecated in 1.4
 Old styles of calling ``cache_page`` decorator
 ----------------------------------------------
 
-Some legacy ways of calling :func:`~django.views.decorators.cache.cache_page`
+Some legacy ways of calling :func:`~django_orm.views.decorators.cache.cache_page`
 have been deprecated. Please see the documentation for the correct way to use
 this decorator.
 
@@ -1188,27 +1188,27 @@ Request exceptions are now always logged
 
 When we added :doc:`logging support </topics/logging/>` in Django in 1.3, the
 admin error email support was moved into the
-:class:`django.utils.log.AdminEmailHandler`, attached to the
-``'django.request'`` logger. In order to maintain the established behavior of
-error emails, the ``'django.request'`` logger was called only when
+:class:`django_orm.utils.log.AdminEmailHandler`, attached to the
+``'django_orm.request'`` logger. In order to maintain the established behavior of
+error emails, the ``'django_orm.request'`` logger was called only when
 :setting:`DEBUG` was ``False``.
 
 To increase the flexibility of error logging for requests, the
-``'django.request'`` logger is now called regardless of the value of
+``'django_orm.request'`` logger is now called regardless of the value of
 :setting:`DEBUG`, and the default settings file for new projects now includes a
-separate filter attached to :class:`django.utils.log.AdminEmailHandler` to
+separate filter attached to :class:`django_orm.utils.log.AdminEmailHandler` to
 prevent admin error emails in ``DEBUG`` mode::
 
    'filters': {
         'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
+            '()': 'django_orm.utils.log.RequireDebugFalse'
         }
     },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
+            'class': 'django_orm.utils.log.AdminEmailHandler'
         }
     },
 
@@ -1223,23 +1223,23 @@ backwards-compatibility shim will be removed entirely.
 The existence of any ``'filters'`` key under the ``'mail_admins'`` handler will
 disable this backward-compatibility shim and deprecation warning.
 
-``django.conf.urls.defaults``
+``django_orm.conf.urls.defaults``
 -----------------------------
 
 Until Django 1.3, the ``include()``, ``patterns()``, and ``url()`` functions,
-plus :data:`~django.conf.urls.handler404` and :data:`~django.conf.urls.handler500`
-were located in a ``django.conf.urls.defaults`` module.
+plus :data:`~django_orm.conf.urls.handler404` and :data:`~django_orm.conf.urls.handler500`
+were located in a ``django_orm.conf.urls.defaults`` module.
 
-In Django 1.4, they live in :mod:`django.conf.urls`.
+In Django 1.4, they live in :mod:`django_orm.conf.urls`.
 
-``django.contrib.databrowse``
+``django_orm.contrib.databrowse``
 -----------------------------
 
 Databrowse has not seen active development for some time, and this does not show
 any sign of changing. There had been a suggestion for a `GSOC project`_ to
 integrate the functionality of databrowse into the admin, but no progress was
 made. While Databrowse has been deprecated, an enhancement of
-``django.contrib.admin`` providing a similar feature set is still possible.
+``django_orm.contrib.admin`` providing a similar feature set is still possible.
 
 .. _GSOC project: https://code.djangoproject.com/wiki/SummerOfCode2011#Integratedatabrowseintotheadmin
 
@@ -1247,7 +1247,7 @@ The code that powers Databrowse is licensed under the same terms as Django
 itself, so it's available to be adopted by an individual or group as
 a third-party project.
 
-``django.core.management.setup_environ``
+``django_orm.core.management.setup_environ``
 ----------------------------------------
 
 This function temporarily modified ``sys.path`` in order to make the parent
@@ -1258,14 +1258,14 @@ needed with the new ``manage.py`` and default project layout.
 This function was never documented or part of the public API, but it was widely
 recommended for use in setting up a "Django environment" for a user script.
 These uses should be replaced by setting the :envvar:`DJANGO_SETTINGS_MODULE`
-environment variable or using :func:`django.conf.settings.configure`.
+environment variable or using :func:`django_orm.conf.settings.configure`.
 
-``django.core.management.execute_manager``
+``django_orm.core.management.execute_manager``
 ------------------------------------------
 
 This function was previously used by ``manage.py`` to execute a management
 command. It is identical to
-``django.core.management.execute_from_command_line``, except that it first
+``django_orm.core.management.execute_from_command_line``, except that it first
 calls ``setup_environ``, which is now deprecated. As such, ``execute_manager``
 is also deprecated; ``execute_from_command_line`` can be used instead. Neither
 of these functions is documented as part of the public API, but a deprecation
@@ -1284,9 +1284,9 @@ the filter function::
     noop.is_safe = True
 
 However, this technique caused some problems in combination with decorators,
-especially :func:`@stringfilter <django.template.defaultfilters.stringfilter>`.
+especially :func:`@stringfilter <django_orm.template.defaultfilters.stringfilter>`.
 Now, the flags are keyword arguments of :meth:`@register.filter
-<django.template.Library.filter>`::
+<django_orm.template.Library.filter>`::
 
     @register.filter(is_safe=True)
     def noop(value):
@@ -1298,7 +1298,7 @@ Wildcard expansion of application names in ``INSTALLED_APPS``
 -------------------------------------------------------------
 
 Until Django 1.3, :setting:`INSTALLED_APPS` accepted wildcards in application
-names, like ``django.contrib.*``. The expansion was performed by a
+names, like ``django_orm.contrib.*``. The expansion was performed by a
 filesystem-based implementation of ``from <package> import *``. Unfortunately,
 this can't be done reliably.
 
@@ -1313,14 +1313,14 @@ This attribute was confusingly named ``HttpRequest.raw_post_data``, but it
 actually provided the body of the HTTP request. It's been renamed to
 ``HttpRequest.body``, and ``HttpRequest.raw_post_data`` has been deprecated.
 
-``django.contrib.sitemaps`` bug fix with potential performance implications
+``django_orm.contrib.sitemaps`` bug fix with potential performance implications
 ---------------------------------------------------------------------------
 
 In previous versions, ``Paginator`` objects used in sitemap classes were
 cached, which could result in stale site maps. We've removed the caching, so
 each request to a site map now creates a new Paginator object and calls the
-:attr:`~django.contrib.sitemaps.Sitemap.items()` method of the
-:class:`~django.contrib.sitemaps.Sitemap` subclass. Depending on what your
+:attr:`~django_orm.contrib.sitemaps.Sitemap.items()` method of the
+:class:`~django_orm.contrib.sitemaps.Sitemap` subclass. Depending on what your
 ``items()`` method is doing, this may have a negative performance impact.
 To mitigate the performance impact, consider using the :doc:`caching
 framework </topics/cache>` within your ``Sitemap`` subclass.

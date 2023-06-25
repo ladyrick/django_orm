@@ -1,11 +1,11 @@
 from pathlib import Path
 from unittest import mock
 
-from django.conf import settings
-from django.contrib.staticfiles.checks import check_finders
-from django.contrib.staticfiles.finders import BaseFinder, get_finder
-from django.core.checks import Error, Warning
-from django.test import override_settings
+from django_orm.conf import settings
+from django_orm.contrib.staticfiles.checks import check_finders
+from django_orm.contrib.staticfiles.finders import BaseFinder, get_finder
+from django_orm.core.checks import Error, Warning
+from django_orm.test import override_settings
 
 from .cases import CollectionTestCase
 from .settings import TEST_ROOT
@@ -47,7 +47,7 @@ class FindersCheckTests(CollectionTestCase):
 
             return [Finder1(), Finder2(), Finder3(), Finder4()]
 
-        with mock.patch("django.contrib.staticfiles.checks.get_finders", get_finders):
+        with mock.patch("django_orm.contrib.staticfiles.checks.get_finders", get_finders):
             errors = check_finders(None)
             self.assertEqual(errors, [error1, error2, error3])
 
@@ -130,5 +130,5 @@ class FindersCheckTests(CollectionTestCase):
                 ],
             )
             # Nonexistent directories are skipped.
-            finder = get_finder("django.contrib.staticfiles.finders.FileSystemFinder")
+            finder = get_finder("django_orm.contrib.staticfiles.finders.FileSystemFinder")
             self.assertEqual(list(finder.list(None)), [])

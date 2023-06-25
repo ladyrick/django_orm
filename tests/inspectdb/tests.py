@@ -3,10 +3,10 @@ import re
 from io import StringIO
 from unittest import mock, skipUnless
 
-from django.core.management import call_command
-from django.db import connection
-from django.db.backends.base.introspection import TableInfo
-from django.test import TestCase, TransactionTestCase, skipUnlessDBFeature
+from django_orm.core.management import call_command
+from django_orm.db import connection
+from django_orm.db.backends.base.introspection import TableInfo
+from django_orm.test import TestCase, TransactionTestCase, skipUnlessDBFeature
 
 from .models import PeopleMoreData, test_collation
 
@@ -405,7 +405,7 @@ class InspectDBTestCase(TestCase):
         """
         out = StringIO()
         with mock.patch(
-            "django.db.connection.introspection.data_types_reverse."
+            "django_orm.db.connection.introspection.data_types_reverse."
             "base_data_types_reverse",
             {
                 "text": "myfields.TextField",
@@ -424,7 +424,7 @@ class InspectDBTestCase(TestCase):
         """
         out = StringIO()
         with mock.patch(
-            "django.db.connection.introspection.get_table_list",
+            "django_orm.db.connection.introspection.get_table_list",
             return_value=[TableInfo(name="nonexistent", type="t")],
         ):
             call_command("inspectdb", stdout=out)

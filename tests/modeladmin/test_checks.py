@@ -1,13 +1,13 @@
-from django import forms
-from django.contrib import admin
-from django.contrib.admin import BooleanFieldListFilter, SimpleListFilter
-from django.contrib.admin.options import VERTICAL, ModelAdmin, TabularInline
-from django.contrib.admin.sites import AdminSite
-from django.core.checks import Error
-from django.db.models import CASCADE, F, Field, ForeignKey, Model
-from django.db.models.functions import Upper
-from django.forms.models import BaseModelFormSet
-from django.test import SimpleTestCase
+from django_orm import forms
+from django_orm.contrib import admin
+from django_orm.contrib.admin import BooleanFieldListFilter, SimpleListFilter
+from django_orm.contrib.admin.options import VERTICAL, ModelAdmin, TabularInline
+from django_orm.contrib.admin.sites import AdminSite
+from django_orm.core.checks import Error
+from django_orm.db.models import CASCADE, F, Field, ForeignKey, Model
+from django_orm.db.models.functions import Upper
+from django_orm.forms.models import BaseModelFormSet
+from django_orm.test import SimpleTestCase
 
 from .models import Band, Song, User, ValidationTestInlineModel, ValidationTestModel
 

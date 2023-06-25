@@ -1,5 +1,5 @@
-from django.contrib.sitemaps import views
-from django.urls import path
+from django_orm.contrib.sitemaps import views
+from django_orm.urls import path
 
 from .http import SimpleSitemap
 
@@ -18,6 +18,6 @@ urlpatterns = [
         "secure/sitemap-<section>.xml",
         views.sitemap,
         {"sitemaps": secure_sitemaps},
-        name="django.contrib.sitemaps.views.sitemap",
+        name="django_orm.contrib.sitemaps.views.sitemap",
     ),
 ]

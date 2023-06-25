@@ -17,32 +17,32 @@ Bugfixes
   admin changelist search bar on a filtered page (:ticket:`32091`).
 
 * Fixed displaying Unicode characters in
-  :class:`forms.JSONField <django.forms.JSONField>` and read-only
-  :class:`models.JSONField <django.db.models.JSONField>` values in the admin
+  :class:`forms.JSONField <django_orm.forms.JSONField>` and read-only
+  :class:`models.JSONField <django_orm.db.models.JSONField>` values in the admin
   (:ticket:`32080`).
 
 * Fixed a regression in Django 3.1 that caused a crash of
-  :class:`~django.contrib.postgres.aggregates.ArrayAgg` and
-  :class:`~django.contrib.postgres.aggregates.StringAgg` with ``ordering``
-  on key transforms for :class:`~django.db.models.JSONField` (:ticket:`32096`).
+  :class:`~django_orm.contrib.postgres.aggregates.ArrayAgg` and
+  :class:`~django_orm.contrib.postgres.aggregates.StringAgg` with ``ordering``
+  on key transforms for :class:`~django_orm.db.models.JSONField` (:ticket:`32096`).
 
 * Fixed a regression in Django 3.1 that caused a crash of ``__in`` lookup when
-  using key transforms for :class:`~django.db.models.JSONField` in the lookup
+  using key transforms for :class:`~django_orm.db.models.JSONField` in the lookup
   value (:ticket:`32096`).
 
 * Fixed a regression in Django 3.1 that caused a crash of
-  :class:`~django.db.models.ExpressionWrapper` with key transforms for
-  :class:`~django.db.models.JSONField` (:ticket:`32096`).
+  :class:`~django_orm.db.models.ExpressionWrapper` with key transforms for
+  :class:`~django_orm.db.models.JSONField` (:ticket:`32096`).
 
 * Fixed a regression in Django 3.1 that caused a migrations crash on PostgreSQL
   when adding an
-  :class:`~django.contrib.postgres.constraints.ExclusionConstraint` with key
-  transforms for :class:`~django.db.models.JSONField` in ``expressions``
+  :class:`~django_orm.contrib.postgres.constraints.ExclusionConstraint` with key
+  transforms for :class:`~django_orm.db.models.JSONField` in ``expressions``
   (:ticket:`32096`).
 
 * Fixed a regression in Django 3.1 where
-  :exc:`ProtectedError.protected_objects <django.db.models.ProtectedError>` and
-  :exc:`RestrictedError.restricted_objects <django.db.models.RestrictedError>`
+  :exc:`ProtectedError.protected_objects <django_orm.db.models.ProtectedError>` and
+  :exc:`RestrictedError.restricted_objects <django_orm.db.models.RestrictedError>`
   attributes returned iterators instead of :py:class:`set` of objects
   (:ticket:`32107`).
 

@@ -1,8 +1,8 @@
 # RemovedInDjango50
-from django.forms import CharField, EmailField, Form, HiddenInput
-from django.forms.utils import ErrorList
-from django.test import SimpleTestCase, ignore_warnings
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.forms import CharField, EmailField, Form, HiddenInput
+from django_orm.forms.utils import ErrorList
+from django_orm.test import SimpleTestCase, ignore_warnings
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from .test_forms import Person
 
@@ -22,7 +22,7 @@ class DivErrorList(ErrorList):
 class DeprecationTests(SimpleTestCase):
     def test_deprecation_warning_html_output(self):
         msg = (
-            "django.forms.BaseForm._html_output() is deprecated. Please use "
+            "django_orm.forms.BaseForm._html_output() is deprecated. Please use "
             ".render() and .get_context() instead."
         )
         with self.assertRaisesMessage(RemovedInDjango50Warning, msg):

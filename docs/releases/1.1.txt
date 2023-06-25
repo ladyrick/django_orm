@@ -64,7 +64,7 @@ This change is slightly backwards incompatible if existing tests need to test
 transactional behavior, if they rely on invalid assumptions about the test
 environment, or if they require a specific test case ordering.
 
-For these cases, :class:`~django.test.TransactionTestCase` can be used instead.
+For these cases, :class:`~django_orm.test.TransactionTestCase` can be used instead.
 This is a just a quick fix to get around test case errors revealed by the new
 rollback approach; in the long-term tests should be rewritten to correct the
 test case.
@@ -75,7 +75,7 @@ Removed ``SetRemoteAddrFromForwardedFor`` middleware
 ----------------------------------------------------
 
 For convenience, Django 1.0 included an optional middleware class --
-``django.middleware.http.SetRemoteAddrFromForwardedFor`` -- which updated the
+``django_orm.middleware.http.SetRemoteAddrFromForwardedFor`` -- which updated the
 value of ``REMOTE_ADDR`` based on the HTTP ``X-Forwarded-For`` header commonly
 set by some proxy configurations.
 
@@ -98,12 +98,12 @@ If you've been relying on this middleware, the easiest upgrade path is:
 * Introduce your modified version of ``SetRemoteAddrFromForwardedFor`` as a
   piece of middleware in your own project.
 
-__ https://github.com/django/django/blob/91f18400cc0fb37659e2dbaab5484ff2081f1f30/django/middleware/http.py#L33
+__ https://github.com/django_orm/django_orm/blob/91f18400cc0fb37659e2dbaab5484ff2081f1f30/django_orm/middleware/http.py#L33
 
 Names of uploaded files are available later
 -------------------------------------------
 
-.. currentmodule:: django.db.models
+.. currentmodule:: django_orm.db.models
 
 In Django 1.0, files uploaded and stored in a model's :class:`FileField` were
 saved to disk before the model was saved to the database. This meant that the
@@ -117,7 +117,7 @@ has been saved.
 Changes to how model formsets are saved
 ---------------------------------------
 
-In Django 1.1, :class:`~django.forms.models.BaseModelFormSet` now calls
+In Django 1.1, :class:`~django_orm.forms.models.BaseModelFormSet` now calls
 ``ModelForm.save()``.
 
 This is backwards-incompatible if you were modifying ``self.initial`` in a model
@@ -142,7 +142,7 @@ Permanent redirects and the ``redirect_to()`` generic view
 ----------------------------------------------------------
 
 Django 1.1 adds a ``permanent`` argument to the
-``django.views.generic.simple.redirect_to()`` view. This is technically
+``django_orm.views.generic.simple.redirect_to()`` view. This is technically
 backwards-incompatible if you were using the ``redirect_to`` view with a
 format-string key called 'permanent', which is highly unlikely.
 
@@ -185,7 +185,7 @@ The major new features in Django 1.1 are:
 ORM improvements
 ----------------
 
-.. currentmodule:: django.db.models
+.. currentmodule:: django_orm.db.models
 
 Two major enhancements have been added to Django's object-relational mapper
 (ORM): aggregate support, and query expressions.
@@ -196,12 +196,12 @@ Aggregate support
 It's now possible to run SQL aggregate queries (i.e. ``COUNT()``, ``MAX()``,
 ``MIN()``, etc.) from within Django's ORM. You can choose to either return the
 results of the aggregate directly, or else annotate the objects in a
-:class:`~django.db.models.query.QuerySet` with the results of the aggregate
+:class:`~django_orm.db.models.query.QuerySet` with the results of the aggregate
 query.
 
 This feature is available as new
-:meth:`~django.db.models.query.QuerySet.aggregate` and
-:meth:`~django.db.models.query.QuerySet.annotate` methods, and is covered in
+:meth:`~django_orm.db.models.query.QuerySet.aggregate` and
+:meth:`~django_orm.db.models.query.QuerySet.annotate` methods, and is covered in
 detail in :doc:`the ORM aggregation documentation </topics/db/aggregation>`.
 
 Query expressions
@@ -209,8 +209,8 @@ Query expressions
 
 Queries can now refer to another field on the query and can traverse
 relationships to refer to fields on related models. This is implemented in the
-new :class:`~django.db.models.F` object; for full details, including examples,
-consult the :class:`F expressions documentation <django.db.models.F>`.
+new :class:`~django_orm.db.models.F` object; for full details, including examples,
+consult the :class:`F expressions documentation <django_orm.db.models.F>`.
 
 Model improvements
 ------------------
@@ -257,8 +257,8 @@ particular fields, you can now tell Django not to retrieve them from the
 database.
 
 You'll do this with the new queryset methods
-:meth:`~django.db.models.query.QuerySet.defer` and
-:meth:`~django.db.models.query.QuerySet.only`.
+:meth:`~django_orm.db.models.query.QuerySet.defer` and
+:meth:`~django_orm.db.models.query.QuerySet.only`.
 
 Testing improvements
 --------------------
@@ -269,13 +269,13 @@ A few notable improvements have been made to the :doc:`testing framework
 Test performance improvements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. currentmodule:: django.test
+.. currentmodule:: django_orm.test
 
 Tests written using Django's :doc:`testing framework </topics/testing/index>` now run
 dramatically faster (as much as 10 times faster in many cases).
 
 This was accomplished through the introduction of transaction-based tests: when
-using :class:`django.test.TestCase`, your tests will now be run in a transaction
+using :class:`django_orm.test.TestCase`, your tests will now be run in a transaction
 which is rolled back when finished, instead of by flushing and re-populating the
 database. This results in an immense speedup for most types of unit tests. See
 the documentation for :class:`TestCase` and :class:`TransactionTestCase` for a
@@ -348,7 +348,7 @@ GeoDjango
 ---------
 
 In Django 1.1, :doc:`GeoDjango </ref/contrib/gis/index>` (i.e.
-``django.contrib.gis``) has several new features:
+``django_orm.contrib.gis``) has several new features:
 
 * Support for SpatiaLite_ -- a spatial database for SQLite -- as a spatial
   backend.
@@ -426,7 +426,7 @@ Other new features and changes introduced since Django 1.0 include:
   </howto/auth-remote-user>` via a new authentication backend that supports
   the standard ``REMOTE_USER`` environment variable used for this purpose.
 
-* There's a new :func:`django.shortcuts.redirect` function that makes it
+* There's a new :func:`django_orm.shortcuts.redirect` function that makes it
   easier to issue redirects given an object, a view name, or a URL.
 
 * The ``postgresql_psycopg2`` backend now supports :ref:`native PostgreSQL
@@ -439,8 +439,8 @@ What's next?
 
 We'll take a short break, and then work on Django 1.2 will begin -- no rest for
 the weary! If you'd like to help, discussion of Django development, including
-progress toward the 1.2 release, takes place daily on the |django-developers|
-mailing list and in the ``#django-dev`` IRC channel on ``irc.libera.chat``.
+progress toward the 1.2 release, takes place daily on the |django_orm-developers|
+mailing list and in the ``#django_orm-dev`` IRC channel on ``irc.libera.chat``.
 Feel free to join the discussions!
 
 Django's online documentation also includes pointers on how to contribute to

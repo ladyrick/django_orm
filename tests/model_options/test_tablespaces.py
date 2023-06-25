@@ -1,7 +1,7 @@
-from django.apps import apps
-from django.conf import settings
-from django.db import connection
-from django.test import TransactionTestCase, skipIfDBFeature, skipUnlessDBFeature
+from django_orm.apps import apps
+from django_orm.conf import settings
+from django_orm.db import connection
+from django_orm.test import TransactionTestCase, skipIfDBFeature, skipUnlessDBFeature
 
 from .models.tablespaces import (
     Article,

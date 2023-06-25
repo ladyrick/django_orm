@@ -1,8 +1,8 @@
 import datetime
 
-from django.db import connection, models, transaction
-from django.db.models import Exists, OuterRef
-from django.test import (
+from django_orm.db import connection, models, transaction
+from django_orm.db.models import Exists, OuterRef
+from django_orm.test import (
     SimpleTestCase,
     TestCase,
     TransactionTestCase,

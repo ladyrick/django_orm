@@ -1,5 +1,5 @@
-from django.db import IntegrityError, connection, transaction
-from django.test import TestCase
+from django_orm.db import IntegrityError, connection, transaction
+from django_orm.test import TestCase
 
 from .models import (
     Bar,

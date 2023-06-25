@@ -67,7 +67,7 @@ comprised solely of *supported* versions of Django: older versions may
 also be affected, but we do not investigate to determine that, and
 will not issue patches or new releases for those versions.
 
-.. _main development branch: https://github.com/django/django/
+.. _main development branch: https://github.com/django_orm/django_orm/
 
 .. _security-disclosure:
 
@@ -79,7 +79,7 @@ public disclosure involves multiple steps.
 
 Approximately one week before public disclosure, we send two notifications:
 
-First, we notify |django-announce| of the date and approximate time of the
+First, we notify |django_orm-announce| of the date and approximate time of the
 upcoming security release, as well as the severity of the issues. This is to
 aid organizations that need to ensure they have staff available to handle
 triaging our announcement and upgrade Django as needed. Severity levels are:
@@ -130,7 +130,7 @@ On the day of disclosure, we will take the following steps:
    relevant patches and new releases, and crediting the reporter of
    the issue (if the reporter wishes to be publicly identified).
 
-#. Post a notice to the |django-announce| and oss-security@lists.openwall.com
+#. Post a notice to the |django_orm-announce| and oss-security@lists.openwall.com
    mailing lists that links to the blog post.
 
 .. _the Python Package Index: https://pypi.org/
@@ -216,7 +216,7 @@ Your request **must** include the following information:
 * A detailed explanation of why you are requesting security notifications.
   Again, please keep in mind that this is *not* simply a list for users of
   Django, and the overwhelming majority of users should subscribe to
-  |django-announce| to receive advanced notice of when a security release will
+  |django_orm-announce| to receive advanced notice of when a security release will
   happen, without the details of the issues, rather than request detailed
   notifications.
 

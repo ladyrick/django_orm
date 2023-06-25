@@ -48,7 +48,7 @@ case of the actual model class name.
 Default: ``[]`` (Empty list)
 
 A list of all the people who get code error notifications. When
-:setting:`DEBUG=False <DEBUG>` and :class:`~django.utils.log.AdminEmailHandler`
+:setting:`DEBUG=False <DEBUG>` and :class:`~django_orm.utils.log.AdminEmailHandler`
 is configured in :setting:`LOGGING` (done by default), Django emails these
 people the details of exceptions raised in the request/response cycle.
 
@@ -86,8 +86,8 @@ strips when performing host validation.
 
 If the ``Host`` header (or ``X-Forwarded-Host`` if
 :setting:`USE_X_FORWARDED_HOST` is enabled) does not match any value in this
-list, the :meth:`django.http.HttpRequest.get_host()` method will raise
-:exc:`~django.core.exceptions.SuspiciousOperation`.
+list, the :meth:`django_orm.http.HttpRequest.get_host()` method will raise
+:exc:`~django_orm.core.exceptions.SuspiciousOperation`.
 
 When :setting:`DEBUG` is ``True`` and ``ALLOWED_HOSTS`` is empty, the host
 is validated against ``['.localhost', '127.0.0.1', '[::1]']``.
@@ -95,7 +95,7 @@ is validated against ``['.localhost', '127.0.0.1', '[::1]']``.
 ``ALLOWED_HOSTS`` is also :ref:`checked when running tests
 <topics-testing-advanced-multiple-hosts>`.
 
-This validation only applies via :meth:`~django.http.HttpRequest.get_host()`;
+This validation only applies via :meth:`~django_orm.http.HttpRequest.get_host()`;
 if your code accesses the ``Host`` header directly from ``request.META`` you
 are bypassing this security protection.
 
@@ -112,7 +112,7 @@ same URL with a slash appended. Note that the redirect may cause any data
 submitted in a POST request to be lost.
 
 The :setting:`APPEND_SLASH` setting is only used if
-:class:`~django.middleware.common.CommonMiddleware` is installed
+:class:`~django_orm.middleware.common.CommonMiddleware` is installed
 (see :doc:`/topics/http/middleware`). See also :setting:`PREPEND_WWW`.
 
 .. setting:: CACHES
@@ -124,7 +124,7 @@ Default::
 
     {
         'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'BACKEND': 'django_orm.core.cache.backends.locmem.LocMemCache',
         }
     }
 
@@ -147,13 +147,13 @@ Default: ``''`` (Empty string)
 
 The cache backend to use. The built-in cache backends are:
 
-* ``'django.core.cache.backends.db.DatabaseCache'``
-* ``'django.core.cache.backends.dummy.DummyCache'``
-* ``'django.core.cache.backends.filebased.FileBasedCache'``
-* ``'django.core.cache.backends.locmem.LocMemCache'``
-* ``'django.core.cache.backends.memcached.PyMemcacheCache'``
-* ``'django.core.cache.backends.memcached.PyLibMCCache'``
-* ``'django.core.cache.backends.redis.RedisCache'``
+* ``'django_orm.core.cache.backends.db.DatabaseCache'``
+* ``'django_orm.core.cache.backends.dummy.DummyCache'``
+* ``'django_orm.core.cache.backends.filebased.FileBasedCache'``
+* ``'django_orm.core.cache.backends.locmem.LocMemCache'``
+* ``'django_orm.core.cache.backends.memcached.PyMemcacheCache'``
+* ``'django_orm.core.cache.backends.memcached.PyLibMCCache'``
+* ``'django_orm.core.cache.backends.redis.RedisCache'``
 
 You can use a cache backend that doesn't ship with Django by setting
 :setting:`BACKEND <CACHES-BACKEND>` to a fully-qualified path of a cache
@@ -206,7 +206,7 @@ name for a local memory cache. e.g.::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+            'BACKEND': 'django_orm.core.cache.backends.filebased.FileBasedCache',
             'LOCATION': '/var/tmp/django_cache',
         }
     }
@@ -419,16 +419,16 @@ cookie is only sent with an HTTPS connection.
 Default: ``False``
 
 Whether to store the CSRF token in the user's session instead of in a cookie.
-It requires the use of :mod:`django.contrib.sessions`.
+It requires the use of :mod:`django_orm.contrib.sessions`.
 
 Storing the CSRF token in a cookie (Django's default) is safe, but storing it
 in the session is common practice in other web frameworks and therefore
 sometimes demanded by security auditors.
 
 Since the :ref:`default error views <error-views>` require the CSRF token,
-:class:`~django.contrib.sessions.middleware.SessionMiddleware` must appear in
+:class:`~django_orm.contrib.sessions.middleware.SessionMiddleware` must appear in
 :setting:`MIDDLEWARE` before any middleware that may raise an exception to
-trigger an error view (such as :exc:`~django.core.exceptions.PermissionDenied`)
+trigger an error view (such as :exc:`~django_orm.core.exceptions.PermissionDenied`)
 if you're using ``CSRF_USE_SESSIONS``. See :ref:`middleware-ordering`.
 
 .. setting:: CSRF_FAILURE_VIEW
@@ -436,7 +436,7 @@ if you're using ``CSRF_USE_SESSIONS``. See :ref:`middleware-ordering`.
 ``CSRF_FAILURE_VIEW``
 ---------------------
 
-Default: ``'django.views.csrf.csrf_failure'``
+Default: ``'django_orm.views.csrf.csrf_failure'``
 
 A dotted path to the view function to be used when an incoming request is
 rejected by the :doc:`CSRF protection </ref/csrf>`. The function should have
@@ -447,9 +447,9 @@ this signature::
 
 where ``reason`` is a short message (intended for developers or logging, not
 for end users) indicating the reason the request was rejected. It should return
-an :class:`~django.http.HttpResponseForbidden`.
+an :class:`~django_orm.http.HttpResponseForbidden`.
 
-``django.views.csrf.csrf_failure()`` accepts an additional ``template_name``
+``django_orm.views.csrf.csrf_failure()`` accepts an additional ``template_name``
 parameter that defaults to ``'403_csrf.html'``. If a template with that name
 exists, it will be used to render the page.
 
@@ -480,7 +480,7 @@ A list of trusted origins for unsafe requests (e.g. ``POST``).
 For requests that include the ``Origin`` header, Django's CSRF protection
 requires that header match the origin present in the ``Host`` header.
 
-For a :meth:`secure <django.http.HttpRequest.is_secure>` unsafe
+For a :meth:`secure <django_orm.http.HttpRequest.is_secure>` unsafe
 request that doesn't include the ``Origin`` header, the request must have a
 ``Referer`` header that matches the origin present in the ``Host`` header.
 
@@ -520,7 +520,7 @@ SQLite. This can be configured using the following::
 
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
+            'ENGINE': 'django_orm.db.backends.sqlite3',
             'NAME': 'mydatabase',
         }
     }
@@ -532,7 +532,7 @@ other database types. This example is for PostgreSQL::
 
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django_orm.db.backends.postgresql',
             'NAME': 'mydatabase',
             'USER': 'mydatabaseuser',
             'PASSWORD': 'mypassword',
@@ -573,10 +573,10 @@ Default: ``''`` (Empty string)
 
 The database backend to use. The built-in database backends are:
 
-* ``'django.db.backends.postgresql'``
-* ``'django.db.backends.mysql'``
-* ``'django.db.backends.sqlite3'``
-* ``'django.db.backends.oracle'``
+* ``'django_orm.db.backends.postgresql'``
+* ``'django_orm.db.backends.mysql'``
+* ``'django_orm.db.backends.sqlite3'``
+* ``'django_orm.db.backends.oracle'``
 
 You can use a database backend that doesn't ship with Django by setting
 ``ENGINE`` to a fully-qualified path (i.e. ``mypackage.backends.whatever``).
@@ -767,7 +767,7 @@ Here's an example with a test database configuration::
 
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django_orm.db.backends.postgresql',
             'USER': 'mydatabaseuser',
             'NAME': 'mydatabase',
             'TEST': {
@@ -840,8 +840,8 @@ Default: ``None``
 
 The alias of the database that this database should mirror during
 testing. It depends on transactions and therefore must be used within
-:class:`~django.test.TransactionTestCase` instead of
-:class:`~django.test.TestCase`.
+:class:`~django_orm.test.TransactionTestCase` instead of
+:class:`~django_orm.test.TestCase`.
 
 This setting exists to allow for testing of primary/replica
 (referred to as master/slave by some databases)
@@ -878,7 +878,7 @@ with :ref:`serialized_rollback=True <test-case-serialized-rollback>`.
 .. deprecated:: 4.0
 
    This setting is deprecated as it can be inferred from the
-   :attr:`~django.test.TestCase.databases` with the
+   :attr:`~django_orm.test.TestCase.databases` with the
    :ref:`serialized_rollback <test-case-serialized-rollback>` option enabled.
 
 .. setting:: TEST_TEMPLATE
@@ -1075,7 +1075,7 @@ The amount by which the DATAFILE_TMP is extended when more space is required.
 Default: ``2621440`` (i.e. 2.5 MB).
 
 The maximum size in bytes that a request body may be before a
-:exc:`~django.core.exceptions.SuspiciousOperation` (``RequestDataTooBig``) is
+:exc:`~django_orm.core.exceptions.SuspiciousOperation` (``RequestDataTooBig``) is
 raised. The check is done when accessing ``request.body`` or ``request.POST``
 and is calculated against the total request size excluding any file upload
 data. You can set this to ``None`` to disable the check. Applications that are
@@ -1097,7 +1097,7 @@ See also :setting:`FILE_UPLOAD_MAX_MEMORY_SIZE`.
 Default: ``1000``
 
 The maximum number of parameters that may be received via GET or POST before a
-:exc:`~django.core.exceptions.SuspiciousOperation` (``TooManyFields``) is
+:exc:`~django_orm.core.exceptions.SuspiciousOperation` (``TooManyFields``) is
 raised. You can set this to ``None`` to disable the check. Applications that
 are expected to receive an unusually large number of form fields should tune
 this setting.
@@ -1119,7 +1119,7 @@ Default: ``100``
 
 The maximum number of files that may be received via POST in a
 ``multipart/form-data`` encoded request before a
-:exc:`~django.core.exceptions.SuspiciousOperation` (``TooManyFiles``) is
+:exc:`~django_orm.core.exceptions.SuspiciousOperation` (``TooManyFiles``) is
 raised. You can set this to ``None`` to disable the check. Applications that
 are expected to receive an unusually large number of file fields should tune
 this setting.
@@ -1279,7 +1279,7 @@ requests being returned as "Bad Request (400)".
 
 .. note::
 
-    The default :file:`settings.py` file created by :djadmin:`django-admin
+    The default :file:`settings.py` file created by :djadmin:`django_orm-admin
     startproject <startproject>` sets ``DEBUG = True`` for convenience.
 
 .. setting:: DEBUG_PROPAGATE_EXCEPTIONS
@@ -1290,8 +1290,8 @@ requests being returned as "Bad Request (400)".
 Default: ``False``
 
 If set to ``True``, Django's exception handling of view functions
-(:data:`~django.conf.urls.handler500`, or the debug view if :setting:`DEBUG`
-is ``True``) and logging of 500 responses (:ref:`django-request-logger`) is
+(:data:`~django_orm.conf.urls.handler500`, or the debug view if :setting:`DEBUG`
+is ``True``) and logging of 500 responses (:ref:`django_orm-request-logger`) is
 skipped and exceptions propagate upward.
 
 This can be useful for some test setups. It shouldn't be used on a live site
@@ -1319,10 +1319,10 @@ See also :setting:`NUMBER_GROUPING`, :setting:`THOUSAND_SEPARATOR` and
 ``DEFAULT_AUTO_FIELD``
 ----------------------
 
-Default: ``'``:class:`django.db.models.AutoField`\ ``'``
+Default: ``'``:class:`django_orm.db.models.AutoField`\ ``'``
 
 Default primary key field type to use for models that don't have a field with
-:attr:`primary_key=True <django.db.models.Field.primary_key>`.
+:attr:`primary_key=True <django_orm.db.models.Field.primary_key>`.
 
 .. admonition:: Migrating auto-created through tables
 
@@ -1338,7 +1338,7 @@ Default primary key field type to use for models that don't have a field with
     key of the auto-created through table will not be migrated.
 
     In order to address this, you should add a
-    :class:`~django.db.migrations.operations.RunSQL` operation to your
+    :class:`~django_orm.db.migrations.operations.RunSQL` operation to your
     migrations to perform the required ``ALTER TABLE`` step. You can check the
     existing table name through ``sqlmigrate``, ``dbshell``, or with the
     field’s ``remote_field.through._meta.db_table`` property.
@@ -1364,10 +1364,10 @@ manually specified. Used when constructing the ``Content-Type`` header.
 ``DEFAULT_EXCEPTION_REPORTER``
 ------------------------------
 
-Default: ``'``:class:`django.views.debug.ExceptionReporter`\ ``'``
+Default: ``'``:class:`django_orm.views.debug.ExceptionReporter`\ ``'``
 
 Default exception reporter class to be used if none has been assigned to the
-:class:`~django.http.HttpRequest` instance yet. See
+:class:`~django_orm.http.HttpRequest` instance yet. See
 :ref:`custom-error-reports`.
 
 .. setting:: DEFAULT_EXCEPTION_REPORTER_FILTER
@@ -1375,10 +1375,10 @@ Default exception reporter class to be used if none has been assigned to the
 ``DEFAULT_EXCEPTION_REPORTER_FILTER``
 -------------------------------------
 
-Default: ``'``:class:`django.views.debug.SafeExceptionReporterFilter`\ ``'``
+Default: ``'``:class:`django_orm.views.debug.SafeExceptionReporterFilter`\ ``'``
 
 Default exception reporter filter class to be used if none has been assigned to
-the :class:`~django.http.HttpRequest` instance yet.
+the :class:`~django_orm.http.HttpRequest` instance yet.
 See :ref:`Filtering error reports<filtering-error-reports>`.
 
 .. setting:: DEFAULT_FILE_STORAGE
@@ -1386,7 +1386,7 @@ See :ref:`Filtering error reports<filtering-error-reports>`.
 ``DEFAULT_FILE_STORAGE``
 ------------------------
 
-Default: ``'``:class:`django.core.files.storage.FileSystemStorage`\ ``'``
+Default: ``'``:class:`django_orm.core.files.storage.FileSystemStorage`\ ``'``
 
 Default file storage class to be used for any file-related operations that don't
 specify a particular storage system. See :doc:`/topics/files`.
@@ -1439,7 +1439,7 @@ This is only used if ``CommonMiddleware`` is installed (see
 ``EMAIL_BACKEND``
 -----------------
 
-Default: ``'``:class:`django.core.mail.backends.smtp.EmailBackend`\ ``'``
+Default: ``'``:class:`django_orm.core.mail.backends.smtp.EmailBackend`\ ``'``
 
 The backend to use for sending emails. For the list of available backends see
 :doc:`/topics/email`.
@@ -1507,8 +1507,8 @@ Port to use for the SMTP server defined in :setting:`EMAIL_HOST`.
 
 Default: ``'[Django] '``
 
-Subject-line prefix for email messages sent with ``django.core.mail.mail_admins``
-or ``django.core.mail.mail_managers``. You'll probably want to include the
+Subject-line prefix for email messages sent with ``django_orm.core.mail.mail_admins``
+or ``django_orm.core.mail.mail_managers``. You'll probably want to include the
 trailing space.
 
 .. setting:: EMAIL_USE_LOCALTIME
@@ -1594,8 +1594,8 @@ attempt.
 Default::
 
     [
-        'django.core.files.uploadhandler.MemoryFileUploadHandler',
-        'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+        'django_orm.core.files.uploadhandler.MemoryFileUploadHandler',
+        'django_orm.core.files.uploadhandler.TemporaryFileUploadHandler',
     ]
 
 A list of handlers to use for uploading. Changing this setting allows complete
@@ -1718,7 +1718,7 @@ If not ``None``, this will be used as the value of the ``SCRIPT_NAME``
 environment variable in any HTTP request. This setting can be used to override
 the server-provided value of ``SCRIPT_NAME``, which may be a rewritten version
 of the preferred value or not supplied at all. It is also used by
-:func:`django.setup()` to set the URL resolver script prefix outside of the
+:func:`django_orm.setup()` to set the URL resolver script prefix outside of the
 request/response cycle (e.g. in management commands and standalone scripts) to
 generate correct URLs when ``SCRIPT_NAME`` is not ``/``.
 
@@ -1727,15 +1727,15 @@ generate correct URLs when ``SCRIPT_NAME`` is not ``/``.
 ``FORM_RENDERER``
 -----------------
 
-Default: ``'``:class:`django.forms.renderers.DjangoTemplates`\ ``'``
+Default: ``'``:class:`django_orm.forms.renderers.DjangoTemplates`\ ``'``
 
 The class that renders forms and form widgets. It must implement
 :ref:`the low-level render API <low-level-widget-render-api>`. Included form
 renderers are:
 
-* ``'``:class:`django.forms.renderers.DjangoTemplates`\ ``'``
-* ``'``:class:`django.forms.renderers.Jinja2`\ ``'``
-* ``'``:class:`django.forms.renderers.TemplatesSetting`\ ``'``
+* ``'``:class:`django_orm.forms.renderers.DjangoTemplates`\ ``'``
+* ``'``:class:`django_orm.forms.renderers.Jinja2`\ ``'``
+* ``'``:class:`django_orm.forms.renderers.TemplatesSetting`\ ``'``
 
 .. setting:: FORMAT_MODULE_PATH
 
@@ -1799,12 +1799,12 @@ Default: ``[]`` (Empty list)
 List of compiled regular expression objects describing URLs that should be
 ignored when reporting HTTP 404 errors via email (see
 :doc:`/howto/error-reporting`). Regular expressions are matched against
-:meth:`request's full paths <django.http.HttpRequest.get_full_path>` (including
+:meth:`request's full paths <django_orm.http.HttpRequest.get_full_path>` (including
 query string, if any). Use this if your site does not provide a commonly
 requested file such as ``favicon.ico`` or ``robots.txt``.
 
 This is only used if
-:class:`~django.middleware.common.BrokenLinkEmailsMiddleware` is enabled (see
+:class:`~django_orm.middleware.common.BrokenLinkEmailsMiddleware` is enabled (see
 :doc:`/topics/http/middleware`).
 
 .. setting:: INSTALLED_APPS
@@ -1825,21 +1825,21 @@ Django installation. Each string should be a dotted Python path to:
 .. admonition:: Use the application registry for introspection
 
     Your code should never access :setting:`INSTALLED_APPS` directly. Use
-    :attr:`django.apps.apps` instead.
+    :attr:`django_orm.apps.apps` instead.
 
 .. admonition:: Application names and labels must be unique in
                 :setting:`INSTALLED_APPS`
 
-    Application :attr:`names <django.apps.AppConfig.name>` — the dotted Python
+    Application :attr:`names <django_orm.apps.AppConfig.name>` — the dotted Python
     path to the application package — must be unique. There is no way to
     include the same application twice, short of duplicating its code under
     another name.
 
-    Application :attr:`labels <django.apps.AppConfig.label>` — by default the
+    Application :attr:`labels <django_orm.apps.AppConfig.label>` — by default the
     final part of the name — must be unique too. For example, you can't
-    include both ``django.contrib.auth`` and ``myproject.auth``. However, you
+    include both ``django_orm.contrib.auth`` and ``myproject.auth``. However, you
     can relabel an application with a custom configuration that defines a
-    different :attr:`~django.apps.AppConfig.label`.
+    different :attr:`~django_orm.apps.AppConfig.label`.
 
     These rules apply regardless of whether :setting:`INSTALLED_APPS`
     references application configuration classes or application packages.
@@ -1857,12 +1857,12 @@ Default: ``[]`` (Empty list)
 
 A list of IP addresses, as strings, that:
 
-* Allow the :func:`~django.template.context_processors.debug` context processor
+* Allow the :func:`~django_orm.template.context_processors.debug` context processor
   to add some variables to the template context.
 * Can use the :ref:`admindocs bookmarklets <admindocs-bookmarklets>` even if
   not logged in as a staff user.
 * Are marked as "internal" (as opposed to "EXTERNAL") in
-  :class:`~django.utils.log.AdminEmailHandler` emails.
+  :class:`~django_orm.utils.log.AdminEmailHandler` emails.
 
 .. setting:: LANGUAGE_CODE
 
@@ -1887,7 +1887,7 @@ It serves two purposes:
   website. It also provides the fallback translation when a translation for a
   given literal doesn't exist for the user's preferred language.
 
-See :ref:`how-django-discovers-language-preference` for more details.
+See :ref:`how-django_orm-discovers-language-preference` for more details.
 
 .. _list of language identifiers: http://www.i18nguy.com/unicode/language-identifiers.html
 
@@ -1999,7 +1999,7 @@ ensure that the cookie is only sent under an HTTPS connection.
 Default: A list of all available languages. This list is continually growing
 and including a copy here would inevitably become rapidly out of date. You can
 see the current list of translated languages by looking in
-:source:`django/conf/global_settings.py`.
+:source:`django_orm/conf/global_settings.py`.
 
 The list is a list of two-tuples in the format
 (:term:`language code<language code>`, ``language name``) -- for example,
@@ -2012,11 +2012,11 @@ to restrict language selection to a subset of the Django-provided languages.
 
 If you define a custom :setting:`LANGUAGES` setting, you can mark the
 language names as translation strings using the
-:func:`~django.utils.translation.gettext_lazy` function.
+:func:`~django_orm.utils.translation.gettext_lazy` function.
 
 Here's a sample settings file::
 
-    from django.utils.translation import gettext_lazy as _
+    from django_orm.utils.translation import gettext_lazy as _
 
     LANGUAGES = [
         ('de', _('German')),
@@ -2030,7 +2030,7 @@ Here's a sample settings file::
 
 Default: A list of all language codes that are written right-to-left. You can
 see the current list of these languages by looking in
-:source:`django/conf/global_settings.py`.
+:source:`django_orm/conf/global_settings.py`.
 
 The list contains :term:`language codes<language code>` for languages that are
 written right-to-left.
@@ -2048,7 +2048,7 @@ languages may contain language codes which are not enabled on a given site.
 Default: ``[]`` (Empty list)
 
 A list of directories where Django looks for translation files.
-See :ref:`how-django-discovers-translations`.
+See :ref:`how-django_orm-discovers-translations`.
 
 Example::
 
@@ -2076,7 +2076,7 @@ errors to an email log handler when :setting:`DEBUG` is ``False``. See also
 :ref:`configuring-logging`.
 
 You can see the default logging configuration by looking in
-:source:`django/utils/log.py`.
+:source:`django_orm/utils/log.py`.
 
 .. setting:: LOGGING_CONFIG
 
@@ -2101,7 +2101,7 @@ Default: ``[]`` (Empty list)
 
 A list in the same format as :setting:`ADMINS` that specifies who should get
 broken link notifications when
-:class:`~django.middleware.common.BrokenLinkEmailsMiddleware` is enabled.
+:class:`~django_orm.middleware.common.BrokenLinkEmailsMiddleware` is enabled.
 
 .. setting:: MEDIA_ROOT
 
@@ -2139,7 +2139,7 @@ to a non-empty value. You will need to :ref:`configure these files to be served
 environments.
 
 If you want to use ``{{ MEDIA_URL }}`` in your templates, add
-``'django.template.context_processors.media'`` in the ``'context_processors'``
+``'django_orm.template.context_processors.media'`` in the ``'context_processors'``
 option of :setting:`TEMPLATES`.
 
 Example: ``"http://media.example.com/"``
@@ -2265,7 +2265,7 @@ See also :setting:`DECIMAL_SEPARATOR`, :setting:`THOUSAND_SEPARATOR` and
 Default: ``False``
 
 Whether to prepend the "www." subdomain to URLs that don't have it. This is only
-used if :class:`~django.middleware.common.CommonMiddleware` is installed
+used if :class:`~django_orm.middleware.common.CommonMiddleware` is installed
 (see :doc:`/topics/http/middleware`). See also :setting:`APPEND_SLASH`.
 
 .. setting:: ROOT_URLCONF
@@ -2278,7 +2278,7 @@ Default: Not defined
 A string representing the full Python import path to your root URLconf, for
 example ``"mydjangoapps.urls"``. Can be overridden on a per-request basis by
 setting the attribute ``urlconf`` on the incoming ``HttpRequest``
-object. See :ref:`how-django-processes-a-request` for details.
+object. See :ref:`how-django_orm-processes-a-request` for details.
 
 .. setting:: SECRET_KEY
 
@@ -2291,12 +2291,12 @@ A secret key for a particular Django installation. This is used to provide
 :doc:`cryptographic signing </topics/signing>`, and should be set to a unique,
 unpredictable value.
 
-:djadmin:`django-admin startproject <startproject>` automatically adds a
+:djadmin:`django_orm-admin startproject <startproject>` automatically adds a
 randomly-generated ``SECRET_KEY`` to each new project.
 
 Uses of the key shouldn't assume that it's text or bytes. Every use should go
-through :func:`~django.utils.encoding.force_str` or
-:func:`~django.utils.encoding.force_bytes` to convert it to the desired type.
+through :func:`~django_orm.utils.encoding.force_str` or
+:func:`~django_orm.utils.encoding.force_bytes` to convert it to the desired type.
 
 Django will refuse to start if :setting:`SECRET_KEY` is not set.
 
@@ -2311,13 +2311,13 @@ Django will refuse to start if :setting:`SECRET_KEY` is not set.
 The secret key is used for:
 
 * All :doc:`sessions </topics/http/sessions>` if you are using
-  any other session backend than ``django.contrib.sessions.backends.cache``,
+  any other session backend than ``django_orm.contrib.sessions.backends.cache``,
   or are using the default
-  :meth:`~django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash()`.
+  :meth:`~django_orm.contrib.auth.models.AbstractBaseUser.get_session_auth_hash()`.
 * All :doc:`messages </ref/contrib/messages>` if you are using
-  :class:`~django.contrib.messages.storage.cookie.CookieStorage` or
-  :class:`~django.contrib.messages.storage.fallback.FallbackStorage`.
-* All :class:`~django.contrib.auth.views.PasswordResetView` tokens.
+  :class:`~django_orm.contrib.messages.storage.cookie.CookieStorage` or
+  :class:`~django_orm.contrib.messages.storage.fallback.FallbackStorage`.
+* All :class:`~django_orm.contrib.auth.views.PasswordResetView` tokens.
 * Any usage of :doc:`cryptographic signing </topics/signing>`, unless a
   different key is provided.
 
@@ -2329,7 +2329,7 @@ passwords of users and key rotation will not affect them.
 
 .. note::
 
-    The default :file:`settings.py` file created by :djadmin:`django-admin
+    The default :file:`settings.py` file created by :djadmin:`django_orm-admin
     startproject <startproject>` creates a unique ``SECRET_KEY`` for
     convenience.
 
@@ -2360,8 +2360,8 @@ expire the sessions, password reset tokens, and so on, that make use of them.
     allowing for key rotation.
 
 Uses of the secret key values shouldn't assume that they are text or bytes.
-Every use should go through :func:`~django.utils.encoding.force_str` or
-:func:`~django.utils.encoding.force_bytes` to convert it to the desired type.
+Every use should go through :func:`~django_orm.utils.encoding.force_str` or
+:func:`~django_orm.utils.encoding.force_bytes` to convert it to the desired type.
 
 .. setting:: SECURE_CONTENT_TYPE_NOSNIFF
 
@@ -2370,7 +2370,7 @@ Every use should go through :func:`~django.utils.encoding.force_str` or
 
 Default: ``True``
 
-If ``True``, the :class:`~django.middleware.security.SecurityMiddleware`
+If ``True``, the :class:`~django_orm.middleware.security.SecurityMiddleware`
 sets the :ref:`x-content-type-options` header on all responses that do not
 already have it.
 
@@ -2384,7 +2384,7 @@ already have it.
 Default: ``'same-origin'``
 
 Unless set to ``None``, the
-:class:`~django.middleware.security.SecurityMiddleware` sets the
+:class:`~django_orm.middleware.security.SecurityMiddleware` sets the
 :ref:`cross-origin-opener-policy` header on all responses that do not already
 have it to the value provided.
 
@@ -2395,7 +2395,7 @@ have it to the value provided.
 
 Default: ``False``
 
-If ``True``, the :class:`~django.middleware.security.SecurityMiddleware` adds
+If ``True``, the :class:`~django_orm.middleware.security.SecurityMiddleware` adds
 the ``includeSubDomains`` directive to the :ref:`http-strict-transport-security`
 header. It has no effect unless :setting:`SECURE_HSTS_SECONDS` is set to a
 non-zero value.
@@ -2412,7 +2412,7 @@ non-zero value.
 
 Default: ``False``
 
-If ``True``, the :class:`~django.middleware.security.SecurityMiddleware` adds
+If ``True``, the :class:`~django_orm.middleware.security.SecurityMiddleware` adds
 the ``preload`` directive to the :ref:`http-strict-transport-security`
 header. It has no effect unless :setting:`SECURE_HSTS_SECONDS` is set to a
 non-zero value.
@@ -2425,7 +2425,7 @@ non-zero value.
 Default: ``0``
 
 If set to a non-zero integer value, the
-:class:`~django.middleware.security.SecurityMiddleware` sets the
+:class:`~django_orm.middleware.security.SecurityMiddleware` sets the
 :ref:`http-strict-transport-security` header on all responses that do not
 already have it.
 
@@ -2514,7 +2514,7 @@ Default: ``[]`` (Empty list)
 
 If a URL path matches a regular expression in this list, the request will not be
 redirected to HTTPS. The
-:class:`~django.middleware.security.SecurityMiddleware` strips leading slashes
+:class:`~django_orm.middleware.security.SecurityMiddleware` strips leading slashes
 from URL paths, so patterns shouldn't include them, e.g.
 ``SECURE_REDIRECT_EXEMPT = [r'^no-ssl/$', …]``. If
 :setting:`SECURE_SSL_REDIRECT` is ``False``, this setting has no effect.
@@ -2526,7 +2526,7 @@ from URL paths, so patterns shouldn't include them, e.g.
 
 Default: ``'same-origin'``
 
-If configured, the :class:`~django.middleware.security.SecurityMiddleware` sets
+If configured, the :class:`~django_orm.middleware.security.SecurityMiddleware` sets
 the :ref:`referrer-policy` header on all responses that do not already have it
 to the value provided.
 
@@ -2549,7 +2549,7 @@ setting has no effect.
 
 Default: ``False``
 
-If ``True``, the :class:`~django.middleware.security.SecurityMiddleware`
+If ``True``, the :class:`~django_orm.middleware.security.SecurityMiddleware`
 :ref:`redirects <ssl-redirect>` all non-HTTPS requests to HTTPS (except for
 those URLs matching a regular expression listed in
 :setting:`SECURE_REDIRECT_EXEMPT`).
@@ -2588,7 +2588,7 @@ The email address that error messages come from, such as those sent to
 .. admonition:: Why are my emails sent from a different address?
 
     This address is used only for error messages. It is *not* the address that
-    regular email messages sent with :meth:`~django.core.mail.send_mail()`
+    regular email messages sent with :meth:`~django_orm.core.mail.send_mail()`
     come from; for that, see :setting:`DEFAULT_FROM_EMAIL`.
 
 .. setting:: SHORT_DATE_FORMAT
@@ -2624,7 +2624,7 @@ See also :setting:`DATE_FORMAT` and :setting:`SHORT_DATE_FORMAT`.
 ``SIGNING_BACKEND``
 -------------------
 
-Default: ``'django.core.signing.TimestampSigner'``
+Default: ``'django_orm.core.signing.TimestampSigner'``
 
 The backend used for signing cookies and other data.
 
@@ -2659,7 +2659,7 @@ Here's a setup that tells the Django template engine to load templates from the
 
     TEMPLATES = [
         {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'BACKEND': 'django_orm.template.backends.django_orm.DjangoTemplates',
             'APP_DIRS': True,
         },
     ]
@@ -2675,8 +2675,8 @@ Default: Not defined
 
 The template backend to use. The built-in template backends are:
 
-* ``'django.template.backends.django.DjangoTemplates'``
-* ``'django.template.backends.jinja2.Jinja2'``
+* ``'django_orm.template.backends.django_orm.DjangoTemplates'``
+* ``'django_orm.template.backends.jinja2.Jinja2'``
 
 You can use a template backend that doesn't ship with Django by setting
 ``BACKEND`` to a fully-qualified path (i.e. ``'mypackage.whatever.Backend'``).
@@ -2719,7 +2719,7 @@ applications.
 
 .. note::
 
-    The default :file:`settings.py` file created by :djadmin:`django-admin
+    The default :file:`settings.py` file created by :djadmin:`django_orm-admin
     startproject <startproject>` sets ``'APP_DIRS': True``.
 
 .. setting:: TEMPLATES-OPTIONS
@@ -2731,8 +2731,8 @@ Default: ``{}`` (Empty dict)
 
 Extra parameters to pass to the template backend. Available parameters vary
 depending on the template backend. See
-:class:`~django.template.backends.django.DjangoTemplates` and
-:class:`~django.template.backends.jinja2.Jinja2` for the options of the
+:class:`~django_orm.template.backends.django_orm.DjangoTemplates` and
+:class:`~django_orm.template.backends.jinja2.Jinja2` for the options of the
 built-in backends.
 
 .. setting:: TEST_RUNNER
@@ -2740,7 +2740,7 @@ built-in backends.
 ``TEST_RUNNER``
 ---------------
 
-Default: ``'django.test.runner.DiscoverRunner'``
+Default: ``'django_orm.test.runner.DiscoverRunner'``
 
 The name of the class to use for starting the test suite. See
 :ref:`other-testing-frameworks`.
@@ -2760,7 +2760,7 @@ tests that need it.
 
 This slows down the startup time of the test runner; if you have apps that
 you know don't need this feature, you can add their full names in here (e.g.
-``'django.contrib.contenttypes'``) to exclude them from this serialization
+``'django_orm.contrib.contenttypes'``) to exclude them from this serialization
 process.
 
 .. setting:: THOUSAND_SEPARATOR
@@ -2849,7 +2849,7 @@ On Unix environments (where :func:`time.tzset` is implemented), Django sets the
 automatically operate in this time zone. However, Django won't set the ``TZ``
 environment variable if you're using the manual configuration option as
 described in :ref:`manually configuring settings
-<settings-without-django-settings-module>`. If Django doesn't set the ``TZ``
+<settings-without-django_orm-settings-module>`. If Django doesn't set the ``TZ``
 environment variable, it's up to you to ensure your processes are running in
 the correct environment.
 
@@ -2893,7 +2893,7 @@ See also :setting:`LANGUAGE_CODE`, :setting:`USE_L10N` and :setting:`USE_TZ`.
 
 .. note::
 
-    The default :file:`settings.py` file created by :djadmin:`django-admin
+    The default :file:`settings.py` file created by :djadmin:`django_orm-admin
     startproject <startproject>` includes ``USE_I18N = True`` for convenience.
 
 .. setting:: USE_L10N
@@ -2958,7 +2958,7 @@ See also :setting:`TIME_ZONE`, :setting:`USE_I18N` and :setting:`USE_L10N`.
 .. note::
 
     The default :file:`settings.py` file created by
-    :djadmin:`django-admin startproject <startproject>` includes
+    :djadmin:`django_orm-admin startproject <startproject>` includes
     ``USE_TZ = True`` for convenience.
 
 .. setting:: USE_X_FORWARDED_HOST
@@ -2997,12 +2997,12 @@ enabled if a proxy which sets this header is in use.
 Default: ``None``
 
 The full Python path of the WSGI application object that Django's built-in
-servers (e.g. :djadmin:`runserver`) will use. The :djadmin:`django-admin
+servers (e.g. :djadmin:`runserver`) will use. The :djadmin:`django_orm-admin
 startproject <startproject>` management command will create a standard
 ``wsgi.py`` file with an ``application`` callable in it, and point this setting
 to that ``application``.
 
-If not set, the return value of ``django.core.wsgi.get_wsgi_application()``
+If not set, the return value of ``django_orm.core.wsgi.get_wsgi_application()``
 will be used. In this case, the behavior of :djadmin:`runserver` will be
 identical to previous Django versions.
 
@@ -3037,20 +3037,20 @@ and :setting:`MONTH_DAY_FORMAT`.
 Default: ``'DENY'``
 
 The default value for the X-Frame-Options header used by
-:class:`~django.middleware.clickjacking.XFrameOptionsMiddleware`. See the
+:class:`~django_orm.middleware.clickjacking.XFrameOptionsMiddleware`. See the
 :doc:`clickjacking protection </ref/clickjacking/>` documentation.
 
 Auth
 ====
 
-Settings for :mod:`django.contrib.auth`.
+Settings for :mod:`django_orm.contrib.auth`.
 
 .. setting:: AUTHENTICATION_BACKENDS
 
 ``AUTHENTICATION_BACKENDS``
 ---------------------------
 
-Default: ``['django.contrib.auth.backends.ModelBackend']``
+Default: ``['django_orm.contrib.auth.backends.ModelBackend']``
 
 A list of authentication backend classes (as strings) to use when attempting to
 authenticate a user. See the :ref:`authentication backends documentation
@@ -3081,7 +3081,7 @@ The model to use to represent a User. See :ref:`auth-custom-user`.
 Default: ``'/accounts/profile/'``
 
 The URL or :ref:`named URL pattern <naming-url-patterns>` where requests are
-redirected after login when the :class:`~django.contrib.auth.views.LoginView`
+redirected after login when the :class:`~django_orm.contrib.auth.views.LoginView`
 doesn't get a ``next`` GET parameter.
 
 .. setting:: LOGIN_URL
@@ -3093,9 +3093,9 @@ Default: ``'/accounts/login/'``
 
 The URL or :ref:`named URL pattern <naming-url-patterns>` where requests are
 redirected for login when using the
-:func:`~django.contrib.auth.decorators.login_required` decorator,
-:class:`~django.contrib.auth.mixins.LoginRequiredMixin`, or
-:class:`~django.contrib.auth.mixins.AccessMixin`.
+:func:`~django_orm.contrib.auth.decorators.login_required` decorator,
+:class:`~django_orm.contrib.auth.mixins.LoginRequiredMixin`, or
+:class:`~django_orm.contrib.auth.mixins.AccessMixin`.
 
 .. setting:: LOGOUT_REDIRECT_URL
 
@@ -3105,7 +3105,7 @@ redirected for login when using the
 Default: ``None``
 
 The URL or :ref:`named URL pattern <naming-url-patterns>` where requests are
-redirected after logout if :class:`~django.contrib.auth.views.LogoutView`
+redirected after logout if :class:`~django_orm.contrib.auth.views.LogoutView`
 doesn't have a ``next_page`` attribute.
 
 If ``None``, no redirect will be performed and the logout view will be
@@ -3120,7 +3120,7 @@ Default: ``259200`` (3 days, in seconds)
 
 The number of seconds a password reset link is valid for.
 
-Used by the :class:`~django.contrib.auth.views.PasswordResetConfirmView`.
+Used by the :class:`~django_orm.contrib.auth.views.PasswordResetConfirmView`.
 
 .. note::
 
@@ -3142,10 +3142,10 @@ See :ref:`auth_password_storage`.
 Default::
 
     [
-        'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-        'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-        'django.contrib.auth.hashers.Argon2PasswordHasher',
-        'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+        'django_orm.contrib.auth.hashers.PBKDF2PasswordHasher',
+        'django_orm.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+        'django_orm.contrib.auth.hashers.Argon2PasswordHasher',
+        'django_orm.contrib.auth.hashers.BCryptSHA256PasswordHasher',
     ]
 
 .. setting:: AUTH_PASSWORD_VALIDATORS
@@ -3164,7 +3164,7 @@ performed and all passwords are accepted.
 Messages
 ========
 
-Settings for :mod:`django.contrib.messages`.
+Settings for :mod:`django_orm.contrib.messages`.
 
 .. setting:: MESSAGE_LEVEL
 
@@ -3182,7 +3182,7 @@ framework. See :ref:`message levels <message-level>` for more details.
    the built-in constants, you must import the constants module directly to
    avoid the potential for circular imports, e.g.::
 
-       from django.contrib.messages import constants as message_constants
+       from django_orm.contrib.messages import constants as message_constants
        MESSAGE_LEVEL = message_constants.DEBUG
 
    If desired, you may specify the numeric values for the constants directly
@@ -3194,19 +3194,19 @@ framework. See :ref:`message levels <message-level>` for more details.
 ``MESSAGE_STORAGE``
 -------------------
 
-Default: ``'django.contrib.messages.storage.fallback.FallbackStorage'``
+Default: ``'django_orm.contrib.messages.storage.fallback.FallbackStorage'``
 
 Controls where Django stores message data. Valid values are:
 
-* ``'django.contrib.messages.storage.fallback.FallbackStorage'``
-* ``'django.contrib.messages.storage.session.SessionStorage'``
-* ``'django.contrib.messages.storage.cookie.CookieStorage'``
+* ``'django_orm.contrib.messages.storage.fallback.FallbackStorage'``
+* ``'django_orm.contrib.messages.storage.session.SessionStorage'``
+* ``'django_orm.contrib.messages.storage.cookie.CookieStorage'``
 
 See :ref:`message storage backends <message-storage-backends>` for more details.
 
 The backends that use cookies --
-:class:`~django.contrib.messages.storage.cookie.CookieStorage` and
-:class:`~django.contrib.messages.storage.fallback.FallbackStorage` --
+:class:`~django_orm.contrib.messages.storage.cookie.CookieStorage` and
+:class:`~django_orm.contrib.messages.storage.fallback.FallbackStorage` --
 use the value of :setting:`SESSION_COOKIE_DOMAIN`, :setting:`SESSION_COOKIE_SECURE`
 and :setting:`SESSION_COOKIE_HTTPONLY` when setting their cookies.
 
@@ -3236,7 +3236,7 @@ to override. See :ref:`message-displaying` above for more details.
    the built-in constants, you must import the ``constants`` module directly to
    avoid the potential for circular imports, e.g.::
 
-       from django.contrib.messages import constants as message_constants
+       from django_orm.contrib.messages import constants as message_constants
        MESSAGE_TAGS = {message_constants.INFO: ''}
 
    If desired, you may specify the numeric values for the constants directly
@@ -3248,7 +3248,7 @@ to override. See :ref:`message-displaying` above for more details.
 Sessions
 ========
 
-Settings for :mod:`django.contrib.sessions`.
+Settings for :mod:`django_orm.contrib.sessions`.
 
 .. setting:: SESSION_CACHE_ALIAS
 
@@ -3290,7 +3290,7 @@ standard domain cookies, existing user cookies will be set to the old
 domain. This may result in them being unable to log in as long as these cookies
 persist.
 
-This setting also affects cookies set by :mod:`django.contrib.messages`.
+This setting also affects cookies set by :mod:`django_orm.contrib.messages`.
 
 .. setting:: SESSION_COOKIE_HTTPONLY
 
@@ -3402,15 +3402,15 @@ the user's session.
 ``SESSION_ENGINE``
 ------------------
 
-Default: ``'django.contrib.sessions.backends.db'``
+Default: ``'django_orm.contrib.sessions.backends.db'``
 
 Controls where Django stores session data. Included engines are:
 
-* ``'django.contrib.sessions.backends.db'``
-* ``'django.contrib.sessions.backends.file'``
-* ``'django.contrib.sessions.backends.cache'``
-* ``'django.contrib.sessions.backends.cached_db'``
-* ``'django.contrib.sessions.backends.signed_cookies'``
+* ``'django_orm.contrib.sessions.backends.db'``
+* ``'django_orm.contrib.sessions.backends.file'``
+* ``'django_orm.contrib.sessions.backends.cache'``
+* ``'django_orm.contrib.sessions.backends.cached_db'``
+* ``'django_orm.contrib.sessions.backends.signed_cookies'``
 
 See :ref:`configuring-sessions` for more details.
 
@@ -3453,19 +3453,19 @@ sessions won't be created, even if this setting is active.
 ``SESSION_SERIALIZER``
 ----------------------
 
-Default: ``'django.contrib.sessions.serializers.JSONSerializer'``
+Default: ``'django_orm.contrib.sessions.serializers.JSONSerializer'``
 
 Full import path of a serializer class to use for serializing session data.
 Included serializer is:
 
-* ``'django.contrib.sessions.serializers.JSONSerializer'``
+* ``'django_orm.contrib.sessions.serializers.JSONSerializer'``
 
 See :ref:`session_serialization` for details.
 
 Sites
 =====
 
-Settings for :mod:`django.contrib.sites`.
+Settings for :mod:`django_orm.contrib.sites`.
 
 .. setting:: SITE_ID
 
@@ -3484,7 +3484,7 @@ and a single database can manage content for multiple sites.
 Static Files
 ============
 
-Settings for :mod:`django.contrib.staticfiles`.
+Settings for :mod:`django_orm.contrib.staticfiles`.
 
 .. setting:: STATIC_ROOT
 
@@ -3589,7 +3589,7 @@ This would allow you to refer to the local file
 ``'/opt/webfiles/stats/polls_20101022.tar.gz'`` with
 ``'/static/downloads/polls_20101022.tar.gz'`` in your templates, e.g.:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     <a href="{% static 'downloads/polls_20101022.tar.gz' %}">
 
@@ -3598,13 +3598,13 @@ This would allow you to refer to the local file
 ``STATICFILES_STORAGE``
 -----------------------
 
-Default: ``'django.contrib.staticfiles.storage.StaticFilesStorage'``
+Default: ``'django_orm.contrib.staticfiles.storage.StaticFilesStorage'``
 
 The file storage engine to use when collecting static files with the
 :djadmin:`collectstatic` management command.
 
 A ready-to-use instance of the storage backend defined in this setting
-can be found at ``django.contrib.staticfiles.storage.staticfiles_storage``.
+can be found at ``django_orm.contrib.staticfiles.storage.staticfiles_storage``.
 
 For an example, see :ref:`staticfiles-from-cdn`.
 
@@ -3616,22 +3616,22 @@ For an example, see :ref:`staticfiles-from-cdn`.
 Default::
 
     [
-        'django.contrib.staticfiles.finders.FileSystemFinder',
-        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+        'django_orm.contrib.staticfiles.finders.FileSystemFinder',
+        'django_orm.contrib.staticfiles.finders.AppDirectoriesFinder',
     ]
 
 The list of finder backends that know how to find static files in
 various locations.
 
 The default will find files stored in the :setting:`STATICFILES_DIRS` setting
-(using ``django.contrib.staticfiles.finders.FileSystemFinder``) and in a
+(using ``django_orm.contrib.staticfiles.finders.FileSystemFinder``) and in a
 ``static`` subdirectory of each app (using
-``django.contrib.staticfiles.finders.AppDirectoriesFinder``). If multiple
+``django_orm.contrib.staticfiles.finders.AppDirectoriesFinder``). If multiple
 files with the same name are present, the first file that is found will be
 used.
 
 One finder is disabled by default:
-``django.contrib.staticfiles.finders.DefaultStorageFinder``. If added to
+``django_orm.contrib.staticfiles.finders.DefaultStorageFinder``. If added to
 your :setting:`STATICFILES_FINDERS` setting, it will look for static files in
 the default file storage as defined by the :setting:`DEFAULT_FILE_STORAGE`
 setting.

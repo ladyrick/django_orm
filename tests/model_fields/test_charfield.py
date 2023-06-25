@@ -1,6 +1,6 @@
-from django.core.exceptions import ValidationError
-from django.db import models
-from django.test import SimpleTestCase, TestCase
+from django_orm.core.exceptions import ValidationError
+from django_orm.db import models
+from django_orm.test import SimpleTestCase, TestCase
 
 from .models import Post
 

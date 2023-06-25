@@ -1,5 +1,5 @@
-from django.template.defaultfilters import length_is
-from django.test import SimpleTestCase
+from django_orm.template.defaultfilters import length_is
+from django_orm.test import SimpleTestCase
 
 from ..utils import setup
 
@@ -60,7 +60,7 @@ class LengthIsTests(SimpleTestCase):
         }
     )
     def test_length_is06(self):
-        output = self.engine.render_to_string("length_is06", {"var": "django"})
+        output = self.engine.render_to_string("length_is06", {"var": "django_orm"})
         self.assertEqual(output, "6")
 
     # Boolean return value from length_is should not be coerced to a string
@@ -89,7 +89,7 @@ class LengthIsTests(SimpleTestCase):
     # Invalid uses that should fail silently.
     @setup({"length_is09": '{{ var|length_is:"fish" }}'})
     def test_length_is09(self):
-        output = self.engine.render_to_string("length_is09", {"var": "django"})
+        output = self.engine.render_to_string("length_is09", {"var": "django_orm"})
         self.assertEqual(output, "")
 
     @setup({"length_is10": '{{ int|length_is:"1" }}'})

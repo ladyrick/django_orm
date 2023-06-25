@@ -9,15 +9,15 @@ try:
 except ImportError:
     from backports import zoneinfo
 
-from django import forms
-from django.conf import settings
-from django.contrib import admin
-from django.contrib.admin import widgets
-from django.contrib.admin.tests import AdminSeleniumTestCase
-from django.contrib.auth.models import User
-from django.core.files.storage import default_storage
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.db.models import (
+from django_orm import forms
+from django_orm.conf import settings
+from django_orm.contrib import admin
+from django_orm.contrib.admin import widgets
+from django_orm.contrib.admin.tests import AdminSeleniumTestCase
+from django_orm.contrib.auth.models import User
+from django_orm.core.files.storage import default_storage
+from django_orm.core.files.uploadedfile import SimpleUploadedFile
+from django_orm.db.models import (
     CharField,
     DateField,
     DateTimeField,
@@ -25,9 +25,9 @@ from django.db.models import (
     ManyToManyField,
     UUIDField,
 )
-from django.test import SimpleTestCase, TestCase, override_settings
-from django.urls import reverse
-from django.utils import translation
+from django_orm.test import SimpleTestCase, TestCase, override_settings
+from django_orm.urls import reverse
+from django_orm.utils import translation
 
 from .models import (
     Advisor,
@@ -1067,7 +1067,7 @@ class DateTimePickerSeleniumTests(AdminWidgetSeleniumTestCase):
         # Get month name translations for every locale
         month_string = "May"
         path = os.path.join(
-            os.path.dirname(import_module("django.contrib.admin").__file__), "locale"
+            os.path.dirname(import_module("django_orm.contrib.admin").__file__), "locale"
         )
         for language_code, language_name in settings.LANGUAGES:
             try:

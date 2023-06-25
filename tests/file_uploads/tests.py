@@ -9,17 +9,17 @@ from io import BytesIO, StringIO
 from unittest import mock
 from urllib.parse import quote
 
-from django.core.exceptions import SuspiciousFileOperation
-from django.core.files import temp as tempfile
-from django.core.files.uploadedfile import SimpleUploadedFile, UploadedFile
-from django.http.multipartparser import (
+from django_orm.core.exceptions import SuspiciousFileOperation
+from django_orm.core.files import temp as tempfile
+from django_orm.core.files.uploadedfile import SimpleUploadedFile, UploadedFile
+from django_orm.http.multipartparser import (
     FILE,
     MultiPartParser,
     MultiPartParserError,
     Parser,
     parse_header,
 )
-from django.test import SimpleTestCase, TestCase, client, override_settings
+from django_orm.test import SimpleTestCase, TestCase, client, override_settings
 
 from . import uploadhandler
 from .models import FileModel
@@ -593,7 +593,7 @@ class FileUploadTests(TestCase):
             temp_file.write(b"a")
             temp_file.seek(0)
             with mock.patch(
-                "django.http.multipartparser.Parser",
+                "django_orm.http.multipartparser.Parser",
                 MockedParser,
             ):
                 response = self.client.post(
@@ -685,7 +685,7 @@ class FileUploadTests(TestCase):
                 return ret
 
         # Maybe this is a little more complicated that it needs to be; but if
-        # the django.test.client.FakePayload.read() implementation changes then
+        # the django_orm.test.client.FakePayload.read() implementation changes then
         # this test would fail.  So we need to know exactly what kind of error
         # it raises when there is an attempt to read more than the available bytes:
         try:

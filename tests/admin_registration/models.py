@@ -2,7 +2,7 @@
 Tests for various ways of registering models with the admin site.
 """
 
-from django.db import models
+from django_orm.db import models
 
 
 class Person(models.Model):

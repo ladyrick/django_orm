@@ -41,11 +41,11 @@ so that it can be of use to the widest audience.
 .. admonition:: Where to get help:
 
     If you're having trouble going through this tutorial, please post a message
-    to |django-developers| or drop by `#django-dev on irc.libera.chat`__ to
+    to |django_orm-developers| or drop by `#django_orm-dev on irc.libera.chat`__ to
     chat with other Django users who might be able to help.
 
 __ https://diveinto.org/python3/table-of-contents.html
-__ https://web.libera.chat/#django-dev
+__ https://web.libera.chat/#django_orm-dev
 
 What does this tutorial cover?
 ------------------------------
@@ -105,7 +105,7 @@ Getting a copy of Django's development version
 ==============================================
 
 The first step to contributing to Django is to get a copy of the source code.
-First, `fork Django on GitHub <https://github.com/django/django/fork>`__. Then,
+First, `fork Django on GitHub <https://github.com/django_orm/django_orm/fork>`__. Then,
 from the command line, use the ``cd`` command to navigate to the directory
 where you'll want your local copy of Django to live.
 
@@ -113,7 +113,7 @@ Download the Django source code repository using the following command:
 
 .. console::
 
-    $ git clone https://github.com/YourGitHubName/django.git
+    $ git clone https://github.com/YourGitHubName/django_orm.git
 
 .. admonition:: Low bandwidth connection?
 
@@ -172,7 +172,7 @@ Go ahead and install the previously cloned copy of Django:
 
 .. console::
 
-    $ python -m pip install -e /path/to/your/local/clone/django/
+    $ python -m pip install -e /path/to/your/local/clone/django_orm/
 
 The installed version of Django is now pointing at your local copy by installing
 in editable mode. You will immediately see any changes you make to it, which is
@@ -267,7 +267,7 @@ imaginary details:
 
 .. admonition:: Ticket #99999 -- Allow making toast
 
-    Django should provide a function ``django.shortcuts.make_toast()`` that
+    Django should provide a function ``django_orm.shortcuts.make_toast()`` that
     returns ``'toast'``.
 
 We'll now implement this feature and associated tests.
@@ -314,14 +314,14 @@ Writing a test for ticket #99999
 --------------------------------
 
 In order to resolve this ticket, we'll add a ``make_toast()`` function to the
-``django.shortcuts`` module. First we are going to write a test that tries to
+``django_orm.shortcuts`` module. First we are going to write a test that tries to
 use the function and check that its output looks correct.
 
 Navigate to Django's ``tests/shortcuts/`` folder and create a new file
 ``test_make_toast.py``. Add the following code::
 
-    from django.shortcuts import make_toast
-    from django.test import SimpleTestCase
+    from django_orm.shortcuts import make_toast
+    from django_orm.test import SimpleTestCase
 
 
     class MakeToastTests(SimpleTestCase):
@@ -348,7 +348,7 @@ __ https://diveinto.org/python3/unit-testing.html
 Running your new test
 ---------------------
 
-Since we haven't made any modifications to ``django.shortcuts`` yet, our test
+Since we haven't made any modifications to ``django_orm.shortcuts`` yet, our test
 should fail. Let's run all the tests in the ``shortcuts`` folder to make sure
 that's really what happens. ``cd`` to the Django ``tests/`` directory and run:
 
@@ -359,7 +359,7 @@ that's really what happens. ``cd`` to the Django ``tests/`` directory and run:
 If the tests ran correctly, you should see one failure corresponding to the test
 method we added, with this error::
 
-    ImportError: cannot import name 'make_toast' from 'django.shortcuts'
+    ImportError: cannot import name 'make_toast' from 'django_orm.shortcuts'
 
 If all of the tests passed, then you'll want to make sure that you added the
 new test shown above to the appropriate folder and file name.
@@ -369,7 +369,7 @@ Writing the code for your ticket
 
 Next we'll be adding the ``make_toast()`` function.
 
-Navigate to the ``django/`` folder and open the ``shortcuts.py`` file. At the
+Navigate to the ``django_orm/`` folder and open the ``shortcuts.py`` file. At the
 bottom, add::
 
     def make_toast():
@@ -423,10 +423,10 @@ release notes for the next version of Django. Open the release notes for the
 latest version in ``docs/releases/``, which at time of writing is ``2.2.txt``.
 Add a note under the "Minor Features" header::
 
-    :mod:`django.shortcuts`
+    :mod:`django_orm.shortcuts`
     ~~~~~~~~~~~~~~~~~~~~~~~
 
-    * The new :func:`django.shortcuts.make_toast` function returns ``'toast'``.
+    * The new :func:`django_orm.shortcuts.make_toast` function returns ``'toast'``.
 
 For more information on writing documentation, including an explanation of what
 the ``versionadded`` bit is all about, see
@@ -456,10 +456,10 @@ Use the arrow keys to move up and down.
 
 .. code-block:: diff
 
-    diff --git a/django/shortcuts.py b/django/shortcuts.py
+    diff --git a/django_orm/shortcuts.py b/django_orm/shortcuts.py
     index 7ab1df0e9d..8dde9e28d9 100644
-    --- a/django/shortcuts.py
-    +++ b/django/shortcuts.py
+    --- a/django_orm/shortcuts.py
+    +++ b/django_orm/shortcuts.py
     @@ -156,3 +156,7 @@ def resolve_url(to, *args, **kwargs):
 
          # Finally, fall back and assume it's a URL
@@ -476,12 +476,12 @@ Use the arrow keys to move up and down.
      Minor features
      --------------
 
-    +:mod:`django.shortcuts`
+    +:mod:`django_orm.shortcuts`
     +~~~~~~~~~~~~~~~~~~~~~~~
     +
-    +* The new :func:`django.shortcuts.make_toast` function returns ``'toast'``.
+    +* The new :func:`django_orm.shortcuts.make_toast` function returns ``'toast'``.
     +
-     :mod:`django.contrib.admin`
+     :mod:`django_orm.contrib.admin`
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     diff --git a/docs/topics/http/shortcuts.txt b/docs/topics/http/shortcuts.txt
@@ -507,8 +507,8 @@ Use the arrow keys to move up and down.
     --- /dev/null
     +++ b/tests/shortcuts/test_make_toast.py
     @@ -0,0 +1,7 @@
-    +from django.shortcuts import make_toast
-    +from django.test import SimpleTestCase
+    +from django_orm.shortcuts import make_toast
+    +from django_orm.test import SimpleTestCase
     +
     +
     +class MakeToastTests(SimpleTestCase):
@@ -546,7 +546,7 @@ After committing the patch, send it to your fork on GitHub (substitute
     $ git push origin ticket_99999
 
 You can create a pull request by visiting the `Django GitHub page
-<https://github.com/django/django/>`_. You'll see your branch under "Your
+<https://github.com/django_orm/django_orm/>`_. You'll see your branch under "Your
 recently pushed branches". Click "Compare & pull request" next to it.
 
 Please don't do it for this tutorial, but on the next page that displays a

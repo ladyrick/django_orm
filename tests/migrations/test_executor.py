@@ -1,19 +1,19 @@
 from unittest import mock
 
-from django.apps.registry import apps as global_apps
-from django.db import DatabaseError, connection, migrations, models
-from django.db.migrations.exceptions import InvalidMigrationPlan
-from django.db.migrations.executor import MigrationExecutor
-from django.db.migrations.graph import MigrationGraph
-from django.db.migrations.recorder import MigrationRecorder
-from django.db.migrations.state import ProjectState
-from django.test import (
+from django_orm.apps.registry import apps as global_apps
+from django_orm.db import DatabaseError, connection, migrations, models
+from django_orm.db.migrations.exceptions import InvalidMigrationPlan
+from django_orm.db.migrations.executor import MigrationExecutor
+from django_orm.db.migrations.graph import MigrationGraph
+from django_orm.db.migrations.recorder import MigrationRecorder
+from django_orm.db.migrations.state import ProjectState
+from django_orm.test import (
     SimpleTestCase,
     modify_settings,
     override_settings,
     skipUnlessDBFeature,
 )
-from django.test.utils import isolate_lru_cache
+from django_orm.test.utils import isolate_lru_cache
 
 from .test_base import MigrationTestBase
 
@@ -30,8 +30,8 @@ class ExecutorTests(MigrationTestBase):
     available_apps = [
         "migrations",
         "migrations2",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
+        "django_orm.contrib.auth",
+        "django_orm.contrib.contenttypes",
     ]
 
     @override_settings(MIGRATION_MODULES={"migrations": "migrations.test_migrations"})
@@ -377,7 +377,7 @@ class ExecutorTests(MigrationTestBase):
     @override_settings(
         MIGRATION_MODULES={
             "migrations": "migrations.test_migrations_custom_user",
-            "django.contrib.auth": "django.contrib.auth.migrations",
+            "django_orm.contrib.auth": "django_orm.contrib.auth.migrations",
         },
         AUTH_USER_MODEL="migrations.Author",
     )
@@ -783,7 +783,7 @@ class ExecutorTests(MigrationTestBase):
 
         executor = MigrationExecutor(connection)
         with mock.patch(
-            "django.db.migrations.executor.MigrationExecutor.record_migration"
+            "django_orm.db.migrations.executor.MigrationExecutor.record_migration"
         ) as record_migration:
             record_migration.side_effect = RuntimeError("Recording migration failed.")
             with self.assertRaisesMessage(RuntimeError, "Recording migration failed."):

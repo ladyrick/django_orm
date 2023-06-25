@@ -1,23 +1,23 @@
 'use strict';
 {
     const globals = this;
-    const django = globals.django;
+    const django_orm = globals.django_orm;
 
-    django.pluralidx = function(count) { return (count === 1) ? 0 : 1; };
+    django_orm.pluralidx = function(count) { return (count === 1) ? 0 : 1; };
 
     /* gettext identity library */
 
-    django.gettext = function(msgid) { return msgid; };
-    django.ngettext = function(singular, plural, count) {
+    django_orm.gettext = function(msgid) { return msgid; };
+    django_orm.ngettext = function(singular, plural, count) {
         return (count === 1) ? singular : plural;
     };
-    django.gettext_noop = function(msgid) { return msgid; };
-    django.pgettext = function(context, msgid) { return msgid; };
-    django.npgettext = function(context, singular, plural, count) {
+    django_orm.gettext_noop = function(msgid) { return msgid; };
+    django_orm.pgettext = function(context, msgid) { return msgid; };
+    django_orm.npgettext = function(context, singular, plural, count) {
         return (count === 1) ? singular : plural;
     };
 
-    django.interpolate = function(fmt, obj, named) {
+    django_orm.interpolate = function(fmt, obj, named) {
         if (named) {
             return fmt.replace(/%\(\w+\)s/g, function(match) {
                 return String(obj[match.slice(2, -2)]);
@@ -31,7 +31,7 @@
 
     /* formatting library */
 
-    django.formats = {
+    django_orm.formats = {
         "DATETIME_FORMAT": "N j, Y, P",
         "DATETIME_INPUT_FORMATS": [
             "%Y-%m-%d %H:%M:%S",
@@ -69,8 +69,8 @@
         "YEAR_MONTH_FORMAT": "F Y"
     };
 
-    django.get_format = function(format_type) {
-        const value = django.formats[format_type];
+    django_orm.get_format = function(format_type) {
+        const value = django_orm.formats[format_type];
         if (typeof value === 'undefined') {
             return format_type;
         } else {
@@ -79,12 +79,12 @@
     };
 
     /* add to global namespace */
-    globals.pluralidx = django.pluralidx;
-    globals.gettext = django.gettext;
-    globals.ngettext = django.ngettext;
-    globals.gettext_noop = django.gettext_noop;
-    globals.pgettext = django.pgettext;
-    globals.npgettext = django.npgettext;
-    globals.interpolate = django.interpolate;
-    globals.get_format = django.get_format;
+    globals.pluralidx = django_orm.pluralidx;
+    globals.gettext = django_orm.gettext;
+    globals.ngettext = django_orm.ngettext;
+    globals.gettext_noop = django_orm.gettext_noop;
+    globals.pgettext = django_orm.pgettext;
+    globals.npgettext = django_orm.npgettext;
+    globals.interpolate = django_orm.interpolate;
+    globals.get_format = django_orm.get_format;
 };

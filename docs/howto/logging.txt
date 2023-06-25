@@ -128,7 +128,7 @@ file ``general.log`` (at the project root):
 
 Different handler classes take different configuration options. For more
 information on available handler classes, see the
-:class:`~django.utils.log.AdminEmailHandler` provided by Django and the various
+:class:`~django_orm.utils.log.AdminEmailHandler` provided by Django and the various
 :py:mod:`handler classes <logging.handlers>` provided by Python.
 
 Logging levels can also be set on the handlers (by default, they accept log

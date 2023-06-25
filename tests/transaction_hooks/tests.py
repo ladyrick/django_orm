@@ -1,5 +1,5 @@
-from django.db import connection, transaction
-from django.test import TransactionTestCase, skipUnlessDBFeature
+from django_orm.db import connection, transaction
+from django_orm.test import TransactionTestCase, skipUnlessDBFeature
 
 from .models import Thing
 

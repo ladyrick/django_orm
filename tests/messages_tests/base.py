@@ -1,12 +1,12 @@
-from django.contrib.messages import constants, get_level, set_level
-from django.contrib.messages.api import MessageFailure
-from django.contrib.messages.constants import DEFAULT_LEVELS
-from django.contrib.messages.storage import default_storage
-from django.contrib.messages.storage.base import Message
-from django.http import HttpRequest, HttpResponse
-from django.test import modify_settings, override_settings
-from django.urls import reverse
-from django.utils.translation import gettext_lazy
+from django_orm.contrib.messages import constants, get_level, set_level
+from django_orm.contrib.messages.api import MessageFailure
+from django_orm.contrib.messages.constants import DEFAULT_LEVELS
+from django_orm.contrib.messages.storage import default_storage
+from django_orm.contrib.messages.storage.base import Message
+from django_orm.http import HttpRequest, HttpResponse
+from django_orm.test import modify_settings, override_settings
+from django_orm.urls import reverse
+from django_orm.utils.translation import gettext_lazy
 
 
 def add_level_messages(storage):
@@ -36,13 +36,13 @@ class BaseTests:
         self.settings_override = override_settings(
             TEMPLATES=[
                 {
-                    "BACKEND": "django.template.backends.django.DjangoTemplates",
+                    "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                     "DIRS": [],
                     "APP_DIRS": True,
                     "OPTIONS": {
                         "context_processors": (
-                            "django.contrib.auth.context_processors.auth",
-                            "django.contrib.messages.context_processors.messages",
+                            "django_orm.contrib.auth.context_processors.auth",
+                            "django_orm.contrib.messages.context_processors.messages",
                         ),
                     },
                 }
@@ -51,7 +51,7 @@ class BaseTests:
             MESSAGE_TAGS={},
             MESSAGE_STORAGE="%s.%s"
             % (self.storage_class.__module__, self.storage_class.__name__),
-            SESSION_SERIALIZER="django.contrib.sessions.serializers.JSONSerializer",
+            SESSION_SERIALIZER="django_orm.contrib.sessions.serializers.JSONSerializer",
         )
         self.settings_override.enable()
 
@@ -212,14 +212,14 @@ class BaseTests:
             self.assertContains(response, msg)
 
     @modify_settings(
-        INSTALLED_APPS={"remove": "django.contrib.messages"},
-        MIDDLEWARE={"remove": "django.contrib.messages.middleware.MessageMiddleware"},
+        INSTALLED_APPS={"remove": "django_orm.contrib.messages"},
+        MIDDLEWARE={"remove": "django_orm.contrib.messages.middleware.MessageMiddleware"},
     )
     @override_settings(
         MESSAGE_LEVEL=constants.DEBUG,
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "DIRS": [],
                 "APP_DIRS": True,
             }
@@ -240,13 +240,13 @@ class BaseTests:
                 self.client.post(add_url, data, follow=True)
 
     @modify_settings(
-        INSTALLED_APPS={"remove": "django.contrib.messages"},
-        MIDDLEWARE={"remove": "django.contrib.messages.middleware.MessageMiddleware"},
+        INSTALLED_APPS={"remove": "django_orm.contrib.messages"},
+        MIDDLEWARE={"remove": "django_orm.contrib.messages.middleware.MessageMiddleware"},
     )
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "DIRS": [],
                 "APP_DIRS": True,
             }

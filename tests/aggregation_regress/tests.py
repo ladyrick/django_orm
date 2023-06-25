@@ -4,10 +4,10 @@ from decimal import Decimal
 from operator import attrgetter
 from unittest import mock
 
-from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import FieldError
-from django.db import connection
-from django.db.models import (
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.core.exceptions import FieldError
+from django_orm.db import connection
+from django_orm.db.models import (
     Aggregate,
     Avg,
     Case,
@@ -23,8 +23,8 @@ from django.db.models import (
     Variance,
     When,
 )
-from django.test import TestCase, skipUnlessAnyDBFeature, skipUnlessDBFeature
-from django.test.utils import Approximate
+from django_orm.test import TestCase, skipUnlessAnyDBFeature, skipUnlessDBFeature
+from django_orm.test.utils import Approximate
 
 from .models import (
     Alfa,
@@ -1548,7 +1548,7 @@ class AggregationTests(TestCase):
         )
         # Force treating unmanaged models as tables.
         with mock.patch(
-            "django.db.connection.features.allows_group_by_selected_pks_on_model",
+            "django_orm.db.connection.features.allows_group_by_selected_pks_on_model",
             return_value=True,
         ):
             with mock.patch.object(Book._meta, "managed", False), mock.patch.object(
@@ -1598,7 +1598,7 @@ class AggregationTests(TestCase):
         )
         ItemTag.objects.create(
             object_id=django_book.id,
-            tag="django",
+            tag="django_orm",
             content_type=ContentType.objects.get_for_model(django_book),
         )
         # Assign a tag to model with same PK as the book above. If the JOIN

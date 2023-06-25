@@ -1,9 +1,9 @@
 from datetime import datetime
 from unittest import mock
 
-from django.db.models import DateTimeField, Value
-from django.db.models.lookups import Lookup, YearLookup
-from django.test import SimpleTestCase
+from django_orm.db.models import DateTimeField, Value
+from django_orm.db.models.lookups import Lookup, YearLookup
+from django_orm.test import SimpleTestCase
 
 
 class CustomLookup(Lookup):

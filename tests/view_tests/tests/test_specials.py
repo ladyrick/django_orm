@@ -1,4 +1,4 @@
-from django.test import SimpleTestCase, override_settings
+from django_orm.test import SimpleTestCase, override_settings
 
 
 @override_settings(ROOT_URLCONF="view_tests.generic_urls")

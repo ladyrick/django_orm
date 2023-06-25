@@ -1,10 +1,10 @@
 import unittest
 from io import StringIO
 
-from django.db import connection
-from django.test import TestCase
-from django.test.runner import DiscoverRunner
-from django.utils.version import PY311
+from django_orm.db import connection
+from django_orm.test import TestCase
+from django_orm.test.runner import DiscoverRunner
+from django_orm.utils.version import PY311
 
 from .models import Person
 

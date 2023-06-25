@@ -5,11 +5,11 @@ import tempfile
 import zipfile
 from unittest import mock
 
-from django.contrib.gis.gdal import GDALRaster, SpatialReference
-from django.contrib.gis.gdal.error import GDALException
-from django.contrib.gis.gdal.raster.band import GDALBand
-from django.contrib.gis.shortcuts import numpy
-from django.test import SimpleTestCase
+from django_orm.contrib.gis.gdal import GDALRaster, SpatialReference
+from django_orm.contrib.gis.gdal.error import GDALException
+from django_orm.contrib.gis.gdal.raster.band import GDALBand
+from django_orm.contrib.gis.shortcuts import numpy
+from django_orm.test import SimpleTestCase
 
 from ..data.rasters.textrasters import JSON_RASTER
 

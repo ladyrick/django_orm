@@ -70,8 +70,8 @@ Then at the Python prompt, try to import Django:
 
 .. parsed-literal::
 
-    >>> import django
-    >>> print(django.get_version())
+    >>> import django_orm
+    >>> print(django_orm.get_version())
     |version|
 
 You may have another version of Django installed.

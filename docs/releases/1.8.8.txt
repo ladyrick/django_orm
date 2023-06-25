@@ -12,8 +12,8 @@ intentionally after that, but we won't test subsequent releases against Python
 3.2 either. Upstream support for Python 3.2 ends February 2016 so we don't find
 much value in providing security updates for a version of Python that could be
 insecure. To read more about the decision and to let us know if this will be
-problematic for you, please read the `django-developers thread
-<https://groups.google.com/g/django-developers/c/eMu5UQpUdWs/discussion>`_.
+problematic for you, please read the `django_orm-developers thread
+<https://groups.google.com/g/django_orm-developers/c/eMu5UQpUdWs/discussion>`_.
 
 Bugfixes
 ========
@@ -25,7 +25,7 @@ Bugfixes
   (:ticket:`25772`).
 
 * Restored the ability to use custom formats from ``formats.py`` with
-  ``django.utils.formats.get_format()`` and the ``date`` template filter
+  ``django_orm.utils.formats.get_format()`` and the ``date`` template filter
   (:ticket:`25812`).
 
 * Fixed a state bug when migrating a ``SeparateDatabaseAndState`` operation
@@ -41,7 +41,7 @@ Bugfixes
 * Fixed a regression which prevented using a language not in Django's default
   language list (:setting:`LANGUAGES`) (:ticket:`25915`).
 
-* ``django.views.decorators.cache.never_cache()`` now sends more persuasive
+* ``django_orm.views.decorators.cache.never_cache()`` now sends more persuasive
   headers (added ``no-cache, no-store, must-revalidate`` to ``Cache-Control``)
   to better prevent caching (:ticket:`13008`). This fixes a problem where a
   page refresh in Firefox cleared the selected entries in the admin's

@@ -1,10 +1,10 @@
 import datetime
 
-from django.test import TestCase
-from django.test.utils import requires_tz_support
-from django.utils import timezone, translation
-from django.utils.timesince import timesince, timeuntil
-from django.utils.translation import npgettext_lazy
+from django_orm.test import TestCase
+from django_orm.test.utils import requires_tz_support
+from django_orm.utils import timezone, translation
+from django_orm.utils.timesince import timesince, timeuntil
+from django_orm.utils.translation import npgettext_lazy
 
 
 class TimesinceTests(TestCase):

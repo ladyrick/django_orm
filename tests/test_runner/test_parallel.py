@@ -2,9 +2,9 @@ import pickle
 import sys
 import unittest
 
-from django.test import SimpleTestCase
-from django.test.runner import RemoteTestResult
-from django.utils.version import PY311
+from django_orm.test import SimpleTestCase
+from django_orm.test.runner import RemoteTestResult
+from django_orm.utils.version import PY311
 
 try:
     import tblib.pickling_support

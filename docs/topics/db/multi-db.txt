@@ -34,13 +34,13 @@ databases -- a default PostgreSQL database and a MySQL database called
     DATABASES = {
         'default': {
             'NAME': 'app_data',
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django_orm.db.backends.postgresql',
             'USER': 'postgres_user',
             'PASSWORD': 's3krit'
         },
         'users': {
             'NAME': 'user_data',
-            'ENGINE': 'django.db.backends.mysql',
+            'ENGINE': 'django_orm.db.backends.mysql',
             'USER': 'mysql_user',
             'PASSWORD': 'priv4te'
         }
@@ -60,13 +60,13 @@ example ``settings.py`` snippet defining two non-default databases, with the
         'default': {},
         'users': {
             'NAME': 'user_data',
-            'ENGINE': 'django.db.backends.mysql',
+            'ENGINE': 'django_orm.db.backends.mysql',
             'USER': 'mysql_user',
             'PASSWORD': 'superS3cret'
         },
         'customers': {
             'NAME': 'customer_data',
-            'ENGINE': 'django.db.backends.mysql',
+            'ENGINE': 'django_orm.db.backends.mysql',
             'USER': 'mysql_cust',
             'PASSWORD': 'veryPriv@ate'
         }
@@ -74,7 +74,7 @@ example ``settings.py`` snippet defining two non-default databases, with the
 
 If you attempt to access a database that you haven't defined in your
 :setting:`DATABASES` setting, Django will raise a
-``django.utils.connection.ConnectionDoesNotExist`` exception.
+``django_orm.utils.connection.ConnectionDoesNotExist`` exception.
 
 .. _synchronizing_multiple_databases:
 
@@ -105,7 +105,7 @@ the database name would raise an error. For the second example::
 Using other management commands
 -------------------------------
 
-Most other ``django-admin`` commands that interact with the database operate in
+Most other ``django_orm-admin`` commands that interact with the database operate in
 the same way as :djadmin:`migrate` -- they only ever operate on one database at
 a time, using ``--database`` to control the database used.
 
@@ -185,8 +185,8 @@ A database Router is a class that provides up to four methods:
     ``model_name`` is set by most migration operations to the value of
     ``model._meta.model_name`` (the lowercased version of the model
     ``__name__``) of the model being migrated. Its value is ``None`` for the
-    :class:`~django.db.migrations.operations.RunPython` and
-    :class:`~django.db.migrations.operations.RunSQL` operations unless they
+    :class:`~django_orm.db.migrations.operations.RunPython` and
+    :class:`~django_orm.db.migrations.operations.RunSQL` operations unless they
     provide it using hints.
 
     ``hints`` are used by certain operations to communicate additional
@@ -234,7 +234,7 @@ Using routers
 Database routers are installed using the :setting:`DATABASE_ROUTERS`
 setting. This setting defines a list of class names, each specifying a
 router that should be used by the base router
-(``django.db.router``).
+(``django_orm.db.router``).
 
 The base router is used by Django's database operations to allocate
 database usage. Whenever a query needs to know which database to use,
@@ -242,8 +242,8 @@ it calls the base router, providing a model and a hint (if
 available). The base router tries each router class in turn until one returns
 a database suggestion. If no routers return a suggestion, the base router tries
 the current :attr:`instance._state.db
-<django.db.models.Model._state>` of the hint instance. If no hint instance
-was provided, or :attr:`instance._state.db <django.db.models.Model._state>` is
+<django_orm.db.models.Model._state>` of the hint instance. If no hint instance
+was provided, or :attr:`instance._state.db <django_orm.db.models.Model._state>` is
 ``None``, the base router will allocate the ``default`` database.
 
 An example
@@ -279,25 +279,25 @@ databases::
         'default': {},
         'auth_db': {
             'NAME': 'auth_db_name',
-            'ENGINE': 'django.db.backends.mysql',
+            'ENGINE': 'django_orm.db.backends.mysql',
             'USER': 'mysql_user',
             'PASSWORD': 'swordfish',
         },
         'primary': {
             'NAME': 'primary_name',
-            'ENGINE': 'django.db.backends.mysql',
+            'ENGINE': 'django_orm.db.backends.mysql',
             'USER': 'mysql_user',
             'PASSWORD': 'spam',
         },
         'replica1': {
             'NAME': 'replica1_name',
-            'ENGINE': 'django.db.backends.mysql',
+            'ENGINE': 'django_orm.db.backends.mysql',
             'USER': 'mysql_user',
             'PASSWORD': 'eggs',
         },
         'replica2': {
             'NAME': 'replica2_name',
-            'ENGINE': 'django.db.backends.mysql',
+            'ENGINE': 'django_orm.db.backends.mysql',
             'USER': 'mysql_user',
             'PASSWORD': 'bacon',
         },
@@ -591,7 +591,7 @@ Exposing multiple databases in Django's admin interface
 Django's admin doesn't have any explicit support for multiple
 databases. If you want to provide an admin interface for a model on a
 database other than that specified by your router chain, you'll
-need to write custom :class:`~django.contrib.admin.ModelAdmin` classes
+need to write custom :class:`~django_orm.contrib.admin.ModelAdmin` classes
 that will direct the admin to use a specific database for content.
 
 ``ModelAdmin`` objects have the following methods that require customization
@@ -629,7 +629,7 @@ where all objects of a given type are stored on a specific database
 usage of multiple databases is more complex, your ``ModelAdmin`` will
 need to reflect that strategy.
 
-:class:`~django.contrib.admin.InlineModelAdmin` objects can be handled in a
+:class:`~django_orm.contrib.admin.InlineModelAdmin` objects can be handled in a
 similar fashion. They require three customized methods::
 
     class MultiDBTabularInline(admin.TabularInline):
@@ -652,7 +652,7 @@ similar fashion. They require three customized methods::
 Once you've written your model admin definitions, they can be
 registered with any ``Admin`` instance::
 
-    from django.contrib import admin
+    from django_orm.contrib import admin
 
     # Specialize the multi-db admin objects for use with specific models.
     class BookInline(MultiDBTabularInline):
@@ -677,12 +677,12 @@ Using raw cursors with multiple databases
 =========================================
 
 If you are using more than one database you can use
-``django.db.connections`` to obtain the connection (and cursor) for a
-specific database. ``django.db.connections`` is a dictionary-like
+``django_orm.db.connections`` to obtain the connection (and cursor) for a
+specific database. ``django_orm.db.connections`` is a dictionary-like
 object that allows you to retrieve a specific connection using its
 alias::
 
-    from django.db import connections
+    from django_orm.db import connections
     with connections['my_db_alias'].cursor() as cursor:
         ...
 

@@ -2,13 +2,13 @@ import datetime
 import tempfile
 import uuid
 
-from django.contrib import admin
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ValidationError
-from django.core.files.storage import FileSystemStorage
-from django.db import models
+from django_orm.contrib import admin
+from django_orm.contrib.auth.models import User
+from django_orm.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.core.exceptions import ValidationError
+from django_orm.core.files.storage import FileSystemStorage
+from django_orm.db import models
 
 
 class Section(models.Model):

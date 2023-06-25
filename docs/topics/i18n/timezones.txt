@@ -43,7 +43,7 @@ installed alongside Django if you are using Python 3.8.
 
 .. note::
 
-    The default :file:`settings.py` file created by :djadmin:`django-admin
+    The default :file:`settings.py` file created by :djadmin:`django_orm-admin
     startproject <startproject>` includes :setting:`USE_TZ = True <USE_TZ>`
     for convenience.
 
@@ -63,8 +63,8 @@ can be used to store time zone information, represented as an instance of a
 subclass of :class:`datetime.tzinfo`. When this attribute is set and describes
 an offset, a datetime object is **aware**. Otherwise, it's **naive**.
 
-You can use :func:`~django.utils.timezone.is_aware` and
-:func:`~django.utils.timezone.is_naive` to determine whether datetimes are
+You can use :func:`~django_orm.utils.timezone.is_aware` and
+:func:`~django_orm.utils.timezone.is_naive` to determine whether datetimes are
 aware or naive.
 
 When time zone support is disabled, Django uses naive datetime objects in local
@@ -79,7 +79,7 @@ When time zone support is enabled (:setting:`USE_TZ=True <USE_TZ>`), Django uses
 time-zone-aware datetime objects. If your code creates datetime objects, they
 should be aware too. In this mode, the example above becomes::
 
-    from django.utils import timezone
+    from django_orm.utils import timezone
 
     now = timezone.now()
 
@@ -122,7 +122,7 @@ In practice, this is rarely an issue. Django gives you aware datetime objects
 in the models and forms, and most often, new datetime objects are created from
 existing ones through :class:`~datetime.timedelta` arithmetic. The only
 datetime that's often created in application code is the current time, and
-:func:`timezone.now() <django.utils.timezone.now>` automatically does the
+:func:`timezone.now() <django_orm.utils.timezone.now>` automatically does the
 right thing.
 
 .. _default-current-time-zone:
@@ -136,7 +136,7 @@ setting.
 The **current time zone** is the time zone that's used for rendering.
 
 You should set the current time zone to the end user's actual time zone with
-:func:`~django.utils.timezone.activate`. Otherwise, the default time zone is
+:func:`~django_orm.utils.timezone.activate`. Otherwise, the default time zone is
 used.
 
 .. note::
@@ -176,7 +176,7 @@ Add the following middleware to :setting:`MIDDLEWARE`::
 
     import zoneinfo
 
-    from django.utils import timezone
+    from django_orm.utils import timezone
 
     class TimezoneMiddleware:
         def __init__(self, get_response):
@@ -192,7 +192,7 @@ Add the following middleware to :setting:`MIDDLEWARE`::
 
 Create a view that can set the current timezone::
 
-    from django.shortcuts import redirect, render
+    from django_orm.shortcuts import redirect, render
 
     # Prepare a map of common locations to timezone choices you wish to offer.
     common_timezones = {
@@ -210,7 +210,7 @@ Create a view that can set the current timezone::
 
 Include a form in ``template.html`` that will ``POST`` to this view:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% load tz %}
     {% get_current_timezone as TIME_ZONE %}
@@ -259,7 +259,7 @@ output for computers rather than for humans. The following filters and tags,
 provided by the ``tz`` template tag library, allow you to control the time zone
 conversions.
 
-.. highlight:: html+django
+.. highlight:: html+django_orm
 
 Template tags
 -------------
@@ -324,7 +324,7 @@ You can get the name of the current time zone using the
     {% get_current_timezone as TIME_ZONE %}
 
 Alternatively, you can activate the
-:func:`~django.template.context_processors.tz` context processor and
+:func:`~django_orm.template.context_processors.tz` context processor and
 use the ``TIME_ZONE`` context variable.
 
 Template filters
@@ -425,12 +425,12 @@ with a naive datetime that you've created in your code.
 
 So the second step is to refactor your code wherever you instantiate datetime
 objects to make them aware. This can be done incrementally.
-:mod:`django.utils.timezone` defines some handy helpers for compatibility
-code: :func:`~django.utils.timezone.now`,
-:func:`~django.utils.timezone.is_aware`,
-:func:`~django.utils.timezone.is_naive`,
-:func:`~django.utils.timezone.make_aware`, and
-:func:`~django.utils.timezone.make_naive`.
+:mod:`django_orm.utils.timezone` defines some handy helpers for compatibility
+code: :func:`~django_orm.utils.timezone.now`,
+:func:`~django_orm.utils.timezone.is_aware`,
+:func:`~django_orm.utils.timezone.is_naive`,
+:func:`~django_orm.utils.timezone.make_aware`, and
+:func:`~django_orm.utils.timezone.make_naive`.
 
 Finally, in order to help you locate code that needs upgrading, Django raises
 a warning when you attempt to save a naive datetime to the database::
@@ -444,7 +444,7 @@ traceback by adding the following to your settings file::
     import warnings
     warnings.filterwarnings(
         'error', r"DateTimeField .* received a naive datetime",
-        RuntimeWarning, r'django\.db\.models\.fields',
+        RuntimeWarning, r'django_orm\.db\.models\.fields',
     )
 
 Fixtures
@@ -458,7 +458,7 @@ While for a naive datetime, it isn't::
 
     "2011-09-01T13:20:30"
 
-For models with :class:`~django.db.models.DateTimeField`\ s, this difference
+For models with :class:`~django_orm.db.models.DateTimeField`\ s, this difference
 makes it impossible to write a fixture that works both with and without time
 zone support.
 
@@ -542,7 +542,7 @@ Troubleshooting
 
    Let's reproduce this error by comparing a naive and an aware datetime::
 
-       >>> from django.utils import timezone
+       >>> from django_orm.utils import timezone
        >>> aware = timezone.now()
        >>> naive = timezone.make_naive(aware)
        >>> naive == aware
@@ -563,7 +563,7 @@ Troubleshooting
 
    If you're writing a pluggable application that's expected to work
    independently of the value of :setting:`USE_TZ`, you may find
-   :func:`django.utils.timezone.now` useful. This function returns the current
+   :func:`django_orm.utils.timezone.now` useful. This function returns the current
    date and time as a naive datetime when ``USE_TZ = False`` and as an aware
    datetime when ``USE_TZ = True``. You can add or subtract
    :class:`datetime.timedelta` as needed.
@@ -628,7 +628,7 @@ Troubleshooting
    datetime is converted to the appropriate time zone first. Usually, this
    will be the current timezone::
 
-       >>> from django.utils import timezone
+       >>> from django_orm.utils import timezone
        >>> timezone.activate(zoneinfo.ZoneInfo("Asia/Singapore"))
        # For this example, we set the time zone to Singapore, but here's how
        # you would obtain the current time zone in the general case.
@@ -656,7 +656,7 @@ Usage
    the naïve datetime::
 
        >>> import zoneinfo
-       >>> from django.utils.dateparse import parse_datetime
+       >>> from django_orm.utils.dateparse import parse_datetime
        >>> naive = parse_datetime("2012-02-21 10:28:45")
        >>> naive.replace(tzinfo=zoneinfo.ZoneInfo("Europe/Helsinki"))
        datetime.datetime(2012, 2, 21, 10, 28, 45, tzinfo=zoneinfo.ZoneInfo(key='Europe/Helsinki'))
@@ -672,13 +672,13 @@ Usage
    Furthermore, Python knows how to compare aware datetimes, taking into
    account UTC offsets when necessary. It's much easier (and possibly faster)
    to write all your model and view code in UTC. So, in most circumstances,
-   the datetime in UTC returned by :func:`django.utils.timezone.now` will be
+   the datetime in UTC returned by :func:`django_orm.utils.timezone.now` will be
    sufficient.
 
    For the sake of completeness, though, if you really want the local time
    in the current time zone, here's how you can obtain it::
 
-       >>> from django.utils import timezone
+       >>> from django_orm.utils import timezone
        >>> timezone.localtime(timezone.now())
        datetime.datetime(2012, 3, 3, 20, 10, 53, 873365, tzinfo=zoneinfo.ZoneInfo(key='Europe/Paris'))
 

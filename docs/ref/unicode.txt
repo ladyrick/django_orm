@@ -88,7 +88,7 @@ imported.
 
 Normally, you won't have to worry about lazy translations. Just be aware that
 if you examine an object and it claims to be a
-``django.utils.functional.__proxy__`` object, it is a lazy translation.
+``django_orm.utils.functional.__proxy__`` object, it is a lazy translation.
 Calling ``str()`` with the lazy translation as the argument will generate a
 string in the current locale.
 
@@ -105,7 +105,7 @@ a bit easier.
 Conversion functions
 ~~~~~~~~~~~~~~~~~~~~
 
-The ``django.utils.encoding`` module contains a few functions that are handy
+The ``django_orm.utils.encoding`` module contains a few functions that are handy
 for converting back and forth between strings and bytestrings.
 
 * ``smart_str(s, encoding='utf-8', strings_only=False, errors='strict')``
@@ -150,7 +150,7 @@ URL from an :rfc:`IRI <3987>` -- very loosely speaking, a :rfc:`URI <2396>`
 that can contain Unicode characters. Use these functions for quoting and
 converting an IRI to a URI:
 
-* The :func:`django.utils.encoding.iri_to_uri()` function, which implements the
+* The :func:`django_orm.utils.encoding.iri_to_uri()` function, which implements the
   conversion from IRI to URI as required by :rfc:`3987#section-3.1`.
 
 * The :func:`urllib.parse.quote` and :func:`urllib.parse.quote_plus`
@@ -177,7 +177,7 @@ like that.
 An example might clarify things here::
 
     >>> from urllib.parse import quote
-    >>> from django.utils.encoding import iri_to_uri
+    >>> from django_orm.utils.encoding import iri_to_uri
     >>> quote('Paris & Orléans')
     'Paris%20%26%20Orl%C3%A9ans'
     >>> iri_to_uri('/favorites/François/%s' % quote('Paris & Orléans'))
@@ -190,12 +190,12 @@ you can construct your IRI without worrying about whether it contains
 non-ASCII characters and then, right at the end, call ``iri_to_uri()`` on the
 result.
 
-Similarly, Django provides :func:`django.utils.encoding.uri_to_iri()` which
+Similarly, Django provides :func:`django_orm.utils.encoding.uri_to_iri()` which
 implements the conversion from URI to IRI as per :rfc:`3987#section-3.2`.
 
 An example to demonstrate::
 
-    >>> from django.utils.encoding import uri_to_iri
+    >>> from django_orm.utils.encoding import uri_to_iri
     >>> uri_to_iri('/%E2%99%A5%E2%99%A5/?utf8=%E2%9C%93')
     '/♥♥/?utf8=✓'
     >>> uri_to_iri('%A9hello%3Fworld')
@@ -230,7 +230,7 @@ Taking care in ``get_absolute_url()``
 
 URLs can only contain ASCII characters. If you're constructing a URL from
 pieces of data that might be non-ASCII, be careful to encode the results in a
-way that is suitable for a URL. The :func:`~django.urls.reverse` function
+way that is suitable for a URL. The :func:`~django_orm.urls.reverse` function
 handles this for you automatically.
 
 If you're constructing a URL manually (i.e., *not* using the ``reverse()``
@@ -239,7 +239,7 @@ use the ``iri_to_uri()`` and ``quote()`` functions that were documented
 above_. For example::
 
     from urllib.parse import quote
-    from django.utils.encoding import iri_to_uri
+    from django_orm.utils.encoding import iri_to_uri
 
     def get_absolute_url(self):
         url = '/person/%s/?x=0&y=0' % quote(self.location)
@@ -257,12 +257,12 @@ Templates
 
 Use strings when creating templates manually::
 
-    from django.template import Template
+    from django_orm.template import Template
     t2 = Template('This is a string template.')
 
 But the common case is to read templates from the filesystem. If your template
 files are not stored with a UTF-8 encoding, adjust the :setting:`TEMPLATES`
-setting. The built-in :py:mod:`~django.template.backends.django` backend
+setting. The built-in :py:mod:`~django_orm.template.backends.django_orm` backend
 provides the ``'file_charset'`` option to change the encoding used to read
 files from disk.
 

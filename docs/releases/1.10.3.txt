@@ -32,7 +32,7 @@ While Django doesn't ship a module that allows remote code execution, this is
 at least a cross-site scripting vector, which could be quite serious if
 developers load a copy of the production database in development or connect to
 some production services for which there's no development instance, for
-example. If a project uses a package like the ``django-debug-toolbar``, then
+example. If a project uses a package like the ``django_orm-debug-toolbar``, then
 the attacker could execute arbitrary SQL, which could be especially bad if the
 developers connect to the database with a superuser account.
 

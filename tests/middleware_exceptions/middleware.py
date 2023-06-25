@@ -1,9 +1,9 @@
 import asyncio
 
-from django.http import Http404, HttpResponse
-from django.template import engines
-from django.template.response import TemplateResponse
-from django.utils.decorators import (
+from django_orm.http import Http404, HttpResponse
+from django_orm.template import engines
+from django_orm.template.response import TemplateResponse
+from django_orm.utils.decorators import (
     async_only_middleware,
     sync_and_async_middleware,
     sync_only_middleware,
@@ -63,7 +63,7 @@ class ProcessViewNoneMiddleware(BaseMiddleware):
 
 class ProcessViewTemplateResponseMiddleware(BaseMiddleware):
     def process_view(self, request, view_func, view_args, view_kwargs):
-        template = engines["django"].from_string(
+        template = engines["django_orm"].from_string(
             "Processed view {{ view }}{% for m in mw %}\n{{ m }}{% endfor %}"
         )
         return TemplateResponse(

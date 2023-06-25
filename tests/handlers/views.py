@@ -1,10 +1,10 @@
 import asyncio
 from http import HTTPStatus
 
-from django.core.exceptions import BadRequest, SuspiciousOperation
-from django.db import connection, transaction
-from django.http import HttpResponse, StreamingHttpResponse
-from django.views.decorators.csrf import csrf_exempt
+from django_orm.core.exceptions import BadRequest, SuspiciousOperation
+from django_orm.db import connection, transaction
+from django_orm.http import HttpResponse, StreamingHttpResponse
+from django_orm.views.decorators.csrf import csrf_exempt
 
 
 def regular(request):

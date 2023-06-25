@@ -1,10 +1,10 @@
 import datetime
 
-from django.core.exceptions import FieldDoesNotExist
-from django.db.models import F
-from django.db.models.functions import Lower
-from django.db.utils import IntegrityError
-from django.test import TestCase, override_settings, skipUnlessDBFeature
+from django_orm.core.exceptions import FieldDoesNotExist
+from django_orm.db.models import F
+from django_orm.db.models.functions import Lower
+from django_orm.db.utils import IntegrityError
+from django_orm.test import TestCase, override_settings, skipUnlessDBFeature
 
 from .models import (
     Article,

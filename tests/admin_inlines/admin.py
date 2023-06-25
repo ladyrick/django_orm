@@ -1,7 +1,7 @@
-from django import forms
-from django.contrib import admin
-from django.core.exceptions import ValidationError
-from django.db import models
+from django_orm import forms
+from django_orm.contrib import admin
+from django_orm.core.exceptions import ValidationError
+from django_orm.db import models
 
 from .models import (
     Author,

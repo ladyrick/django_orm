@@ -2,7 +2,7 @@
 Request and response objects
 ============================
 
-.. module:: django.http
+.. module:: django_orm.http
    :synopsis: Classes dealing with HTTP requests and responses.
 
 Quick overview
@@ -16,7 +16,7 @@ passing the :class:`HttpRequest` as the first argument to the view function.
 Each view is responsible for returning an :class:`HttpResponse` object.
 
 This document explains the APIs for :class:`HttpRequest` and
-:class:`HttpResponse` objects, which are defined in the :mod:`django.http`
+:class:`HttpResponse` objects, which are defined in the :mod:`django_orm.http`
 module.
 
 ``HttpRequest`` objects
@@ -127,7 +127,7 @@ All attributes should be considered read-only, unless stated otherwise.
 
     A dictionary-like object containing all uploaded files. Each key in
     ``FILES`` is the ``name`` from the ``<input type="file" name="">``. Each
-    value in ``FILES`` is an :class:`~django.core.files.uploadedfile.UploadedFile`.
+    value in ``FILES`` is an :class:`~django_orm.core.files.uploadedfile.UploadedFile`.
 
     See :doc:`/topics/files` for more information.
 
@@ -206,7 +206,7 @@ All attributes should be considered read-only, unless stated otherwise.
 
 .. attribute:: HttpRequest.resolver_match
 
-    An instance of :class:`~django.urls.ResolverMatch` representing the
+    An instance of :class:`~django_orm.urls.ResolverMatch` representing the
     resolved URL. This attribute is only set after URL resolving took place,
     which means it's available in all views but not in middleware which are
     executed before URL resolving takes place (you can use it in
@@ -221,13 +221,13 @@ application.
 .. attribute:: HttpRequest.current_app
 
     The :ttag:`url` template tag will use its value as the ``current_app``
-    argument to :func:`~django.urls.reverse()`.
+    argument to :func:`~django_orm.urls.reverse()`.
 
 .. attribute:: HttpRequest.urlconf
 
     This will be used as the root URLconf for the current request, overriding
     the :setting:`ROOT_URLCONF` setting. See
-    :ref:`how-django-processes-a-request` for details.
+    :ref:`how-django_orm-processes-a-request` for details.
 
     ``urlconf`` can be set to ``None`` to revert any changes made by previous
     middleware and return to using the :setting:`ROOT_URLCONF`.
@@ -251,26 +251,26 @@ middleware class is listed in :setting:`MIDDLEWARE`.
 
 .. attribute:: HttpRequest.session
 
-    From the :class:`~django.contrib.sessions.middleware.SessionMiddleware`: A
+    From the :class:`~django_orm.contrib.sessions.middleware.SessionMiddleware`: A
     readable and writable, dictionary-like object that represents the current
     session.
 
 .. attribute:: HttpRequest.site
 
-    From the :class:`~django.contrib.sites.middleware.CurrentSiteMiddleware`:
-    An instance of :class:`~django.contrib.sites.models.Site` or
-    :class:`~django.contrib.sites.requests.RequestSite` as returned by
-    :func:`~django.contrib.sites.shortcuts.get_current_site()`
+    From the :class:`~django_orm.contrib.sites.middleware.CurrentSiteMiddleware`:
+    An instance of :class:`~django_orm.contrib.sites.models.Site` or
+    :class:`~django_orm.contrib.sites.requests.RequestSite` as returned by
+    :func:`~django_orm.contrib.sites.shortcuts.get_current_site()`
     representing the current site.
 
 .. attribute:: HttpRequest.user
 
-    From the :class:`~django.contrib.auth.middleware.AuthenticationMiddleware`:
+    From the :class:`~django_orm.contrib.auth.middleware.AuthenticationMiddleware`:
     An instance of :setting:`AUTH_USER_MODEL` representing the currently
     logged-in user. If the user isn't currently logged in, ``user`` will be set
-    to an instance of :class:`~django.contrib.auth.models.AnonymousUser`. You
+    to an instance of :class:`~django_orm.contrib.auth.models.AnonymousUser`. You
     can tell them apart with
-    :attr:`~django.contrib.auth.models.User.is_authenticated`, like so::
+    :attr:`~django_orm.contrib.auth.models.User.is_authenticated`, like so::
 
         if request.user.is_authenticated:
             ... # Do something for logged-in users.
@@ -290,7 +290,7 @@ Methods
 
     Example: ``"127.0.0.1:8000"``
 
-    Raises ``django.core.exceptions.DisallowedHost`` if the host is not in
+    Raises ``django_orm.core.exceptions.DisallowedHost`` if the host is not in
     :setting:`ALLOWED_HOSTS` or the domain name is invalid according to
     :rfc:`1034`/:rfc:`1035 <1035>`.
 
@@ -322,8 +322,8 @@ Methods
 
         This middleware should be positioned before any other middleware that
         relies on the value of :meth:`~HttpRequest.get_host()` -- for instance,
-        :class:`~django.middleware.common.CommonMiddleware` or
-        :class:`~django.middleware.csrf.CsrfViewMiddleware`.
+        :class:`~django_orm.middleware.common.CommonMiddleware` or
+        :class:`~django_orm.middleware.csrf.CsrfViewMiddleware`.
 
 .. method:: HttpRequest.get_port()
 
@@ -371,7 +371,7 @@ Methods
 .. method:: HttpRequest.get_signed_cookie(key, default=RAISE_ERROR, salt='', max_age=None)
 
     Returns a cookie value for a signed cookie, or raises a
-    ``django.core.signing.BadSignature`` exception if the signature is
+    ``django_orm.core.signing.BadSignature`` exception if the signature is
     no longer valid. If you provide the ``default`` argument the exception
     will be suppressed and that default value will be returned instead.
 
@@ -424,9 +424,9 @@ Methods
 
     If a response varies depending on the content of the ``Accept`` header and
     you are using some form of caching like Django's :mod:`cache middleware
-    <django.middleware.cache>`, you should decorate the view with
+    <django_orm.middleware.cache>`, you should decorate the view with
     :func:`vary_on_headers('Accept')
-    <django.views.decorators.vary.vary_on_headers>` so that the responses are
+    <django_orm.views.decorators.vary.vary_on_headers>` so that the responses are
     properly cached.
 
 .. method:: HttpRequest.read(size=None)
@@ -455,7 +455,7 @@ Methods
 .. class:: QueryDict
 
 In an :class:`HttpRequest` object, the :attr:`~HttpRequest.GET` and
-:attr:`~HttpRequest.POST` attributes are instances of ``django.http.QueryDict``,
+:attr:`~HttpRequest.POST` attributes are instances of ``django_orm.http.QueryDict``,
 a dictionary-like class customized to deal with multiple values for the same
 key. This is necessary because some HTML form elements, notably
 ``<select multiple>``, pass multiple values for the same key.
@@ -501,7 +501,7 @@ a subclass of dictionary. Exceptions are outlined here:
 
     Returns the value for the given key. If the key has more than one value,
     it returns the last value. Raises
-    ``django.utils.datastructures.MultiValueDictKeyError`` if the key does not
+    ``django_orm.utils.datastructures.MultiValueDictKeyError`` if the key does not
     exist. (This is a subclass of Python's standard :exc:`KeyError`, so you can
     stick to catching ``KeyError``.)
 
@@ -650,7 +650,7 @@ Django, :class:`HttpResponse` objects are your responsibility. Each view you
 write is responsible for instantiating, populating, and returning an
 :class:`HttpResponse`.
 
-The :class:`HttpResponse` class lives in the :mod:`django.http` module.
+The :class:`HttpResponse` class lives in the :mod:`django_orm.http` module.
 
 Usage
 -----
@@ -661,7 +661,7 @@ Passing strings
 Typical usage is to pass the contents of the page, as a string, bytestring,
 or :class:`memoryview`, to the :class:`HttpResponse` constructor::
 
-    >>> from django.http import HttpResponse
+    >>> from django_orm.http import HttpResponse
     >>> response = HttpResponse("Here's the text of the web page.")
     >>> response = HttpResponse("Text only, please.", content_type="text/plain")
     >>> response = HttpResponse(b'Bytestrings are also accepted.')
@@ -714,9 +714,9 @@ You can also set headers on instantiation::
     >>> response = HttpResponse(headers={'Age': 120})
 
 For setting the ``Cache-Control`` and ``Vary`` header fields, it is recommended
-to use the :func:`~django.utils.cache.patch_cache_control` and
-:func:`~django.utils.cache.patch_vary_headers` methods from
-:mod:`django.utils.cache`, since these fields can have multiple, comma-separated
+to use the :func:`~django_orm.utils.cache.patch_cache_control` and
+:func:`~django_orm.utils.cache.patch_vary_headers` methods from
+:mod:`django_orm.utils.cache`, since these fields can have multiple, comma-separated
 values. The "patch" methods ensure that other values, e.g. added by a
 middleware, are not removed.
 
@@ -965,7 +965,7 @@ Methods
 
 Django includes a number of ``HttpResponse`` subclasses that handle different
 types of HTTP responses. Like ``HttpResponse``, these subclasses live in
-:mod:`django.http`.
+:mod:`django_orm.http`.
 
 .. class:: HttpResponseRedirect
 
@@ -1023,7 +1023,7 @@ types of HTTP responses. Like ``HttpResponse``, these subclasses live in
 
     If a custom subclass of :class:`HttpResponse` implements a ``render``
     method, Django will treat it as emulating a
-    :class:`~django.template.response.SimpleTemplateResponse`, and the
+    :class:`~django_orm.template.response.SimpleTemplateResponse`, and the
     ``render`` method must itself return a valid response object.
 
 Custom response classes
@@ -1033,7 +1033,7 @@ If you find yourself needing a response class that Django doesn't provide, you
 can create it with the help of :py:class:`http.HTTPStatus`. For example::
 
     from http import HTTPStatus
-    from django.http import HttpResponse
+    from django_orm.http import HttpResponse
 
     class HttpResponseNoContent(HttpResponse):
         status_code = HTTPStatus.NO_CONTENT
@@ -1054,7 +1054,7 @@ can create it with the help of :py:class:`http.HTTPStatus`. For example::
     JSON-serializable object.
 
     The ``encoder``, which defaults to
-    :class:`django.core.serializers.json.DjangoJSONEncoder`, will be used to
+    :class:`django_orm.core.serializers.json.DjangoJSONEncoder`, will be used to
     serialize the data. See :ref:`JSON serialization
     <serialization-formats-json>` for more details about this serializer.
 
@@ -1071,7 +1071,7 @@ Usage
 
 Typical usage could look like::
 
-    >>> from django.http import JsonResponse
+    >>> from django_orm.http import JsonResponse
     >>> response = JsonResponse({'foo': 'bar'})
     >>> response.content
     b'{"foo": "bar"}'
@@ -1096,7 +1096,7 @@ using non-dict objects in JSON-encoded response.
     <https://262.ecma-international.org/5.1/#sec-11.1.4>`_ it was possible to
     poison the JavaScript ``Array`` constructor. For this reason, Django does
     not allow passing non-dict objects to the
-    :class:`~django.http.JsonResponse` constructor by default.  However, most
+    :class:`~django_orm.http.JsonResponse` constructor by default.  However, most
     modern browsers implement ECMAScript 5 which removes this attack vector.
     Therefore it is possible to disable this security precaution.
 
@@ -1208,7 +1208,7 @@ Attributes
 ``FileResponse`` accepts any file-like object with binary content, for example
 a file open in binary mode like so::
 
-    >>> from django.http import FileResponse
+    >>> from django_orm.http import FileResponse
     >>> response = FileResponse(open('myfile.png', 'rb'))
 
 The file will be closed automatically, so don't open it with a context manager.

@@ -1,6 +1,6 @@
 """A custom backend for testing."""
 
-from django.core.mail.backends.base import BaseEmailBackend
+from django_orm.core.mail.backends.base import BaseEmailBackend
 
 
 class EmailBackend(BaseEmailBackend):

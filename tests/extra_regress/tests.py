@@ -1,7 +1,7 @@
 import datetime
 
-from django.contrib.auth.models import User
-from django.test import TestCase
+from django_orm.contrib.auth.models import User
+from django_orm.test import TestCase
 
 from .models import Order, RevisionableModel, TestObject
 

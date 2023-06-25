@@ -19,7 +19,7 @@ Running the unit tests
 Quickstart
 ----------
 
-First, `fork Django on GitHub <https://github.com/django/django/fork>`__.
+First, `fork Django on GitHub <https://github.com/django_orm/django_orm/fork>`__.
 
 Second, create and activate a virtual environment. If you're not familiar with
 how to do that, read our :doc:`contributing tutorial </intro/contributing>`.
@@ -28,8 +28,8 @@ Next, clone your fork, install some requirements, and run the tests:
 
 .. console::
 
-   $ git clone https://github.com/YourGitHubName/django.git django-repo
-   $ cd django-repo/tests
+   $ git clone https://github.com/YourGitHubName/django_orm.git django_orm-repo
+   $ cd django_orm-repo/tests
    $ python -m pip install -e ..
    $ python -m pip install -r requirements/py3.txt
    $ ./runtests.py
@@ -138,14 +138,14 @@ necessary for the majority of patches. To run the JavaScript tests using
 This command runs ``npm install`` to ensure test requirements are up to
 date and then runs ``npm test``.
 
-Running tests using ``django-docker-box``
+Running tests using ``django_orm-docker-box``
 -----------------------------------------
 
-`django-docker-box`_ allows you to run the Django's test suite across all
-supported databases and python versions. See the `django-docker-box`_ project
+`django_orm-docker-box`_ allows you to run the Django's test suite across all
+supported databases and python versions. See the `django_orm-docker-box`_ project
 page for installation and usage instructions.
 
-.. _django-docker-box: https://github.com/django/django-docker-box/
+.. _django-docker-box: https://github.com/django_orm/django_orm-docker-box/
 
 .. _running-unit-tests-settings:
 
@@ -491,7 +491,7 @@ Seeing the SQL queries run during a test
 ----------------------------------------
 
 If you wish to examine the SQL being run in failing tests, you can turn on
-:ref:`SQL logging <django-db-logger>` using the ``--debug-sql`` option. If you
+:ref:`SQL logging <django_orm-db-logger>` using the ``--debug-sql`` option. If you
 combine this with ``--verbosity=2``, all SQL queries will be output:
 
 .. console::
@@ -520,14 +520,14 @@ Tips for writing tests
 Isolating model registration
 ----------------------------
 
-To avoid polluting the global :attr:`~django.apps.apps` registry and prevent
+To avoid polluting the global :attr:`~django_orm.apps.apps` registry and prevent
 unnecessary table creation, models defined in a test method should be bound to
 a temporary ``Apps`` instance. To do this, use the
-:func:`~django.test.utils.isolate_apps` decorator::
+:func:`~django_orm.test.utils.isolate_apps` decorator::
 
-    from django.db import models
-    from django.test import SimpleTestCase
-    from django.test.utils import isolate_apps
+    from django_orm.db import models
+    from django_orm.test import SimpleTestCase
+    from django_orm.test.utils import isolate_apps
 
     class TestModelDefinition(SimpleTestCase):
         @isolate_apps('app_label')
@@ -539,19 +539,19 @@ a temporary ``Apps`` instance. To do this, use the
 .. admonition:: Setting ``app_label``
 
     Models defined in a test method with no explicit
-    :attr:`~django.db.models.Options.app_label` are automatically assigned the
+    :attr:`~django_orm.db.models.Options.app_label` are automatically assigned the
     label of the app in which their test class is located.
 
     In order to make sure the models defined within the context of
-    :func:`~django.test.utils.isolate_apps` instances are correctly
+    :func:`~django_orm.test.utils.isolate_apps` instances are correctly
     installed, you should pass the set of targeted ``app_label`` as arguments:
 
     .. code-block:: python
         :caption: ``tests/app_label/tests.py``
 
-        from django.db import models
-        from django.test import SimpleTestCase
-        from django.test.utils import isolate_apps
+        from django_orm.db import models
+        from django_orm.test import SimpleTestCase
+        from django_orm.test.utils import isolate_apps
 
         class TestModelDefinition(SimpleTestCase):
             @isolate_apps('app_label', 'other_app_label')

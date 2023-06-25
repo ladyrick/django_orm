@@ -1,6 +1,6 @@
-from django.contrib.sites.managers import CurrentSiteManager
-from django.contrib.sites.models import Site
-from django.db import models
+from django_orm.contrib.sites.managers import CurrentSiteManager
+from django_orm.contrib.sites.models import Site
+from django_orm.db import models
 
 
 class AbstractArticle(models.Model):

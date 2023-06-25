@@ -1,10 +1,10 @@
 import unittest
 
-from django.core.exceptions import ImproperlyConfigured
-from django.db import ProgrammingError
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.db import ProgrammingError
 
 try:
-    from django.contrib.gis.db.backends.postgis.operations import PostGISOperations
+    from django_orm.contrib.gis.db.backends.postgis.operations import PostGISOperations
 
     HAS_POSTGRES = True
 except ImportError:

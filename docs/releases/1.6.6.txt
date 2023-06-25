@@ -34,7 +34,7 @@ and few HTTP requests would be all that is necessary to make a site unavailable.
 We've remedied the issue by changing the algorithm for generating file names
 if a file with the uploaded name already exists.
 :meth:`Storage.get_available_name()
-<django.core.files.storage.Storage.get_available_name>` now appends an
+<django_orm.core.files.storage.Storage.get_available_name>` now appends an
 underscore plus a random 7 character alphanumeric string (e.g. ``"_x3a1gho"``),
 rather than iterating through an underscore followed by a number (e.g. ``"_1"``,
 ``"_2"``, etc.).
@@ -42,7 +42,7 @@ rather than iterating through an underscore followed by a number (e.g. ``"_1"``,
 ``RemoteUserMiddleware`` session hijacking
 ==========================================
 
-When using the :class:`~django.contrib.auth.middleware.RemoteUserMiddleware`
+When using the :class:`~django_orm.contrib.auth.middleware.RemoteUserMiddleware`
 and the ``RemoteUserBackend``, a change to the ``REMOTE_USER`` header between
 requests without an intervening logout could result in the prior user's session
 being co-opted by the subsequent user. The middleware now logs the user out on

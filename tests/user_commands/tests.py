@@ -5,21 +5,21 @@ from unittest import mock
 
 from admin_scripts.tests import AdminScriptTestCase
 
-from django.apps import apps
-from django.core import management
-from django.core.checks import Tags
-from django.core.management import BaseCommand, CommandError, find_commands
-from django.core.management.utils import (
+from django_orm.apps import apps
+from django_orm.core import management
+from django_orm.core.checks import Tags
+from django_orm.core.management import BaseCommand, CommandError, find_commands
+from django_orm.core.management.utils import (
     find_command,
     get_random_secret_key,
     is_ignored_path,
     normalize_path_patterns,
     popen_wrapper,
 )
-from django.db import connection
-from django.test import SimpleTestCase, override_settings
-from django.test.utils import captured_stderr, extend_sys_path
-from django.utils import translation
+from django_orm.db import connection
+from django_orm.test import SimpleTestCase, override_settings
+from django_orm.test.utils import captured_stderr, extend_sys_path
+from django_orm.utils import translation
 
 from .management.commands import dance
 
@@ -27,8 +27,8 @@ from .management.commands import dance
 # A minimal set of apps to avoid system checks running on all apps.
 @override_settings(
     INSTALLED_APPS=[
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
+        "django_orm.contrib.auth",
+        "django_orm.contrib.contenttypes",
         "user_commands",
     ],
 )
@@ -190,14 +190,14 @@ class CommandTests(SimpleTestCase):
 
     def test_requires_system_checks_empty(self):
         with mock.patch(
-            "django.core.management.base.BaseCommand.check"
+            "django_orm.core.management.base.BaseCommand.check"
         ) as mocked_check:
             management.call_command("no_system_checks")
         self.assertIs(mocked_check.called, False)
 
     def test_requires_system_checks_specific(self):
         with mock.patch(
-            "django.core.management.base.BaseCommand.check"
+            "django_orm.core.management.base.BaseCommand.check"
         ) as mocked_check:
             management.call_command("specific_system_checks")
         mocked_check.called_once_with(tags=[Tags.staticfiles, Tags.models])
@@ -457,7 +457,7 @@ class CommandRunTests(AdminScriptTestCase):
     def test_skip_checks(self):
         self.write_settings(
             "settings.py",
-            apps=["django.contrib.staticfiles", "user_commands"],
+            apps=["django_orm.contrib.staticfiles", "user_commands"],
             sdict={
                 # (staticfiles.E001) The STATICFILES_DIRS setting is not a tuple or
                 # list.

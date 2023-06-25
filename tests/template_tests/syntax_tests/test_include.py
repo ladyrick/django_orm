@@ -1,12 +1,12 @@
-from django.template import (
+from django_orm.template import (
     Context,
     Engine,
     TemplateDoesNotExist,
     TemplateSyntaxError,
     loader,
 )
-from django.template.loader_tags import IncludeNode
-from django.test import SimpleTestCase
+from django_orm.template.loader_tags import IncludeNode
+from django_orm.test import SimpleTestCase
 
 from ..utils import setup
 from .test_basic import basic_templates
@@ -256,9 +256,9 @@ class IncludeTests(SimpleTestCase):
             debug=True,
             loaders=[
                 (
-                    "django.template.loaders.cached.Loader",
+                    "django_orm.template.loaders.cached.Loader",
                     [
-                        "django.template.loaders.app_directories.Loader",
+                        "django_orm.template.loaders.app_directories.Loader",
                     ],
                 ),
             ],
@@ -353,7 +353,7 @@ class IncludeTests(SimpleTestCase):
         engine = Engine(
             loaders=[
                 (
-                    "django.template.loaders.locmem.Loader",
+                    "django_orm.template.loaders.locmem.Loader",
                     {
                         "template": (
                             '{% for x in vars %}{% include "include" %}{% endfor %}'

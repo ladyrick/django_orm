@@ -2,7 +2,7 @@
 Geographic Feeds
 ================
 
-.. module:: django.contrib.gis.feeds
+.. module:: django_orm.contrib.gis.feeds
     :synopsis: GeoDjango's framework for generating spatial feeds.
 
 GeoDjango has its own :class:`Feed` subclass that may embed location information
@@ -27,11 +27,11 @@ API Reference
 .. class:: Feed
 
     In addition to methods provided by the
-    :class:`django.contrib.syndication.views.Feed` base class, GeoDjango's
+    :class:`django_orm.contrib.syndication.views.Feed` base class, GeoDjango's
     ``Feed`` class provides the following overrides. Note that these overrides
     may be done in multiple ways::
 
-        from django.contrib.gis.feeds import Feed
+        from django_orm.contrib.gis.feeds import Feed
 
         class MyFeed(Feed):
 
@@ -80,7 +80,7 @@ API Reference
 ``SyndicationFeed`` Subclasses
 ------------------------------
 
-The following :class:`django.utils.feedgenerator.SyndicationFeed` subclasses
+The following :class:`django_orm.utils.feedgenerator.SyndicationFeed` subclasses
 are available:
 
 .. class:: GeoRSSFeed
@@ -92,4 +92,4 @@ are available:
 .. note::
 
     `W3C Geo`_ formatted feeds only support
-    :class:`~django.contrib.gis.db.models.PointField` geometries.
+    :class:`~django_orm.contrib.gis.db.models.PointField` geometries.

@@ -1,11 +1,11 @@
 import unittest
 
-from django.core.exceptions import FieldError
-from django.db import IntegrityError, connection, transaction
-from django.db.models import CharField, Count, F, IntegerField, Max
-from django.db.models.functions import Abs, Concat, Lower
-from django.test import TestCase
-from django.test.utils import register_lookup
+from django_orm.core.exceptions import FieldError
+from django_orm.db import IntegrityError, connection, transaction
+from django_orm.db.models import CharField, Count, F, IntegerField, Max
+from django_orm.db.models.functions import Abs, Concat, Lower
+from django_orm.test import TestCase
+from django_orm.test.utils import register_lookup
 
 from .models import (
     A,
@@ -159,7 +159,7 @@ class AdvancedTests(TestCase):
     def test_update_m2m_field(self):
         msg = (
             "Cannot update model field "
-            "<django.db.models.fields.related.ManyToManyField: m2m_foo> "
+            "<django_orm.db.models.fields.related.ManyToManyField: m2m_foo> "
             "(only non-relations and foreign keys permitted)."
         )
         with self.assertRaisesMessage(FieldError, msg):

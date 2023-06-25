@@ -1,13 +1,13 @@
 import datetime
 from xml.dom import minidom
 
-from django.contrib.sites.models import Site
-from django.contrib.syndication import views
-from django.core.exceptions import ImproperlyConfigured
-from django.test import TestCase, override_settings
-from django.test.utils import requires_tz_support
-from django.utils import timezone
-from django.utils.feedgenerator import (
+from django_orm.contrib.sites.models import Site
+from django_orm.contrib.syndication import views
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.test import TestCase, override_settings
+from django_orm.test.utils import requires_tz_support
+from django_orm.utils import timezone
+from django_orm.utils.feedgenerator import (
     Atom1Feed,
     Rss201rev2Feed,
     rfc2822_date,
@@ -141,7 +141,7 @@ class SyndicationFeedTest(FeedTestCase):
                 "copyright": "Copyright (c) 2007, Sally Smith",
             },
         )
-        self.assertCategories(chan, ["python", "django"])
+        self.assertCategories(chan, ["python", "django_orm"])
 
         # Ensure the content of the channel is correct
         self.assertChildNodeContent(
@@ -323,7 +323,7 @@ class SyndicationFeedTest(FeedTestCase):
                 "link": "http://example.com/blog/",
             },
         )
-        self.assertCategories(chan, ["python", "django"])
+        self.assertCategories(chan, ["python", "django_orm"])
 
         # Check feed_url is passed
         self.assertEqual(
@@ -456,7 +456,7 @@ class SyndicationFeedTest(FeedTestCase):
         feed = minidom.parseString(response.content).firstChild
 
         self.assertEqual(feed.nodeName, "feed")
-        self.assertEqual(feed.getAttribute("django"), "rocks")
+        self.assertEqual(feed.getAttribute("django_orm"), "rocks")
         self.assertChildNodes(
             feed,
             [

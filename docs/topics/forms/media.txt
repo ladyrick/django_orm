@@ -29,7 +29,7 @@ in a form suitable for inclusion on your web page.
 
     If you like the widgets that the Django Admin application uses,
     feel free to use them in your own application! They're all stored
-    in ``django.contrib.admin.widgets``.
+    in ``django_orm.contrib.admin.widgets``.
 
 .. admonition:: Which JavaScript toolkit?
 
@@ -51,7 +51,7 @@ inner class define the requirements.
 
 Here's an example::
 
-    from django import forms
+    from django_orm import forms
 
     class CalendarWidget(forms.TextInput):
         class Media:
@@ -213,10 +213,10 @@ String paths used to specify assets can be either relative or absolute. If a
 path starts with ``/``, ``http://`` or ``https://``, it will be
 interpreted as an absolute path, and left as-is. All other paths will
 be prepended with the value of the appropriate prefix. If the
-:mod:`django.contrib.staticfiles` app is installed, it will be used to serve
+:mod:`django_orm.contrib.staticfiles` app is installed, it will be used to serve
 assets.
 
-Whether or not you use :mod:`django.contrib.staticfiles`,  the
+Whether or not you use :mod:`django_orm.contrib.staticfiles`,  the
 :setting:`STATIC_URL` and :setting:`STATIC_ROOT` settings are required to
 render a complete web page.
 
@@ -226,7 +226,7 @@ to using :setting:`MEDIA_URL`. For example, if the :setting:`MEDIA_URL` for
 your site was ``'http://uploads.example.com/'`` and :setting:`STATIC_URL`
 was ``None``::
 
-    >>> from django import forms
+    >>> from django_orm import forms
     >>> class CalendarWidget(forms.TextInput):
     ...     class Media:
     ...         css = {
@@ -248,8 +248,8 @@ But if :setting:`STATIC_URL` is ``'http://static.example.com/'``::
     <script src="http://static.example.com/animations.js"></script>
     <script src="http://othersite.com/actions.js"></script>
 
-Or if :mod:`~django.contrib.staticfiles` is configured using the
-:class:`~django.contrib.staticfiles.storage.ManifestStaticFilesStorage`::
+Or if :mod:`~django_orm.contrib.staticfiles` is configured using the
+:class:`~django_orm.contrib.staticfiles.storage.ManifestStaticFilesStorage`::
 
     >>> w = CalendarWidget()
     >>> print(w.media)
@@ -264,11 +264,11 @@ Paths as objects
 
 Asset paths may also be given as hashable objects implementing an
 ``__html__()`` method. The ``__html__()`` method is typically added using the
-:func:`~django.utils.html.html_safe` decorator. The object is responsible for
+:func:`~django_orm.utils.html.html_safe` decorator. The object is responsible for
 outputting the complete HTML ``<script>`` or ``<link>`` tag content::
 
-    >>> from django import forms
-    >>> from django.utils.html import html_safe
+    >>> from django_orm import forms
+    >>> from django_orm.utils.html import html_safe
     >>>
     >>> @html_safe
     >>> class JSPath:
@@ -315,7 +315,7 @@ Combining ``Media`` objects
 added, the resulting ``Media`` object contains the union of the assets
 specified by both::
 
-    >>> from django import forms
+    >>> from django_orm import forms
     >>> class CalendarWidget(forms.TextInput):
     ...     class Media:
     ...         css = {
@@ -347,7 +347,7 @@ defined in each ``Media`` class.
 
 For example::
 
-    >>> from django import forms
+    >>> from django_orm import forms
     >>> class CalendarWidget(forms.TextInput):
     ...     class Media:
     ...         js = ('jQuery.js', 'calendar.js', 'noConflict.js')
@@ -379,7 +379,7 @@ objects have a ``media`` property. The default value for this property
 is the result of adding the ``media`` definitions for all widgets that
 are part of the form::
 
-    >>> from django import forms
+    >>> from django_orm import forms
     >>> class ContactForm(forms.Form):
     ...     date = DateField(widget=CalendarWidget)
     ...     name = CharField(max_length=40, widget=OtherWidget)

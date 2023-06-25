@@ -15,19 +15,19 @@ try:
 except ImportError:
     pytz = None
 
-from django.contrib.auth.models import User
-from django.core import serializers
-from django.db import connection
-from django.db.models import F, Max, Min
-from django.http import HttpRequest
-from django.template import (
+from django_orm.contrib.auth.models import User
+from django_orm.core import serializers
+from django_orm.db import connection
+from django_orm.db.models import F, Max, Min
+from django_orm.http import HttpRequest
+from django_orm.template import (
     Context,
     RequestContext,
     Template,
     TemplateSyntaxError,
     context_processors,
 )
-from django.test import (
+from django_orm.test import (
     SimpleTestCase,
     TestCase,
     TransactionTestCase,
@@ -36,11 +36,11 @@ from django.test import (
     skipIfDBFeature,
     skipUnlessDBFeature,
 )
-from django.test.utils import requires_tz_support
-from django.urls import reverse
-from django.utils import timezone
-from django.utils.deprecation import RemovedInDjango50Warning
-from django.utils.timezone import timedelta
+from django_orm.test.utils import requires_tz_support
+from django_orm.urls import reverse
+from django_orm.utils import timezone
+from django_orm.utils.deprecation import RemovedInDjango50Warning
+from django_orm.utils.timezone import timedelta
 
 from .forms import (
     EventForm,
@@ -91,7 +91,7 @@ def get_timezones(key):
 class UTCAliasTests(SimpleTestCase):
     def test_alias_deprecation_warning(self):
         msg = (
-            "The django.utils.timezone.utc alias is deprecated. "
+            "The django_orm.utils.timezone.utc alias is deprecated. "
             "Please update your code to use datetime.timezone.utc instead."
         )
         with self.assertRaisesMessage(RemovedInDjango50Warning, msg):
@@ -1242,7 +1242,7 @@ class TemplateTests(SimpleTestCase):
     @skipIf(sys.platform == "win32", "Windows uses non-standard time zone names")
     def test_tz_template_context_processor(self):
         """
-        Test the django.template.context_processors.tz template context processor.
+        Test the django_orm.template.context_processors.tz template context processor.
         """
         tpl = Template("{{ TIME_ZONE }}")
         context = Context()

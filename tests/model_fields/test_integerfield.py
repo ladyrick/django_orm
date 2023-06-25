@@ -1,7 +1,7 @@
-from django.core import validators
-from django.core.exceptions import ValidationError
-from django.db import IntegrityError, connection, models
-from django.test import SimpleTestCase, TestCase
+from django_orm.core import validators
+from django_orm.core.exceptions import ValidationError
+from django_orm.db import IntegrityError, connection, models
+from django_orm.test import SimpleTestCase, TestCase
 
 from .models import (
     BigIntegerModel,

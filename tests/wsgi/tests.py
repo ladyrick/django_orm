@@ -1,11 +1,11 @@
-from django.core.exceptions import ImproperlyConfigured
-from django.core.servers.basehttp import get_internal_wsgi_application
-from django.core.signals import request_started
-from django.core.wsgi import get_wsgi_application
-from django.db import close_old_connections
-from django.http import FileResponse
-from django.test import SimpleTestCase, override_settings
-from django.test.client import RequestFactory
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.core.servers.basehttp import get_internal_wsgi_application
+from django_orm.core.signals import request_started
+from django_orm.core.wsgi import get_wsgi_application
+from django_orm.db import close_old_connections
+from django_orm.http import FileResponse
+from django_orm.test import SimpleTestCase, override_settings
+from django_orm.test.client import RequestFactory
 
 
 @override_settings(ROOT_URLCONF="wsgi.urls")
@@ -104,7 +104,7 @@ class GetInternalWSGIApplicationTest(SimpleTestCase):
         def mock_get_wsgi_app():
             return fake_app
 
-        from django.core.servers import basehttp
+        from django_orm.core.servers import basehttp
 
         _orig_get_wsgi_app = basehttp.get_wsgi_application
         basehttp.get_wsgi_application = mock_get_wsgi_app

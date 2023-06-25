@@ -1,8 +1,8 @@
 from unittest.mock import MagicMock, patch
 
-from django.db import DEFAULT_DB_ALIAS, connection, connections
-from django.db.backends.base.base import BaseDatabaseWrapper
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
+from django_orm.db import DEFAULT_DB_ALIAS, connection, connections
+from django_orm.db.backends.base.base import BaseDatabaseWrapper
+from django_orm.test import SimpleTestCase, TestCase, skipUnlessDBFeature
 
 from ..models import Square
 

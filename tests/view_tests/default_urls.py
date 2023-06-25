@@ -1,5 +1,5 @@
-from django.contrib import admin
-from django.urls import path
+from django_orm.contrib import admin
+from django_orm.urls import path
 
 urlpatterns = [
     # This is the same as in the default project template

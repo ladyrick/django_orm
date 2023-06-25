@@ -2,7 +2,7 @@
 The flatpages app
 =================
 
-.. module:: django.contrib.flatpages
+.. module:: django_orm.contrib.flatpages
    :synopsis: A framework for managing simple ?flat? HTML content in a database.
 
 Django comes with an optional "flatpages" application. It lets you store "flat"
@@ -25,8 +25,8 @@ Installation
 
 To install the flatpages app, follow these steps:
 
-1. Install the :mod:`sites framework <django.contrib.sites>` by adding
-   ``'django.contrib.sites'`` to your :setting:`INSTALLED_APPS` setting,
+1. Install the :mod:`sites framework <django_orm.contrib.sites>` by adding
+   ``'django_orm.contrib.sites'`` to your :setting:`INSTALLED_APPS` setting,
    if it's not already in there.
 
    Also make sure you've correctly set :setting:`SITE_ID` to the ID of the
@@ -34,7 +34,7 @@ To install the flatpages app, follow these steps:
    ``SITE_ID = 1``, but if you're using the sites framework to manage
    multiple sites, it could be the ID of a different site.
 
-2. Add ``'django.contrib.flatpages'`` to your :setting:`INSTALLED_APPS`
+2. Add ``'django_orm.contrib.flatpages'`` to your :setting:`INSTALLED_APPS`
    setting.
 
 Then either:
@@ -42,17 +42,17 @@ Then either:
 3. Add an entry in your URLconf. For example::
 
     urlpatterns = [
-        path('pages/', include('django.contrib.flatpages.urls')),
+        path('pages/', include('django_orm.contrib.flatpages.urls')),
     ]
 
 or:
 
-3. Add ``'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'``
+3. Add ``'django_orm.contrib.flatpages.middleware.FlatpageFallbackMiddleware'``
    to your :setting:`MIDDLEWARE` setting.
 
 4. Run the command :djadmin:`manage.py migrate <migrate>`.
 
-.. currentmodule:: django.contrib.flatpages.middleware
+.. currentmodule:: django_orm.contrib.flatpages.middleware
 
 How it works
 ============
@@ -69,13 +69,13 @@ There are several ways to include the flat pages in your URLconf. You can
 dedicate a particular path to flat pages::
 
     urlpatterns = [
-        path('pages/', include('django.contrib.flatpages.urls')),
+        path('pages/', include('django_orm.contrib.flatpages.urls')),
     ]
 
 You can also set it up as a "catchall" pattern. In this case, it is important
 to place the pattern at the end of the other urlpatterns::
 
-    from django.contrib.flatpages import views
+    from django_orm.contrib.flatpages import views
 
     # Your other patterns here
     urlpatterns += [
@@ -92,7 +92,7 @@ Another common setup is to use flat pages for a limited set of known pages and
 to hard code the urls, so you can reference them with the :ttag:`url` template
 tag::
 
-    from django.contrib.flatpages import views
+    from django_orm.contrib.flatpages import views
 
     urlpatterns += [
         path('about-us/', views.flatpage, {'url': '/about-us/'}, name='about'),
@@ -102,7 +102,7 @@ tag::
 Using the middleware
 --------------------
 
-The :class:`~django.contrib.flatpages.middleware.FlatpageFallbackMiddleware`
+The :class:`~django_orm.contrib.flatpages.middleware.FlatpageFallbackMiddleware`
 can do all of the work.
 
 .. class:: FlatpageFallbackMiddleware
@@ -119,7 +119,7 @@ can do all of the work.
 
     * It passes that template a single context variable, ``flatpage``,
       which is the flatpage object. It uses
-      :class:`~django.template.RequestContext` in rendering the
+      :class:`~django_orm.template.RequestContext` in rendering the
       template.
 
     The middleware will only add a trailing slash and redirect (by looking
@@ -140,7 +140,7 @@ can do all of the work.
    normal URL resolution apply view middleware.
 
 Note that the order of :setting:`MIDDLEWARE` matters. Generally, you can put
-:class:`~django.contrib.flatpages.middleware.FlatpageFallbackMiddleware` at the
+:class:`~django_orm.contrib.flatpages.middleware.FlatpageFallbackMiddleware` at the
 end of the list. This means it will run first when processing the response, and
 ensures that any other response-processing middleware see the real flatpage
 response rather than the 404.
@@ -151,15 +151,15 @@ For more on middleware, read the :doc:`middleware docs
 .. admonition:: Ensure that your 404 template works
 
     Note that the
-    :class:`~django.contrib.flatpages.middleware.FlatpageFallbackMiddleware`
+    :class:`~django_orm.contrib.flatpages.middleware.FlatpageFallbackMiddleware`
     only steps in once another view has successfully produced a 404 response.
     If another view or middleware class attempts to produce a 404 but ends up
     raising an exception instead, the response will become an HTTP 500
     ("Internal Server Error") and the
-    :class:`~django.contrib.flatpages.middleware.FlatpageFallbackMiddleware`
+    :class:`~django_orm.contrib.flatpages.middleware.FlatpageFallbackMiddleware`
     will not attempt to serve a flat page.
 
-.. currentmodule:: django.contrib.flatpages.models
+.. currentmodule:: django_orm.contrib.flatpages.models
 
 How to add, change and delete flatpages
 =======================================
@@ -178,10 +178,10 @@ The ``FlatPage`` model has an ``enable_comments`` field that isn't used by
 apps. It doesn't appear in the admin interface, but you can add it by
 registering a custom ``ModelAdmin`` for ``FlatPage``::
 
-    from django.contrib import admin
-    from django.contrib.flatpages.admin import FlatPageAdmin
-    from django.contrib.flatpages.models import FlatPage
-    from django.utils.translation import gettext_lazy as _
+    from django_orm.contrib import admin
+    from django_orm.contrib.flatpages.admin import FlatPageAdmin
+    from django_orm.contrib.flatpages.models import FlatPage
+    from django_orm.utils.translation import gettext_lazy as _
 
     # Define a new FlatPageAdmin
     class FlatPageAdmin(FlatPageAdmin):
@@ -208,17 +208,17 @@ Via the Python API
 
     Flatpages are represented by a standard
     :doc:`Django model </topics/db/models>`,
-    which lives in :source:`django/contrib/flatpages/models.py`. You can access
+    which lives in :source:`django_orm/contrib/flatpages/models.py`. You can access
     flatpage objects via the :doc:`Django database API </topics/db/queries>`.
 
-.. currentmodule:: django.contrib.flatpages
+.. currentmodule:: django_orm.contrib.flatpages
 
 .. admonition:: Check for duplicate flatpage URLs.
 
     If you add or modify flatpages via your own code, you will likely want to
     check for duplicate flatpage URLs within the same site. The flatpage form
     used in the admin performs this validation check, and can be imported from
-    ``django.contrib.flatpages.forms.FlatpageForm`` and used in your own
+    ``django_orm.contrib.flatpages.forms.FlatpageForm`` and used in your own
     views.
 
 Flatpage templates
@@ -241,7 +241,7 @@ which is the flatpage object.
 
 Here's a sample :file:`flatpages/default.html` template:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     <!DOCTYPE html>
     <html>
@@ -258,7 +258,7 @@ both ``flatpage.title`` and ``flatpage.content`` are marked as **not**
 requiring :ref:`automatic HTML escaping <automatic-html-escaping>` in the
 template.
 
-Getting a list of :class:`~django.contrib.flatpages.models.FlatPage` objects in your templates
+Getting a list of :class:`~django_orm.contrib.flatpages.models.FlatPage` objects in your templates
 ==============================================================================================
 
 The flatpages app provides a template tag that allows you to iterate
@@ -270,7 +270,7 @@ tag library <loading-custom-template-libraries>` before you can use
 it. After loading the library, you can retrieve all current flatpages
 via the :ttag:`get_flatpages` tag:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% load flatpages %}
     {% get_flatpages as flatpages %}
@@ -292,7 +292,7 @@ an authenticated user using a ``for`` clause.
 
 For example:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% get_flatpages for someuser as about_pages %}
 
@@ -310,37 +310,37 @@ from the context.
 
 For example:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% get_flatpages '/about/' as about_pages %}
     {% get_flatpages about_prefix as about_pages %}
     {% get_flatpages '/about/' for someuser as about_pages %}
 
-Integrating with :mod:`django.contrib.sitemaps`
+Integrating with :mod:`django_orm.contrib.sitemaps`
 ===============================================
 
-.. currentmodule:: django.contrib.flatpages.sitemaps
+.. currentmodule:: django_orm.contrib.flatpages.sitemaps
 
 .. class:: FlatPageSitemap
 
     The :class:`sitemaps.FlatPageSitemap
-    <django.contrib.flatpages.sitemaps.FlatPageSitemap>` class looks at all
-    publicly visible :mod:`~django.contrib.flatpages` defined for the current
+    <django_orm.contrib.flatpages.sitemaps.FlatPageSitemap>` class looks at all
+    publicly visible :mod:`~django_orm.contrib.flatpages` defined for the current
     :setting:`SITE_ID` (see the :mod:`sites documentation
-    <django.contrib.sites>`) and creates an entry in the sitemap. These entries
-    include only the :attr:`~django.contrib.sitemaps.Sitemap.location`
-    attribute -- not :attr:`~django.contrib.sitemaps.Sitemap.lastmod`,
-    :attr:`~django.contrib.sitemaps.Sitemap.changefreq` or
-    :attr:`~django.contrib.sitemaps.Sitemap.priority`.
+    <django_orm.contrib.sites>`) and creates an entry in the sitemap. These entries
+    include only the :attr:`~django_orm.contrib.sitemaps.Sitemap.location`
+    attribute -- not :attr:`~django_orm.contrib.sitemaps.Sitemap.lastmod`,
+    :attr:`~django_orm.contrib.sitemaps.Sitemap.changefreq` or
+    :attr:`~django_orm.contrib.sitemaps.Sitemap.priority`.
 
 Example
 -------
 
 Here's an example of a URLconf using :class:`FlatPageSitemap`::
 
-    from django.contrib.flatpages.sitemaps import FlatPageSitemap
-    from django.contrib.sitemaps.views import sitemap
-    from django.urls import path
+    from django_orm.contrib.flatpages.sitemaps import FlatPageSitemap
+    from django_orm.contrib.sitemaps.views import sitemap
+    from django_orm.urls import path
 
     urlpatterns = [
         # ...
@@ -348,5 +348,5 @@ Here's an example of a URLconf using :class:`FlatPageSitemap`::
         # the sitemap
         path('sitemap.xml', sitemap,
             {'sitemaps': {'flatpages': FlatPageSitemap}},
-            name='django.contrib.sitemaps.views.sitemap'),
+            name='django_orm.contrib.sitemaps.views.sitemap'),
     ]

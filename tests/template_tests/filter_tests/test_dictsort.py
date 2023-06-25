@@ -1,5 +1,5 @@
-from django.template.defaultfilters import _property_resolver, dictsort
-from django.test import SimpleTestCase
+from django_orm.template.defaultfilters import _property_resolver, dictsort
+from django_orm.test import SimpleTestCase
 
 
 class User:

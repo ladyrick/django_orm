@@ -3,18 +3,18 @@ from unittest import mock
 
 from migrations.test_base import OperationTestBase
 
-from django.db import IntegrityError, NotSupportedError, connection, transaction
-from django.db.migrations.state import ProjectState
-from django.db.models import CheckConstraint, Index, Q, UniqueConstraint
-from django.db.utils import ProgrammingError
-from django.test import modify_settings, override_settings, skipUnlessDBFeature
-from django.test.utils import CaptureQueriesContext
+from django_orm.db import IntegrityError, NotSupportedError, connection, transaction
+from django_orm.db.migrations.state import ProjectState
+from django_orm.db.models import CheckConstraint, Index, Q, UniqueConstraint
+from django_orm.db.utils import ProgrammingError
+from django_orm.test import modify_settings, override_settings, skipUnlessDBFeature
+from django_orm.test.utils import CaptureQueriesContext
 
 from . import PostgreSQLTestCase
 
 try:
-    from django.contrib.postgres.indexes import BrinIndex, BTreeIndex
-    from django.contrib.postgres.operations import (
+    from django_orm.contrib.postgres.indexes import BrinIndex, BTreeIndex
+    from django_orm.contrib.postgres.operations import (
         AddConstraintNotValid,
         AddIndexConcurrently,
         BloomExtension,
@@ -395,7 +395,7 @@ class CreateCollationTests(PostgreSQLTestCase):
         msg = "Non-deterministic collations require PostgreSQL 12+."
         with connection.schema_editor(atomic=False) as editor:
             with mock.patch(
-                "django.db.backends.postgresql.features.DatabaseFeatures."
+                "django_orm.db.backends.postgresql.features.DatabaseFeatures."
                 "supports_non_deterministic_collations",
                 False,
             ):

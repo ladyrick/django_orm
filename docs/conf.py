@@ -114,7 +114,7 @@ copyright = "Django Software Foundation and contributors"
 version = "4.1"
 # The full version, including alpha/beta/rc tags.
 try:
-    from django import VERSION, get_version
+    from django_orm import VERSION, get_version
 except ImportError:
     release = version
 else:
@@ -132,10 +132,10 @@ django_next_version = "4.2"
 
 extlinks = {
     "bpo": ("https://bugs.python.org/issue?@action=redirect&bpo=%s", "bpo-%s"),
-    "commit": ("https://github.com/django/django/commit/%s", "%s"),
+    "commit": ("https://github.com/django_orm/django_orm/commit/%s", "%s"),
     "cve": ("https://nvd.nist.gov/vuln/detail/CVE-%s", "CVE-%s"),
     # A file or directory. GitHub redirects from blob to tree if needed.
-    "source": ("https://github.com/django/django/blob/main/%s", "%s"),
+    "source": ("https://github.com/django_orm/django_orm/blob/main/%s", "%s"),
     "ticket": ("https://code.djangoproject.com/ticket/%s", "#%s"),
 }
 
@@ -265,14 +265,14 @@ html_additional_pages = {}
 # Output file base name for HTML help builder.
 htmlhelp_basename = "Djangodoc"
 
-modindex_common_prefix = ["django."]
+modindex_common_prefix = ["django_orm."]
 
 # Appended to every page
 rst_epilog = """
-.. |django-users| replace:: :ref:`django-users <django-users-mailing-list>`
-.. |django-developers| replace:: :ref:`django-developers <django-developers-mailing-list>`
-.. |django-announce| replace:: :ref:`django-announce <django-announce-mailing-list>`
-.. |django-updates| replace:: :ref:`django-updates <django-updates-mailing-list>`
+.. |django_orm-users| replace:: :ref:`django_orm-users <django_orm-users-mailing-list>`
+.. |django_orm-developers| replace:: :ref:`django_orm-developers <django_orm-developers-mailing-list>`
+.. |django_orm-announce| replace:: :ref:`django_orm-announce <django_orm-announce-mailing-list>`
+.. |django_orm-updates| replace:: :ref:`django_orm-updates <django_orm-updates-mailing-list>`
 """  # NOQA
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -302,7 +302,7 @@ latex_elements = {
 latex_documents = [
     (
         "contents",
-        "django.tex",
+        "django_orm.tex",
         "Django Documentation",
         "Django Software Foundation",
         "manual",
@@ -336,8 +336,8 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (
-        "ref/django-admin",
-        "django-admin",
+        "ref/django_orm-admin",
+        "django_orm-admin",
         "Utility script for the Django web framework",
         ["Django Software Foundation"],
         1,
@@ -352,7 +352,7 @@ man_pages = [
 texinfo_documents = [
     (
         root_doc,
-        "django",
+        "django_orm",
         "",
         "",
         "Django",

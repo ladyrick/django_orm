@@ -1,16 +1,16 @@
 import json
 import pickle
 
-from django.contrib.gis.gdal import (
+from django_orm.contrib.gis.gdal import (
     CoordTransform,
     GDALException,
     OGRGeometry,
     OGRGeomType,
     SpatialReference,
 )
-from django.template import Context
-from django.template.engine import Engine
-from django.test import SimpleTestCase
+from django_orm.template import Context
+from django_orm.template.engine import Engine
+from django_orm.test import SimpleTestCase
 
 from ..test_data import TestDataMixin
 
@@ -48,10 +48,10 @@ class OGRGeomTest(SimpleTestCase, TestDataMixin):
         self.assertNotEqual(OGRGeomType("POINT"), OGRGeomType(6))
 
         # Testing the Django field name equivalent property.
-        self.assertEqual("PointField", OGRGeomType("Point").django)
-        self.assertEqual("GeometryField", OGRGeomType("Geometry").django)
-        self.assertEqual("GeometryField", OGRGeomType("Unknown").django)
-        self.assertIsNone(OGRGeomType("none").django)
+        self.assertEqual("PointField", OGRGeomType("Point").django_orm)
+        self.assertEqual("GeometryField", OGRGeomType("Geometry").django_orm)
+        self.assertEqual("GeometryField", OGRGeomType("Unknown").django_orm)
+        self.assertIsNone(OGRGeomType("none").django_orm)
 
         # 'Geometry' initialization implies an unknown geometry type.
         gt = OGRGeomType("Geometry")
@@ -64,7 +64,7 @@ class OGRGeomTest(SimpleTestCase, TestDataMixin):
         self.assertEqual(OGRGeomType(wkb25bit + 1), "Point25D")
         self.assertEqual(OGRGeomType("MultiLineString25D"), (5 + wkb25bit))
         self.assertEqual(
-            "GeometryCollectionField", OGRGeomType("GeometryCollection25D").django
+            "GeometryCollectionField", OGRGeomType("GeometryCollection25D").django_orm
         )
 
     def test_wkt(self):

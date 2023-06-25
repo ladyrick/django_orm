@@ -2,10 +2,10 @@
 Lookup API reference
 ====================
 
-.. module:: django.db.models.lookups
+.. module:: django_orm.db.models.lookups
    :synopsis: Lookups API
 
-.. currentmodule:: django.db.models
+.. currentmodule:: django_orm.db.models
 
 This document has the API references of lookups, the Django API for building
 the ``WHERE`` clause of a database query. To learn how to *use* lookups, see
@@ -35,7 +35,7 @@ Registration API
 
 Django uses :class:`~lookups.RegisterLookupMixin` to give a class the interface to
 register lookups on itself. The two prominent examples are
-:class:`~django.db.models.Field`, the base class of all model fields, and
+:class:`~django_orm.db.models.Field`, the base class of all model fields, and
 :class:`Transform`, the base class of all Django transforms.
 
 .. class:: lookups.RegisterLookupMixin
@@ -123,7 +123,7 @@ following methods:
 .. attribute:: output_field
 
     Defines the type of class returned by the ``get_lookup()`` method. It must
-    be a :class:`~django.db.models.Field` instance.
+    be a :class:`~django_orm.db.models.Field` instance.
 
 ``Transform`` reference
 =======================
@@ -163,7 +163,7 @@ following methods:
     .. attribute:: output_field
 
         Defines the class this transformation outputs. It must be a
-        :class:`~django.db.models.Field` instance. By default is the same as
+        :class:`~django_orm.db.models.Field` instance. By default is the same as
         its ``lhs.output_field``.
 
 ``Lookup`` reference

@@ -9,33 +9,33 @@ from io import StringIO
 from pathlib import Path
 from unittest import mock, skipIf
 
-from django.core import mail
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.db import DatabaseError, connection
-from django.http import Http404, HttpRequest, HttpResponse
-from django.shortcuts import render
-from django.template import TemplateDoesNotExist
-from django.test import RequestFactory, SimpleTestCase, override_settings
-from django.test.utils import LoggingCaptureMixin
-from django.urls import path, reverse
-from django.urls.converters import IntConverter
-from django.utils.functional import SimpleLazyObject
-from django.utils.regex_helper import _lazy_re_compile
-from django.utils.safestring import mark_safe
-from django.views.debug import (
+from django_orm.core import mail
+from django_orm.core.files.uploadedfile import SimpleUploadedFile
+from django_orm.db import DatabaseError, connection
+from django_orm.http import Http404, HttpRequest, HttpResponse
+from django_orm.shortcuts import render
+from django_orm.template import TemplateDoesNotExist
+from django_orm.test import RequestFactory, SimpleTestCase, override_settings
+from django_orm.test.utils import LoggingCaptureMixin
+from django_orm.urls import path, reverse
+from django_orm.urls.converters import IntConverter
+from django_orm.utils.functional import SimpleLazyObject
+from django_orm.utils.regex_helper import _lazy_re_compile
+from django_orm.utils.safestring import mark_safe
+from django_orm.views.debug import (
     CallableSettingWrapper,
     ExceptionCycleWarning,
     ExceptionReporter,
 )
-from django.views.debug import Path as DebugPath
-from django.views.debug import (
+from django_orm.views.debug import Path as DebugPath
+from django_orm.views.debug import (
     SafeExceptionReporterFilter,
     default_urlconf,
     get_default_exception_reporter_filter,
     technical_404_response,
     technical_500_response,
 )
-from django.views.decorators.debug import sensitive_post_parameters, sensitive_variables
+from django_orm.views.decorators.debug import sensitive_post_parameters, sensitive_variables
 
 from ..views import (
     custom_exception_reporter_filter_view,
@@ -77,27 +77,27 @@ class CallableSettingWrapperTests(SimpleTestCase):
 @override_settings(DEBUG=True, ROOT_URLCONF="view_tests.urls")
 class DebugViewTests(SimpleTestCase):
     def test_files(self):
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             response = self.client.get("/raises/")
         self.assertEqual(response.status_code, 500)
 
         data = {
             "file_data.txt": SimpleUploadedFile("file_data.txt", b"haha"),
         }
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             response = self.client.post("/raises/", data)
         self.assertContains(response, "file_data.txt", status_code=500)
         self.assertNotContains(response, "haha", status_code=500)
 
     def test_400(self):
         # When DEBUG=True, technical_500_template() is called.
-        with self.assertLogs("django.security", "WARNING"):
+        with self.assertLogs("django_orm.security", "WARNING"):
             response = self.client.get("/raises400/")
         self.assertContains(response, '<div class="context" id="', status_code=400)
 
     def test_400_bad_request(self):
         # When DEBUG=True, technical_500_template() is called.
-        with self.assertLogs("django.request", "WARNING") as cm:
+        with self.assertLogs("django_orm.request", "WARNING") as cm:
             response = self.client.get("/raises400_bad_request/")
         self.assertContains(response, '<div class="context" id="', status_code=400)
         self.assertEqual(
@@ -109,7 +109,7 @@ class DebugViewTests(SimpleTestCase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
             }
         ]
     )
@@ -121,11 +121,11 @@ class DebugViewTests(SimpleTestCase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "OPTIONS": {
                     "loaders": [
                         (
-                            "django.template.loaders.locmem.Loader",
+                            "django_orm.template.loaders.locmem.Loader",
                             {
                                 "403.html": (
                                     "This is a test template for a 403 error "
@@ -227,7 +227,7 @@ class DebugViewTests(SimpleTestCase):
         )
 
     def test_technical_500(self):
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             response = self.client.get("/raises500/")
         self.assertContains(
             response,
@@ -235,7 +235,7 @@ class DebugViewTests(SimpleTestCase):
             status_code=500,
             html=True,
         )
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             response = self.client.get("/raises500/", HTTP_ACCEPT="text/plain")
         self.assertContains(
             response,
@@ -244,7 +244,7 @@ class DebugViewTests(SimpleTestCase):
         )
 
     def test_classbased_technical_500(self):
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             response = self.client.get("/classbased500/")
         self.assertContains(
             response,
@@ -252,7 +252,7 @@ class DebugViewTests(SimpleTestCase):
             status_code=500,
             html=True,
         )
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             response = self.client.get("/classbased500/", HTTP_ACCEPT="text/plain")
         self.assertContains(
             response,
@@ -266,7 +266,7 @@ class DebugViewTests(SimpleTestCase):
         be localized.
         """
         with self.settings(DEBUG=True):
-            with self.assertLogs("django.request", "ERROR"):
+            with self.assertLogs("django_orm.request", "ERROR"):
                 response = self.client.get("/raises500/")
             # We look for a HTML fragment of the form
             # '<div class="context" id="c38123208">',
@@ -284,7 +284,7 @@ class DebugViewTests(SimpleTestCase):
             )
 
     def test_template_exceptions(self):
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             try:
                 self.client.get(reverse("template_exception"))
             except Exception:
@@ -301,7 +301,7 @@ class DebugViewTests(SimpleTestCase):
         "Raises OSError instead of TemplateDoesNotExist on Windows.",
     )
     def test_safestring_in_exception(self):
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             response = self.client.get("/safestring_exception/")
             self.assertNotContains(
                 response,
@@ -326,11 +326,11 @@ class DebugViewTests(SimpleTestCase):
             with override_settings(
                 TEMPLATES=[
                     {
-                        "BACKEND": "django.template.backends.django.DjangoTemplates",
+                        "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                         "DIRS": [tempdir],
                     }
                 ]
-            ), self.assertLogs("django.request", "ERROR"):
+            ), self.assertLogs("django_orm.request", "ERROR"):
                 response = self.client.get(
                     reverse(
                         "raises_template_does_not_exist", kwargs={"path": template_name}
@@ -345,7 +345,7 @@ class DebugViewTests(SimpleTestCase):
             # Assert as HTML.
             self.assertContains(
                 response,
-                "<li><code>django.template.loaders.filesystem.Loader</code>: "
+                "<li><code>django_orm.template.loaders.filesystem.Loader</code>: "
                 "%s (Source does not exist)</li>"
                 % os.path.join(tempdir, "notfound.html"),
                 status_code=500,
@@ -356,7 +356,7 @@ class DebugViewTests(SimpleTestCase):
         """
         Make sure if you don't specify a template, the debug view doesn't blow up.
         """
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             with self.assertRaises(TemplateDoesNotExist):
                 self.client.get("/render_no_template/")
 
@@ -405,7 +405,7 @@ class DebugViewTests(SimpleTestCase):
             self.assertContains(response, "Page not found", status_code=404)
 
     def test_exception_reporter_from_request(self):
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             response = self.client.get("/custom_reporter_class_view/")
         self.assertContains(response, "custom traceback text", status_code=500)
 
@@ -413,7 +413,7 @@ class DebugViewTests(SimpleTestCase):
         DEFAULT_EXCEPTION_REPORTER="view_tests.views.CustomExceptionReporter"
     )
     def test_exception_reporter_from_settings(self):
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             response = self.client.get("/raises500/")
         self.assertContains(response, "custom traceback text", status_code=500)
 
@@ -421,7 +421,7 @@ class DebugViewTests(SimpleTestCase):
         DEFAULT_EXCEPTION_REPORTER="view_tests.views.TemplateOverrideExceptionReporter"
     )
     def test_template_override_exception_reporter(self):
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             response = self.client.get("/raises500/")
         self.assertContains(
             response,
@@ -430,7 +430,7 @@ class DebugViewTests(SimpleTestCase):
             html=True,
         )
 
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             response = self.client.get("/raises500/", HTTP_ACCEPT="text/plain")
         self.assertContains(response, "Oh dear, an error occurred!", status_code=500)
 
@@ -461,20 +461,20 @@ class DebugViewQueriesAllowedTests(SimpleTestCase):
     # No template directories are configured, so no templates will be found.
     TEMPLATES=[
         {
-            "BACKEND": "django.template.backends.dummy.TemplateStrings",
+            "BACKEND": "django_orm.template.backends.dummy.TemplateStrings",
         }
     ],
 )
 class NonDjangoTemplatesDebugViewTests(SimpleTestCase):
     def test_400(self):
         # When DEBUG=True, technical_500_template() is called.
-        with self.assertLogs("django.security", "WARNING"):
+        with self.assertLogs("django_orm.security", "WARNING"):
             response = self.client.get("/raises400/")
         self.assertContains(response, '<div class="context" id="', status_code=400)
 
     def test_400_bad_request(self):
         # When DEBUG=True, technical_500_template() is called.
-        with self.assertLogs("django.request", "WARNING") as cm:
+        with self.assertLogs("django_orm.request", "WARNING") as cm:
             response = self.client.get("/raises400_bad_request/")
         self.assertContains(response, '<div class="context" id="', status_code=400)
         self.assertEqual(
@@ -495,7 +495,7 @@ class NonDjangoTemplatesDebugViewTests(SimpleTestCase):
         url = reverse(
             "raises_template_does_not_exist", kwargs={"path": "notfound.html"}
         )
-        with self.assertLogs("django.request", "ERROR"):
+        with self.assertLogs("django_orm.request", "ERROR"):
             response = self.client.get(url)
         self.assertContains(response, '<div class="context" id="', status_code=500)
 
@@ -775,7 +775,7 @@ class ExceptionReporterTests(SimpleTestCase):
         except Exception:
             exc_type, exc_value, tb = sys.exc_info()
         with mock.patch(
-            "django.views.debug.ExceptionReporter._get_source",
+            "django_orm.views.debug.ExceptionReporter._get_source",
             return_value=["wrong source"],
         ):
             request = self.rf.get("/test_view/")

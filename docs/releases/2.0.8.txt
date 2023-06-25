@@ -9,7 +9,7 @@ Django 2.0.8 fixes a security issue and several bugs in 2.0.7.
 CVE-2018-14574: Open redirect possibility in ``CommonMiddleware``
 =================================================================
 
-If the :class:`~django.middleware.common.CommonMiddleware` and the
+If the :class:`~django_orm.middleware.common.CommonMiddleware` and the
 :setting:`APPEND_SLASH` setting are both enabled, and if the project has a
 URL pattern that accepts any path ending in a slash (many content management
 systems have such a pattern), then a request to a maliciously crafted URL of
@@ -25,5 +25,5 @@ Bugfixes
 * Fixed a regression in Django 2.0.7 that broke the ``regex`` lookup on MariaDB
   (even though MariaDB isn't officially supported) (:ticket:`29544`).
 
-* Fixed a regression where ``django.template.Template`` crashed if the
+* Fixed a regression where ``django_orm.template.Template`` crashed if the
   ``template_string`` argument is lazy (:ticket:`29617`).

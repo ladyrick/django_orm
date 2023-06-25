@@ -1,10 +1,10 @@
-from django.contrib.admin.models import CHANGE, LogEntry
-from django.contrib.admin.tests import AdminSeleniumTestCase
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
-from django.core.paginator import Paginator
-from django.test import TestCase, override_settings
-from django.urls import reverse
+from django_orm.contrib.admin.models import CHANGE, LogEntry
+from django_orm.contrib.admin.tests import AdminSeleniumTestCase
+from django_orm.contrib.auth.models import User
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.core.paginator import Paginator
+from django_orm.test import TestCase, override_settings
+from django_orm.urls import reverse
 
 from .models import City, State
 

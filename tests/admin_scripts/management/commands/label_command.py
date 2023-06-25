@@ -1,4 +1,4 @@
-from django.core.management.base import LabelCommand
+from django_orm.core.management.base import LabelCommand
 
 
 class Command(LabelCommand):

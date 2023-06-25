@@ -15,7 +15,7 @@ anyone.
 
 .. _django-users-mailing-list:
 
-``django-users``
+``django_orm-users``
 ================
 
 This is the right place if you are looking to ask any question regarding the
@@ -25,19 +25,19 @@ installation, usage, or debugging of Django.
 
     If it's the first time you send an email to this list, your email must be
     accepted first so don't worry if :ref:`your message does not appear
-    <message-does-not-appear-on-django-users>` instantly.
+    <message-does-not-appear-on-django_orm-users>` instantly.
 
-* `django-users mailing archive`_
-* `django-users subscription email address`_
-* `django-users posting email`_
+* `django_orm-users mailing archive`_
+* `django_orm-users subscription email address`_
+* `django_orm-users posting email`_
 
-.. _django-users mailing archive: https://groups.google.com/g/django-users
-.. _django-users subscription email address: mailto:django-users+subscribe@googlegroups.com
-.. _django-users posting email: mailto:django-users@googlegroups.com
+.. _django-users mailing archive: https://groups.google.com/g/django_orm-users
+.. _django-users subscription email address: mailto:django_orm-users+subscribe@googlegroups.com
+.. _django-users posting email: mailto:django_orm-users@googlegroups.com
 
 .. _django-developers-mailing-list:
 
-``django-developers``
+``django_orm-developers``
 =====================
 
 The discussion about the development of Django itself takes place here.
@@ -49,45 +49,45 @@ answered there.
 .. note::
 
     Please make use of
-    :ref:`django-users mailing list <django-users-mailing-list>` if you want
+    :ref:`django_orm-users mailing list <django_orm-users-mailing-list>` if you want
     to ask for tech support, doing so in this list is inappropriate.
 
-* `django-developers mailing archive`_
-* `django-developers subscription email address`_
-* `django-developers posting email`_
+* `django_orm-developers mailing archive`_
+* `django_orm-developers subscription email address`_
+* `django_orm-developers posting email`_
 
-.. _django-developers mailing archive: https://groups.google.com/g/django-developers
-.. _django-developers subscription email address: mailto:django-developers+subscribe@googlegroups.com
-.. _django-developers posting email: mailto:django-developers@googlegroups.com
+.. _django-developers mailing archive: https://groups.google.com/g/django_orm-developers
+.. _django-developers subscription email address: mailto:django_orm-developers+subscribe@googlegroups.com
+.. _django-developers posting email: mailto:django_orm-developers@googlegroups.com
 
 .. _django-announce-mailing-list:
 
-``django-announce``
+``django_orm-announce``
 ===================
 
 A (very) low-traffic list for announcing :ref:`upcoming security releases
 <security-disclosure>`, new releases of Django, and security advisories.
 
-* `django-announce mailing archive`_
-* `django-announce subscription email address`_
-* `django-announce posting email`_
+* `django_orm-announce mailing archive`_
+* `django_orm-announce subscription email address`_
+* `django_orm-announce posting email`_
 
-.. _django-announce mailing archive: https://groups.google.com/g/django-announce
-.. _django-announce subscription email address: mailto:django-announce+subscribe@googlegroups.com
-.. _django-announce posting email: mailto:django-announce@googlegroups.com
+.. _django-announce mailing archive: https://groups.google.com/g/django_orm-announce
+.. _django-announce subscription email address: mailto:django_orm-announce+subscribe@googlegroups.com
+.. _django-announce posting email: mailto:django_orm-announce@googlegroups.com
 
 .. _django-updates-mailing-list:
 
-``django-updates``
+``django_orm-updates``
 ==================
 
 All the ticket updates are mailed automatically to this list, which is tracked
 by developers and interested community members.
 
-* `django-updates mailing archive`_
-* `django-updates subscription email address`_
-* `django-updates posting email`_
+* `django_orm-updates mailing archive`_
+* `django_orm-updates subscription email address`_
+* `django_orm-updates posting email`_
 
-.. _django-updates mailing archive: https://groups.google.com/g/django-updates
-.. _django-updates subscription email address: mailto:django-updates+subscribe@googlegroups.com
-.. _django-updates posting email: mailto:django-updates@googlegroups.com
+.. _django-updates mailing archive: https://groups.google.com/g/django_orm-updates
+.. _django-updates subscription email address: mailto:django_orm-updates+subscribe@googlegroups.com
+.. _django-updates posting email: mailto:django_orm-updates@googlegroups.com

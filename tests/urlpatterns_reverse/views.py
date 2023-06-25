@@ -1,9 +1,9 @@
 from functools import partial, update_wrapper
 
-from django.contrib.auth.decorators import user_passes_test
-from django.http import HttpResponse
-from django.urls import reverse_lazy
-from django.views.generic import RedirectView
+from django_orm.contrib.auth.decorators import user_passes_test
+from django_orm.http import HttpResponse
+from django_orm.urls import reverse_lazy
+from django_orm.views.generic import RedirectView
 
 
 def empty_view(request, *args, **kwargs):

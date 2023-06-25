@@ -2,15 +2,15 @@ import compileall
 import os
 from importlib import import_module
 
-from django.db import connection, connections
-from django.db.migrations.exceptions import (
+from django_orm.db import connection, connections
+from django_orm.db.migrations.exceptions import (
     AmbiguityError,
     InconsistentMigrationHistory,
     NodeNotFoundError,
 )
-from django.db.migrations.loader import MigrationLoader
-from django.db.migrations.recorder import MigrationRecorder
-from django.test import TestCase, modify_settings, override_settings
+from django_orm.db.migrations.loader import MigrationLoader
+from django_orm.db.migrations.recorder import MigrationRecorder
+from django_orm.test import TestCase, modify_settings, override_settings
 
 from .test_base import MigrationTestBase
 

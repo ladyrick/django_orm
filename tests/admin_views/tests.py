@@ -15,37 +15,37 @@ try:
 except ImportError:
     pytz = None
 
-from django.contrib import admin
-from django.contrib.admin import AdminSite, ModelAdmin
-from django.contrib.admin.helpers import ACTION_CHECKBOX_NAME
-from django.contrib.admin.models import ADDITION, DELETION, LogEntry
-from django.contrib.admin.options import TO_FIELD_VAR
-from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
-from django.contrib.admin.tests import AdminSeleniumTestCase
-from django.contrib.admin.utils import quote
-from django.contrib.admin.views.main import IS_POPUP_VAR
-from django.contrib.auth import REDIRECT_FIELD_NAME, get_permission_codename
-from django.contrib.auth.models import Group, Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.core import mail
-from django.core.checks import Error
-from django.core.files import temp as tempfile
-from django.db import connection
-from django.forms.utils import ErrorList
-from django.template.response import TemplateResponse
-from django.test import (
+from django_orm.contrib import admin
+from django_orm.contrib.admin import AdminSite, ModelAdmin
+from django_orm.contrib.admin.helpers import ACTION_CHECKBOX_NAME
+from django_orm.contrib.admin.models import ADDITION, DELETION, LogEntry
+from django_orm.contrib.admin.options import TO_FIELD_VAR
+from django_orm.contrib.admin.templatetags.admin_urls import add_preserved_filters
+from django_orm.contrib.admin.tests import AdminSeleniumTestCase
+from django_orm.contrib.admin.utils import quote
+from django_orm.contrib.admin.views.main import IS_POPUP_VAR
+from django_orm.contrib.auth import REDIRECT_FIELD_NAME, get_permission_codename
+from django_orm.contrib.auth.models import Group, Permission, User
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.core import mail
+from django_orm.core.checks import Error
+from django_orm.core.files import temp as tempfile
+from django_orm.db import connection
+from django_orm.forms.utils import ErrorList
+from django_orm.template.response import TemplateResponse
+from django_orm.test import (
     TestCase,
     modify_settings,
     override_settings,
     skipUnlessDBFeature,
 )
-from django.test.utils import override_script_prefix
-from django.urls import NoReverseMatch, resolve, reverse
-from django.utils import formats, translation
-from django.utils.cache import get_max_age
-from django.utils.encoding import iri_to_uri
-from django.utils.html import escape
-from django.utils.http import urlencode
+from django_orm.test.utils import override_script_prefix
+from django_orm.urls import NoReverseMatch, resolve, reverse
+from django_orm.utils import formats, translation
+from django_orm.utils.cache import get_max_age
+from django_orm.utils.encoding import iri_to_uri
+from django_orm.utils.html import escape
+from django_orm.utils.http import urlencode
 
 from . import customadmin
 from .admin import CityAdmin, site, site2
@@ -1024,7 +1024,7 @@ class AdminViewBasicTest(AdminViewBasicTestCase):
             self.assertContains(response, "%Y-%m-%d %H:%M:%S")
 
     def test_disallowed_filtering(self):
-        with self.assertLogs("django.security.DisallowedModelAdminLookup", "ERROR"):
+        with self.assertLogs("django_orm.security.DisallowedModelAdminLookup", "ERROR"):
             response = self.client.get(
                 "%s?owner__email__startswith=fuzzy"
                 % reverse("admin:admin_views_album_changelist")
@@ -1067,13 +1067,13 @@ class AdminViewBasicTest(AdminViewBasicTestCase):
 
     def test_disallowed_to_field(self):
         url = reverse("admin:admin_views_section_changelist")
-        with self.assertLogs("django.security.DisallowedModelAdminToField", "ERROR"):
+        with self.assertLogs("django_orm.security.DisallowedModelAdminToField", "ERROR"):
             response = self.client.get(url, {TO_FIELD_VAR: "missing_field"})
         self.assertEqual(response.status_code, 400)
 
         # Specifying a field that is not referred by any other model registered
         # to this admin site should raise an exception.
-        with self.assertLogs("django.security.DisallowedModelAdminToField", "ERROR"):
+        with self.assertLogs("django_orm.security.DisallowedModelAdminToField", "ERROR"):
             response = self.client.get(
                 reverse("admin:admin_views_section_changelist"), {TO_FIELD_VAR: "name"}
             )
@@ -1120,13 +1120,13 @@ class AdminViewBasicTest(AdminViewBasicTestCase):
         # #25622 - Specifying a field of a model only referred by a generic
         # relation should raise DisallowedModelAdminToField.
         url = reverse("admin:admin_views_referencedbygenrel_changelist")
-        with self.assertLogs("django.security.DisallowedModelAdminToField", "ERROR"):
+        with self.assertLogs("django_orm.security.DisallowedModelAdminToField", "ERROR"):
             response = self.client.get(url, {TO_FIELD_VAR: "object_id"})
         self.assertEqual(response.status_code, 400)
 
         # We also want to prevent the add, change, and delete views from
         # leaking a disallowed field value.
-        with self.assertLogs("django.security.DisallowedModelAdminToField", "ERROR"):
+        with self.assertLogs("django_orm.security.DisallowedModelAdminToField", "ERROR"):
             response = self.client.post(
                 reverse("admin:admin_views_section_add"), {TO_FIELD_VAR: "name"}
             )
@@ -1134,12 +1134,12 @@ class AdminViewBasicTest(AdminViewBasicTestCase):
 
         section = Section.objects.create()
         url = reverse("admin:admin_views_section_change", args=(section.pk,))
-        with self.assertLogs("django.security.DisallowedModelAdminToField", "ERROR"):
+        with self.assertLogs("django_orm.security.DisallowedModelAdminToField", "ERROR"):
             response = self.client.post(url, {TO_FIELD_VAR: "name"})
         self.assertEqual(response.status_code, 400)
 
         url = reverse("admin:admin_views_section_delete", args=(section.pk,))
-        with self.assertLogs("django.security.DisallowedModelAdminToField", "ERROR"):
+        with self.assertLogs("django_orm.security.DisallowedModelAdminToField", "ERROR"):
             response = self.client.post(url, {TO_FIELD_VAR: "name"})
         self.assertEqual(response.status_code, 400)
 
@@ -1435,10 +1435,10 @@ class AdminViewBasicTest(AdminViewBasicTestCase):
         ]
         for url in tests:
             with self.subTest(url=url):
-                with self.assertNoLogs("django.template", "DEBUG"):
+                with self.assertNoLogs("django_orm.template", "DEBUG"):
                     self.client.get(url)
         # Login must be after logout.
-        with self.assertNoLogs("django.template", "DEBUG"):
+        with self.assertNoLogs("django_orm.template", "DEBUG"):
             self.client.post(reverse("admin:logout"))
             self.client.get(reverse("admin:login"))
 
@@ -1449,20 +1449,20 @@ class AdminViewBasicTest(AdminViewBasicTestCase):
             "index": "0",
             "_selected_action": self.a1.pk,
         }
-        with self.assertNoLogs("django.template", "DEBUG"):
+        with self.assertNoLogs("django_orm.template", "DEBUG"):
             self.client.post(reverse("admin:admin_views_article_changelist"), post_data)
 
     @override_settings(
         AUTH_PASSWORD_VALIDATORS=[
             {
                 "NAME": (
-                    "django.contrib.auth.password_validation."
+                    "django_orm.contrib.auth.password_validation."
                     "UserAttributeSimilarityValidator"
                 )
             },
             {
                 "NAME": (
-                    "django.contrib.auth.password_validation."
+                    "django_orm.contrib.auth.password_validation."
                     "NumericPasswordValidator"
                 )
             },
@@ -1479,19 +1479,19 @@ class AdminViewBasicTest(AdminViewBasicTestCase):
     AUTH_PASSWORD_VALIDATORS=[
         {
             "NAME": (
-                "django.contrib.auth.password_validation."
+                "django_orm.contrib.auth.password_validation."
                 "UserAttributeSimilarityValidator"
             )
         },
         {
             "NAME": (
-                "django.contrib.auth.password_validation." "NumericPasswordValidator"
+                "django_orm.contrib.auth.password_validation." "NumericPasswordValidator"
             )
         },
     ],
     TEMPLATES=[
         {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
             # Put this app's and the shared tests templates dirs in DIRS to
             # take precedence over the admin's templates dir.
             "DIRS": [
@@ -1501,10 +1501,10 @@ class AdminViewBasicTest(AdminViewBasicTestCase):
             "APP_DIRS": True,
             "OPTIONS": {
                 "context_processors": [
-                    "django.template.context_processors.debug",
-                    "django.template.context_processors.request",
-                    "django.contrib.auth.context_processors.auth",
-                    "django.contrib.messages.context_processors.messages",
+                    "django_orm.template.context_processors.debug",
+                    "django_orm.template.context_processors.request",
+                    "django_orm.contrib.auth.context_processors.auth",
+                    "django_orm.contrib.messages.context_processors.messages",
                 ],
             },
         }
@@ -1967,13 +1967,13 @@ def get_perm(Model, codename):
     # Test with the admin's documented list of required context processors.
     TEMPLATES=[
         {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
             "APP_DIRS": True,
             "OPTIONS": {
                 "context_processors": [
-                    "django.template.context_processors.request",
-                    "django.contrib.auth.context_processors.auth",
-                    "django.contrib.messages.context_processors.messages",
+                    "django_orm.template.context_processors.request",
+                    "django_orm.contrib.auth.context_processors.auth",
+                    "django_orm.contrib.messages.context_processors.messages",
                 ],
             },
         }
@@ -2398,7 +2398,7 @@ class AdminViewPermissionsTest(TestCase):
         # make sure the view removes test cookie
         self.assertIs(self.client.session.test_cookie_worked(), False)
 
-    @mock.patch("django.contrib.admin.options.InlineModelAdmin.has_change_permission")
+    @mock.patch("django_orm.contrib.admin.options.InlineModelAdmin.has_change_permission")
     def test_add_view_with_view_only_inlines(self, has_change_permission):
         """User with add permission to a section but view-only for inlines."""
         self.viewuser.user_permissions.add(
@@ -3198,13 +3198,13 @@ class AdminViewPermissionsTest(TestCase):
     ROOT_URLCONF="admin_views.urls",
     TEMPLATES=[
         {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
             "APP_DIRS": True,
             "OPTIONS": {
                 "context_processors": [
-                    "django.template.context_processors.request",
-                    "django.contrib.auth.context_processors.auth",
-                    "django.contrib.messages.context_processors.messages",
+                    "django_orm.template.context_processors.request",
+                    "django_orm.contrib.auth.context_processors.auth",
+                    "django_orm.contrib.messages.context_processors.messages",
                 ],
             },
         }
@@ -3584,9 +3584,9 @@ class AdminViewDeletedObjectsTest(TestCase):
         should be listed for deletion.
         """
         bookmark = Bookmark.objects.create(name="djangoproject")
-        tag = FunkyTag.objects.create(content_object=bookmark, name="django")
+        tag = FunkyTag.objects.create(content_object=bookmark, name="django_orm")
         tag_url = reverse("admin:admin_views_funkytag_change", args=(tag.id,))
-        should_contain = '<li>Funky tag: <a href="%s">django' % tag_url
+        should_contain = '<li>Funky tag: <a href="%s">django_orm' % tag_url
         response = self.client.get(
             reverse("admin:admin_views_bookmark_delete", args=(bookmark.pk,))
         )
@@ -7282,7 +7282,7 @@ except ImportError:
 @unittest.skipUnless(docutils, "no docutils installed.")
 @override_settings(ROOT_URLCONF="admin_views.urls")
 @modify_settings(
-    INSTALLED_APPS={"append": ["django.contrib.admindocs", "django.contrib.flatpages"]}
+    INSTALLED_APPS={"append": ["django_orm.contrib.admindocs", "django_orm.contrib.flatpages"]}
 )
 class AdminDocsTest(TestCase):
     @classmethod
@@ -7295,7 +7295,7 @@ class AdminDocsTest(TestCase):
         self.client.force_login(self.superuser)
 
     def test_tags(self):
-        response = self.client.get(reverse("django-admindocs-tags"))
+        response = self.client.get(reverse("django_orm-admindocs-tags"))
 
         # The builtin tag group exists
         self.assertContains(response, "<h2>Built-in tags</h2>", count=2, html=True)
@@ -7334,7 +7334,7 @@ class AdminDocsTest(TestCase):
         )
 
     def test_filters(self):
-        response = self.client.get(reverse("django-admindocs-filters"))
+        response = self.client.get(reverse("django_orm-admindocs-filters"))
 
         # The builtin filter group exists
         self.assertContains(response, "<h2>Built-in filters</h2>", count=2, html=True)
@@ -7350,14 +7350,14 @@ class AdminDocsTest(TestCase):
     ROOT_URLCONF="admin_views.urls",
     TEMPLATES=[
         {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
             "APP_DIRS": True,
             "OPTIONS": {
                 "context_processors": [
-                    "django.template.context_processors.debug",
-                    "django.template.context_processors.request",
-                    "django.contrib.auth.context_processors.auth",
-                    "django.contrib.messages.context_processors.messages",
+                    "django_orm.template.context_processors.debug",
+                    "django_orm.template.context_processors.request",
+                    "django_orm.contrib.auth.context_processors.auth",
+                    "django_orm.contrib.messages.context_processors.messages",
                 ],
             },
         }

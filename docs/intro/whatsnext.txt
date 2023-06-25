@@ -123,11 +123,11 @@ ticket system and use your feedback to improve the documentation for everybody.
 
 Note, however, that tickets should explicitly relate to the documentation,
 rather than asking broad tech-support questions. If you need help with your
-particular Django setup, try the |django-users| mailing list or the `#django
+particular Django setup, try the |django_orm-users| mailing list or the `#django_orm
 IRC channel`_ instead.
 
 .. _ticket system: https://code.djangoproject.com/
-.. _#django IRC channel: https://web.libera.chat/#django
+.. _#django_orm IRC channel: https://web.libera.chat/#django_orm
 
 In plain text
 -------------
@@ -150,7 +150,7 @@ Django document:
 
 .. console::
 
-    $ grep -r max_length /path/to/django/docs/
+    $ grep -r max_length /path/to/django_orm/docs/
 
 As HTML, locally
 ----------------
@@ -169,7 +169,7 @@ You can get a local copy of the HTML documentation following a few steps:
 
   .. code-block:: console
 
-        $ cd path/to/django/docs
+        $ cd path/to/django_orm/docs
         $ make html
 
   You'll need `GNU Make`__ installed for this.
@@ -178,7 +178,7 @@ You can get a local copy of the HTML documentation following a few steps:
 
   .. code-block:: bat
 
-        cd path\to\django\docs
+        cd path\to\django_orm\docs
         make.bat html
 
 * The HTML documentation will be placed in ``docs/_build/html``.

@@ -15,7 +15,7 @@ Bugfixes
 * Fixed passing extra HTTP headers to ``AsyncRequestFactory`` request methods
   (:ticket:`32159`).
 
-* Fixed crash of key transforms for :class:`~django.db.models.JSONField` on
+* Fixed crash of key transforms for :class:`~django_orm.db.models.JSONField` on
   PostgreSQL when using on a ``Subquery()`` annotation (:ticket:`32182`).
 
 * Fixed a regression in Django 3.1 that caused a crash of auto-reloader for
@@ -26,9 +26,9 @@ Bugfixes
   ``Q`` object annotation (:ticket:`32200`).
 
 * Fixed a regression in Django 3.1 that caused suppressing connection errors
-  when :class:`~django.db.models.JSONField` is used on SQLite
+  when :class:`~django_orm.db.models.JSONField` is used on SQLite
   (:ticket:`32224`).
 
 * Fixed a crash on SQLite, when ``QuerySet.values()/values_list()`` contained
-  key transforms for :class:`~django.db.models.JSONField` returning non-string
+  key transforms for :class:`~django_orm.db.models.JSONField` returning non-string
   primitive values (:ticket:`32203`).

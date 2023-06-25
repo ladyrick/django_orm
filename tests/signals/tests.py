@@ -1,11 +1,11 @@
 from unittest import mock
 
-from django.apps.registry import Apps
-from django.db import models
-from django.db.models import signals
-from django.dispatch import receiver
-from django.test import SimpleTestCase, TestCase
-from django.test.utils import isolate_apps
+from django_orm.apps.registry import Apps
+from django_orm.db import models
+from django_orm.db.models import signals
+from django_orm.dispatch import receiver
+from django_orm.test import SimpleTestCase, TestCase
+from django_orm.test.utils import isolate_apps
 
 from .models import Author, Book, Car, Page, Person
 

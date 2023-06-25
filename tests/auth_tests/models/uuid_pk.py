@@ -1,7 +1,7 @@
 import uuid
 
-from django.contrib.auth.models import AbstractUser
-from django.db import models
+from django_orm.contrib.auth.models import AbstractUser
+from django_orm.db import models
 
 from .custom_user import RemoveGroupsAndPermissions
 

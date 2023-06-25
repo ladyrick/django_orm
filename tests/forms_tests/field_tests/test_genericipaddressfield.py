@@ -1,6 +1,6 @@
-from django.core.exceptions import ValidationError
-from django.forms import GenericIPAddressField
-from django.test import SimpleTestCase
+from django_orm.core.exceptions import ValidationError
+from django_orm.forms import GenericIPAddressField
+from django_orm.test import SimpleTestCase
 
 
 class GenericIPAddressFieldTest(SimpleTestCase):
@@ -12,7 +12,7 @@ class GenericIPAddressFieldTest(SimpleTestCase):
 
     def test_generic_ipaddress_as_generic(self):
         # The edge cases of the IPv6 validation code are not deeply tested
-        # here, they are covered in the tests for django.utils.ipv6
+        # here, they are covered in the tests for django_orm.utils.ipv6
         f = GenericIPAddressField()
         with self.assertRaisesMessage(ValidationError, "'This field is required.'"):
             f.clean("")

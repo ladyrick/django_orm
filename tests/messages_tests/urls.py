@@ -1,12 +1,12 @@
-from django import forms
-from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import engines
-from django.template.response import TemplateResponse
-from django.urls import path, re_path, reverse
-from django.views.decorators.cache import never_cache
-from django.views.generic.edit import DeleteView, FormView
+from django_orm import forms
+from django_orm.contrib import messages
+from django_orm.contrib.messages.views import SuccessMessageMixin
+from django_orm.http import HttpResponse, HttpResponseRedirect
+from django_orm.template import engines
+from django_orm.template.response import TemplateResponse
+from django_orm.urls import path, re_path, reverse
+from django_orm.views.decorators.cache import never_cache
+from django_orm.views.generic.edit import DeleteView, FormView
 
 from .models import SomeObject
 
@@ -44,13 +44,13 @@ def add_template_response(request, message_type):
 
 @never_cache
 def show(request):
-    template = engines["django"].from_string(TEMPLATE)
+    template = engines["django_orm"].from_string(TEMPLATE)
     return HttpResponse(template.render(request=request))
 
 
 @never_cache
 def show_template_response(request):
-    template = engines["django"].from_string(TEMPLATE)
+    template = engines["django_orm"].from_string(TEMPLATE)
     return TemplateResponse(request, template)
 
 

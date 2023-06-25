@@ -2,8 +2,8 @@ from datetime import date
 from decimal import Decimal
 from unittest import mock
 
-from django.db import connection, transaction
-from django.db.models import (
+from django_orm.db import connection, transaction
+from django_orm.db.models import (
     Case,
     Count,
     DecimalField,
@@ -13,8 +13,8 @@ from django.db.models import (
     Sum,
     When,
 )
-from django.test import TestCase
-from django.test.testcases import skipUnlessDBFeature
+from django_orm.test import TestCase
+from django_orm.test.testcases import skipUnlessDBFeature
 
 from .models import (
     Author,

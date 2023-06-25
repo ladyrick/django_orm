@@ -1,5 +1,5 @@
-from django.template import TemplateDoesNotExist, TemplateSyntaxError
-from django.test import SimpleTestCase
+from django_orm.template import TemplateDoesNotExist, TemplateSyntaxError
+from django_orm.test import SimpleTestCase
 
 from ..utils import setup
 from .test_extends import inheritance_templates

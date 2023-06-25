@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django_orm.urls import path, re_path
 
 urlpatterns = [
     path("/path-starting-with-slash/", lambda x: x),

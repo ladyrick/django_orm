@@ -148,7 +148,7 @@ read more about how to :ref:`filter error reports <filtering-error-reports>`.
 ``AdminEmailHandler``
 ---------------------
 
-The built-in :class:`~django.utils.log.AdminEmailHandler` deserves a mention in
+The built-in :class:`~django_orm.utils.log.AdminEmailHandler` deserves a mention in
 the context of security. If its ``include_html`` option is enabled, the email
 message it sends will contain a full traceback, with names and values of local
 variables at each level of the stack, plus the values of your Django settings
@@ -231,7 +231,7 @@ This configures the parent ``root`` logger to send messages with the
 development.
 
 Next we can add more fine-grained logging. Here's an example of how to make the
-logging system print more messages from just the :ref:`django-logger` named
+logging system print more messages from just the :ref:`django_orm-logger` named
 logger:
 
 .. code-block:: python
@@ -252,7 +252,7 @@ logger:
             'level': 'WARNING',
         },
         'loggers': {
-            'django': {
+            'django_orm': {
                 'handlers': ['console'],
                 'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
                 'propagate': False,
@@ -260,7 +260,7 @@ logger:
         },
     }
 
-By default, this config sends messages from the ``django`` logger of level
+By default, this config sends messages from the ``django_orm`` logger of level
 ``INFO`` or higher to the console. This is the same level as Django's default
 logging config, except that the default config only displays log records when
 ``DEBUG=True``. Django does not log many such ``INFO`` level messages. With
@@ -269,7 +269,7 @@ this config, however, you can also set the environment variable
 verbose as it includes all database queries.
 
 You don't have to log to the console. Here's a configuration which writes all
-logging from the :ref:`django-logger` named logger to a local file:
+logging from the :ref:`django_orm-logger` named logger to a local file:
 
 .. code-block:: python
     :caption: ``settings.py``
@@ -281,11 +281,11 @@ logging from the :ref:`django-logger` named logger to a local file:
             'file': {
                 'level': 'DEBUG',
                 'class': 'logging.FileHandler',
-                'filename': '/path/to/django/debug.log',
+                'filename': '/path/to/django_orm/debug.log',
             },
         },
         'loggers': {
-            'django': {
+            'django_orm': {
                 'handlers': ['file'],
                 'level': 'DEBUG',
                 'propagate': True,
@@ -320,7 +320,7 @@ Finally, here's an example of a fairly complex logging setup:
                 'foo': 'bar',
             },
             'require_debug_true': {
-                '()': 'django.utils.log.RequireDebugTrue',
+                '()': 'django_orm.utils.log.RequireDebugTrue',
             },
         },
         'handlers': {
@@ -332,16 +332,16 @@ Finally, here's an example of a fairly complex logging setup:
             },
             'mail_admins': {
                 'level': 'ERROR',
-                'class': 'django.utils.log.AdminEmailHandler',
+                'class': 'django_orm.utils.log.AdminEmailHandler',
                 'filters': ['special']
             }
         },
         'loggers': {
-            'django': {
+            'django_orm': {
                 'handlers': ['console'],
                 'propagate': True,
             },
-            'django.request': {
+            'django_orm.request': {
                 'handlers': ['mail_admins'],
                 'level': 'ERROR',
                 'propagate': False,
@@ -381,7 +381,7 @@ This logging configuration does the following things:
     ``foo`` will be given a value of ``bar`` when instantiating
     ``SpecialFilter``.
 
-  * ``django.utils.log.RequireDebugTrue``, which passes on records when
+  * ``django_orm.utils.log.RequireDebugTrue``, which passes on records when
     :setting:`DEBUG` is ``True``.
 
 * Defines two handlers:
@@ -390,19 +390,19 @@ This logging configuration does the following things:
     (or higher) message to ``sys.stderr``. This handler uses the ``simple``
     output format.
 
-  * ``mail_admins``, an :class:`~django.utils.log.AdminEmailHandler`, which
+  * ``mail_admins``, an :class:`~django_orm.utils.log.AdminEmailHandler`, which
     emails any ``ERROR`` (or higher) message to the site :setting:`ADMINS`.
     This handler uses the ``special`` filter.
 
 * Configures three loggers:
 
-  * ``django``, which passes all messages to the ``console`` handler.
+  * ``django_orm``, which passes all messages to the ``console`` handler.
 
-  * ``django.request``, which passes all ``ERROR`` messages to
+  * ``django_orm.request``, which passes all ``ERROR`` messages to
     the ``mail_admins`` handler. In addition, this logger is
     marked to *not* propagate messages. This means that log
-    messages written to ``django.request`` will not be handled
-    by the ``django`` logger.
+    messages written to ``django_orm.request`` will not be handled
+    by the ``django_orm`` logger.
 
   * ``myproject.custom``, which passes all messages at ``INFO``
     or higher that also pass the ``special`` filter to two

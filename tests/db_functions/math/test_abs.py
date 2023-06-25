@@ -1,9 +1,9 @@
 from decimal import Decimal
 
-from django.db.models import DecimalField
-from django.db.models.functions import Abs
-from django.test import TestCase
-from django.test.utils import register_lookup
+from django_orm.db.models import DecimalField
+from django_orm.db.models.functions import Abs
+from django_orm.test import TestCase
+from django_orm.test.utils import register_lookup
 
 from ..models import DecimalModel, FloatModel, IntegerModel
 

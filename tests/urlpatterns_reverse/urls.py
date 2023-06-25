@@ -1,4 +1,4 @@
-from django.urls import include, path, re_path
+from django_orm.urls import include, path, re_path
 
 from .views import (
     absolute_kwargs_view,

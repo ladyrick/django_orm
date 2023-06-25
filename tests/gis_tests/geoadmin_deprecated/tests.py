@@ -1,14 +1,14 @@
-from django.contrib.gis import admin
-from django.contrib.gis.geos import Point
-from django.test import SimpleTestCase, ignore_warnings, override_settings
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.contrib.gis import admin
+from django_orm.contrib.gis.geos import Point
+from django_orm.test import SimpleTestCase, ignore_warnings, override_settings
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from .admin import UnmodifiableAdmin
 from .models import City, site
 
 
 @ignore_warnings(category=RemovedInDjango50Warning)
-@override_settings(ROOT_URLCONF="django.contrib.gis.tests.geoadmin.urls")
+@override_settings(ROOT_URLCONF="django_orm.contrib.gis.tests.geoadmin.urls")
 class GeoAdminTest(SimpleTestCase):
     def test_ensure_geographic_media(self):
         geoadmin = site._registry[City]
@@ -82,7 +82,7 @@ class GeoAdminTest(SimpleTestCase):
     def test_olwidget_empty_string(self):
         geoadmin = site._registry[City]
         form = geoadmin.get_changelist_form(None)({"point": ""})
-        with self.assertNoLogs("django.contrib.gis", "ERROR"):
+        with self.assertNoLogs("django_orm.contrib.gis", "ERROR"):
             output = str(form["point"])
         self.assertInHTML(
             '<textarea id="id_point" class="vWKTField required" cols="150"'
@@ -93,7 +93,7 @@ class GeoAdminTest(SimpleTestCase):
     def test_olwidget_invalid_string(self):
         geoadmin = site._registry[City]
         form = geoadmin.get_changelist_form(None)({"point": "INVALID()"})
-        with self.assertLogs("django.contrib.gis", "ERROR") as cm:
+        with self.assertLogs("django_orm.contrib.gis", "ERROR") as cm:
             output = str(form["point"])
         self.assertInHTML(
             '<textarea id="id_point" class="vWKTField required" cols="150"'
@@ -117,9 +117,9 @@ class DeprecationTests(SimpleTestCase):
             pass
 
         msg = (
-            "django.contrib.gis.admin.GeoModelAdmin and OSMGeoAdmin are "
-            "deprecated in favor of django.contrib.admin.ModelAdmin and "
-            "django.contrib.gis.admin.GISModelAdmin."
+            "django_orm.contrib.gis.admin.GeoModelAdmin and OSMGeoAdmin are "
+            "deprecated in favor of django_orm.contrib.admin.ModelAdmin and "
+            "django_orm.contrib.gis.admin.GISModelAdmin."
         )
         with self.assertRaisesMessage(RemovedInDjango50Warning, msg):
             DeprecatedOSMGeoAdmin(City, site)
@@ -127,6 +127,6 @@ class DeprecationTests(SimpleTestCase):
             DeprecatedGeoModelAdmin(City, site)
 
     def test_openlayerswidget_warning(self):
-        msg = "django.contrib.gis.admin.OpenLayersWidget is deprecated."
+        msg = "django_orm.contrib.gis.admin.OpenLayersWidget is deprecated."
         with self.assertRaisesMessage(RemovedInDjango50Warning, msg):
             admin.OpenLayersWidget()

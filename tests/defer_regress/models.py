@@ -2,7 +2,7 @@
 Regression tests for defer() / only() behavior.
 """
 
-from django.db import models
+from django_orm.db import models
 
 
 class Item(models.Model):

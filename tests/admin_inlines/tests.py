@@ -1,10 +1,10 @@
-from django.contrib.admin import ModelAdmin, TabularInline
-from django.contrib.admin.helpers import InlineAdminForm
-from django.contrib.admin.tests import AdminSeleniumTestCase
-from django.contrib.auth.models import Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.test import RequestFactory, TestCase, override_settings
-from django.urls import reverse
+from django_orm.contrib.admin import ModelAdmin, TabularInline
+from django_orm.contrib.admin.helpers import InlineAdminForm
+from django_orm.contrib.admin.tests import AdminSeleniumTestCase
+from django_orm.contrib.auth.models import Permission, User
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.test import RequestFactory, TestCase, override_settings
+from django_orm.urls import reverse
 
 from .admin import InnerInline
 from .admin import site as admin_site

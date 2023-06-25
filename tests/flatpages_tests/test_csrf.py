@@ -1,24 +1,24 @@
-from django.contrib.auth.models import User
-from django.contrib.flatpages.models import FlatPage
-from django.contrib.sites.models import Site
-from django.test import Client, TestCase, modify_settings, override_settings
+from django_orm.contrib.auth.models import User
+from django_orm.contrib.flatpages.models import FlatPage
+from django_orm.contrib.sites.models import Site
+from django_orm.test import Client, TestCase, modify_settings, override_settings
 
 from .settings import FLATPAGES_TEMPLATES
 
 
-@modify_settings(INSTALLED_APPS={"append": "django.contrib.flatpages"})
+@modify_settings(INSTALLED_APPS={"append": "django_orm.contrib.flatpages"})
 @override_settings(
     LOGIN_URL="/accounts/login/",
     MIDDLEWARE=[
-        "django.middleware.common.CommonMiddleware",
-        "django.contrib.sessions.middleware.SessionMiddleware",
-        "django.middleware.csrf.CsrfViewMiddleware",
-        "django.contrib.auth.middleware.AuthenticationMiddleware",
-        "django.contrib.messages.middleware.MessageMiddleware",
-        "django.contrib.flatpages.middleware.FlatpageFallbackMiddleware",
+        "django_orm.middleware.common.CommonMiddleware",
+        "django_orm.contrib.sessions.middleware.SessionMiddleware",
+        "django_orm.middleware.csrf.CsrfViewMiddleware",
+        "django_orm.contrib.auth.middleware.AuthenticationMiddleware",
+        "django_orm.contrib.messages.middleware.MessageMiddleware",
+        "django_orm.contrib.flatpages.middleware.FlatpageFallbackMiddleware",
     ],
     ROOT_URLCONF="flatpages_tests.urls",
-    CSRF_FAILURE_VIEW="django.views.csrf.csrf_failure",
+    CSRF_FAILURE_VIEW="django_orm.views.csrf.csrf_failure",
     TEMPLATES=FLATPAGES_TEMPLATES,
     SITE_ID=1,
 )

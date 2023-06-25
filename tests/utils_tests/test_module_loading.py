@@ -4,14 +4,14 @@ import unittest
 from importlib import import_module
 from zipimport import zipimporter
 
-from django.test import SimpleTestCase, modify_settings
-from django.test.utils import extend_sys_path
-from django.utils.module_loading import (
+from django_orm.test import SimpleTestCase, modify_settings
+from django_orm.test.utils import extend_sys_path
+from django_orm.utils.module_loading import (
     autodiscover_modules,
     import_string,
     module_has_submodule,
 )
-from django.utils.version import PY310
+from django_orm.utils.version import PY310
 
 
 class DefaultLoader(unittest.TestCase):
@@ -36,9 +36,9 @@ class DefaultLoader(unittest.TestCase):
             import_module("utils_tests.test_module.no_such_module")
 
         # A child that doesn't exist, but is the name of a package on the path
-        self.assertFalse(module_has_submodule(test_module, "django"))
+        self.assertFalse(module_has_submodule(test_module, "django_orm"))
         with self.assertRaises(ImportError):
-            import_module("utils_tests.test_module.django")
+            import_module("utils_tests.test_module.django_orm")
 
         # Don't be confused by caching of import misses
         import types  # NOQA: causes attempted import of utils_tests.types
@@ -131,7 +131,7 @@ class EggLoader(unittest.TestCase):
 
 class ModuleImportTests(SimpleTestCase):
     def test_import_string(self):
-        cls = import_string("django.utils.module_loading.import_string")
+        cls = import_string("django_orm.utils.module_loading.import_string")
         self.assertEqual(cls, import_string)
 
         # Test exceptions raised

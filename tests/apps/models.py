@@ -1,5 +1,5 @@
-from django.apps.registry import Apps
-from django.db import models
+from django_orm.apps.registry import Apps
+from django_orm.db import models
 
 # We're testing app registry presence on load, so this is handy.
 

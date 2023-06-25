@@ -84,8 +84,8 @@ two supported by Django are `pylibmc`_ and `pymemcache`_.
 To use Memcached with Django:
 
 * Set :setting:`BACKEND <CACHES-BACKEND>` to
-  ``django.core.cache.backends.memcached.PyMemcacheCache`` or
-  ``django.core.cache.backends.memcached.PyLibMCCache`` (depending on your
+  ``django_orm.core.cache.backends.memcached.PyMemcacheCache`` or
+  ``django_orm.core.cache.backends.memcached.PyLibMCCache`` (depending on your
   chosen memcached binding)
 
 * Set :setting:`LOCATION <CACHES-LOCATION>` to ``ip:port`` values,
@@ -98,7 +98,7 @@ the ``pymemcache`` binding::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+            'BACKEND': 'django_orm.core.cache.backends.memcached.PyMemcacheCache',
             'LOCATION': '127.0.0.1:11211',
         }
     }
@@ -108,7 +108,7 @@ In this example, Memcached is available through a local Unix socket file
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+            'BACKEND': 'django_orm.core.cache.backends.memcached.PyMemcacheCache',
             'LOCATION': 'unix:/tmp/memcached.sock',
         }
     }
@@ -126,7 +126,7 @@ address 172.19.26.240 and 172.19.26.242, both on port 11211::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+            'BACKEND': 'django_orm.core.cache.backends.memcached.PyMemcacheCache',
             'LOCATION': [
                 '172.19.26.240:11211',
                 '172.19.26.242:11211',
@@ -140,7 +140,7 @@ on the IP addresses 172.19.26.240 (port 11211), 172.19.26.242 (port 11212), and
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+            'BACKEND': 'django_orm.core.cache.backends.memcached.PyMemcacheCache',
             'LOCATION': [
                 '172.19.26.240:11211',
                 '172.19.26.242:11212',
@@ -189,7 +189,7 @@ additional `hiredis-py`_ package is also recommended.
 To use Redis as your cache backend with Django:
 
 * Set :setting:`BACKEND <CACHES-BACKEND>` to
-  ``django.core.cache.backends.redis.RedisCache``.
+  ``django_orm.core.cache.backends.redis.RedisCache``.
 
 * Set :setting:`LOCATION <CACHES-LOCATION>` to the URL pointing to your Redis
   instance, using the appropriate scheme. See the ``redis-py`` docs for
@@ -200,7 +200,7 @@ For example, if Redis is running on localhost (127.0.0.1) port 6379::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'BACKEND': 'django_orm.core.cache.backends.redis.RedisCache',
             'LOCATION': 'redis://127.0.0.1:6379',
         }
     }
@@ -210,7 +210,7 @@ username and password, add them in the ``LOCATION`` along with the URL::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'BACKEND': 'django_orm.core.cache.backends.redis.RedisCache',
             'LOCATION': 'redis://username:password@127.0.0.1:6379',
         }
     }
@@ -223,7 +223,7 @@ chosen at random::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'BACKEND': 'django_orm.core.cache.backends.redis.RedisCache',
             'LOCATION': [
                 'redis://127.0.0.1:6379', # leader
                 'redis://127.0.0.1:6378', # read-replica 1
@@ -243,7 +243,7 @@ got a fast, well-indexed database server.
 To use a database table as your cache backend:
 
 * Set :setting:`BACKEND <CACHES-BACKEND>` to
-  ``django.core.cache.backends.db.DatabaseCache``
+  ``django_orm.core.cache.backends.db.DatabaseCache``
 
 * Set :setting:`LOCATION <CACHES-LOCATION>` to ``tablename``, the name of the
   database table. This name can be whatever you want, as long as it's a valid
@@ -253,7 +253,7 @@ In this example, the cache table's name is ``my_cache_table``::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+            'BACKEND': 'django_orm.core.cache.backends.db.DatabaseCache',
             'LOCATION': 'my_cache_table',
         }
     }
@@ -333,13 +333,13 @@ Filesystem caching
 
 The file-based backend serializes and stores each cache value as a separate
 file. To use this backend set :setting:`BACKEND <CACHES-BACKEND>` to
-``"django.core.cache.backends.filebased.FileBasedCache"`` and
+``"django_orm.core.cache.backends.filebased.FileBasedCache"`` and
 :setting:`LOCATION <CACHES-LOCATION>` to a suitable directory. For example,
 to store cached data in ``/var/tmp/django_cache``, use this setting::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+            'BACKEND': 'django_orm.core.cache.backends.filebased.FileBasedCache',
             'LOCATION': '/var/tmp/django_cache',
         }
     }
@@ -349,7 +349,7 @@ like this::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+            'BACKEND': 'django_orm.core.cache.backends.filebased.FileBasedCache',
             'LOCATION': 'c:/foo/bar',
         }
     }
@@ -384,12 +384,12 @@ This is the default cache if another is not specified in your settings file. If
 you want the speed advantages of in-memory caching but don't have the capability
 of running Memcached, consider the local-memory cache backend. This cache is
 per-process (see below) and thread-safe. To use it, set :setting:`BACKEND
-<CACHES-BACKEND>` to ``"django.core.cache.backends.locmem.LocMemCache"``. For
+<CACHES-BACKEND>` to ``"django_orm.core.cache.backends.locmem.LocMemCache"``. For
 example::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'BACKEND': 'django_orm.core.cache.backends.locmem.LocMemCache',
             'LOCATION': 'unique-snowflake',
         }
     }
@@ -420,7 +420,7 @@ activate dummy caching, set :setting:`BACKEND <CACHES-BACKEND>` like so::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+            'BACKEND': 'django_orm.core.cache.backends.dummy.DummyCache',
         }
     }
 
@@ -440,7 +440,7 @@ cache backend with Django, use the Python import path as the
 
 If you're building your own backend, you can use the standard cache backends
 as reference implementations. You'll find the code in the
-``django/core/cache/backends/`` directory of the Django source.
+``django_orm/core/cache/backends/`` directory of the Django source.
 
 Note: Without a really compelling reason, such as a host that doesn't support
 them, you should stick to the cache backends included with Django. They've
@@ -514,7 +514,7 @@ of 60 seconds, and a maximum capacity of 1000 items::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+            'BACKEND': 'django_orm.core.cache.backends.filebased.FileBasedCache',
             'LOCATION': '/var/tmp/django_cache',
             'TIMEOUT': 60,
             'OPTIONS': {
@@ -528,7 +528,7 @@ the binary protocol, SASL authentication, and the ``ketama`` behavior mode::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+            'BACKEND': 'django_orm.core.cache.backends.memcached.PyLibMCCache',
             'LOCATION': '127.0.0.1:11211',
             'OPTIONS': {
                 'binary': True,
@@ -548,7 +548,7 @@ flag on the connection's socket::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+            'BACKEND': 'django_orm.core.cache.backends.memcached.PyMemcacheCache',
             'LOCATION': '127.0.0.1:11211',
             'OPTIONS': {
                 'no_delay': True,
@@ -567,7 +567,7 @@ class`_ (``redis.ConnectionPool`` is used by default)::
 
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'BACKEND': 'django_orm.core.cache.backends.redis.RedisCache',
             'LOCATION': 'redis://127.0.0.1:6379',
             'OPTIONS': {
                 'db': '10',
@@ -587,14 +587,14 @@ The per-site cache
 
 Once the cache is set up, the simplest way to use caching is to cache your
 entire site. You'll need to add
-``'django.middleware.cache.UpdateCacheMiddleware'`` and
-``'django.middleware.cache.FetchFromCacheMiddleware'`` to your
+``'django_orm.middleware.cache.UpdateCacheMiddleware'`` and
+``'django_orm.middleware.cache.FetchFromCacheMiddleware'`` to your
 :setting:`MIDDLEWARE` setting, as in this example::
 
     MIDDLEWARE = [
-        'django.middleware.cache.UpdateCacheMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.cache.FetchFromCacheMiddleware',
+        'django_orm.middleware.cache.UpdateCacheMiddleware',
+        'django_orm.middleware.common.CommonMiddleware',
+        'django_orm.middleware.cache.FetchFromCacheMiddleware',
     ]
 
 .. note::
@@ -621,7 +621,7 @@ the same response headers as the corresponding GET request; in which case it can
 return a cached GET response for HEAD request.
 
 Additionally, ``UpdateCacheMiddleware`` automatically sets a few headers in
-each :class:`~django.http.HttpResponse` which affect :ref:`downstream caches
+each :class:`~django_orm.http.HttpResponse` which affect :ref:`downstream caches
 <downstream-caches>`:
 
 * Sets the ``Expires`` header to the current date/time plus the defined
@@ -635,17 +635,17 @@ See :doc:`/topics/http/middleware` for more on middleware.
 If a view sets its own cache expiry time (i.e. it has a ``max-age`` section in
 its ``Cache-Control`` header) then the page will be cached until the expiry
 time, rather than :setting:`CACHE_MIDDLEWARE_SECONDS`. Using the decorators in
-``django.views.decorators.cache`` you can easily set a view's expiry time
-(using the :func:`~django.views.decorators.cache.cache_control` decorator) or
+``django_orm.views.decorators.cache`` you can easily set a view's expiry time
+(using the :func:`~django_orm.views.decorators.cache.cache_control` decorator) or
 disable caching for a view (using the
-:func:`~django.views.decorators.cache.never_cache` decorator). See the
+:func:`~django_orm.views.decorators.cache.never_cache` decorator). See the
 `using other headers`__ section for more on these decorators.
 
 .. _i18n-cache-key:
 
 If :setting:`USE_I18N` is set to ``True`` then the generated cache key will
 include the name of the active :term:`language<language code>` -- see also
-:ref:`how-django-discovers-language-preference`). This allows you to easily
+:ref:`how-django_orm-discovers-language-preference`). This allows you to easily
 cache multilingual sites without having to create the cache key yourself.
 
 Cache keys also include the :ref:`current time zone
@@ -656,13 +656,13 @@ __ `Controlling cache: Using other headers`_
 The per-view cache
 ==================
 
-.. function:: django.views.decorators.cache.cache_page(timeout, *, cache=None, key_prefix=None)
+.. function:: django_orm.views.decorators.cache.cache_page(timeout, *, cache=None, key_prefix=None)
 
 A more granular way to use the caching framework is by caching the output of
-individual views. ``django.views.decorators.cache`` defines a ``cache_page``
+individual views. ``django_orm.views.decorators.cache`` defines a ``cache_page``
 decorator that will automatically cache the view's response for you::
 
-    from django.views.decorators.cache import cache_page
+    from django_orm.views.decorators.cache import cache_page
 
     @cache_page(60 * 15)
     def my_view(request):
@@ -737,7 +737,7 @@ to it in the URLconf. Here's the old URLconf from earlier::
 
 Here's the same thing, with ``my_view`` wrapped in ``cache_page``::
 
-    from django.views.decorators.cache import cache_page
+    from django_orm.views.decorators.cache import cache_page
 
     urlpatterns = [
         path('foo/<int:code>/', cache_page(60 * 15)(my_view)),
@@ -758,7 +758,7 @@ and the name to give the cache fragment. The fragment is cached forever if
 timeout is ``None``. The name will be taken as is, do not use a variable. For
 example:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% load cache %}
     {% cache 500 sidebar %}
@@ -772,7 +772,7 @@ of your site. Do this by passing one or more additional arguments, which may be
 variables with or without filters, to the ``{% cache %}`` template tag to
 uniquely identify the cache fragment:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% load cache %}
     {% cache 500 sidebar request.user.username %}
@@ -785,7 +785,7 @@ tag you could use one of the
 :ref:`translation-specific variables<template-translation-vars>` available in
 templates to achieve the same result:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% load i18n %}
     {% load cache %}
@@ -801,7 +801,7 @@ resolves to an integer value. For example, if the template variable
 ``my_timeout`` is set to the value ``600``, then the following two examples are
 equivalent:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% cache 600 sidebar %} ... {% endcache %}
     {% cache my_timeout sidebar %} ... {% endcache %}
@@ -814,13 +814,13 @@ If no such cache exists, it will fall back to using the default cache. You may
 select an alternate cache backend to use with the ``using`` keyword argument,
 which must be the last argument to the tag.
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% cache 300 local-thing ...  using="localcache" %}
 
 It is considered an error to specify a cache name that is not configured.
 
-.. function:: django.core.cache.utils.make_template_fragment_key(fragment_name, vary_on=None)
+.. function:: django_orm.core.cache.utils.make_template_fragment_key(fragment_name, vary_on=None)
 
 If you want to obtain the cache key used for a cached fragment, you can use
 ``make_template_fragment_key``. ``fragment_name`` is the same as second argument
@@ -830,8 +830,8 @@ a cached item, for example:
 
 .. code-block:: pycon
 
-    >>> from django.core.cache import cache
-    >>> from django.core.cache.utils import make_template_fragment_key
+    >>> from django_orm.core.cache import cache
+    >>> from django_orm.core.cache.utils import make_template_fragment_key
     # cache key for {% cache 500 sidebar username %}
     >>> key = make_template_fragment_key('sidebar', [username])
     >>> cache.delete(key) # invalidates cached template fragment
@@ -864,14 +864,14 @@ pickling.)
 Accessing the cache
 -------------------
 
-.. data:: django.core.cache.caches
+.. data:: django_orm.core.cache.caches
 
     You can access the caches configured in the :setting:`CACHES` setting
-    through a dict-like object: ``django.core.cache.caches``. Repeated
+    through a dict-like object: ``django_orm.core.cache.caches``. Repeated
     requests for the same alias in the same thread will return the same
     object.
 
-        >>> from django.core.cache import caches
+        >>> from django_orm.core.cache import caches
         >>> cache1 = caches['myalias']
         >>> cache2 = caches['myalias']
         >>> cache1 is cache2
@@ -883,12 +883,12 @@ Accessing the cache
     To provide thread-safety, a different instance of the cache backend will
     be returned for each thread.
 
-.. data:: django.core.cache.cache
+.. data:: django_orm.core.cache.cache
 
     As a shortcut, the default cache is available as
-    ``django.core.cache.cache``::
+    ``django_orm.core.cache.cache``::
 
-        >>> from django.core.cache import cache
+        >>> from django_orm.core.cache import cache
 
     This object is equivalent to ``caches['default']``.
 
@@ -897,7 +897,7 @@ Accessing the cache
 Basic usage
 -----------
 
-.. currentmodule:: django.core.caches
+.. currentmodule:: django_orm.core.caches
 
 The basic interface is:
 
@@ -1183,7 +1183,7 @@ Memcached, the most commonly-used production cache backend, does not allow
 cache keys longer than 250 characters or containing whitespace or control
 characters, and using such keys will cause an exception. To encourage
 cache-portable code and minimize unpleasant surprises, the other built-in cache
-backends issue a warning (``django.core.cache.backends.base.CacheKeyWarning``)
+backends issue a warning (``django_orm.core.cache.backends.base.CacheKeyWarning``)
 if a key is used that would cause an error on memcached.
 
 If you are using a production backend that can accept a wider range of keys (a
@@ -1194,7 +1194,7 @@ this code in the ``management`` module of one of your
 
      import warnings
 
-     from django.core.cache import CacheKeyWarning
+     from django_orm.core.cache import CacheKeyWarning
 
      warnings.simplefilter("ignore", CacheKeyWarning)
 
@@ -1203,7 +1203,7 @@ built-in backends, you can subclass it, override just the ``validate_key``
 method, and follow the instructions for `using a custom cache backend`_. For
 instance, to do this for the ``locmem`` backend, put this code in a module::
 
-    from django.core.cache.backends.locmem import LocMemCache
+    from django_orm.core.cache.backends.locmem import LocMemCache
 
     class CustomLocMemCache(LocMemCache):
         def validate_key(self, key):
@@ -1223,7 +1223,7 @@ Asynchronous support
 Django has developing support for asynchronous cache backends, but does not
 yet support asynchronous caching. It will be coming in a future release.
 
-``django.core.cache.backends.base.BaseCache`` has async variants of :ref:`all
+``django_orm.core.cache.backends.base.BaseCache`` has async variants of :ref:`all
 base methods <cache-basic-interface>`. By convention, the asynchronous versions
 of all methods are prefixed with ``a``. By default, the arguments for both
 variants are the same::
@@ -1298,9 +1298,9 @@ as a cookie, or a language, or a user-agent -- you'll need to use the ``Vary``
 header to tell caching mechanisms that the page output depends on those things.
 
 To do this in Django, use the convenient
-:func:`django.views.decorators.vary.vary_on_headers` view decorator, like so::
+:func:`django_orm.views.decorators.vary.vary_on_headers` view decorator, like so::
 
-    from django.views.decorators.vary import vary_on_headers
+    from django_orm.views.decorators.vary import vary_on_headers
 
     @vary_on_headers('User-Agent')
     def my_view(request):
@@ -1328,7 +1328,7 @@ different from a request with the user-agent ``Mozilla`` and the cookie value
 ``foo=ham``.
 
 Because varying on cookie is so common, there's a
-:func:`django.views.decorators.vary.vary_on_cookie` decorator. These two views
+:func:`django_orm.views.decorators.vary.vary_on_cookie` decorator. These two views
 are equivalent::
 
     @vary_on_cookie
@@ -1342,11 +1342,11 @@ are equivalent::
 The headers you pass to ``vary_on_headers`` are not case sensitive;
 ``"User-Agent"`` is the same thing as ``"user-agent"``.
 
-You can also use a helper function, :func:`django.utils.cache.patch_vary_headers`,
+You can also use a helper function, :func:`django_orm.utils.cache.patch_vary_headers`,
 directly. This function sets, or adds to, the ``Vary header``. For example::
 
-    from django.shortcuts import render
-    from django.utils.cache import patch_vary_headers
+    from django_orm.shortcuts import render
+    from django_orm.utils.cache import patch_vary_headers
 
     def my_view(request):
         ...
@@ -1354,7 +1354,7 @@ directly. This function sets, or adds to, the ``Vary header``. For example::
         patch_vary_headers(response, ['Cookie'])
         return response
 
-``patch_vary_headers`` takes an :class:`~django.http.HttpResponse` instance as
+``patch_vary_headers`` takes an :class:`~django_orm.http.HttpResponse` instance as
 its first argument and a list/tuple of case-insensitive header names as its
 second argument.
 
@@ -1375,10 +1375,10 @@ public cache. So web applications need a way to tell caches which data is
 private and which is public.
 
 The solution is to indicate a page's cache should be "private." To do this in
-Django, use the :func:`~django.views.decorators.cache.cache_control` view
+Django, use the :func:`~django_orm.views.decorators.cache.cache_control` view
 decorator. Example::
 
-    from django.views.decorators.cache import cache_control
+    from django_orm.views.decorators.cache import cache_control
 
     @cache_control(private=True)
     def my_view(request):
@@ -1392,12 +1392,12 @@ exclusive. The decorator ensures that the "public" directive is removed if
 "private" should be set (and vice versa). An example use of the two directives
 would be a blog site that offers both private and public entries. Public
 entries may be cached on any shared cache. The following code uses
-:func:`~django.utils.cache.patch_cache_control`, the manual way to modify the
+:func:`~django_orm.utils.cache.patch_cache_control`, the manual way to modify the
 cache control header (it is internally called by the
-:func:`~django.views.decorators.cache.cache_control` decorator)::
+:func:`~django_orm.views.decorators.cache.cache_control` decorator)::
 
-    from django.views.decorators.cache import patch_cache_control
-    from django.views.decorators.vary import vary_on_cookie
+    from django_orm.views.decorators.cache import patch_cache_control
+    from django_orm.views.decorators.vary import vary_on_cookie
 
     @vary_on_cookie
     def list_blog_entries_view(request):
@@ -1416,7 +1416,7 @@ server-side cache framework, you can still tell clients to cache a view for a
 certain amount of time with the :rfc:`max-age <7234#section-5.2.2.8>`
 directive::
 
-    from django.views.decorators.cache import cache_control
+    from django_orm.views.decorators.cache import cache_control
 
     @cache_control(max_age=3600)
     def my_view(request):
@@ -1425,7 +1425,7 @@ directive::
 (If you *do* use the caching middleware, it already sets the ``max-age`` with
 the value of the :setting:`CACHE_MIDDLEWARE_SECONDS` setting. In that case,
 the custom ``max_age`` from the
-:func:`~django.views.decorators.cache.cache_control` decorator will take
+:func:`~django_orm.views.decorators.cache.cache_control` decorator will take
 precedence, and the header values will be merged correctly.)
 
 Any valid ``Cache-Control`` response directive is valid in ``cache_control()``.
@@ -1442,11 +1442,11 @@ The full list of known directives can be found in the `IANA registry`_
 .. _IANA registry: https://www.iana.org/assignments/http-cache-directives/http-cache-directives.xhtml
 
 If you want to use headers to disable caching altogether,
-:func:`~django.views.decorators.cache.never_cache` is a view decorator that
+:func:`~django_orm.views.decorators.cache.never_cache` is a view decorator that
 adds headers to ensure the response won't be cached by browsers or other
 caches. Example::
 
-    from django.views.decorators.cache import never_cache
+    from django_orm.views.decorators.cache import never_cache
 
     @never_cache
     def myview(request):

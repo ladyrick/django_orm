@@ -1,7 +1,7 @@
 import asyncio
 
-from django.core.cache import CacheKeyWarning, cache
-from django.test import SimpleTestCase, override_settings
+from django_orm.core.cache import CacheKeyWarning, cache
+from django_orm.test import SimpleTestCase, override_settings
 
 from .tests import KEY_ERRORS_WITH_MEMCACHED_MSG
 
@@ -9,7 +9,7 @@ from .tests import KEY_ERRORS_WITH_MEMCACHED_MSG
 @override_settings(
     CACHES={
         "default": {
-            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+            "BACKEND": "django_orm.core.cache.backends.dummy.DummyCache",
         }
     }
 )

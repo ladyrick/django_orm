@@ -1,9 +1,9 @@
-from django.apps import apps
-from django.contrib.auth import authenticate, signals
-from django.contrib.auth.models import User
-from django.core.exceptions import FieldDoesNotExist
-from django.test import TestCase, override_settings
-from django.test.client import RequestFactory
+from django_orm.apps import apps
+from django_orm.contrib.auth import authenticate, signals
+from django_orm.contrib.auth.models import User
+from django_orm.core.exceptions import FieldDoesNotExist
+from django_orm.test import TestCase, override_settings
+from django_orm.test.client import RequestFactory
 
 from .models import MinimalUser, UserWithDisabledLastLoginField
 

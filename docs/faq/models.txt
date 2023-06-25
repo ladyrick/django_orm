@@ -10,7 +10,7 @@ How can I see the raw SQL queries Django is running?
 Make sure your Django :setting:`DEBUG` setting is set to ``True``.
 Then do this::
 
-    >>> from django.db import connection
+    >>> from django_orm.db import connection
     >>> connection.queries
     [{'sql': 'SELECT polls_polls.id, polls_polls.question, polls_polls.pub_date FROM polls_polls',
     'time': '0.002'}]
@@ -28,13 +28,13 @@ SELECTs, etc. Each time your app hits the database, the query will be recorded.
 If you are using :doc:`multiple databases</topics/db/multi-db>`, you can use the
 same interface on each member of the ``connections`` dictionary::
 
-    >>> from django.db import connections
+    >>> from django_orm.db import connections
     >>> connections['my_db_alias'].queries
 
 If you need to clear the query list manually at any point in your functions,
 call ``reset_queries()``, like this::
 
-    from django.db import reset_queries
+    from django_orm.db import reset_queries
     reset_queries()
 
 Can I use Django with a preexisting database?
@@ -46,7 +46,7 @@ If I make changes to a model, how do I update the database?
 ===========================================================
 
 Take a look at Django's support for :mod:`schema migrations
-<django.db.migrations>`.
+<django_orm.db.migrations>`.
 
 If you don't mind clearing data, your project's ``manage.py`` utility has a
 :djadmin:`flush` option to reset the database to the state it was in
@@ -81,7 +81,7 @@ How do I add database-specific options to my CREATE TABLE statements, such as sp
 We try to avoid adding special cases in the Django code to accommodate all the
 database-specific options such as table type, etc. If you'd like to use any of
 these options, create a migration with a
-:class:`~django.db.migrations.operations.RunSQL` operation that contains
+:class:`~django_orm.db.migrations.operations.RunSQL` operation that contains
 ``ALTER TABLE`` statements that do what you want to do.
 
 For example, if you're using MySQL and want your tables to use the MyISAM table

@@ -3,9 +3,9 @@ import math
 import re
 from decimal import Decimal
 
-from django.core.exceptions import FieldError
-from django.db import connection
-from django.db.models import (
+from django_orm.core.exceptions import FieldError
+from django_orm.db import connection
+from django_orm.db.models import (
     Avg,
     Case,
     Count,
@@ -29,8 +29,8 @@ from django.db.models import (
     Variance,
     When,
 )
-from django.db.models.expressions import Func, RawSQL
-from django.db.models.functions import (
+from django_orm.db.models.expressions import Func, RawSQL
+from django_orm.db.models.functions import (
     Cast,
     Coalesce,
     Greatest,
@@ -39,10 +39,10 @@ from django.db.models.functions import (
     TruncDate,
     TruncHour,
 )
-from django.test import TestCase
-from django.test.testcases import skipUnlessDBFeature
-from django.test.utils import Approximate, CaptureQueriesContext
-from django.utils import timezone
+from django_orm.test import TestCase
+from django_orm.test.testcases import skipUnlessDBFeature
+from django_orm.test.utils import Approximate, CaptureQueriesContext
+from django_orm.utils import timezone
 
 from .models import Author, Book, Publisher, Store
 

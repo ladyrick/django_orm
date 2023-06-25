@@ -1,5 +1,5 @@
-from django.urls import re_path
-from django.views.generic import TemplateView
+from django_orm.urls import re_path
+from django_orm.views.generic import TemplateView
 
 view = TemplateView.as_view(template_name="dummy.html")
 

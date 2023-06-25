@@ -1,9 +1,9 @@
 import sys
 from types import ModuleType
 
-from django.conf import USE_L10N_DEPRECATED_MSG, Settings, settings
-from django.test import TestCase, ignore_warnings
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.conf import USE_L10N_DEPRECATED_MSG, Settings, settings
+from django_orm.test import TestCase, ignore_warnings
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 
 class DeprecationTests(TestCase):

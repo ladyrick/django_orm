@@ -6,14 +6,14 @@ Django 1.7.2 release notes
 
 Django 1.7.2 fixes several bugs in 1.7.1.
 
-Additionally, Django's vendored version of six, ``django.utils.six``, has
+Additionally, Django's vendored version of six, ``django_orm.utils.six``, has
 been upgraded to the latest release (1.9.0).
 
 Bugfixes
 ========
 
 * Fixed migration's renaming of auto-created many-to-many tables when changing
-  :attr:`Meta.db_table <django.db.models.Options.db_table>` (:ticket:`23630`).
+  :attr:`Meta.db_table <django_orm.db.models.Options.db_table>` (:ticket:`23630`).
 
 * Fixed a migration crash when adding an explicit ``id`` field to a model on
   SQLite (:ticket:`23702`).
@@ -55,7 +55,7 @@ Bugfixes
 
 * Fixed a regression where custom form fields having a ``queryset`` attribute
   but no ``limit_choices_to`` could not be used in a
-  :class:`~django.forms.ModelForm` (:ticket:`23795`).
+  :class:`~django_orm.forms.ModelForm` (:ticket:`23795`).
 
 * Fixed a custom field type validation error with MySQL backend when
   ``db_type`` returned ``None`` (:ticket:`23761`).
@@ -66,7 +66,7 @@ Bugfixes
 * Fixed :djadmin:`squashmigrations` to respect the ``--no-optimize`` parameter
   (:ticket:`23799`).
 
-* Made :class:`~django.db.migrations.operations.RenameModel` reversible
+* Made :class:`~django_orm.db.migrations.operations.RenameModel` reversible
   (:ticket:`22248`)
 
 * Avoided unnecessary rollbacks of migrations from other apps when migrating
@@ -78,7 +78,7 @@ Bugfixes
 * Fixed a crash in migrations when deleting a field that is part of a
   ``index/unique_together`` constraint (:ticket:`23794`).
 
-* Fixed ``django.core.files.File.__repr__()`` when the file's ``name`` contains
+* Fixed ``django_orm.core.files.File.__repr__()`` when the file's ``name`` contains
   Unicode characters (:ticket:`23888`).
 
 * Added missing context to the admin's ``delete_selected`` view that prevented
@@ -106,7 +106,7 @@ Bugfixes
   (:ticket:`23950`).
 
 * Prevented the
-  ``django.contrib.auth.middleware.SessionAuthenticationMiddleware`` from
+  ``django_orm.contrib.auth.middleware.SessionAuthenticationMiddleware`` from
   setting a ``"Vary: Cookie"`` header on all responses (:ticket:`23939`).
 
 * Fixed a crash when adding ``blank=True`` to ``TextField()`` on MySQL
@@ -177,7 +177,7 @@ Bugfixes
   setup (:ticket:`24000`).
 
 * Restored support for objects that aren't :class:`str` or :class:`bytes` in
-  ``django.utils.safestring.mark_for_escaping()`` on Python 3.
+  ``django_orm.utils.safestring.mark_for_escaping()`` on Python 3.
 
 * Supported strings escaped by third-party libraries with the ``__html__``
   convention in the template engine (:ticket:`23831`).

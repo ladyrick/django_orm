@@ -1,6 +1,6 @@
-from django.db import DatabaseError, connection
-from django.db.models import Index
-from django.test import TransactionTestCase, skipUnlessDBFeature
+from django_orm.db import DatabaseError, connection
+from django_orm.db.models import Index
+from django_orm.test import TransactionTestCase, skipUnlessDBFeature
 
 from .models import (
     Article,

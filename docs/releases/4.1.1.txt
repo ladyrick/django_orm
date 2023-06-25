@@ -24,8 +24,8 @@ Bugfixes
   add another"* options (:ticket:`33893`).
 
 * Fixed a regression in Django 4.1 that caused a crash of
-  :class:`~django.db.models.expressions.Window` expressions with
-  :class:`~django.contrib.postgres.aggregates.ArrayAgg` (:ticket:`33898`).
+  :class:`~django_orm.db.models.expressions.Window` expressions with
+  :class:`~django_orm.contrib.postgres.aggregates.ArrayAgg` (:ticket:`33898`).
 
 * Fixed a regression in Django 4.1 that caused a migration crash on SQLite
   3.35.5+ when removing an indexed field (:ticket:`33899`).
@@ -57,5 +57,5 @@ Bugfixes
   3.20 (:ticket:`33960`).
 
 * Fixed a regression in Django 4.1 that caused an admin crash when the
-  :mod:`~django.contrib.admindocs` app was used (:ticket:`33955`,
+  :mod:`~django_orm.contrib.admindocs` app was used (:ticket:`33955`,
   :ticket:`33971`).

@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 
-from django.template.defaultfilters import timeuntil_filter
-from django.test import SimpleTestCase
-from django.test.utils import requires_tz_support
+from django_orm.template.defaultfilters import timeuntil_filter
+from django_orm.test import SimpleTestCase
+from django_orm.test.utils import requires_tz_support
 
 from ..utils import setup
 from .timezone_utils import TimezoneTestCase

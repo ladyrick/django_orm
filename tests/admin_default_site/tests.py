@@ -1,6 +1,6 @@
-from django.contrib import admin
-from django.contrib.admin import sites
-from django.test import SimpleTestCase, override_settings
+from django_orm.contrib import admin
+from django_orm.contrib.admin import sites
+from django_orm.test import SimpleTestCase, override_settings
 
 from .sites import CustomAdminSite
 
@@ -8,11 +8,11 @@ from .sites import CustomAdminSite
 @override_settings(
     INSTALLED_APPS=[
         "admin_default_site.apps.MyCustomAdminConfig",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
-        "django.contrib.sessions",
-        "django.contrib.messages",
-        "django.contrib.staticfiles",
+        "django_orm.contrib.auth",
+        "django_orm.contrib.contenttypes",
+        "django_orm.contrib.sessions",
+        "django_orm.contrib.messages",
+        "django_orm.contrib.staticfiles",
     ]
 )
 class CustomAdminSiteTests(SimpleTestCase):

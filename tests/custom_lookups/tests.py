@@ -2,11 +2,11 @@ import time
 import unittest
 from datetime import date, datetime
 
-from django.core.exceptions import FieldError
-from django.db import connection, models
-from django.test import SimpleTestCase, TestCase, override_settings
-from django.test.utils import register_lookup
-from django.utils import timezone
+from django_orm.core.exceptions import FieldError
+from django_orm.db import connection, models
+from django_orm.test import SimpleTestCase, TestCase, override_settings
+from django_orm.test.utils import register_lookup
+from django_orm.utils import timezone
 
 from .models import Article, Author, MySQLUnixTimestamp
 

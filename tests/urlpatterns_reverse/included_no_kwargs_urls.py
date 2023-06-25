@@ -1,4 +1,4 @@
-from django.urls import re_path
+from django_orm.urls import re_path
 
 from .views import empty_view
 

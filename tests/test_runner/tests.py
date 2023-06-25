@@ -1,5 +1,5 @@
 """
-Tests for django test runner
+Tests for django_orm test runner
 """
 import collections.abc
 import multiprocessing
@@ -10,13 +10,13 @@ from unittest import mock
 
 from admin_scripts.tests import AdminScriptTestCase
 
-from django import db
-from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
-from django.core.management import call_command
-from django.core.management.base import SystemCheckError
-from django.test import SimpleTestCase, TransactionTestCase, skipUnlessDBFeature
-from django.test.runner import (
+from django_orm import db
+from django_orm.conf import settings
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.core.management import call_command
+from django_orm.core.management.base import SystemCheckError
+from django_orm.test import SimpleTestCase, TransactionTestCase, skipUnlessDBFeature
+from django_orm.test.runner import (
     DiscoverRunner,
     Shuffler,
     _init_worker,
@@ -24,14 +24,14 @@ from django.test.runner import (
     reorder_tests,
     shuffle_tests,
 )
-from django.test.testcases import connections_support_transactions
-from django.test.utils import (
+from django_orm.test.testcases import connections_support_transactions
+from django_orm.test.utils import (
     captured_stderr,
     dependency_ordered,
     get_unique_databases_and_mirrors,
     iter_test_cases,
 )
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from .models import B, Person, Through
 
@@ -643,7 +643,7 @@ class CustomTestRunnerOptionsCmdlineTests(AdminScriptTestCase):
 class NoInitializeSuiteTestRunnerTests(SimpleTestCase):
     @mock.patch.object(multiprocessing, "get_start_method", return_value="spawn")
     @mock.patch(
-        "django.test.runner.ParallelTestSuite.initialize_suite",
+        "django_orm.test.runner.ParallelTestSuite.initialize_suite",
         side_effect=Exception("initialize_suite() is called."),
     )
     def test_no_initialize_suite_test_runner(self, *mocked_objects):
@@ -770,16 +770,16 @@ class SQLiteInMemoryTestDbs(TransactionTestCase):
             tested_connections = db.ConnectionHandler(
                 {
                     "default": {
-                        "ENGINE": "django.db.backends.sqlite3",
+                        "ENGINE": "django_orm.db.backends.sqlite3",
                         option_key: option_value,
                     },
                     "other": {
-                        "ENGINE": "django.db.backends.sqlite3",
+                        "ENGINE": "django_orm.db.backends.sqlite3",
                         option_key: option_value,
                     },
                 }
             )
-            with mock.patch("django.test.utils.connections", new=tested_connections):
+            with mock.patch("django_orm.test.utils.connections", new=tested_connections):
                 other = tested_connections["other"]
                 DiscoverRunner(verbosity=0).setup_databases()
                 msg = (
@@ -799,7 +799,7 @@ class DummyBackendTest(unittest.TestCase):
         setup_databases() doesn't fail with dummy database backend.
         """
         tested_connections = db.ConnectionHandler({})
-        with mock.patch("django.test.utils.connections", new=tested_connections):
+        with mock.patch("django_orm.test.utils.connections", new=tested_connections):
             runner_instance = DiscoverRunner(verbosity=0)
             old_config = runner_instance.setup_databases()
             runner_instance.teardown_databases(old_config)
@@ -813,7 +813,7 @@ class AliasedDefaultTestSetupTest(unittest.TestCase):
         tested_connections = db.ConnectionHandler(
             {"default": {"NAME": "dummy"}, "aliased": {"NAME": "dummy"}}
         )
-        with mock.patch("django.test.utils.connections", new=tested_connections):
+        with mock.patch("django_orm.test.utils.connections", new=tested_connections):
             runner_instance = DiscoverRunner(verbosity=0)
             old_config = runner_instance.setup_databases()
             runner_instance.teardown_databases(old_config)
@@ -827,20 +827,20 @@ class SetupDatabasesTests(SimpleTestCase):
         tested_connections = db.ConnectionHandler(
             {
                 "default": {
-                    "ENGINE": "django.db.backends.dummy",
+                    "ENGINE": "django_orm.db.backends.dummy",
                     "NAME": "dbname",
                 },
                 "other": {
-                    "ENGINE": "django.db.backends.dummy",
+                    "ENGINE": "django_orm.db.backends.dummy",
                     "NAME": "dbname",
                 },
             }
         )
 
         with mock.patch(
-            "django.db.backends.dummy.base.DatabaseWrapper.creation_class"
+            "django_orm.db.backends.dummy.base.DatabaseWrapper.creation_class"
         ) as mocked_db_creation:
-            with mock.patch("django.test.utils.connections", new=tested_connections):
+            with mock.patch("django_orm.test.utils.connections", new=tested_connections):
                 old_config = self.runner_instance.setup_databases()
                 self.runner_instance.teardown_databases(old_config)
         mocked_db_creation.return_value.destroy_test_db.assert_called_once_with(
@@ -855,21 +855,21 @@ class SetupDatabasesTests(SimpleTestCase):
         tested_connections = db.ConnectionHandler(
             {
                 "other": {
-                    "ENGINE": "django.db.backends.dummy",
+                    "ENGINE": "django_orm.db.backends.dummy",
                     "NAME": "dbname",
                 },
                 "default": {
-                    "ENGINE": "django.db.backends.dummy",
+                    "ENGINE": "django_orm.db.backends.dummy",
                     "NAME": "dbname",
                 },
             }
         )
-        with mock.patch("django.test.utils.connections", new=tested_connections):
+        with mock.patch("django_orm.test.utils.connections", new=tested_connections):
             test_databases, _ = get_unique_databases_and_mirrors()
             self.assertEqual(
                 test_databases,
                 {
-                    ("", "", "django.db.backends.dummy", "test_dbname"): (
+                    ("", "", "django_orm.db.backends.dummy", "test_dbname"): (
                         "dbname",
                         ["default", "other"],
                     ),
@@ -887,7 +887,7 @@ class SetupDatabasesTests(SimpleTestCase):
         )
         # Using the real current name as old_name to not mess with the test suite.
         old_name = settings.DATABASES[db.DEFAULT_DB_ALIAS]["NAME"]
-        with mock.patch("django.db.connections", new=tested_connections):
+        with mock.patch("django_orm.db.connections", new=tested_connections):
             tested_connections["default"].creation.destroy_test_db(
                 old_name, verbosity=0, keepdb=True
             )
@@ -899,14 +899,14 @@ class SetupDatabasesTests(SimpleTestCase):
         tested_connections = db.ConnectionHandler(
             {
                 "default": {
-                    "ENGINE": "django.db.backends.dummy",
+                    "ENGINE": "django_orm.db.backends.dummy",
                 },
             }
         )
         with mock.patch(
-            "django.db.backends.dummy.base.DatabaseWrapper.creation_class"
+            "django_orm.db.backends.dummy.base.DatabaseWrapper.creation_class"
         ) as mocked_db_creation:
-            with mock.patch("django.test.utils.connections", new=tested_connections):
+            with mock.patch("django_orm.test.utils.connections", new=tested_connections):
                 self.runner_instance.setup_databases()
         mocked_db_creation.return_value.create_test_db.assert_called_once_with(
             verbosity=0, autoclobber=False, serialize=True, keepdb=False
@@ -916,7 +916,7 @@ class SetupDatabasesTests(SimpleTestCase):
         tested_connections = db.ConnectionHandler(
             {
                 "default": {
-                    "ENGINE": "django.db.backends.dummy",
+                    "ENGINE": "django_orm.db.backends.dummy",
                     "TEST": {"SERIALIZE": False},
                 },
             }
@@ -927,9 +927,9 @@ class SetupDatabasesTests(SimpleTestCase):
             "enable the serialized_rollback feature."
         )
         with mock.patch(
-            "django.db.backends.dummy.base.DatabaseWrapper.creation_class"
+            "django_orm.db.backends.dummy.base.DatabaseWrapper.creation_class"
         ) as mocked_db_creation:
-            with mock.patch("django.test.utils.connections", new=tested_connections):
+            with mock.patch("django_orm.test.utils.connections", new=tested_connections):
                 with self.assertWarnsMessage(RemovedInDjango50Warning, msg):
                     self.runner_instance.setup_databases()
         mocked_db_creation.return_value.create_test_db.assert_called_once_with(
@@ -974,10 +974,10 @@ class EmptyDefaultDatabaseTest(unittest.TestCase):
         error when running a unit test that does not use a database.
         """
         tested_connections = db.ConnectionHandler({"default": {}})
-        with mock.patch("django.db.connections", new=tested_connections):
+        with mock.patch("django_orm.db.connections", new=tested_connections):
             connection = tested_connections[db.utils.DEFAULT_DB_ALIAS]
             self.assertEqual(
-                connection.settings_dict["ENGINE"], "django.db.backends.dummy"
+                connection.settings_dict["ENGINE"], "django_orm.db.backends.dummy"
             )
             connections_support_transactions()
 
@@ -988,15 +988,15 @@ class RunTestsExceptionHandlingTests(unittest.TestCase):
         Teardown functions are run when run_checks() raises SystemCheckError.
         """
         with mock.patch(
-            "django.test.runner.DiscoverRunner.setup_test_environment"
-        ), mock.patch("django.test.runner.DiscoverRunner.setup_databases"), mock.patch(
-            "django.test.runner.DiscoverRunner.build_suite"
+            "django_orm.test.runner.DiscoverRunner.setup_test_environment"
+        ), mock.patch("django_orm.test.runner.DiscoverRunner.setup_databases"), mock.patch(
+            "django_orm.test.runner.DiscoverRunner.build_suite"
         ), mock.patch(
-            "django.test.runner.DiscoverRunner.run_checks", side_effect=SystemCheckError
+            "django_orm.test.runner.DiscoverRunner.run_checks", side_effect=SystemCheckError
         ), mock.patch(
-            "django.test.runner.DiscoverRunner.teardown_databases"
+            "django_orm.test.runner.DiscoverRunner.teardown_databases"
         ) as teardown_databases, mock.patch(
-            "django.test.runner.DiscoverRunner.teardown_test_environment"
+            "django_orm.test.runner.DiscoverRunner.teardown_test_environment"
         ) as teardown_test_environment:
             runner = DiscoverRunner(verbosity=0, interactive=False)
             with self.assertRaises(SystemCheckError):
@@ -1012,16 +1012,16 @@ class RunTestsExceptionHandlingTests(unittest.TestCase):
         and teardown databases() raises ValueError.
         """
         with mock.patch(
-            "django.test.runner.DiscoverRunner.setup_test_environment"
-        ), mock.patch("django.test.runner.DiscoverRunner.setup_databases"), mock.patch(
-            "django.test.runner.DiscoverRunner.build_suite"
+            "django_orm.test.runner.DiscoverRunner.setup_test_environment"
+        ), mock.patch("django_orm.test.runner.DiscoverRunner.setup_databases"), mock.patch(
+            "django_orm.test.runner.DiscoverRunner.build_suite"
         ), mock.patch(
-            "django.test.runner.DiscoverRunner.run_checks", side_effect=SystemCheckError
+            "django_orm.test.runner.DiscoverRunner.run_checks", side_effect=SystemCheckError
         ), mock.patch(
-            "django.test.runner.DiscoverRunner.teardown_databases",
+            "django_orm.test.runner.DiscoverRunner.teardown_databases",
             side_effect=ValueError,
         ) as teardown_databases, mock.patch(
-            "django.test.runner.DiscoverRunner.teardown_test_environment"
+            "django_orm.test.runner.DiscoverRunner.teardown_test_environment"
         ) as teardown_test_environment:
             runner = DiscoverRunner(verbosity=0, interactive=False)
             with self.assertRaises(SystemCheckError):
@@ -1037,16 +1037,16 @@ class RunTestsExceptionHandlingTests(unittest.TestCase):
         run_checks().
         """
         with mock.patch(
-            "django.test.runner.DiscoverRunner.setup_test_environment"
-        ), mock.patch("django.test.runner.DiscoverRunner.setup_databases"), mock.patch(
-            "django.test.runner.DiscoverRunner.build_suite"
+            "django_orm.test.runner.DiscoverRunner.setup_test_environment"
+        ), mock.patch("django_orm.test.runner.DiscoverRunner.setup_databases"), mock.patch(
+            "django_orm.test.runner.DiscoverRunner.build_suite"
         ), mock.patch(
-            "django.test.runner.DiscoverRunner.run_checks"
+            "django_orm.test.runner.DiscoverRunner.run_checks"
         ), mock.patch(
-            "django.test.runner.DiscoverRunner.teardown_databases",
+            "django_orm.test.runner.DiscoverRunner.teardown_databases",
             side_effect=ValueError,
         ) as teardown_databases, mock.patch(
-            "django.test.runner.DiscoverRunner.teardown_test_environment"
+            "django_orm.test.runner.DiscoverRunner.teardown_test_environment"
         ) as teardown_test_environment:
             runner = DiscoverRunner(verbosity=0, interactive=False)
             with self.assertRaises(ValueError):

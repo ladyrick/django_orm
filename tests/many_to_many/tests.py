@@ -1,7 +1,7 @@
 from unittest import mock
 
-from django.db import transaction
-from django.test import TestCase, skipIfDBFeature, skipUnlessDBFeature
+from django_orm.db import transaction
+from django_orm.test import TestCase, skipIfDBFeature, skipUnlessDBFeature
 
 from .models import Article, InheritedArticleA, InheritedArticleB, Publication, User
 

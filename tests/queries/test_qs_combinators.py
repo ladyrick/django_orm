@@ -1,9 +1,9 @@
 import operator
 
-from django.db import DatabaseError, NotSupportedError, connection
-from django.db.models import Exists, F, IntegerField, OuterRef, Subquery, Value
-from django.test import TestCase, skipIfDBFeature, skipUnlessDBFeature
-from django.test.utils import CaptureQueriesContext
+from django_orm.db import DatabaseError, NotSupportedError, connection
+from django_orm.db.models import Exists, F, IntegerField, OuterRef, Subquery, Value
+from django_orm.test import TestCase, skipIfDBFeature, skipUnlessDBFeature
+from django_orm.test.utils import CaptureQueriesContext
 
 from .models import Author, Celebrity, ExtraInfo, Number, ReservedName
 

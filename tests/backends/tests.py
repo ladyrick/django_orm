@@ -1,12 +1,12 @@
-"""Tests related to django.db.backends that haven't been organized."""
+"""Tests related to django_orm.db.backends that haven't been organized."""
 import datetime
 import threading
 import unittest
 import warnings
 from unittest import mock
 
-from django.core.management.color import no_style
-from django.db import (
+from django_orm.core.management.color import no_style
+from django_orm.db import (
     DEFAULT_DB_ALIAS,
     DatabaseError,
     IntegrityError,
@@ -15,11 +15,11 @@ from django.db import (
     reset_queries,
     transaction,
 )
-from django.db.backends.base.base import BaseDatabaseWrapper
-from django.db.backends.signals import connection_created
-from django.db.backends.utils import CursorWrapper
-from django.db.models.sql.constants import CURSOR
-from django.test import (
+from django_orm.db.backends.base.base import BaseDatabaseWrapper
+from django_orm.db.backends.signals import connection_created
+from django_orm.db.backends.utils import CursorWrapper
+from django_orm.db.models.sql.constants import CURSOR
+from django_orm.test import (
     TestCase,
     TransactionTestCase,
     override_settings,
@@ -529,7 +529,7 @@ class BackendTestCase(TransactionTestCase):
             BaseDatabaseWrapper.queries_limit = old_queries_limit
             new_connection.close()
 
-    @mock.patch("django.db.backends.utils.logger")
+    @mock.patch("django_orm.db.backends.utils.logger")
     @override_settings(DEBUG=True)
     def test_queries_logger(self, mocked_logger):
         sql = "SELECT 1" + connection.features.bare_select_suffix
@@ -720,7 +720,7 @@ class ThreadTests(TransactionTestCase):
 
     def test_default_connection_thread_local(self):
         """
-        The default connection (i.e. django.db.connection) is different for
+        The default connection (i.e. django_orm.db.connection) is different for
         each thread (#17258).
         """
         # Map connections by id because connections with identical aliases
@@ -731,9 +731,9 @@ class ThreadTests(TransactionTestCase):
         connections_dict[id(connection)] = connection
 
         def runner():
-            # Passing django.db.connection between threads doesn't work while
+            # Passing django_orm.db.connection between threads doesn't work while
             # connections[DEFAULT_DB_ALIAS] does.
-            from django.db import connections
+            from django_orm.db import connections
 
             connection = connections[DEFAULT_DB_ALIAS]
             # Allow thread sharing so the connection can be closed by the
@@ -772,7 +772,7 @@ class ThreadTests(TransactionTestCase):
             connections_dict[id(conn)] = conn
 
         def runner():
-            from django.db import connections
+            from django_orm.db import connections
 
             for conn in connections.all():
                 # Allow thread sharing so the connection can be closed by the
@@ -807,7 +807,7 @@ class ThreadTests(TransactionTestCase):
 
         def do_thread():
             def runner(main_thread_connection):
-                from django.db import connections
+                from django_orm.db import connections
 
                 connections["default"] = main_thread_connection
                 try:

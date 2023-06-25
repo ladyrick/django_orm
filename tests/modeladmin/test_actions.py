@@ -1,7 +1,7 @@
-from django.contrib import admin
-from django.contrib.auth.models import Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.test import TestCase
+from django_orm.contrib import admin
+from django_orm.contrib.auth.models import Permission, User
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.test import TestCase
 
 from .models import Band
 

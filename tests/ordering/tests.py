@@ -1,7 +1,7 @@
 from datetime import datetime
 from operator import attrgetter
 
-from django.db.models import (
+from django_orm.db.models import (
     CharField,
     Count,
     DateTimeField,
@@ -11,8 +11,8 @@ from django.db.models import (
     Subquery,
     Value,
 )
-from django.db.models.functions import Upper
-from django.test import TestCase
+from django_orm.db.models.functions import Upper
+from django_orm.test import TestCase
 
 from .models import (
     Article,

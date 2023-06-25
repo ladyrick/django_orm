@@ -7,15 +7,15 @@ import warnings
 from io import StringIO
 from unittest import mock
 
-from django.apps import apps
-from django.contrib.sites.models import Site
-from django.core import management
-from django.core.files.temp import NamedTemporaryFile
-from django.core.management import CommandError
-from django.core.management.commands.dumpdata import ProxyModelWarning
-from django.core.serializers.base import ProgressBar
-from django.db import IntegrityError, connection
-from django.test import TestCase, TransactionTestCase, skipUnlessDBFeature
+from django_orm.apps import apps
+from django_orm.contrib.sites.models import Site
+from django_orm.core import management
+from django_orm.core.files.temp import NamedTemporaryFile
+from django_orm.core.management import CommandError
+from django_orm.core.management.commands.dumpdata import ProxyModelWarning
+from django_orm.core.serializers.base import ProgressBar
+from django_orm.db import IntegrityError, connection
+from django_orm.test import TestCase, TransactionTestCase, skipUnlessDBFeature
 
 from .models import (
     Article,
@@ -291,7 +291,7 @@ class FixtureLoadingTests(DumpDataAssertMixin, TestCase):
             [
                 '<Tag: <Article: Copyright is fine the way it is> tagged "copyright">',
                 '<Tag: <Article: Copyright is fine the way it is> tagged "legal">',
-                '<Tag: <Article: Django conquers world!> tagged "django">',
+                '<Tag: <Article: Django conquers world!> tagged "django_orm">',
                 '<Tag: <Article: Django conquers world!> tagged "world domination">',
             ],
             transform=repr,
@@ -388,7 +388,7 @@ class FixtureLoadingTests(DumpDataAssertMixin, TestCase):
             '{"tagged_type": ["fixtures", "article"], "name": "legal", '
             '"tagged_id": 3}}, '
             '{"pk": 3, "model": "fixtures.tag", "fields": '
-            '{"tagged_type": ["fixtures", "article"], "name": "django", '
+            '{"tagged_type": ["fixtures", "article"], "name": "django_orm", '
             '"tagged_id": 4}}, '
             '{"pk": 4, "model": "fixtures.tag", "fields": '
             '{"tagged_type": ["fixtures", "article"], "name": "world domination", '
@@ -418,7 +418,7 @@ class FixtureLoadingTests(DumpDataAssertMixin, TestCase):
         # Dump the current contents of the database as an XML fixture
         self._dumpdata_assert(
             ["fixtures"],
-            '<?xml version="1.0" encoding="utf-8"?><django-objects version="1.0">'
+            '<?xml version="1.0" encoding="utf-8"?><django_orm-objects version="1.0">'
             '<object pk="1" model="fixtures.category">'
             '<field type="CharField" name="title">News Stories</field>'
             '<field type="TextField" name="description">Latest news stories</field>'
@@ -455,7 +455,7 @@ class FixtureLoadingTests(DumpDataAssertMixin, TestCase):
             "</field>"
             '<field type="PositiveIntegerField" name="tagged_id">3</field></object>'
             '<object pk="3" model="fixtures.tag">'
-            '<field type="CharField" name="name">django</field>'
+            '<field type="CharField" name="name">django_orm</field>'
             '<field to="contenttypes.contenttype" name="tagged_type" '
             'rel="ManyToOneRel"><natural>fixtures</natural><natural>article</natural>'
             "</field>"
@@ -509,7 +509,7 @@ class FixtureLoadingTests(DumpDataAssertMixin, TestCase):
             '<field to="fixtures.person" name="authors" rel="ManyToManyRel">'
             '<object><natural>Artist formerly known as "Prince"</natural></object>'
             "<object><natural>Django Reinhardt</natural></object></field>"
-            "</object></django-objects>",
+            "</object></django_orm-objects>",
             format="xml",
             natural_foreign_keys=True,
         )
@@ -1030,7 +1030,7 @@ class FixtureLoadingTests(DumpDataAssertMixin, TestCase):
         # Dump the current contents of the database as an XML fixture
         self._dumpdata_assert(
             ["fixtures"],
-            '<?xml version="1.0" encoding="utf-8"?><django-objects version="1.0">'
+            '<?xml version="1.0" encoding="utf-8"?><django_orm-objects version="1.0">'
             '<object pk="1" model="fixtures.category">'
             '<field type="CharField" name="title">News Stories</field>'
             '<field type="TextField" name="description">Latest news stories</field>'
@@ -1065,7 +1065,7 @@ class FixtureLoadingTests(DumpDataAssertMixin, TestCase):
             "</object>"
             '<object pk="3" model="fixtures.person">'
             '<field type="CharField" name="name">Prince</field>'
-            "</object></django-objects>",
+            "</object></django_orm-objects>",
             format="xml",
             natural_foreign_keys=True,
         )
@@ -1115,7 +1115,7 @@ class FixtureLoadingTests(DumpDataAssertMixin, TestCase):
         fixture_xml = os.path.join(tests_dir, "fixtures", "fixture3.xml")
 
         with mock.patch(
-            "django.core.management.commands.loaddata.sys.stdin", open(fixture_json)
+            "django_orm.core.management.commands.loaddata.sys.stdin", open(fixture_json)
         ):
             management.call_command("loaddata", "--format=json", "-", verbosity=0)
             self.assertSequenceEqual(
@@ -1124,7 +1124,7 @@ class FixtureLoadingTests(DumpDataAssertMixin, TestCase):
             )
 
         with mock.patch(
-            "django.core.management.commands.loaddata.sys.stdin", open(fixture_xml)
+            "django_orm.core.management.commands.loaddata.sys.stdin", open(fixture_xml)
         ):
             management.call_command("loaddata", "--format=xml", "-", verbosity=0)
             self.assertSequenceEqual(
@@ -1151,8 +1151,8 @@ class NonexistentFixtureTests(TestCase):
                 "loaddata", "this_fixture_doesnt_exist", stdout=stdout_output
             )
 
-    @mock.patch("django.db.connection.enable_constraint_checking")
-    @mock.patch("django.db.connection.disable_constraint_checking")
+    @mock.patch("django_orm.db.connection.enable_constraint_checking")
+    @mock.patch("django_orm.db.connection.disable_constraint_checking")
     def test_nonexistent_fixture_no_constraint_checking(
         self, disable_constraint_checking, enable_constraint_checking
     ):
@@ -1173,7 +1173,7 @@ class NonexistentFixtureTests(TestCase):
 class FixtureTransactionTests(DumpDataAssertMixin, TransactionTestCase):
     available_apps = [
         "fixtures",
-        "django.contrib.sites",
+        "django_orm.contrib.sites",
     ]
 
     @skipUnlessDBFeature("supports_forward_references")

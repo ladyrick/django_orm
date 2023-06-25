@@ -1,6 +1,6 @@
 from unittest import skipIf
 
-from django.contrib.gis.gdal import (
+from django_orm.contrib.gis.gdal import (
     GDAL_VERSION,
     AxisOrder,
     CoordTransform,
@@ -8,8 +8,8 @@ from django.contrib.gis.gdal import (
     SpatialReference,
     SRSException,
 )
-from django.contrib.gis.geos import GEOSGeometry
-from django.test import SimpleTestCase
+from django_orm.contrib.gis.geos import GEOSGeometry
+from django_orm.test import SimpleTestCase
 
 
 class TestSRS:

@@ -1,10 +1,10 @@
-from django import forms
-from django.core.exceptions import ImproperlyConfigured
-from django.test import SimpleTestCase, TestCase, override_settings
-from django.test.client import RequestFactory
-from django.urls import reverse
-from django.views.generic.base import View
-from django.views.generic.edit import (
+from django_orm import forms
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.test import SimpleTestCase, TestCase, override_settings
+from django_orm.test.client import RequestFactory
+from django_orm.urls import reverse
+from django_orm.views.generic.base import View
+from django_orm.views.generic.edit import (
     CreateView,
     DeleteView,
     DeleteViewCustomDeleteWarning,

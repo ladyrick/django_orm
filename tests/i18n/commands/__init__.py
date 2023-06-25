@@ -1,5 +1,5 @@
-from django.utils.translation import gettext as _
-from django.utils.translation import ngettext
+from django_orm.utils.translation import gettext as _
+from django_orm.utils.translation import ngettext
 
 # Translators: This comment should be extracted
 dummy1 = _("This is a translatable string.")

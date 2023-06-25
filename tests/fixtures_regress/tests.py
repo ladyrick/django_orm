@@ -5,12 +5,12 @@ import re
 from io import StringIO
 from pathlib import Path
 
-from django.core import management, serializers
-from django.core.exceptions import ImproperlyConfigured
-from django.core.serializers.base import DeserializationError
-from django.db import IntegrityError, transaction
-from django.db.models import signals
-from django.test import (
+from django_orm.core import management, serializers
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.core.serializers.base import DeserializationError
+from django_orm.db import IntegrityError, transaction
+from django_orm.db.models import signals
+from django_orm.test import (
     TestCase,
     TransactionTestCase,
     override_settings,

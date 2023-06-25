@@ -1,7 +1,7 @@
-from django.template.defaultfilters import unordered_list
-from django.test import SimpleTestCase
-from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy
+from django_orm.template.defaultfilters import unordered_list
+from django_orm.test import SimpleTestCase
+from django_orm.utils.safestring import mark_safe
+from django_orm.utils.translation import gettext_lazy
 
 from ..utils import setup
 

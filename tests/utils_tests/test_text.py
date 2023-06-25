@@ -1,12 +1,12 @@
 import json
 import sys
 
-from django.core.exceptions import SuspiciousFileOperation
-from django.test import SimpleTestCase
-from django.utils import text
-from django.utils.functional import lazystr
-from django.utils.text import format_lazy
-from django.utils.translation import gettext_lazy, override
+from django_orm.core.exceptions import SuspiciousFileOperation
+from django_orm.test import SimpleTestCase
+from django_orm.utils import text
+from django_orm.utils.functional import lazystr
+from django_orm.utils.text import format_lazy
+from django_orm.utils.translation import gettext_lazy, override
 
 IS_WIDE_BUILD = len("\U0001F4A9") == 1
 
@@ -288,19 +288,19 @@ class TestUtilsText(SimpleTestCase):
         self.assertLess(compressed_length, actual_length)
 
     def test_format_lazy(self):
-        self.assertEqual("django/test", format_lazy("{}/{}", "django", lazystr("test")))
-        self.assertEqual("django/test", format_lazy("{0}/{1}", *("django", "test")))
+        self.assertEqual("django_orm/test", format_lazy("{}/{}", "django_orm", lazystr("test")))
+        self.assertEqual("django_orm/test", format_lazy("{0}/{1}", *("django_orm", "test")))
         self.assertEqual(
-            "django/test", format_lazy("{a}/{b}", **{"a": "django", "b": "test"})
+            "django_orm/test", format_lazy("{a}/{b}", **{"a": "django_orm", "b": "test"})
         )
         self.assertEqual(
-            "django/test", format_lazy("{a[0]}/{a[1]}", a=("django", "test"))
+            "django_orm/test", format_lazy("{a[0]}/{a[1]}", a=("django_orm", "test"))
         )
 
         t = {}
         s = format_lazy("{0[a]}-{p[a]}", t, p=t)
-        t["a"] = lazystr("django")
-        self.assertEqual("django-django", s)
+        t["a"] = lazystr("django_orm")
+        self.assertEqual("django_orm-django_orm", s)
         t["a"] = "update"
         self.assertEqual("update-update", s)
 

@@ -3,10 +3,10 @@ import datetime
 import json
 import uuid
 
-from django.core.exceptions import NON_FIELD_ERRORS
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.core.validators import MaxValueValidator, RegexValidator
-from django.forms import (
+from django_orm.core.exceptions import NON_FIELD_ERRORS
+from django_orm.core.files.uploadedfile import SimpleUploadedFile
+from django_orm.core.validators import MaxValueValidator, RegexValidator
+from django_orm.forms import (
     BooleanField,
     CharField,
     CheckboxSelectMultiple,
@@ -37,15 +37,15 @@ from django.forms import (
     ValidationError,
     forms,
 )
-from django.forms.renderers import DjangoTemplates, get_default_renderer
-from django.forms.utils import ErrorList
-from django.http import QueryDict
-from django.template import Context, Template
-from django.test import SimpleTestCase
-from django.test.utils import isolate_lru_cache, override_settings
-from django.utils.datastructures import MultiValueDict
-from django.utils.deprecation import RemovedInDjango50Warning
-from django.utils.safestring import mark_safe
+from django_orm.forms.renderers import DjangoTemplates, get_default_renderer
+from django_orm.forms.utils import ErrorList
+from django_orm.http import QueryDict
+from django_orm.template import Context, Template
+from django_orm.test import SimpleTestCase
+from django_orm.test.utils import isolate_lru_cache, override_settings
+from django_orm.utils.datastructures import MultiValueDict
+from django_orm.utils.deprecation import RemovedInDjango50Warning
+from django_orm.utils.safestring import mark_safe
 
 from . import jinja2_tests
 
@@ -2392,7 +2392,7 @@ class FormsTestCase(SimpleTestCase):
         # empty dictionary). Also, the initial value is *not* used if data for a
         # particular required field isn't provided.
         class UserRegistration(Form):
-            username = CharField(max_length=10, initial="django")
+            username = CharField(max_length=10, initial="django_orm")
             password = CharField(widget=PasswordInput)
 
         # Here, we're not submitting any data, so the initial value will be displayed.)
@@ -2400,7 +2400,7 @@ class FormsTestCase(SimpleTestCase):
         self.assertHTMLEqual(
             p.as_ul(),
             """
-            <li>Username: <input type="text" name="username" value="django"
+            <li>Username: <input type="text" name="username" value="django_orm"
                 maxlength="10" required></li>
             <li>Password: <input type="password" name="password" required></li>
             """,
@@ -2453,11 +2453,11 @@ Password: <input type="password" name="password" required></li>""",
             password = CharField(widget=PasswordInput)
 
         # Here, we're not submitting any data, so the initial value will be displayed.)
-        p = UserRegistration(initial={"username": "django"}, auto_id=False)
+        p = UserRegistration(initial={"username": "django_orm"}, auto_id=False)
         self.assertHTMLEqual(
             p.as_ul(),
             """
-            <li>Username: <input type="text" name="username" value="django"
+            <li>Username: <input type="text" name="username" value="django_orm"
                 maxlength="10" required></li>
             <li>Password: <input type="password" name="password" required></li>
             """,
@@ -2473,7 +2473,7 @@ Password: <input type="password" name="password" required></li>""",
         )
 
         # The 'initial' parameter is meaningless if you pass data.
-        p = UserRegistration({}, initial={"username": "django"}, auto_id=False)
+        p = UserRegistration({}, initial={"username": "django_orm"}, auto_id=False)
         self.assertHTMLEqual(
             p.as_ul(),
             """<li><ul class="errorlist"><li>This field is required.</li></ul>
@@ -2482,7 +2482,7 @@ Username: <input type="text" name="username" maxlength="10" required></li>
 Password: <input type="password" name="password" required></li>""",
         )
         p = UserRegistration(
-            {"username": ""}, initial={"username": "django"}, auto_id=False
+            {"username": ""}, initial={"username": "django_orm"}, auto_id=False
         )
         self.assertHTMLEqual(
             p.as_ul(),
@@ -2492,7 +2492,7 @@ Username: <input type="text" name="username" maxlength="10" required></li>
 Password: <input type="password" name="password" required></li>""",
         )
         p = UserRegistration(
-            {"username": "foo"}, initial={"username": "django"}, auto_id=False
+            {"username": "foo"}, initial={"username": "django_orm"}, auto_id=False
         )
         self.assertHTMLEqual(
             p.as_ul(),
@@ -2508,14 +2508,14 @@ Password: <input type="password" name="password" required></li>""",
         # In this example, we don't provide a value for 'username', and the
         # form raises a validation error rather than using the initial value
         # for 'username'.
-        p = UserRegistration({"password": "secret"}, initial={"username": "django"})
+        p = UserRegistration({"password": "secret"}, initial={"username": "django_orm"})
         self.assertEqual(p.errors["username"], ["This field is required."])
         self.assertFalse(p.is_valid())
 
         # If a Form defines 'initial' *and* 'initial' is passed as a parameter
         # to Form(), then the latter will get precedence.
         class UserRegistration(Form):
-            username = CharField(max_length=10, initial="django")
+            username = CharField(max_length=10, initial="django_orm")
             password = CharField(widget=PasswordInput)
 
         p = UserRegistration(initial={"username": "babik"}, auto_id=False)
@@ -2540,7 +2540,7 @@ Password: <input type="password" name="password" required></li>""",
 
         # We need to define functions that get called later.)
         def initial_django():
-            return "django"
+            return "django_orm"
 
         def initial_stephane():
             return "stephane"
@@ -2559,7 +2559,7 @@ Password: <input type="password" name="password" required></li>""",
         self.assertHTMLEqual(
             p.as_ul(),
             """
-            <li>Username: <input type="text" name="username" value="django"
+            <li>Username: <input type="text" name="username" value="django_orm"
                 maxlength="10" required></li>
             <li>Password: <input type="password" name="password" required></li>
             <li>Options: <select multiple name="options" required>
@@ -2650,7 +2650,7 @@ Options: <select multiple name="options" required>
         self.assertHTMLEqual(
             p.as_ul(),
             """
-            <li>Username: <input type="text" name="username" value="django"
+            <li>Username: <input type="text" name="username" value="django_orm"
                 maxlength="10" required></li>
             <li>Password: <input type="password" name="password" required></li>
             <li>Options: <select multiple name="options" required>
@@ -4709,12 +4709,12 @@ class TemplateTests(SimpleTestCase):
             '<input type="submit" required>'
             "</form>",
         )
-        f = UserRegistration({"username": "django"}, auto_id=False)
+        f = UserRegistration({"username": "django_orm"}, auto_id=False)
         self.assertHTMLEqual(
             t.render(Context({"form": f})),
             "<form>"
             "<p><label>Your username: "
-            '<input type="text" name="username" value="django" maxlength="10" required>'
+            '<input type="text" name="username" value="django_orm" maxlength="10" required>'
             "</label></p>"
             '<ul class="errorlist"><li>This field is required.</li></ul><p>'
             "<label>Password: "
@@ -4867,14 +4867,14 @@ class TemplateTests(SimpleTestCase):
             "</form>"
         )
         f = UserRegistration(
-            {"username": "django", "password1": "foo", "password2": "bar"},
+            {"username": "django_orm", "password1": "foo", "password2": "bar"},
             auto_id=False,
         )
         self.assertHTMLEqual(
             t.render(Context({"form": f})),
             "<form>"
             "<p><label>Your username: "
-            '<input type="text" name="username" value="django" maxlength="10" required>'
+            '<input type="text" name="username" value="django_orm" maxlength="10" required>'
             "</label></p>"
             "<p><label>Password: "
             '<input type="password" name="password1" required></label></p>'
@@ -4901,7 +4901,7 @@ class TemplateTests(SimpleTestCase):
             '<ul class="errorlist nonfield">'
             "<li>Please make sure your passwords match.</li></ul>"
             "<p><label>Your username: "
-            '<input type="text" name="username" value="django" maxlength="10" required>'
+            '<input type="text" name="username" value="django_orm" maxlength="10" required>'
             "</label></p>"
             "<p><label>Password: "
             '<input type="password" name="password1" required></label></p>'
@@ -5072,10 +5072,10 @@ class OverrideTests(SimpleTestCase):
 
 class DeprecationTests(SimpleTestCase):
     def test_warning(self):
-        from django.forms.utils import DEFAULT_TEMPLATE_DEPRECATION_MSG
+        from django_orm.forms.utils import DEFAULT_TEMPLATE_DEPRECATION_MSG
 
         with isolate_lru_cache(get_default_renderer), self.settings(
-            FORM_RENDERER="django.forms.renderers.DjangoTemplates"
+            FORM_RENDERER="django_orm.forms.renderers.DjangoTemplates"
         ), self.assertRaisesMessage(
             RemovedInDjango50Warning, DEFAULT_TEMPLATE_DEPRECATION_MSG
         ):

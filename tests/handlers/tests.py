@@ -1,8 +1,8 @@
-from django.core.exceptions import ImproperlyConfigured
-from django.core.handlers.wsgi import WSGIHandler, WSGIRequest, get_script_name
-from django.core.signals import request_finished, request_started
-from django.db import close_old_connections, connection
-from django.test import (
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.core.handlers.wsgi import WSGIHandler, WSGIRequest, get_script_name
+from django_orm.core.signals import request_finished, request_started
+from django_orm.db import close_old_connections, connection
+from django_orm.test import (
     RequestFactory,
     SimpleTestCase,
     TransactionTestCase,

@@ -1,5 +1,5 @@
-from django.contrib import messages
-from django.test import RequestFactory, SimpleTestCase
+from django_orm.contrib import messages
+from django_orm.test import RequestFactory, SimpleTestCase
 
 
 class DummyStorage:
@@ -37,7 +37,7 @@ class ApiTests(SimpleTestCase):
     def test_middleware_missing(self):
         msg = (
             "You cannot add messages without installing "
-            "django.contrib.messages.middleware.MessageMiddleware"
+            "django_orm.contrib.messages.middleware.MessageMiddleware"
         )
         with self.assertRaisesMessage(messages.MessageFailure, msg):
             messages.add_message(self.request, messages.DEBUG, "some message")

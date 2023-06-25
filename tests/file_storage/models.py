@@ -9,8 +9,8 @@ import random
 import tempfile
 from pathlib import Path
 
-from django.core.files.storage import FileSystemStorage
-from django.db import models
+from django_orm.core.files.storage import FileSystemStorage
+from django_orm.db import models
 
 
 class CustomValidNameStorage(FileSystemStorage):

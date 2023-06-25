@@ -1,6 +1,6 @@
 import unittest
 
-from django.utils import inspect
+from django_orm.utils import inspect
 
 
 class Person:

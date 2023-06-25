@@ -1,8 +1,8 @@
 import json
 import uuid
 
-from django.core.serializers.json import DjangoJSONEncoder
-from django.forms import (
+from django_orm.core.serializers.json import DjangoJSONEncoder
+from django_orm.forms import (
     CharField,
     Form,
     JSONField,
@@ -10,7 +10,7 @@ from django.forms import (
     TextInput,
     ValidationError,
 )
-from django.test import SimpleTestCase
+from django_orm.test import SimpleTestCase
 
 
 class JSONFieldTest(SimpleTestCase):

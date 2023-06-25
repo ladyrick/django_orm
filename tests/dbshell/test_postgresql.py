@@ -5,9 +5,9 @@ import sys
 from pathlib import Path
 from unittest import mock, skipUnless
 
-from django.db import connection
-from django.db.backends.postgresql.client import DatabaseClient
-from django.test import SimpleTestCase
+from django_orm.db import connection
+from django_orm.db.backends.postgresql.client import DatabaseClient
+from django_orm.test import SimpleTestCase
 
 
 class PostgreSqlDbshellCommandTestCase(SimpleTestCase):

@@ -1,6 +1,6 @@
 import unittest
 
-from django.template.smartif import IfParser
+from django_orm.template.smartif import IfParser
 
 
 class SmartIfTests(unittest.TestCase):

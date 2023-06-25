@@ -7,10 +7,10 @@ Django raises some of its own exceptions as well as standard Python exceptions.
 Django Core Exceptions
 ======================
 
-.. module:: django.core.exceptions
+.. module:: django_orm.core.exceptions
     :synopsis: Django core exceptions
 
-Django core exception classes are defined in ``django.core.exceptions``.
+Django core exception classes are defined in ``django_orm.core.exceptions``.
 
 ``AppRegistryNotReady``
 -----------------------
@@ -27,11 +27,11 @@ Django core exception classes are defined in ``django.core.exceptions``.
 .. exception:: ObjectDoesNotExist
 
     The base class for :exc:`Model.DoesNotExist
-    <django.db.models.Model.DoesNotExist>` exceptions. A ``try/except`` for
+    <django_orm.db.models.Model.DoesNotExist>` exceptions. A ``try/except`` for
     ``ObjectDoesNotExist`` will catch
-    :exc:`~django.db.models.Model.DoesNotExist` exceptions for all models.
+    :exc:`~django_orm.db.models.Model.DoesNotExist` exceptions for all models.
 
-    See :meth:`~django.db.models.query.QuerySet.get()`.
+    See :meth:`~django_orm.db.models.query.QuerySet.get()`.
 
 ``EmptyResultSet``
 ------------------
@@ -57,12 +57,12 @@ Django core exception classes are defined in ``django.core.exceptions``.
 .. exception:: MultipleObjectsReturned
 
     The base class for :exc:`Model.MultipleObjectsReturned
-    <django.db.models.Model.MultipleObjectsReturned>` exceptions. A
+    <django_orm.db.models.Model.MultipleObjectsReturned>` exceptions. A
     ``try/except`` for ``MultipleObjectsReturned`` will catch
-    :exc:`~django.db.models.Model.MultipleObjectsReturned` exceptions for all
+    :exc:`~django_orm.db.models.Model.MultipleObjectsReturned` exceptions for all
     models.
 
-    See :meth:`~django.db.models.query.QuerySet.get()`.
+    See :meth:`~django_orm.db.models.query.QuerySet.get()`.
 
 ``SuspiciousOperation``
 -----------------------
@@ -88,7 +88,7 @@ Django core exception classes are defined in ``django.core.exceptions``.
 
     If a ``SuspiciousOperation`` exception reaches the ASGI/WSGI handler level
     it is logged at the ``Error`` level and results in
-    a :class:`~django.http.HttpResponseBadRequest`. See the :doc:`logging
+    a :class:`~django_orm.http.HttpResponseBadRequest`. See the :doc:`logging
     documentation </topics/logging/>` for more information.
 
 .. versionchanged:: 3.2.18
@@ -109,7 +109,7 @@ Django core exception classes are defined in ``django.core.exceptions``.
 .. exception:: ViewDoesNotExist
 
     The :exc:`ViewDoesNotExist` exception is raised by
-    :mod:`django.urls` when a requested view does not exist.
+    :mod:`django_orm.urls` when a requested view does not exist.
 
 ``MiddlewareNotUsed``
 ---------------------
@@ -175,7 +175,7 @@ list of errors.
     The :exc:`BadRequest` exception is raised when the request cannot be
     processed due to a client error. If a ``BadRequest`` exception reaches the
     ASGI/WSGI handler level it results in a
-    :class:`~django.http.HttpResponseBadRequest`.
+    :class:`~django_orm.http.HttpResponseBadRequest`.
 
 ``RequestAborted``
 ------------------
@@ -207,12 +207,12 @@ list of errors.
     asynchronous thread, then create a synchronous thread and call it in that.
     You can accomplish this is with :func:`asgiref.sync.sync_to_async`.
 
-.. currentmodule:: django.urls
+.. currentmodule:: django_orm.urls
 
 URL Resolver exceptions
 =======================
 
-URL Resolver exceptions are defined in ``django.urls``.
+URL Resolver exceptions are defined in ``django_orm.urls``.
 
 ``Resolver404``
 ---------------
@@ -220,24 +220,24 @@ URL Resolver exceptions are defined in ``django.urls``.
 .. exception:: Resolver404
 
     The :exc:`Resolver404` exception is raised by
-    :func:`~django.urls.resolve()` if the path passed to ``resolve()`` doesn't
-    map to a view. It's a subclass of :class:`django.http.Http404`.
+    :func:`~django_orm.urls.resolve()` if the path passed to ``resolve()`` doesn't
+    map to a view. It's a subclass of :class:`django_orm.http.Http404`.
 
 ``NoReverseMatch``
 ------------------
 
 .. exception:: NoReverseMatch
 
-    The :exc:`NoReverseMatch` exception is raised by :mod:`django.urls` when a
+    The :exc:`NoReverseMatch` exception is raised by :mod:`django_orm.urls` when a
     matching URL in your URLconf cannot be identified based on the parameters
     supplied.
 
-.. currentmodule:: django.db
+.. currentmodule:: django_orm.db
 
 Database Exceptions
 ===================
 
-Database exceptions may be imported from ``django.db``.
+Database exceptions may be imported from ``django_orm.db``.
 
 Django wraps the standard database exceptions so that your Django code has a
 guaranteed common implementation of these classes.
@@ -263,21 +263,21 @@ information provided.
 .. exception:: models.ProtectedError
 
 Raised to prevent deletion of referenced objects when using
-:attr:`django.db.models.PROTECT`. :exc:`models.ProtectedError` is a subclass
+:attr:`django_orm.db.models.PROTECT`. :exc:`models.ProtectedError` is a subclass
 of :exc:`IntegrityError`.
 
 .. exception:: models.RestrictedError
 
 Raised to prevent deletion of referenced objects when using
-:attr:`django.db.models.RESTRICT`. :exc:`models.RestrictedError` is a subclass
+:attr:`django_orm.db.models.RESTRICT`. :exc:`models.RestrictedError` is a subclass
 of :exc:`IntegrityError`.
 
-.. currentmodule:: django.http
+.. currentmodule:: django_orm.http
 
 HTTP Exceptions
 ===============
 
-HTTP exceptions may be imported from ``django.http``.
+HTTP exceptions may be imported from ``django_orm.http``.
 
 ``UnreadablePostError``
 -----------------------
@@ -286,12 +286,12 @@ HTTP exceptions may be imported from ``django.http``.
 
     :exc:`UnreadablePostError` is raised when a user cancels an upload.
 
-.. currentmodule:: django.contrib.sessions.exceptions
+.. currentmodule:: django_orm.contrib.sessions.exceptions
 
 Sessions Exceptions
 ===================
 
-Sessions exceptions are defined in ``django.contrib.sessions.exceptions``.
+Sessions exceptions are defined in ``django_orm.contrib.sessions.exceptions``.
 
 ``SessionInterrupted``
 ----------------------
@@ -300,14 +300,14 @@ Sessions exceptions are defined in ``django.contrib.sessions.exceptions``.
 
     :exc:`SessionInterrupted` is raised when a session is destroyed in a
     concurrent request. It's a subclass of
-    :exc:`~django.core.exceptions.BadRequest`.
+    :exc:`~django_orm.core.exceptions.BadRequest`.
 
 Transaction Exceptions
 ======================
 
-.. currentmodule:: django.db.transaction
+.. currentmodule:: django_orm.db.transaction
 
-Transaction exceptions are defined in ``django.db.transaction``.
+Transaction exceptions are defined in ``django_orm.db.transaction``.
 
 ``TransactionManagementError``
 ------------------------------
@@ -317,12 +317,12 @@ Transaction exceptions are defined in ``django.db.transaction``.
     :exc:`TransactionManagementError` is raised for any and all problems
     related to database transactions.
 
-.. currentmodule:: django.test
+.. currentmodule:: django_orm.test
 
 Testing Framework Exceptions
 ============================
 
-Exceptions provided by the ``django.test`` package.
+Exceptions provided by the ``django_orm.test`` package.
 
 ``RedirectCycleError``
 ----------------------

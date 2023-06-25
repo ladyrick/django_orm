@@ -1,5 +1,5 @@
-from django.db import connection
-from django.db.models import (
+from django_orm.db import connection
+from django_orm.db.models import (
     CharField,
     F,
     Func,
@@ -10,18 +10,18 @@ from django.db.models import (
     Value,
     Window,
 )
-from django.db.models.fields.json import KeyTextTransform, KeyTransform
-from django.db.models.functions import Cast, Concat, Substr
-from django.test import skipUnlessDBFeature
-from django.test.utils import Approximate, ignore_warnings
-from django.utils import timezone
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.db.models.fields.json import KeyTextTransform, KeyTransform
+from django_orm.db.models.functions import Cast, Concat, Substr
+from django_orm.test import skipUnlessDBFeature
+from django_orm.test.utils import Approximate, ignore_warnings
+from django_orm.utils import timezone
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from . import PostgreSQLTestCase
 from .models import AggregateTestModel, HotelReservation, Room, StatTestModel
 
 try:
-    from django.contrib.postgres.aggregates import (
+    from django_orm.contrib.postgres.aggregates import (
         ArrayAgg,
         BitAnd,
         BitOr,
@@ -43,7 +43,7 @@ try:
         StatAggregate,
         StringAgg,
     )
-    from django.contrib.postgres.fields import ArrayField
+    from django_orm.contrib.postgres.fields import ArrayField
 except ImportError:
     pass  # psycopg2 is not installed
 

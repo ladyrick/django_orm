@@ -1,6 +1,6 @@
-from django.db import connection
-from django.db.models import Max
-from django.test import TestCase
+from django_orm.db import connection
+from django_orm.db.models import Max
+from django_orm.test import TestCase
 
 from .models import Cash, CashModel
 

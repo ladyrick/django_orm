@@ -1,7 +1,7 @@
 import datetime
 
-from django.forms import ChoiceField, Form, MultiWidget, RadioSelect
-from django.test import override_settings
+from django_orm.forms import ChoiceField, Form, MultiWidget, RadioSelect
+from django_orm.test import override_settings
 
 from .base import WidgetTest
 

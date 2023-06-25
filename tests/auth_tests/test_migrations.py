@@ -1,24 +1,24 @@
 from importlib import import_module
 
-from django.apps import apps
-from django.contrib.auth.models import Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.db import connection, connections
-from django.test import TransactionTestCase
-from django.test.utils import captured_stdout
+from django_orm.apps import apps
+from django_orm.contrib.auth.models import Permission, User
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.db import connection, connections
+from django_orm.test import TransactionTestCase
+from django_orm.test.utils import captured_stdout
 
 from .models import Proxy, UserProxy
 
 update_proxy_permissions = import_module(
-    "django.contrib.auth.migrations.0011_update_proxy_permissions"
+    "django_orm.contrib.auth.migrations.0011_update_proxy_permissions"
 )
 
 
 class ProxyModelWithDifferentAppLabelTests(TransactionTestCase):
     available_apps = [
         "auth_tests",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
+        "django_orm.contrib.auth",
+        "django_orm.contrib.contenttypes",
     ]
 
     def setUp(self):
@@ -105,8 +105,8 @@ class ProxyModelWithDifferentAppLabelTests(TransactionTestCase):
 class ProxyModelWithSameAppLabelTests(TransactionTestCase):
     available_apps = [
         "auth_tests",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
+        "django_orm.contrib.auth",
+        "django_orm.contrib.contenttypes",
     ]
 
     def setUp(self):
@@ -219,8 +219,8 @@ class MultiDBProxyModelAppLabelTests(TransactionTestCase):
     databases = {"default", "other"}
     available_apps = [
         "auth_tests",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
+        "django_orm.contrib.auth",
+        "django_orm.contrib.contenttypes",
     ]
 
     def setUp(self):

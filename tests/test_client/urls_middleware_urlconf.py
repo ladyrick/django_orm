@@ -1,5 +1,5 @@
-from django.http import HttpResponse
-from django.urls import path
+from django_orm.http import HttpResponse
+from django_orm.urls import path
 
 
 def empty_response(request):

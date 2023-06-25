@@ -10,5 +10,5 @@ Bugfixes
 ========
 
 * Fixed a crash when filtering with a ``Subquery()`` annotation of a queryset
-  containing ``django.contrib.postgres.fields.JSONField`` or
-  :class:`~django.contrib.postgres.fields.HStoreField` (:ticket:`30769`).
+  containing ``django_orm.contrib.postgres.fields.JSONField`` or
+  :class:`~django_orm.contrib.postgres.fields.HStoreField` (:ticket:`30769`).

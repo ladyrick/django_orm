@@ -2,7 +2,7 @@
 Templates
 =========
 
-.. module:: django.template
+.. module:: django_orm.template
     :synopsis: Django's template system
 
 Being a web framework, Django needs a convenient way to generate HTML
@@ -30,11 +30,11 @@ It's a good template library even though it's fairly opinionated and sports a
 few idiosyncrasies. If you don't have a pressing reason to choose another
 backend, you should use the DTL, especially if you're writing a pluggable
 application and you intend to distribute templates. Django's contrib apps that
-include templates, like :doc:`django.contrib.admin </ref/contrib/admin/index>`,
+include templates, like :doc:`django_orm.contrib.admin </ref/contrib/admin/index>`,
 use the DTL.
 
 For historical reasons, both the generic support for template engines and the
-implementation of the Django template language live in the ``django.template``
+implementation of the Django template language live in the ``django_orm.template``
 namespace.
 
 .. warning::
@@ -49,7 +49,7 @@ namespace.
 The Django template language
 ============================
 
-.. highlight:: html+django
+.. highlight:: html+django_orm
 
 Syntax
 ------
@@ -126,9 +126,9 @@ Filters transform the values of variables and tag arguments.
 
 They look like this::
 
-     {{ django|title }}
+     {{ django_orm|title }}
 
-With a context of ``{'django': 'the web framework for perfectionists with
+With a context of ``{'django_orm': 'the web framework for perfectionists with
 deadlines'}``, this template renders to::
 
     The Web Framework For Perfectionists With Deadlines
@@ -161,42 +161,42 @@ Components
 Engine
 ~~~~~~
 
-:class:`django.template.Engine` encapsulates an instance of the Django
+:class:`django_orm.template.Engine` encapsulates an instance of the Django
 template system. The main reason for instantiating an
-:class:`~django.template.Engine` directly is to use the Django template
+:class:`~django_orm.template.Engine` directly is to use the Django template
 language outside of a Django project.
 
-:class:`django.template.backends.django.DjangoTemplates` is a thin wrapper
-adapting :class:`django.template.Engine` to Django's template backend API.
+:class:`django_orm.template.backends.django_orm.DjangoTemplates` is a thin wrapper
+adapting :class:`django_orm.template.Engine` to Django's template backend API.
 
 Template
 ~~~~~~~~
 
-:class:`django.template.Template` represents a compiled template. Templates are
+:class:`django_orm.template.Template` represents a compiled template. Templates are
 obtained with :meth:`.Engine.get_template` or :meth:`.Engine.from_string`.
 
-Likewise ``django.template.backends.django.Template`` is a thin wrapper
-adapting :class:`django.template.Template` to the common template API.
+Likewise ``django_orm.template.backends.django_orm.Template`` is a thin wrapper
+adapting :class:`django_orm.template.Template` to the common template API.
 
 Context
 ~~~~~~~
 
-:class:`django.template.Context` holds some metadata in addition to the context
+:class:`django_orm.template.Context` holds some metadata in addition to the context
 data. It is passed to :meth:`.Template.render` for rendering a template.
 
-:class:`django.template.RequestContext` is a subclass of
-:class:`~django.template.Context` that stores the current
-:class:`~django.http.HttpRequest` and runs template context processors.
+:class:`django_orm.template.RequestContext` is a subclass of
+:class:`~django_orm.template.Context` that stores the current
+:class:`~django_orm.http.HttpRequest` and runs template context processors.
 
 The common API doesn't have an equivalent concept. Context data is passed in a
-plain :class:`dict` and the current :class:`~django.http.HttpRequest` is passed
+plain :class:`dict` and the current :class:`~django_orm.http.HttpRequest` is passed
 separately if needed.
 
 Loaders
 ~~~~~~~
 
 Template loaders are responsible for locating templates, loading them, and
-returning :class:`~django.template.Template` objects.
+returning :class:`~django_orm.template.Template` objects.
 
 Django provides several :ref:`built-in template loaders <template-loaders>`
 and supports :ref:`custom template loaders <custom-template-loaders>`.
@@ -205,7 +205,7 @@ Context processors
 ~~~~~~~~~~~~~~~~~~
 
 Context processors are functions that receive the current
-:class:`~django.http.HttpRequest` as an argument and return a :class:`dict` of
+:class:`~django_orm.http.HttpRequest` as an argument and return a :class:`dict` of
 data to be added to the rendering context.
 
 Their main use is to add common data shared by all templates to the context
@@ -231,7 +231,7 @@ more useful value::
 
     TEMPLATES = [
         {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'BACKEND': 'django_orm.template.backends.django_orm.DjangoTemplates',
             'DIRS': [],
             'APP_DIRS': True,
             'OPTIONS': {
@@ -242,8 +242,8 @@ more useful value::
 
 :setting:`BACKEND <TEMPLATES-BACKEND>` is a dotted Python path to a template
 engine class implementing Django's template backend API. The built-in backends
-are :class:`django.template.backends.django.DjangoTemplates` and
-:class:`django.template.backends.jinja2.Jinja2`.
+are :class:`django_orm.template.backends.django_orm.DjangoTemplates` and
+:class:`django_orm.template.backends.jinja2.Jinja2`.
 
 Since most engines load templates from files, the top-level configuration for
 each engine contains two common settings:
@@ -266,9 +266,9 @@ backend with different options. In that case you should define a unique
 Usage
 -----
 
-.. module:: django.template.loader
+.. module:: django_orm.template.loader
 
-The ``django.template.loader`` module defines two functions to load templates.
+The ``django_orm.template.loader`` module defines two functions to load templates.
 
 .. function:: get_template(template_name, using=None)
 
@@ -280,9 +280,9 @@ The ``django.template.loader`` module defines two functions to load templates.
 
     ``get_template()`` tries each template engine in order until one succeeds.
     If the template cannot be found, it raises
-    :exc:`~django.template.TemplateDoesNotExist`. If the template is found but
+    :exc:`~django_orm.template.TemplateDoesNotExist`. If the template is found but
     contains invalid syntax, it raises
-    :exc:`~django.template.TemplateSyntaxError`.
+    :exc:`~django_orm.template.TemplateSyntaxError`.
 
     How templates are searched and loaded depends on each engine's backend and
     configuration.
@@ -296,10 +296,10 @@ The ``django.template.loader`` module defines two functions to load templates.
     list of template names. It tries each name in order and returns the first
     template that exists.
 
-.. currentmodule:: django.template
+.. currentmodule:: django_orm.template
 
 If loading a template fails, the following two exceptions, defined in
-``django.template``, may be raised:
+``django_orm.template``, may be raised:
 
 .. exception:: TemplateDoesNotExist(msg, tried=None, backend=None, chain=None)
 
@@ -317,9 +317,9 @@ If loading a template fails, the following two exceptions, defined in
         ``status`` is a string with the reason the template wasn't found.
 
     ``chain``
-        A list of intermediate :exc:`~django.template.TemplateDoesNotExist`
+        A list of intermediate :exc:`~django_orm.template.TemplateDoesNotExist`
         exceptions raised when trying to load a template. This is used by
-        functions, such as :func:`~django.template.loader.get_template`, that
+        functions, such as :func:`~django_orm.template.loader.get_template`, that
         try to load a given template from multiple engines.
 
 .. exception:: TemplateSyntaxError(msg)
@@ -329,7 +329,7 @@ If loading a template fails, the following two exceptions, defined in
 ``Template`` objects returned by ``get_template()`` and ``select_template()``
 must provide a ``render()`` method with the following signature:
 
-.. currentmodule:: django.template.backends.base
+.. currentmodule:: django_orm.template.backends.base
 
 .. method:: Template.render(context=None, request=None)
 
@@ -338,7 +338,7 @@ must provide a ``render()`` method with the following signature:
     If ``context`` is provided, it must be a :class:`dict`. If it isn't
     provided, the engine will render the template with an empty context.
 
-    If ``request`` is provided, it must be an :class:`~django.http.HttpRequest`.
+    If ``request`` is provided, it must be an :class:`~django_orm.http.HttpRequest`.
     Then the engine must make it, as well as the CSRF token, available in the
     template. How this is achieved is up to each backend.
 
@@ -347,14 +347,14 @@ Here's an example of the search algorithm. For this example the
 
     TEMPLATES = [
         {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'BACKEND': 'django_orm.template.backends.django_orm.DjangoTemplates',
             'DIRS': [
                 '/home/html/example.com',
                 '/home/html/default',
             ],
         },
         {
-            'BACKEND': 'django.template.backends.jinja2.Jinja2',
+            'BACKEND': 'django_orm.template.backends.jinja2.Jinja2',
             'DIRS': [
                 '/home/html/jinja2',
             ],
@@ -364,25 +364,25 @@ Here's an example of the search algorithm. For this example the
 If you call ``get_template('story_detail.html')``, here are the files Django
 will look for, in order:
 
-* ``/home/html/example.com/story_detail.html`` (``'django'`` engine)
-* ``/home/html/default/story_detail.html`` (``'django'`` engine)
+* ``/home/html/example.com/story_detail.html`` (``'django_orm'`` engine)
+* ``/home/html/default/story_detail.html`` (``'django_orm'`` engine)
 * ``/home/html/jinja2/story_detail.html`` (``'jinja2'`` engine)
 
 If you call ``select_template(['story_253_detail.html', 'story_detail.html'])``,
 here's what Django will look for:
 
-* ``/home/html/example.com/story_253_detail.html`` (``'django'`` engine)
-* ``/home/html/default/story_253_detail.html`` (``'django'`` engine)
+* ``/home/html/example.com/story_253_detail.html`` (``'django_orm'`` engine)
+* ``/home/html/default/story_253_detail.html`` (``'django_orm'`` engine)
 * ``/home/html/jinja2/story_253_detail.html`` (``'jinja2'`` engine)
-* ``/home/html/example.com/story_detail.html`` (``'django'`` engine)
-* ``/home/html/default/story_detail.html`` (``'django'`` engine)
+* ``/home/html/example.com/story_detail.html`` (``'django_orm'`` engine)
+* ``/home/html/default/story_detail.html`` (``'django_orm'`` engine)
 * ``/home/html/jinja2/story_detail.html`` (``'jinja2'`` engine)
 
 When Django finds a template that exists, it stops looking.
 
 .. admonition:: Tip
 
-    You can use :func:`~django.template.loader.select_template()` for flexible
+    You can use :func:`~django_orm.template.loader.select_template()` for flexible
     template loading. For example, if you've written a news story and want
     some stories to have custom templates, use something like
     ``select_template(['story_%s_detail.html' % story.id,
@@ -405,11 +405,11 @@ To load a template that's within a subdirectory, use a slash, like so::
 Using the same :setting:`TEMPLATES` option as above, this will attempt to load
 the following templates:
 
-* ``/home/html/example.com/news/story_detail.html`` (``'django'`` engine)
-* ``/home/html/default/news/story_detail.html`` (``'django'`` engine)
+* ``/home/html/example.com/news/story_detail.html`` (``'django_orm'`` engine)
+* ``/home/html/default/news/story_detail.html`` (``'django_orm'`` engine)
 * ``/home/html/jinja2/news/story_detail.html`` (``'jinja2'`` engine)
 
-.. currentmodule:: django.template.loader
+.. currentmodule:: django_orm.template.loader
 
 In addition, to cut down on the repetitive nature of loading and rendering
 templates, Django provides a shortcut function which automates the process.
@@ -429,7 +429,7 @@ templates, Django provides a shortcut function which automates the process.
         A :class:`dict` to be used as the template's context for rendering.
 
     ``request``
-        An optional :class:`~django.http.HttpRequest` that will be available
+        An optional :class:`~django_orm.http.HttpRequest` that will be available
         during the template's rendering process.
 
     ``using``
@@ -438,38 +438,38 @@ templates, Django provides a shortcut function which automates the process.
 
     Usage example::
 
-        from django.template.loader import render_to_string
+        from django_orm.template.loader import render_to_string
         rendered = render_to_string('my_template.html', {'foo': 'bar'})
 
-See also the :func:`~django.shortcuts.render()` shortcut which calls
+See also the :func:`~django_orm.shortcuts.render()` shortcut which calls
 :func:`render_to_string()` and feeds the result into an
-:class:`~django.http.HttpResponse` suitable for returning from a view.
+:class:`~django_orm.http.HttpResponse` suitable for returning from a view.
 
 Finally, you can use configured engines directly:
 
 .. data:: engines
 
-    Template engines are available in ``django.template.engines``::
+    Template engines are available in ``django_orm.template.engines``::
 
-        from django.template import engines
+        from django_orm.template import engines
 
-        django_engine = engines['django']
+        django_engine = engines['django_orm']
         template = django_engine.from_string("Hello {{ name }}!")
 
-    The lookup key — ``'django'`` in this example — is the engine's
+    The lookup key — ``'django_orm'`` in this example — is the engine's
     :setting:`NAME <TEMPLATES-NAME>`.
 
-.. module:: django.template.backends
+.. module:: django_orm.template.backends
 
 Built-in backends
 -----------------
 
-.. module:: django.template.backends.django
+.. module:: django_orm.template.backends.django_orm
 
 .. class:: DjangoTemplates
 
 Set :setting:`BACKEND <TEMPLATES-BACKEND>` to
-``'django.template.backends.django.DjangoTemplates'`` to configure a Django
+``'django_orm.template.backends.django_orm.DjangoTemplates'`` to configure a Django
 template engine.
 
 When :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` is ``True``, ``DjangoTemplates``
@@ -495,7 +495,7 @@ applications. This generic name was kept for backwards-compatibility.
 
   It defaults to an empty list.
 
-  See :class:`~django.template.RequestContext` for more information.
+  See :class:`~django_orm.template.RequestContext` for more information.
 
 * ``'debug'``: a boolean that turns on/off template debug mode. If it is
   ``True``, the fancy error page will display a detailed report for any
@@ -533,7 +533,7 @@ applications. This generic name was kept for backwards-compatibility.
       OPTIONS={
           'libraries': {
               'myapp_tags': 'path.to.myapp.tags',
-              'admin.urls': 'django.contrib.admin.templatetags.admin_urls',
+              'admin.urls': 'django_orm.contrib.admin.templatetags.admin_urls',
           },
       }
 
@@ -550,7 +550,7 @@ applications. This generic name was kept for backwards-compatibility.
   Tags and filters from built-in libraries can be used without first calling
   the :ttag:`{% load %} <load>` tag.
 
-.. module:: django.template.backends.jinja2
+.. module:: django_orm.template.backends.jinja2
 
 .. class:: Jinja2
 
@@ -561,7 +561,7 @@ Requires Jinja2_ to be installed:
     $ python -m pip install Jinja2
 
 Set :setting:`BACKEND <TEMPLATES-BACKEND>` to
-``'django.template.backends.jinja2.Jinja2'`` to configure a Jinja2_ engine.
+``'django_orm.template.backends.jinja2.Jinja2'`` to configure a Jinja2_ engine.
 
 When :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` is ``True``, ``Jinja2`` engines
 look for templates in the ``jinja2`` subdirectory of installed applications.
@@ -615,7 +615,7 @@ adds defaults that differ from Jinja2's for a few options:
     more in line with the design of Jinja2.
 
 The default configuration is purposefully kept to a minimum. If a template is
-rendered with a request (e.g. when using :py:func:`~django.shortcuts.render`),
+rendered with a request (e.g. when using :py:func:`~django_orm.shortcuts.render`),
 the ``Jinja2`` backend adds the globals ``request``, ``csrf_input``, and
 ``csrf_token`` to the context. Apart from that, this backend doesn't create a
 Django-flavored environment. It doesn't know about Django filters and tags.
@@ -624,8 +624,8 @@ environment.
 
 For example, you can create ``myproject/jinja2.py`` with this content::
 
-    from django.templatetags.static import static
-    from django.urls import reverse
+    from django_orm.templatetags.static import static
+    from django_orm.urls import reverse
 
     from jinja2 import Environment
 

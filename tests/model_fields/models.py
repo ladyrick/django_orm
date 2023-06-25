@@ -3,13 +3,13 @@ import os
 import tempfile
 import uuid
 
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.core.files.storage import FileSystemStorage
-from django.core.serializers.json import DjangoJSONEncoder
-from django.db import models
-from django.db.models.fields.files import ImageFieldFile
-from django.utils.translation import gettext_lazy as _
+from django_orm.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.core.files.storage import FileSystemStorage
+from django_orm.core.serializers.json import DjangoJSONEncoder
+from django_orm.db import models
+from django_orm.db.models.fields.files import ImageFieldFile
+from django_orm.utils.translation import gettext_lazy as _
 
 try:
     from PIL import Image

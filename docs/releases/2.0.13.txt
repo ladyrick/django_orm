@@ -9,5 +9,5 @@ Django 2.0.13 fixes a regression in 2.0.12/2.0.11.
 Bugfixes
 ========
 
-* Fixed crash in ``django.utils.numberformat.format_number()`` when the number
+* Fixed crash in ``django_orm.utils.numberformat.format_number()`` when the number
   has over 200 digits (:ticket:`30177`).

@@ -1,9 +1,9 @@
 import os
 from datetime import datetime, timedelta, timezone
 
-from django.conf import settings
-from django.contrib.staticfiles.storage import ManifestStaticFilesStorage
-from django.core.files import storage
+from django_orm.conf import settings
+from django_orm.contrib.staticfiles.storage import ManifestStaticFilesStorage
+from django_orm.core.files import storage
 
 
 class DummyStorage(storage.Storage):

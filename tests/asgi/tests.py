@@ -5,17 +5,17 @@ from pathlib import Path
 
 from asgiref.testing import ApplicationCommunicator
 
-from django.contrib.staticfiles.handlers import ASGIStaticFilesHandler
-from django.core.asgi import get_asgi_application
-from django.core.signals import request_finished, request_started
-from django.db import close_old_connections
-from django.test import (
+from django_orm.contrib.staticfiles.handlers import ASGIStaticFilesHandler
+from django_orm.core.asgi import get_asgi_application
+from django_orm.core.signals import request_finished, request_started
+from django_orm.db import close_old_connections
+from django_orm.test import (
     AsyncRequestFactory,
     SimpleTestCase,
     modify_settings,
     override_settings,
 )
-from django.utils.http import http_date
+from django_orm.utils.http import http_date
 
 from .urls import sync_waiter, test_filename
 
@@ -97,13 +97,13 @@ class ASGITest(SimpleTestCase):
         # Allow response.close() to finish.
         await communicator.wait()
 
-    @modify_settings(INSTALLED_APPS={"append": "django.contrib.staticfiles"})
+    @modify_settings(INSTALLED_APPS={"append": "django_orm.contrib.staticfiles"})
     @override_settings(
         STATIC_URL="static/",
         STATIC_ROOT=TEST_STATIC_ROOT,
         STATICFILES_DIRS=[TEST_STATIC_ROOT],
         STATICFILES_FINDERS=[
-            "django.contrib.staticfiles.finders.FileSystemFinder",
+            "django_orm.contrib.staticfiles.finders.FileSystemFinder",
         ],
     )
     async def test_static_file_response(self):

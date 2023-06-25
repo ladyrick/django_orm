@@ -5,10 +5,10 @@ import struct
 from io import BytesIO
 from urllib.parse import quote
 
-from django.conf import settings
-from django.core import mail
-from django.core.exceptions import PermissionDenied
-from django.http import (
+from django_orm.conf import settings
+from django_orm.core import mail
+from django_orm.core.exceptions import PermissionDenied
+from django_orm.http import (
     FileResponse,
     HttpRequest,
     HttpResponse,
@@ -17,11 +17,11 @@ from django.http import (
     HttpResponseRedirect,
     StreamingHttpResponse,
 )
-from django.middleware.clickjacking import XFrameOptionsMiddleware
-from django.middleware.common import BrokenLinkEmailsMiddleware, CommonMiddleware
-from django.middleware.gzip import GZipMiddleware
-from django.middleware.http import ConditionalGetMiddleware
-from django.test import RequestFactory, SimpleTestCase, override_settings
+from django_orm.middleware.clickjacking import XFrameOptionsMiddleware
+from django_orm.middleware.common import BrokenLinkEmailsMiddleware, CommonMiddleware
+from django_orm.middleware.gzip import GZipMiddleware
+from django_orm.middleware.http import ConditionalGetMiddleware
+from django_orm.test import RequestFactory, SimpleTestCase, override_settings
 
 int2byte = struct.Struct(">B").pack
 

@@ -1,5 +1,5 @@
-from django.core.checks import register
-from django.db import models
+from django_orm.core.checks import register
+from django_orm.db import models
 
 
 class SimpleModel(models.Model):

@@ -5,11 +5,11 @@ import pickle
 import unittest
 import uuid
 
-from django.core.exceptions import DisallowedRedirect
-from django.core.serializers.json import DjangoJSONEncoder
-from django.core.signals import request_finished
-from django.db import close_old_connections
-from django.http import (
+from django_orm.core.exceptions import DisallowedRedirect
+from django_orm.core.serializers.json import DjangoJSONEncoder
+from django_orm.core.signals import request_finished
+from django_orm.db import close_old_connections
+from django_orm.http import (
     BadHeaderError,
     HttpResponse,
     HttpResponseNotAllowed,
@@ -22,8 +22,8 @@ from django.http import (
     StreamingHttpResponse,
     parse_cookie,
 )
-from django.test import SimpleTestCase
-from django.utils.functional import lazystr
+from django_orm.test import SimpleTestCase
+from django_orm.utils.functional import lazystr
 
 
 class QueryDictTests(SimpleTestCase):

@@ -1,5 +1,5 @@
-import django.contrib.postgres.fields
-from django.db import migrations, models
+import django_orm.contrib.postgres.fields
+from django_orm.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="integerarraydefaultmodel",
             name="field_2",
-            field=django.contrib.postgres.fields.ArrayField(
+            field=django_orm.contrib.postgres.fields.ArrayField(
                 models.IntegerField(), default=[], size=None
             ),
             preserve_default=False,

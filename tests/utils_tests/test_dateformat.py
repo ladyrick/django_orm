@@ -1,10 +1,10 @@
 from datetime import date, datetime, time, timezone, tzinfo
 
-from django.test import SimpleTestCase, override_settings
-from django.test.utils import TZ_SUPPORT, requires_tz_support
-from django.utils import dateformat, translation
-from django.utils.dateformat import format
-from django.utils.timezone import get_default_timezone, get_fixed_timezone, make_aware
+from django_orm.test import SimpleTestCase, override_settings
+from django_orm.test.utils import TZ_SUPPORT, requires_tz_support
+from django_orm.utils import dateformat, translation
+from django_orm.utils.dateformat import format
+from django_orm.utils.timezone import get_default_timezone, get_fixed_timezone, make_aware
 
 
 @override_settings(TIME_ZONE="Europe/Copenhagen")

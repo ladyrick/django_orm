@@ -1,5 +1,5 @@
-import django.contrib.postgres.fields
-from django.db import migrations, models
+import django_orm.contrib.postgres.fields
+from django_orm.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "field",
-                    django.contrib.postgres.fields.ArrayField(
+                    django_orm.contrib.postgres.fields.ArrayField(
                         models.IntegerField(), size=None
                     ),
                 ),

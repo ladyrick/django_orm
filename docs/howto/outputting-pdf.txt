@@ -41,13 +41,13 @@ Write your view
 ===============
 
 The key to generating PDFs dynamically with Django is that the ReportLab API
-acts on file-like objects, and Django's :class:`~django.http.FileResponse`
+acts on file-like objects, and Django's :class:`~django_orm.http.FileResponse`
 objects accept file-like objects.
 
 Here's a "Hello World" example::
 
     import io
-    from django.http import FileResponse
+    from django_orm.http import FileResponse
     from reportlab.pdfgen import canvas
 
     def some_view(request):
@@ -90,7 +90,7 @@ mention:
 
 * You can hook into the ReportLab API: The same buffer passed as the first
   argument to ``canvas.Canvas`` can be fed to the
-  :class:`~django.http.FileResponse` class.
+  :class:`~django_orm.http.FileResponse` class.
 
 * Note that all subsequent PDF-generation methods are called on the PDF
   object (in this case, ``p``) -- not on ``buffer``.

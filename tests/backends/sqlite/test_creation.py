@@ -3,8 +3,8 @@ import multiprocessing
 import unittest
 from unittest import mock
 
-from django.db import DEFAULT_DB_ALIAS, NotSupportedError, connection, connections
-from django.test import SimpleTestCase
+from django_orm.db import DEFAULT_DB_ALIAS, NotSupportedError, connection, connections
+from django_orm.test import SimpleTestCase
 
 
 @unittest.skipUnless(connection.vendor == "sqlite", "SQLite tests")

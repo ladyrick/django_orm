@@ -2,7 +2,7 @@
 Tests for the order_with_respect_to Meta attribute.
 """
 
-from django.db import models
+from django_orm.db import models
 
 
 class Question(models.Model):

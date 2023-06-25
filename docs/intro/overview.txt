@@ -28,7 +28,7 @@ database-schema problems. Here's a quick example:
 .. code-block:: python
     :caption: ``mysite/news/models.py``
 
-    from django.db import models
+    from django_orm.db import models
 
     class Reporter(models.Model):
         full_name = models.CharField(max_length=70)
@@ -148,7 +148,7 @@ only step required is to register your model in the admin site:
 .. code-block:: python
     :caption: ``mysite/news/models.py``
 
-    from django.db import models
+    from django_orm.db import models
 
     class Article(models.Model):
         pub_date = models.DateField()
@@ -159,7 +159,7 @@ only step required is to register your model in the admin site:
 .. code-block:: python
     :caption: ``mysite/news/admin.py``
 
-    from django.contrib import admin
+    from django_orm.contrib import admin
 
     from . import models
 
@@ -191,7 +191,7 @@ example above:
 .. code-block:: python
     :caption: ``mysite/news/urls.py``
 
-    from django.urls import path
+    from django_orm.urls import path
 
     from . import views
 
@@ -220,8 +220,8 @@ Write your views
 ================
 
 Each view is responsible for doing one of two things: Returning an
-:class:`~django.http.HttpResponse` object containing the content for the
-requested page, or raising an exception such as :class:`~django.http.Http404`.
+:class:`~django_orm.http.HttpResponse` object containing the content for the
+requested page, or raising an exception such as :class:`~django_orm.http.Http404`.
 The rest is up to you.
 
 Generally, a view retrieves data according to the parameters, loads a template
@@ -231,7 +231,7 @@ and renders the template with the retrieved data. Here's an example view for
 .. code-block:: python
     :caption: ``mysite/news/views.py``
 
-    from django.shortcuts import render
+    from django_orm.shortcuts import render
 
     from .models import Article
 
@@ -257,7 +257,7 @@ in the first directory, it checks the second, and so on.
 Let's say the ``news/year_archive.html`` template was found. Here's what that
 might look like:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
     :caption: ``mysite/news/templates/news/year_archive.html``
 
     {% extends "base.html" %}
@@ -298,7 +298,7 @@ in templates: each template has to define only what's unique to that template.
 Here's what the "base.html" template, including the use of :doc:`static files
 </howto/static-files/index>`, might look like:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
     :caption: ``mysite/templates/base.html``
 
     {% load static %}

@@ -38,7 +38,7 @@ demonstrate the kind of functionality databases may have.
 
 .. admonition:: Searching in other databases
 
-    All of the searching tools provided by :mod:`django.contrib.postgres` are
+    All of the searching tools provided by :mod:`django_orm.contrib.postgres` are
     constructed entirely on public APIs such as :doc:`custom lookups
     </ref/models/lookups>` and :doc:`database functions
     </ref/models/database-functions>`. Depending on your database, you should
@@ -108,7 +108,7 @@ powerful as some other search engines, it has the advantage of being inside
 your database and so can easily be combined with other relational queries such
 as categorization.
 
-The :mod:`django.contrib.postgres` module provides some helpers to make these
+The :mod:`django_orm.contrib.postgres` module provides some helpers to make these
 queries. For example, a query might select all the blog entries which mention
 "cheese"::
 

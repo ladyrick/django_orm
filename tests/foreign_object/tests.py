@@ -3,11 +3,11 @@ import datetime
 import pickle
 from operator import attrgetter
 
-from django.core.exceptions import FieldError
-from django.db import models
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
-from django.test.utils import isolate_apps
-from django.utils import translation
+from django_orm.core.exceptions import FieldError
+from django_orm.db import models
+from django_orm.test import SimpleTestCase, TestCase, skipUnlessDBFeature
+from django_orm.test.utils import isolate_apps
+from django_orm.utils import translation
 
 from .models import (
     Article,

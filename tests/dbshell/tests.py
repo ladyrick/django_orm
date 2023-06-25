@@ -1,9 +1,9 @@
 from unittest import mock
 
-from django.core.management import call_command
-from django.core.management.base import CommandError
-from django.db import connection
-from django.test import SimpleTestCase
+from django_orm.core.management import call_command
+from django_orm.core.management.base import CommandError
+from django_orm.db import connection
+from django_orm.test import SimpleTestCase
 
 
 class DbshellCommandTestCase(SimpleTestCase):

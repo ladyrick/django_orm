@@ -3,12 +3,12 @@ import math
 import re
 from decimal import Decimal
 
-from django.contrib.gis.db.models import GeometryField, PolygonField, functions
-from django.contrib.gis.geos import GEOSGeometry, LineString, Point, Polygon, fromstr
-from django.contrib.gis.measure import Area
-from django.db import NotSupportedError, connection
-from django.db.models import IntegerField, Sum, Value
-from django.test import TestCase, skipUnlessDBFeature
+from django_orm.contrib.gis.db.models import GeometryField, PolygonField, functions
+from django_orm.contrib.gis.geos import GEOSGeometry, LineString, Point, Polygon, fromstr
+from django_orm.contrib.gis.measure import Area
+from django_orm.db import NotSupportedError, connection
+from django_orm.db.models import IntegerField, Sum, Value
+from django_orm.test import TestCase, skipUnlessDBFeature
 
 from ..utils import FuncTestMixin
 from .models import City, Country, CountryWebMercator, State, Track
@@ -16,7 +16,7 @@ from .models import City, Country, CountryWebMercator, State, Track
 
 class GISFunctionsTests(FuncTestMixin, TestCase):
     """
-    Testing functions from django/contrib/gis/db/models/functions.py.
+    Testing functions from django_orm/contrib/gis/db/models/functions.py.
     Area/Distance/Length/Perimeter are tested in distapp/tests.
 
     Please keep the tests in function's alphabetic order.

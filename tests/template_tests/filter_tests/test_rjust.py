@@ -1,6 +1,6 @@
-from django.template.defaultfilters import rjust
-from django.test import SimpleTestCase
-from django.utils.safestring import mark_safe
+from django_orm.template.defaultfilters import rjust
+from django_orm.test import SimpleTestCase
+from django_orm.utils.safestring import mark_safe
 
 from ..utils import setup
 

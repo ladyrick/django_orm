@@ -4,9 +4,9 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 from unittest import TestCase, mock
 
-from django.core.exceptions import ValidationError
-from django.core.files.base import ContentFile
-from django.core.validators import (
+from django_orm.core.exceptions import ValidationError
+from django_orm.core.files.base import ContentFile
+from django_orm.core.validators import (
     BaseValidator,
     DecimalValidator,
     EmailValidator,
@@ -30,7 +30,7 @@ from django.core.validators import (
     validate_slug,
     validate_unicode_slug,
 )
-from django.test import SimpleTestCase
+from django_orm.test import SimpleTestCase
 
 try:
     from PIL import Image  # noqa
@@ -255,7 +255,7 @@ INVALID_URLS = [
     "http://[::ffff:192.9.5.5]\n",
     "http://www.djangoproject.com/\r",
     "http://[::ffff:192.9.5.5]\r",
-    "http://www.django\rproject.com/",
+    "http://www.django_orm\rproject.com/",
     "http://[::\rffff:192.9.5.5]",
     "http://\twww.djangoproject.com/",
     "http://\t[::ffff:192.9.5.5]",
@@ -373,7 +373,7 @@ TEST_DATA = [
     (validate_ipv4_address, "1.02.3.4", ValidationError),
     (validate_ipv4_address, "1.2.03.4", ValidationError),
     (validate_ipv4_address, "1.2.3.04", ValidationError),
-    # validate_ipv6_address uses django.utils.ipv6, which
+    # validate_ipv6_address uses django_orm.utils.ipv6, which
     # is tested in much greater detail in its own testcase
     (validate_ipv6_address, "fe80::1", None),
     (validate_ipv6_address, "::1", None),

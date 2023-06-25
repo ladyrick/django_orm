@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from django.contrib.admin.options import IncorrectLookupParameters
-from django.contrib.auth.models import User
-from django.test import RequestFactory, TestCase
-from django.utils.timezone import make_aware
+from django_orm.contrib.admin.options import IncorrectLookupParameters
+from django_orm.contrib.auth.models import User
+from django_orm.test import RequestFactory, TestCase
+from django_orm.utils.timezone import make_aware
 
 from .admin import EventAdmin
 from .admin import site as custom_site

@@ -1,7 +1,7 @@
-from django.db import models
-from django.db.models import QuerySet
-from django.db.models.manager import BaseManager
-from django.urls import reverse
+from django_orm.db import models
+from django_orm.db.models import QuerySet
+from django_orm.db.models.manager import BaseManager
+from django_orm.urls import reverse
 
 
 class Artist(models.Model):

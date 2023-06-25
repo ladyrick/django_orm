@@ -1,5 +1,5 @@
-from django.core.serializers.base import DeserializedObject
-from django.test import SimpleTestCase
+from django_orm.core.serializers.base import DeserializedObject
+from django_orm.test import SimpleTestCase
 
 from .models import Author
 

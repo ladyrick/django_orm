@@ -1,6 +1,6 @@
-from django.core.exceptions import FieldError
-from django.db.models import FilteredRelation
-from django.test import SimpleTestCase, TestCase
+from django_orm.core.exceptions import FieldError
+from django_orm.db.models import FilteredRelation
+from django_orm.test import SimpleTestCase, TestCase
 
 from .models import (
     AdvancedUserStat,

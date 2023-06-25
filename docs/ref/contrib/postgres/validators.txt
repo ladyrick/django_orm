@@ -2,9 +2,9 @@
 Validators
 ==========
 
-.. module:: django.contrib.postgres.validators
+.. module:: django_orm.contrib.postgres.validators
 
-These validators are available from the ``django.contrib.postgres.validators``
+These validators are available from the ``django_orm.contrib.postgres.validators``
 module.
 
 ``KeysValidator``

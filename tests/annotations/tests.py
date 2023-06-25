@@ -1,8 +1,8 @@
 import datetime
 from decimal import Decimal
 
-from django.core.exceptions import FieldDoesNotExist, FieldError
-from django.db.models import (
+from django_orm.core.exceptions import FieldDoesNotExist, FieldError
+from django_orm.db.models import (
     BooleanField,
     Case,
     CharField,
@@ -23,10 +23,10 @@ from django.db.models import (
     Value,
     When,
 )
-from django.db.models.expressions import RawSQL
-from django.db.models.functions import Coalesce, ExtractYear, Floor, Length, Lower, Trim
-from django.test import TestCase, skipUnlessDBFeature
-from django.test.utils import register_lookup
+from django_orm.db.models.expressions import RawSQL
+from django_orm.db.models.functions import Coalesce, ExtractYear, Floor, Length, Lower, Trim
+from django_orm.test import TestCase, skipUnlessDBFeature
+from django_orm.test.utils import register_lookup
 
 from .models import (
     Author,

@@ -9,12 +9,12 @@ Logging
     * :ref:`logging-how-to`
     * :ref:`Django logging overview <logging-explanation>`
 
-.. module:: django.utils.log
+.. module:: django_orm.utils.log
    :synopsis: Logging tools for Django applications
 
 Django's logging module extends Python's builtin :mod:`logging`.
 
-Logging is configured as part of the general Django :func:`django.setup`
+Logging is configured as part of the general Django :func:`django_orm.setup`
 function, so it's always available unless explicitly disabled.
 
 .. _default-logging-configuration:
@@ -32,22 +32,22 @@ The full set of default logging conditions are:
 
 When :setting:`DEBUG` is ``True``:
 
-* The ``django`` logger sends messages in the ``django`` hierarchy (except
-  ``django.server``) at the ``INFO`` level or higher to the console.
+* The ``django_orm`` logger sends messages in the ``django_orm`` hierarchy (except
+  ``django_orm.server``) at the ``INFO`` level or higher to the console.
 
 When :setting:`DEBUG` is ``False``:
 
-* The ``django`` logger sends messages in the ``django`` hierarchy (except
-  ``django.server``)  with ``ERROR`` or ``CRITICAL`` level to
+* The ``django_orm`` logger sends messages in the ``django_orm`` hierarchy (except
+  ``django_orm.server``)  with ``ERROR`` or ``CRITICAL`` level to
   :class:`AdminEmailHandler`.
 
 Independently of the value of :setting:`DEBUG`:
 
-* The :ref:`django-server-logger` logger sends messages at the ``INFO`` level
+* The :ref:`django_orm-server-logger` logger sends messages at the ``INFO`` level
   or higher to the console.
 
-All loggers except :ref:`django-server-logger` propagate logging to their
-parents, up to the root ``django`` logger. The ``console`` and ``mail_admins``
+All loggers except :ref:`django_orm-server-logger` propagate logging to their
+parents, up to the root ``django_orm`` logger. The ``console`` and ``mail_admins``
 handlers are attached to the root logger to provide the behavior described
 above.
 
@@ -60,23 +60,23 @@ Default logging definition
 --------------------------
 
 Django's default logging configuration inherits Python's defaults. It's
-available as ``django.utils.log.DEFAULT_LOGGING`` and defined in
-:source:`django/utils/log.py`::
+available as ``django_orm.utils.log.DEFAULT_LOGGING`` and defined in
+:source:`django_orm/utils/log.py`::
 
     {
         'version': 1,
         'disable_existing_loggers': False,
         'filters': {
             'require_debug_false': {
-                '()': 'django.utils.log.RequireDebugFalse',
+                '()': 'django_orm.utils.log.RequireDebugFalse',
             },
             'require_debug_true': {
-                '()': 'django.utils.log.RequireDebugTrue',
+                '()': 'django_orm.utils.log.RequireDebugTrue',
             },
         },
         'formatters': {
-            'django.server': {
-                '()': 'django.utils.log.ServerFormatter',
+            'django_orm.server': {
+                '()': 'django_orm.utils.log.ServerFormatter',
                 'format': '[{server_time}] {message}',
                 'style': '{',
             }
@@ -87,24 +87,24 @@ available as ``django.utils.log.DEFAULT_LOGGING`` and defined in
                 'filters': ['require_debug_true'],
                 'class': 'logging.StreamHandler',
             },
-            'django.server': {
+            'django_orm.server': {
                 'level': 'INFO',
                 'class': 'logging.StreamHandler',
-                'formatter': 'django.server',
+                'formatter': 'django_orm.server',
             },
             'mail_admins': {
                 'level': 'ERROR',
                 'filters': ['require_debug_false'],
-                'class': 'django.utils.log.AdminEmailHandler'
+                'class': 'django_orm.utils.log.AdminEmailHandler'
             }
         },
         'loggers': {
-            'django': {
+            'django_orm': {
                 'handlers': ['console', 'mail_admins'],
                 'level': 'INFO',
             },
-            'django.server': {
-                'handlers': ['django.server'],
+            'django_orm.server': {
+                'handlers': ['django_orm.server'],
                 'level': 'INFO',
                 'propagate': False,
             },
@@ -127,22 +127,22 @@ Django provides several built-in loggers.
 
 .. _django-logger:
 
-``django``
+``django_orm``
 ~~~~~~~~~~
 
-The parent logger for messages in the ``django`` :ref:`named logger hierarchy
+The parent logger for messages in the ``django_orm`` :ref:`named logger hierarchy
 <naming-loggers-hierarchy>`. Django does not post messages using this name.
 Instead, it uses one of the loggers below.
 
 .. _django-request-logger:
 
-``django.request``
+``django_orm.request``
 ~~~~~~~~~~~~~~~~~~
 
 Log messages related to the handling of requests. 5XX responses are
 raised as ``ERROR`` messages; 4XX responses are raised as ``WARNING``
-messages. Requests that are logged to the ``django.security`` logger aren't
-logged to ``django.request``.
+messages. Requests that are logged to the ``django_orm.security`` logger aren't
+logged to ``django_orm.request``.
 
 Messages to this logger have the following extra context:
 
@@ -152,7 +152,7 @@ Messages to this logger have the following extra context:
 
 .. _django-server-logger:
 
-``django.server``
+``django_orm.server``
 ~~~~~~~~~~~~~~~~~
 
 Log messages related to the handling of requests received by the server invoked
@@ -168,7 +168,7 @@ Messages to this logger have the following extra context:
 
 .. _django-template-logger:
 
-``django.template``
+``django_orm.template``
 ~~~~~~~~~~~~~~~~~~~
 
 Log messages related to the rendering of templates.
@@ -177,7 +177,7 @@ Log messages related to the rendering of templates.
 
 .. _django-db-logger:
 
-``django.db.backends``
+``django_orm.db.backends``
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Messages relating to the interaction of code with the database. For example,
@@ -206,11 +206,11 @@ wish to view all database queries.
 
 .. _django-security-logger:
 
-``django.security.*``
+``django_orm.security.*``
 ~~~~~~~~~~~~~~~~~~~~~
 
 The security loggers will receive messages on any occurrence of
-:exc:`~django.core.exceptions.SuspiciousOperation` and other security-related
+:exc:`~django_orm.core.exceptions.SuspiciousOperation` and other security-related
 errors. There is a sub-logger for each subtype of security error, including all
 ``SuspiciousOperation``\s. The level of the log event depends on where the
 exception is handled.  Most occurrences are logged as a warning, while
@@ -218,12 +218,12 @@ any ``SuspiciousOperation`` that reaches the WSGI handler will be logged as an
 error. For example, when an HTTP ``Host`` header is included in a request from
 a client that does not match :setting:`ALLOWED_HOSTS`, Django will return a 400
 response, and an error message will be logged to the
-``django.security.DisallowedHost`` logger.
+``django_orm.security.DisallowedHost`` logger.
 
-These log events will reach the ``django`` logger by default, which mails error
+These log events will reach the ``django_orm`` logger by default, which mails error
 events to admins when ``DEBUG=False``. Requests resulting in a 400 response due
-to a ``SuspiciousOperation`` will not be logged to the ``django.request``
-logger, but only to the ``django.security`` logger.
+to a ``SuspiciousOperation`` will not be logged to the ``django_orm.request``
+logger, but only to the ``django_orm.security`` logger.
 
 To silence a particular type of ``SuspiciousOperation``, you can override that
 specific logger following this example::
@@ -234,25 +234,25 @@ specific logger following this example::
         },
     },
     'loggers': {
-        'django.security.DisallowedHost': {
+        'django_orm.security.DisallowedHost': {
             'handlers': ['null'],
             'propagate': False,
         },
     },
 
-Other ``django.security`` loggers not based on ``SuspiciousOperation`` are:
+Other ``django_orm.security`` loggers not based on ``SuspiciousOperation`` are:
 
-* ``django.security.csrf``: For :ref:`CSRF failures <csrf-rejected-requests>`.
+* ``django_orm.security.csrf``: For :ref:`CSRF failures <csrf-rejected-requests>`.
 
-``django.db.backends.schema``
+``django_orm.db.backends.schema``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Logs the SQL queries that are executed during schema changes to the database by
 the :doc:`migrations framework </topics/migrations>`. Note that it won't log the
-queries executed by :class:`~django.db.migrations.operations.RunPython`.
+queries executed by :class:`~django_orm.db.migrations.operations.RunPython`.
 Messages to this logger have ``params`` and ``sql`` in their extra context (but
-unlike ``django.db.backends``, not duration). The values have the same meaning
-as explained in :ref:`django-db-logger`.
+unlike ``django_orm.db.backends``, not duration). The values have the same meaning
+as explained in :ref:`django_orm-db-logger`.
 
 Handlers
 --------
@@ -278,12 +278,12 @@ Python logging module <python:logging.handlers>`.
     containing the full content of the debug web page that would have been
     produced if :setting:`DEBUG` were ``True``. To set this value in your
     configuration, include it in the handler definition for
-    ``django.utils.log.AdminEmailHandler``, like this::
+    ``django_orm.utils.log.AdminEmailHandler``, like this::
 
         'handlers': {
             'mail_admins': {
                 'level': 'ERROR',
-                'class': 'django.utils.log.AdminEmailHandler',
+                'class': 'django_orm.utils.log.AdminEmailHandler',
                 'include_html': True,
             },
         },
@@ -298,8 +298,8 @@ Python logging module <python:logging.handlers>`.
         'handlers': {
             'mail_admins': {
                 'level': 'ERROR',
-                'class': 'django.utils.log.AdminEmailHandler',
-                'email_backend': 'django.core.mail.backends.filebased.EmailBackend',
+                'class': 'django_orm.utils.log.AdminEmailHandler',
+                'email_backend': 'django_orm.core.mail.backends.filebased.EmailBackend',
             },
         },
 
@@ -307,14 +307,14 @@ Python logging module <python:logging.handlers>`.
     :setting:`EMAIL_BACKEND` will be used.
 
     The ``reporter_class`` argument of ``AdminEmailHandler`` allows providing
-    an ``django.views.debug.ExceptionReporter`` subclass to customize the
+    an ``django_orm.views.debug.ExceptionReporter`` subclass to customize the
     traceback text sent in the email body. You provide a string import path to
     the class you wish to use, like this::
 
         'handlers': {
             'mail_admins': {
                 'level': 'ERROR',
-                'class': 'django.utils.log.AdminEmailHandler',
+                'class': 'django_orm.utils.log.AdminEmailHandler',
                 'include_html': True,
                 'reporter_class': 'somepackage.error_reporter.CustomErrorReporter',
             },
@@ -323,7 +323,7 @@ Python logging module <python:logging.handlers>`.
     .. method:: send_mail(subject, message, *args, **kwargs)
 
         Sends emails to admin users. To customize this behavior, you can
-        subclass the :class:`~django.utils.log.AdminEmailHandler` class and
+        subclass the :class:`~django_orm.utils.log.AdminEmailHandler` class and
         override this method.
 
 Filters
@@ -339,11 +339,11 @@ logging module.
     passes through the filter. Handling of that record will not proceed if the
     callback returns False.
 
-    For instance, to filter out :exc:`~django.http.UnreadablePostError`
+    For instance, to filter out :exc:`~django_orm.http.UnreadablePostError`
     (raised when a user cancels an upload) from the admin emails, you would
     create a filter function::
 
-        from django.http import UnreadablePostError
+        from django_orm.http import UnreadablePostError
 
         def skip_unreadable_post(record):
             if record.exc_info:
@@ -356,7 +356,7 @@ logging module.
 
         'filters': {
             'skip_unreadable_posts': {
-                '()': 'django.utils.log.CallbackFilter',
+                '()': 'django_orm.utils.log.CallbackFilter',
                 'callback': skip_unreadable_post,
             },
         },
@@ -364,7 +364,7 @@ logging module.
             'mail_admins': {
                 'level': 'ERROR',
                 'filters': ['skip_unreadable_posts'],
-                'class': 'django.utils.log.AdminEmailHandler',
+                'class': 'django_orm.utils.log.AdminEmailHandler',
             },
         },
 
@@ -378,14 +378,14 @@ logging module.
 
         'filters': {
             'require_debug_false': {
-                '()': 'django.utils.log.RequireDebugFalse',
+                '()': 'django_orm.utils.log.RequireDebugFalse',
             },
         },
         'handlers': {
             'mail_admins': {
                 'level': 'ERROR',
                 'filters': ['require_debug_false'],
-                'class': 'django.utils.log.AdminEmailHandler',
+                'class': 'django_orm.utils.log.AdminEmailHandler',
             },
         },
 

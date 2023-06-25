@@ -1,5 +1,5 @@
 """
-Tests for django.core.servers.
+Tests for django_orm.core.servers.
 """
 import errno
 import os
@@ -10,11 +10,11 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import urlopen
 
-from django.conf import settings
-from django.core.servers.basehttp import ThreadedWSGIServer, WSGIServer
-from django.db import DEFAULT_DB_ALIAS, connections
-from django.test import LiveServerTestCase, override_settings
-from django.test.testcases import LiveServerThread, QuietWSGIRequestHandler
+from django_orm.conf import settings
+from django_orm.core.servers.basehttp import ThreadedWSGIServer, WSGIServer
+from django_orm.db import DEFAULT_DB_ALIAS, connections
+from django_orm.test import LiveServerTestCase, override_settings
+from django_orm.test.testcases import LiveServerThread, QuietWSGIRequestHandler
 
 from .models import Person
 
@@ -31,9 +31,9 @@ TEST_SETTINGS = {
 class LiveServerBase(LiveServerTestCase):
     available_apps = [
         "servers",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
-        "django.contrib.sessions",
+        "django_orm.contrib.auth",
+        "django_orm.contrib.contenttypes",
+        "django_orm.contrib.sessions",
     ]
     fixtures = ["testdata.json"]
 

@@ -1,12 +1,12 @@
 from unittest import mock
 
-from django.contrib.contenttypes.checks import check_model_name_lengths
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.core import checks
-from django.db import models
-from django.test import SimpleTestCase, override_settings
-from django.test.utils import isolate_apps
+from django_orm.contrib.contenttypes.checks import check_model_name_lengths
+from django_orm.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.core import checks
+from django_orm.db import models
+from django_orm.test import SimpleTestCase, override_settings
+from django_orm.test.utils import isolate_apps
 
 
 @isolate_apps("contenttypes_tests", attr_name="apps")
@@ -111,8 +111,8 @@ class GenericForeignKeyTests(SimpleTestCase):
 
     @override_settings(
         INSTALLED_APPS=[
-            "django.contrib.auth",
-            "django.contrib.contenttypes",
+            "django_orm.contrib.auth",
+            "django_orm.contrib.contenttypes",
             "contenttypes_tests",
         ]
     )

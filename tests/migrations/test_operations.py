@@ -1,12 +1,12 @@
-from django.core.exceptions import FieldDoesNotExist
-from django.db import IntegrityError, connection, migrations, models, transaction
-from django.db.migrations.migration import Migration
-from django.db.migrations.operations.fields import FieldOperation
-from django.db.migrations.state import ModelState, ProjectState
-from django.db.models.functions import Abs
-from django.db.transaction import atomic
-from django.test import SimpleTestCase, override_settings, skipUnlessDBFeature
-from django.test.utils import CaptureQueriesContext
+from django_orm.core.exceptions import FieldDoesNotExist
+from django_orm.db import IntegrityError, connection, migrations, models, transaction
+from django_orm.db.migrations.migration import Migration
+from django_orm.db.migrations.operations.fields import FieldOperation
+from django_orm.db.migrations.state import ModelState, ProjectState
+from django_orm.db.models.functions import Abs
+from django_orm.db.transaction import atomic
+from django_orm.test import SimpleTestCase, override_settings, skipUnlessDBFeature
+from django_orm.test.utils import CaptureQueriesContext
 
 from .models import FoodManager, FoodQuerySet, UnicodeModel
 from .test_base import OperationTestBase
@@ -130,7 +130,7 @@ class OperationTests(OperationTestBase):
                 ),
             )
         message = (
-            "Found duplicate value <class 'django.db.models.base.Model'> in "
+            "Found duplicate value <class 'django_orm.db.models.base.Model'> in "
             "CreateModel bases argument."
         )
         with self.assertRaisesMessage(ValueError, message):
@@ -4320,11 +4320,11 @@ class OperationTests(OperationTestBase):
             "INSERT INTO i_love_ponies (id, special_thing) "
             "VALUES (1, 'i love ponies'); -- this is magic!\n"
             "INSERT INTO i_love_ponies (id, special_thing) "
-            "VALUES (2, 'i love django');\n"
+            "VALUES (2, 'i love django_orm');\n"
             "UPDATE i_love_ponies SET special_thing = 'Ponies' "
             "WHERE special_thing LIKE '%%ponies';"
             "UPDATE i_love_ponies SET special_thing = 'Django' "
-            "WHERE special_thing LIKE '%django';",
+            "WHERE special_thing LIKE '%django_orm';",
             # Run delete queries to test for parameter substitution failure
             # reported in #23426
             "DELETE FROM i_love_ponies WHERE special_thing LIKE '%Django%';"

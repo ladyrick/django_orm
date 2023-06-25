@@ -1,7 +1,7 @@
-from django.db import connection, migrations
+from django_orm.db import connection, migrations
 
 if connection.features.supports_raster:
-    from django.contrib.postgres.operations import CreateExtension
+    from django_orm.contrib.postgres.operations import CreateExtension
 
     pg_version = connection.ops.postgis_version_tuple()
 

@@ -17,7 +17,7 @@ A simple view
 
 Here's a view that returns the current date and time, as an HTML document::
 
-    from django.http import HttpResponse
+    from django_orm.http import HttpResponse
     import datetime
 
     def current_datetime(request):
@@ -27,11 +27,11 @@ Here's a view that returns the current date and time, as an HTML document::
 
 Let's step through this code one line at a time:
 
-* First, we import the class :class:`~django.http.HttpResponse` from the
-  :mod:`django.http` module, along with Python's ``datetime`` library.
+* First, we import the class :class:`~django_orm.http.HttpResponse` from the
+  :mod:`django_orm.http` module, along with Python's ``datetime`` library.
 
 * Next, we define a function called ``current_datetime``. This is the view
-  function. Each view function takes an :class:`~django.http.HttpRequest`
+  function. Each view function takes an :class:`~django_orm.http.HttpRequest`
   object as its first parameter, which is typically named ``request``.
 
   Note that the name of the view function doesn't matter; it doesn't have to
@@ -39,9 +39,9 @@ Let's step through this code one line at a time:
   calling it ``current_datetime`` here, because that name clearly indicates
   what it does.
 
-* The view returns an :class:`~django.http.HttpResponse` object that
+* The view returns an :class:`~django_orm.http.HttpResponse` object that
   contains the generated response. Each view function is responsible for
-  returning an :class:`~django.http.HttpResponse` object. (There are
+  returning an :class:`~django_orm.http.HttpResponse` object. (There are
   exceptions, but we'll get to those later.)
 
 .. admonition:: Django's Time Zone
@@ -61,14 +61,14 @@ Returning errors
 ================
 
 Django provides help for returning HTTP error codes. There are subclasses of
-:class:`~django.http.HttpResponse` for a number of common HTTP status codes
+:class:`~django_orm.http.HttpResponse` for a number of common HTTP status codes
 other than 200 (which means *"OK"*). You can find the full list of available
 subclasses in the :ref:`request/response <ref-httpresponse-subclasses>`
 documentation. Return an instance of one of those subclasses instead of a
-normal :class:`~django.http.HttpResponse` in order to signify an error. For
+normal :class:`~django_orm.http.HttpResponse` in order to signify an error. For
 example::
 
-    from django.http import HttpResponse, HttpResponseNotFound
+    from django_orm.http import HttpResponse, HttpResponseNotFound
 
     def my_view(request):
         # ...
@@ -79,11 +79,11 @@ example::
 
 There isn't a specialized subclass for every possible HTTP response code,
 since many of them aren't going to be that common. However, as documented in
-the :class:`~django.http.HttpResponse` documentation, you can also pass the
-HTTP status code into the constructor for :class:`~django.http.HttpResponse`
+the :class:`~django_orm.http.HttpResponse` documentation, you can also pass the
+HTTP status code into the constructor for :class:`~django_orm.http.HttpResponse`
 to create a return class for any status code you like. For example::
 
-    from django.http import HttpResponse
+    from django_orm.http import HttpResponse
 
     def my_view(request):
         # ...
@@ -97,9 +97,9 @@ to handle those errors.
 The ``Http404`` exception
 -------------------------
 
-.. class:: django.http.Http404()
+.. class:: django_orm.http.Http404()
 
-When you return an error such as :class:`~django.http.HttpResponseNotFound`,
+When you return an error such as :class:`~django_orm.http.HttpResponseNotFound`,
 you're responsible for defining the HTML of the resulting error page::
 
     return HttpResponseNotFound('<h1>Page not found</h1>')
@@ -111,8 +111,8 @@ standard error page for your application, along with an HTTP error code 404.
 
 Example usage::
 
-    from django.http import Http404
-    from django.shortcuts import render
+    from django_orm.http import Http404
+    from django_orm.shortcuts import render
     from polls.models import Poll
 
     def detail(request, poll_id):
@@ -142,23 +142,23 @@ but can easily be overridden if you need any custom behavior. Specify the
 handlers as seen below in your URLconf (setting them anywhere else will have no
 effect).
 
-The :func:`~django.views.defaults.page_not_found` view is overridden by
-:data:`~django.conf.urls.handler404`::
+The :func:`~django_orm.views.defaults.page_not_found` view is overridden by
+:data:`~django_orm.conf.urls.handler404`::
 
     handler404 = 'mysite.views.my_custom_page_not_found_view'
 
-The :func:`~django.views.defaults.server_error` view is overridden by
-:data:`~django.conf.urls.handler500`::
+The :func:`~django_orm.views.defaults.server_error` view is overridden by
+:data:`~django_orm.conf.urls.handler500`::
 
     handler500 = 'mysite.views.my_custom_error_view'
 
-The :func:`~django.views.defaults.permission_denied` view is overridden by
-:data:`~django.conf.urls.handler403`::
+The :func:`~django_orm.views.defaults.permission_denied` view is overridden by
+:data:`~django_orm.conf.urls.handler403`::
 
     handler403 = 'mysite.views.my_custom_permission_denied_view'
 
-The :func:`~django.views.defaults.bad_request` view is overridden by
-:data:`~django.conf.urls.handler400`::
+The :func:`~django_orm.views.defaults.bad_request` view is overridden by
+:data:`~django_orm.conf.urls.handler400`::
 
     handler400 = 'mysite.views.my_custom_bad_request_view'
 
@@ -173,10 +173,10 @@ Testing custom error views
 To test the response of a custom error handler, raise the appropriate exception
 in a test view. For example::
 
-    from django.core.exceptions import PermissionDenied
-    from django.http import HttpResponse
-    from django.test import SimpleTestCase, override_settings
-    from django.urls import path
+    from django_orm.core.exceptions import PermissionDenied
+    from django_orm.http import HttpResponse
+    from django_orm.test import SimpleTestCase, override_settings
+    from django_orm.urls import path
 
 
     def response_error_handler(request, exception=None):
@@ -217,7 +217,7 @@ performance benefits.
 Here's an example of an async view::
 
     import datetime
-    from django.http import HttpResponse
+    from django_orm.http import HttpResponse
 
     async def current_datetime(request):
         now = datetime.datetime.now()

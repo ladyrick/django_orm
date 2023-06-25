@@ -1,20 +1,20 @@
 import os
 
 AUTH_MIDDLEWARE = [
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django_orm.contrib.sessions.middleware.SessionMiddleware",
+    "django_orm.contrib.auth.middleware.AuthenticationMiddleware",
 ]
 
 AUTH_TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
         "DIRS": [os.path.join(os.path.dirname(__file__), "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
+                "django_orm.template.context_processors.request",
+                "django_orm.contrib.auth.context_processors.auth",
+                "django_orm.contrib.messages.context_processors.messages",
             ],
         },
     }

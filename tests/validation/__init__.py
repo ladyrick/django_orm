@@ -1,4 +1,4 @@
-from django.core.exceptions import ValidationError
+from django_orm.core.exceptions import ValidationError
 
 
 class ValidationAssertions:

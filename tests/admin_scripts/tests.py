@@ -15,25 +15,25 @@ import unittest
 from io import StringIO
 from unittest import mock
 
-from django import conf, get_version
-from django.conf import settings
-from django.core.management import (
+from django_orm import conf, get_version
+from django_orm.conf import settings
+from django_orm.core.management import (
     BaseCommand,
     CommandError,
     call_command,
     color,
     execute_from_command_line,
 )
-from django.core.management.commands.loaddata import Command as LoaddataCommand
-from django.core.management.commands.runserver import Command as RunserverCommand
-from django.core.management.commands.testserver import Command as TestserverCommand
-from django.db import ConnectionHandler, connection
-from django.db.migrations.recorder import MigrationRecorder
-from django.test import LiveServerTestCase, SimpleTestCase, TestCase, override_settings
-from django.test.utils import captured_stderr, captured_stdout
-from django.urls import path
-from django.utils.version import PY39
-from django.views.static import serve
+from django_orm.core.management.commands.loaddata import Command as LoaddataCommand
+from django_orm.core.management.commands.runserver import Command as RunserverCommand
+from django_orm.core.management.commands.testserver import Command as TestserverCommand
+from django_orm.db import ConnectionHandler, connection
+from django_orm.db.migrations.recorder import MigrationRecorder
+from django_orm.test import LiveServerTestCase, SimpleTestCase, TestCase, override_settings
+from django_orm.test.utils import captured_stderr, captured_stdout
+from django_orm.urls import path
+from django_orm.utils.version import PY39
+from django_orm.views.static import serve
 
 from . import urls
 
@@ -83,8 +83,8 @@ class AdminScriptTestCase(SimpleTestCase):
 
             if apps is None:
                 apps = [
-                    "django.contrib.auth",
-                    "django.contrib.contenttypes",
+                    "django_orm.contrib.auth",
+                    "django_orm.contrib.contenttypes",
                     "admin_scripts",
                 ]
 
@@ -101,7 +101,7 @@ class AdminScriptTestCase(SimpleTestCase):
         paths = []
         for backend in settings.DATABASES.values():
             package = backend["ENGINE"].split(".")[0]
-            if package != "django":
+            if package != "django_orm":
                 backend_pkg = __import__(package)
                 backend_dir = os.path.dirname(backend_pkg.__file__)
                 paths.append(os.path.dirname(backend_dir))
@@ -112,7 +112,7 @@ class AdminScriptTestCase(SimpleTestCase):
         # The base dir for Django's tests is one level up.
         tests_dir = os.path.dirname(os.path.dirname(__file__))
         # The base dir for Django is one level above the test dir. We don't use
-        # `import django` to figure that out, so we don't pick up a Django
+        # `import django_orm` to figure that out, so we don't pick up a Django
         # from site-packages or similar.
         django_dir = os.path.dirname(tests_dir)
         ext_backend_base_dirs = self._ext_backend_paths()
@@ -142,7 +142,7 @@ class AdminScriptTestCase(SimpleTestCase):
         return p.stdout, p.stderr
 
     def run_django_admin(self, args, settings_file=None, umask=None):
-        return self.run_test(["-m", "django", *args], settings_file, umask=umask)
+        return self.run_test(["-m", "django_orm", *args], settings_file, umask=umask)
 
     def run_manage(self, args, settings_file=None, manage_py=None):
         template_manage_py = (
@@ -195,16 +195,16 @@ class AdminScriptTestCase(SimpleTestCase):
 ##########################################################################
 # DJANGO ADMIN TESTS
 # This first series of test classes checks the environment processing
-# of the django-admin.
+# of the django_orm-admin.
 ##########################################################################
 
 
 class DjangoAdminNoSettings(AdminScriptTestCase):
-    "A series of tests for django-admin when there is no settings.py file."
+    "A series of tests for django_orm-admin when there is no settings.py file."
 
     def test_builtin_command(self):
         """
-        no settings: django-admin builtin commands fail with an error when no
+        no settings: django_orm-admin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
@@ -214,7 +214,7 @@ class DjangoAdminNoSettings(AdminScriptTestCase):
 
     def test_builtin_with_bad_settings(self):
         """
-        no settings: django-admin builtin commands fail if settings file (from
+        no settings: django_orm-admin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
@@ -224,7 +224,7 @@ class DjangoAdminNoSettings(AdminScriptTestCase):
 
     def test_builtin_with_bad_environment(self):
         """
-        no settings: django-admin builtin commands fail if settings file (from
+        no settings: django_orm-admin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
@@ -245,7 +245,7 @@ class DjangoAdminNoSettings(AdminScriptTestCase):
 
 class DjangoAdminDefaultSettings(AdminScriptTestCase):
     """
-    A series of tests for django-admin when using a settings.py file that
+    A series of tests for django_orm-admin when using a settings.py file that
     contains the test application.
     """
 
@@ -255,7 +255,7 @@ class DjangoAdminDefaultSettings(AdminScriptTestCase):
 
     def test_builtin_command(self):
         """
-        default: django-admin builtin commands fail with an error when no
+        default: django_orm-admin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
@@ -265,7 +265,7 @@ class DjangoAdminDefaultSettings(AdminScriptTestCase):
 
     def test_builtin_with_settings(self):
         """
-        default: django-admin builtin commands succeed if settings are provided
+        default: django_orm-admin builtin commands succeed if settings are provided
         as argument.
         """
         args = ["check", "--settings=test_project.settings", "admin_scripts"]
@@ -275,7 +275,7 @@ class DjangoAdminDefaultSettings(AdminScriptTestCase):
 
     def test_builtin_with_environment(self):
         """
-        default: django-admin builtin commands succeed if settings are provided
+        default: django_orm-admin builtin commands succeed if settings are provided
         in the environment.
         """
         args = ["check", "admin_scripts"]
@@ -285,7 +285,7 @@ class DjangoAdminDefaultSettings(AdminScriptTestCase):
 
     def test_builtin_with_bad_settings(self):
         """
-        default: django-admin builtin commands fail if settings file (from
+        default: django_orm-admin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
@@ -295,7 +295,7 @@ class DjangoAdminDefaultSettings(AdminScriptTestCase):
 
     def test_builtin_with_bad_environment(self):
         """
-        default: django-admin builtin commands fail if settings file (from
+        default: django_orm-admin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
@@ -305,7 +305,7 @@ class DjangoAdminDefaultSettings(AdminScriptTestCase):
 
     def test_custom_command(self):
         """
-        default: django-admin can't execute user commands if it isn't provided
+        default: django_orm-admin can't execute user commands if it isn't provided
         settings.
         """
         args = ["noargs_command"]
@@ -316,7 +316,7 @@ class DjangoAdminDefaultSettings(AdminScriptTestCase):
 
     def test_custom_command_with_settings(self):
         """
-        default: django-admin can execute user commands if settings are
+        default: django_orm-admin can execute user commands if settings are
         provided as argument.
         """
         args = ["noargs_command", "--settings=test_project.settings"]
@@ -326,7 +326,7 @@ class DjangoAdminDefaultSettings(AdminScriptTestCase):
 
     def test_custom_command_with_environment(self):
         """
-        default: django-admin can execute user commands if settings are
+        default: django_orm-admin can execute user commands if settings are
         provided in environment.
         """
         args = ["noargs_command"]
@@ -337,7 +337,7 @@ class DjangoAdminDefaultSettings(AdminScriptTestCase):
 
 class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
     """
-    A series of tests for django-admin when using a settings.py file that
+    A series of tests for django_orm-admin when using a settings.py file that
     contains the test application specified using a full path.
     """
 
@@ -346,8 +346,8 @@ class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
         self.write_settings(
             "settings.py",
             [
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
+                "django_orm.contrib.auth",
+                "django_orm.contrib.contenttypes",
                 "admin_scripts",
                 "admin_scripts.complex_app",
             ],
@@ -355,7 +355,7 @@ class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
 
     def test_builtin_command(self):
         """
-        fulldefault: django-admin builtin commands fail with an error when no
+        fulldefault: django_orm-admin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
@@ -365,7 +365,7 @@ class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
 
     def test_builtin_with_settings(self):
         """
-        fulldefault: django-admin builtin commands succeed if a settings file
+        fulldefault: django_orm-admin builtin commands succeed if a settings file
         is provided.
         """
         args = ["check", "--settings=test_project.settings", "admin_scripts"]
@@ -375,7 +375,7 @@ class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
 
     def test_builtin_with_environment(self):
         """
-        fulldefault: django-admin builtin commands succeed if the environment
+        fulldefault: django_orm-admin builtin commands succeed if the environment
         contains settings.
         """
         args = ["check", "admin_scripts"]
@@ -385,7 +385,7 @@ class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
 
     def test_builtin_with_bad_settings(self):
         """
-        fulldefault: django-admin builtin commands fail if settings file (from
+        fulldefault: django_orm-admin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
@@ -395,7 +395,7 @@ class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
 
     def test_builtin_with_bad_environment(self):
         """
-        fulldefault: django-admin builtin commands fail if settings file (from
+        fulldefault: django_orm-admin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
@@ -405,7 +405,7 @@ class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
 
     def test_custom_command(self):
         """
-        fulldefault: django-admin can't execute user commands unless settings
+        fulldefault: django_orm-admin can't execute user commands unless settings
         are provided.
         """
         args = ["noargs_command"]
@@ -416,7 +416,7 @@ class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
 
     def test_custom_command_with_settings(self):
         """
-        fulldefault: django-admin can execute user commands if settings are
+        fulldefault: django_orm-admin can execute user commands if settings are
         provided as argument.
         """
         args = ["noargs_command", "--settings=test_project.settings"]
@@ -426,7 +426,7 @@ class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
 
     def test_custom_command_with_environment(self):
         """
-        fulldefault: django-admin can execute user commands if settings are
+        fulldefault: django_orm-admin can execute user commands if settings are
         provided in environment.
         """
         args = ["noargs_command"]
@@ -437,19 +437,19 @@ class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
 
 class DjangoAdminMinimalSettings(AdminScriptTestCase):
     """
-    A series of tests for django-admin when using a settings.py file that
+    A series of tests for django_orm-admin when using a settings.py file that
     doesn't contain the test application.
     """
 
     def setUp(self):
         super().setUp()
         self.write_settings(
-            "settings.py", apps=["django.contrib.auth", "django.contrib.contenttypes"]
+            "settings.py", apps=["django_orm.contrib.auth", "django_orm.contrib.contenttypes"]
         )
 
     def test_builtin_command(self):
         """
-        minimal: django-admin builtin commands fail with an error when no
+        minimal: django_orm-admin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
@@ -459,7 +459,7 @@ class DjangoAdminMinimalSettings(AdminScriptTestCase):
 
     def test_builtin_with_settings(self):
         """
-        minimal: django-admin builtin commands fail if settings are provided as
+        minimal: django_orm-admin builtin commands fail if settings are provided as
         argument.
         """
         args = ["check", "--settings=test_project.settings", "admin_scripts"]
@@ -469,7 +469,7 @@ class DjangoAdminMinimalSettings(AdminScriptTestCase):
 
     def test_builtin_with_environment(self):
         """
-        minimal: django-admin builtin commands fail if settings are provided in
+        minimal: django_orm-admin builtin commands fail if settings are provided in
         the environment.
         """
         args = ["check", "admin_scripts"]
@@ -479,7 +479,7 @@ class DjangoAdminMinimalSettings(AdminScriptTestCase):
 
     def test_builtin_with_bad_settings(self):
         """
-        minimal: django-admin builtin commands fail if settings file (from
+        minimal: django_orm-admin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
@@ -489,7 +489,7 @@ class DjangoAdminMinimalSettings(AdminScriptTestCase):
 
     def test_builtin_with_bad_environment(self):
         """
-        minimal: django-admin builtin commands fail if settings file (from
+        minimal: django_orm-admin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
@@ -498,7 +498,7 @@ class DjangoAdminMinimalSettings(AdminScriptTestCase):
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_custom_command(self):
-        "minimal: django-admin can't execute user commands unless settings are provided"
+        "minimal: django_orm-admin can't execute user commands unless settings are provided"
         args = ["noargs_command"]
         out, err = self.run_django_admin(args)
         self.assertNoOutput(out)
@@ -507,7 +507,7 @@ class DjangoAdminMinimalSettings(AdminScriptTestCase):
 
     def test_custom_command_with_settings(self):
         """
-        minimal: django-admin can't execute user commands, even if settings are
+        minimal: django_orm-admin can't execute user commands, even if settings are
         provided as argument.
         """
         args = ["noargs_command", "--settings=test_project.settings"]
@@ -517,7 +517,7 @@ class DjangoAdminMinimalSettings(AdminScriptTestCase):
 
     def test_custom_command_with_environment(self):
         """
-        minimal: django-admin can't execute user commands, even if settings are
+        minimal: django_orm-admin can't execute user commands, even if settings are
         provided in environment.
         """
         args = ["noargs_command"]
@@ -528,7 +528,7 @@ class DjangoAdminMinimalSettings(AdminScriptTestCase):
 
 class DjangoAdminAlternateSettings(AdminScriptTestCase):
     """
-    A series of tests for django-admin when using a settings file with a name
+    A series of tests for django_orm-admin when using a settings file with a name
     other than 'settings.py'.
     """
 
@@ -538,7 +538,7 @@ class DjangoAdminAlternateSettings(AdminScriptTestCase):
 
     def test_builtin_command(self):
         """
-        alternate: django-admin builtin commands fail with an error when no
+        alternate: django_orm-admin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
@@ -548,7 +548,7 @@ class DjangoAdminAlternateSettings(AdminScriptTestCase):
 
     def test_builtin_with_settings(self):
         """
-        alternate: django-admin builtin commands succeed if settings are
+        alternate: django_orm-admin builtin commands succeed if settings are
         provided as argument.
         """
         args = ["check", "--settings=test_project.alternate_settings", "admin_scripts"]
@@ -558,7 +558,7 @@ class DjangoAdminAlternateSettings(AdminScriptTestCase):
 
     def test_builtin_with_environment(self):
         """
-        alternate: django-admin builtin commands succeed if settings are
+        alternate: django_orm-admin builtin commands succeed if settings are
         provided in the environment.
         """
         args = ["check", "admin_scripts"]
@@ -568,7 +568,7 @@ class DjangoAdminAlternateSettings(AdminScriptTestCase):
 
     def test_builtin_with_bad_settings(self):
         """
-        alternate: django-admin builtin commands fail if settings file (from
+        alternate: django_orm-admin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
@@ -578,7 +578,7 @@ class DjangoAdminAlternateSettings(AdminScriptTestCase):
 
     def test_builtin_with_bad_environment(self):
         """
-        alternate: django-admin builtin commands fail if settings file (from
+        alternate: django_orm-admin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
@@ -588,7 +588,7 @@ class DjangoAdminAlternateSettings(AdminScriptTestCase):
 
     def test_custom_command(self):
         """
-        alternate: django-admin can't execute user commands unless settings
+        alternate: django_orm-admin can't execute user commands unless settings
         are provided.
         """
         args = ["noargs_command"]
@@ -599,7 +599,7 @@ class DjangoAdminAlternateSettings(AdminScriptTestCase):
 
     def test_custom_command_with_settings(self):
         """
-        alternate: django-admin can execute user commands if settings are
+        alternate: django_orm-admin can execute user commands if settings are
         provided as argument.
         """
         args = ["noargs_command", "--settings=test_project.alternate_settings"]
@@ -609,7 +609,7 @@ class DjangoAdminAlternateSettings(AdminScriptTestCase):
 
     def test_custom_command_with_environment(self):
         """
-        alternate: django-admin can execute user commands if settings are
+        alternate: django_orm-admin can execute user commands if settings are
         provided in environment.
         """
         args = ["noargs_command"]
@@ -620,7 +620,7 @@ class DjangoAdminAlternateSettings(AdminScriptTestCase):
 
 class DjangoAdminMultipleSettings(AdminScriptTestCase):
     """
-    A series of tests for django-admin when multiple settings files
+    A series of tests for django_orm-admin when multiple settings files
     (including the default 'settings.py') are available. The default settings
     file is insufficient for performing the operations described, so the
     alternate settings must be used by the running script.
@@ -629,13 +629,13 @@ class DjangoAdminMultipleSettings(AdminScriptTestCase):
     def setUp(self):
         super().setUp()
         self.write_settings(
-            "settings.py", apps=["django.contrib.auth", "django.contrib.contenttypes"]
+            "settings.py", apps=["django_orm.contrib.auth", "django_orm.contrib.contenttypes"]
         )
         self.write_settings("alternate_settings.py")
 
     def test_builtin_command(self):
         """
-        alternate: django-admin builtin commands fail with an error when no
+        alternate: django_orm-admin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
@@ -645,7 +645,7 @@ class DjangoAdminMultipleSettings(AdminScriptTestCase):
 
     def test_builtin_with_settings(self):
         """
-        alternate: django-admin builtin commands succeed if settings are
+        alternate: django_orm-admin builtin commands succeed if settings are
         provided as argument.
         """
         args = ["check", "--settings=test_project.alternate_settings", "admin_scripts"]
@@ -655,7 +655,7 @@ class DjangoAdminMultipleSettings(AdminScriptTestCase):
 
     def test_builtin_with_environment(self):
         """
-        alternate: django-admin builtin commands succeed if settings are
+        alternate: django_orm-admin builtin commands succeed if settings are
         provided in the environment.
         """
         args = ["check", "admin_scripts"]
@@ -665,7 +665,7 @@ class DjangoAdminMultipleSettings(AdminScriptTestCase):
 
     def test_builtin_with_bad_settings(self):
         """
-        alternate: django-admin builtin commands fail if settings file (from
+        alternate: django_orm-admin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
@@ -674,7 +674,7 @@ class DjangoAdminMultipleSettings(AdminScriptTestCase):
 
     def test_builtin_with_bad_environment(self):
         """
-        alternate: django-admin builtin commands fail if settings file (from
+        alternate: django_orm-admin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
@@ -684,7 +684,7 @@ class DjangoAdminMultipleSettings(AdminScriptTestCase):
 
     def test_custom_command(self):
         """
-        alternate: django-admin can't execute user commands unless settings are
+        alternate: django_orm-admin can't execute user commands unless settings are
         provided.
         """
         args = ["noargs_command"]
@@ -695,7 +695,7 @@ class DjangoAdminMultipleSettings(AdminScriptTestCase):
 
     def test_custom_command_with_settings(self):
         """
-        alternate: django-admin can execute user commands if settings are
+        alternate: django_orm-admin can execute user commands if settings are
         provided as argument.
         """
         args = ["noargs_command", "--settings=test_project.alternate_settings"]
@@ -705,7 +705,7 @@ class DjangoAdminMultipleSettings(AdminScriptTestCase):
 
     def test_custom_command_with_environment(self):
         """
-        alternate: django-admin can execute user commands if settings are
+        alternate: django_orm-admin can execute user commands if settings are
         provided in environment.
         """
         args = ["noargs_command"]
@@ -716,7 +716,7 @@ class DjangoAdminMultipleSettings(AdminScriptTestCase):
 
 class DjangoAdminSettingsDirectory(AdminScriptTestCase):
     """
-    A series of tests for django-admin when the settings file is in a
+    A series of tests for django_orm-admin when the settings file is in a
     directory. (see #9751).
     """
 
@@ -763,7 +763,7 @@ class DjangoAdminSettingsDirectory(AdminScriptTestCase):
 
     def test_builtin_command(self):
         """
-        directory: django-admin builtin commands fail with an error when no
+        directory: django_orm-admin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
@@ -773,7 +773,7 @@ class DjangoAdminSettingsDirectory(AdminScriptTestCase):
 
     def test_builtin_with_bad_settings(self):
         """
-        directory: django-admin builtin commands fail if settings file (from
+        directory: django_orm-admin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
@@ -782,7 +782,7 @@ class DjangoAdminSettingsDirectory(AdminScriptTestCase):
 
     def test_builtin_with_bad_environment(self):
         """
-        directory: django-admin builtin commands fail if settings file (from
+        directory: django_orm-admin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
@@ -792,7 +792,7 @@ class DjangoAdminSettingsDirectory(AdminScriptTestCase):
 
     def test_custom_command(self):
         """
-        directory: django-admin can't execute user commands unless settings are
+        directory: django_orm-admin can't execute user commands unless settings are
         provided.
         """
         args = ["noargs_command"]
@@ -803,7 +803,7 @@ class DjangoAdminSettingsDirectory(AdminScriptTestCase):
 
     def test_builtin_with_settings(self):
         """
-        directory: django-admin builtin commands succeed if settings are
+        directory: django_orm-admin builtin commands succeed if settings are
         provided as argument.
         """
         args = ["check", "--settings=test_project.settings", "admin_scripts"]
@@ -813,7 +813,7 @@ class DjangoAdminSettingsDirectory(AdminScriptTestCase):
 
     def test_builtin_with_environment(self):
         """
-        directory: django-admin builtin commands succeed if settings are
+        directory: django_orm-admin builtin commands succeed if settings are
         provided in the environment.
         """
         args = ["check", "admin_scripts"]
@@ -976,7 +976,7 @@ class ManageFullPathDefaultSettings(AdminScriptTestCase):
         super().setUp()
         self.write_settings(
             "settings.py",
-            ["django.contrib.auth", "django.contrib.contenttypes", "admin_scripts"],
+            ["django_orm.contrib.auth", "django_orm.contrib.contenttypes", "admin_scripts"],
         )
 
     def test_builtin_command(self):
@@ -1068,7 +1068,7 @@ class ManageMinimalSettings(AdminScriptTestCase):
     def setUp(self):
         super().setUp()
         self.write_settings(
-            "settings.py", apps=["django.contrib.auth", "django.contrib.contenttypes"]
+            "settings.py", apps=["django_orm.contrib.auth", "django_orm.contrib.contenttypes"]
         )
 
     def test_builtin_command(self):
@@ -1269,7 +1269,7 @@ class ManageMultipleSettings(AdminScriptTestCase):
     def setUp(self):
         super().setUp()
         self.write_settings(
-            "settings.py", apps=["django.contrib.auth", "django.contrib.contenttypes"]
+            "settings.py", apps=["django_orm.contrib.auth", "django_orm.contrib.contenttypes"]
         )
         self.write_settings("alternate_settings.py")
 
@@ -1404,7 +1404,7 @@ class ManageSettingsWithSettingsErrors(AdminScriptTestCase):
         """
         self.write_settings(
             "settings.py",
-            extra="from django.core.exceptions import ImproperlyConfigured\n"
+            extra="from django_orm.core.exceptions import ImproperlyConfigured\n"
             "raise ImproperlyConfigured()",
         )
         args = ["help"]
@@ -1447,28 +1447,28 @@ class ManageCheck(AdminScriptTestCase):
             apps=[
                 "admin_scripts.complex_app",
                 "admin_scripts.simple_app",
-                "django.contrib.admin.apps.SimpleAdminConfig",
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
-                "django.contrib.messages",
+                "django_orm.contrib.admin.apps.SimpleAdminConfig",
+                "django_orm.contrib.auth",
+                "django_orm.contrib.contenttypes",
+                "django_orm.contrib.messages",
             ],
             sdict={
                 "DEBUG": True,
                 "MIDDLEWARE": [
-                    "django.contrib.messages.middleware.MessageMiddleware",
-                    "django.contrib.auth.middleware.AuthenticationMiddleware",
-                    "django.contrib.sessions.middleware.SessionMiddleware",
+                    "django_orm.contrib.messages.middleware.MessageMiddleware",
+                    "django_orm.contrib.auth.middleware.AuthenticationMiddleware",
+                    "django_orm.contrib.sessions.middleware.SessionMiddleware",
                 ],
                 "TEMPLATES": [
                     {
-                        "BACKEND": "django.template.backends.django.DjangoTemplates",
+                        "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                         "DIRS": [],
                         "APP_DIRS": True,
                         "OPTIONS": {
                             "context_processors": [
-                                "django.template.context_processors.request",
-                                "django.contrib.auth.context_processors.auth",
-                                "django.contrib.messages.context_processors.messages",
+                                "django_orm.template.context_processors.request",
+                                "django_orm.contrib.auth.context_processors.auth",
+                                "django_orm.contrib.messages.context_processors.messages",
                             ],
                         },
                     },
@@ -1488,9 +1488,9 @@ class ManageCheck(AdminScriptTestCase):
             "settings.py",
             apps=[
                 "admin_scripts.app_with_import",
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
-                "django.contrib.sites",
+                "django_orm.contrib.auth",
+                "django_orm.contrib.contenttypes",
+                "django_orm.contrib.sites",
             ],
             sdict={"DEBUG": True},
         )
@@ -1506,8 +1506,8 @@ class ManageCheck(AdminScriptTestCase):
             "settings.py",
             apps=[
                 "admin_scripts.app_raising_messages",
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
+                "django_orm.contrib.auth",
+                "django_orm.contrib.contenttypes",
             ],
             sdict={"DEBUG": True},
         )
@@ -1543,8 +1543,8 @@ class ManageCheck(AdminScriptTestCase):
             "settings.py",
             apps=[
                 "admin_scripts.app_raising_warning",
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
+                "django_orm.contrib.auth",
+                "django_orm.contrib.contenttypes",
             ],
             sdict={"DEBUG": True},
         )
@@ -1639,7 +1639,7 @@ class ManageRunserver(SimpleTestCase):
         """
         tested_connections = ConnectionHandler({})
         with mock.patch(
-            "django.core.management.base.connections", new=tested_connections
+            "django_orm.core.management.base.connections", new=tested_connections
         ):
             self.cmd.check_migrations()
 
@@ -1652,9 +1652,9 @@ class ManageRunserver(SimpleTestCase):
         # You have # ...
         self.assertIn("unapplied migration(s)", self.output.getvalue())
 
-    @mock.patch("django.core.management.commands.runserver.run")
-    @mock.patch("django.core.management.base.BaseCommand.check_migrations")
-    @mock.patch("django.core.management.base.BaseCommand.check")
+    @mock.patch("django_orm.core.management.commands.runserver.run")
+    @mock.patch("django_orm.core.management.base.BaseCommand.check_migrations")
+    @mock.patch("django_orm.core.management.base.BaseCommand.check")
     def test_skip_checks(self, mocked_check, *mocked_objects):
         call_command(
             "runserver",
@@ -1753,7 +1753,7 @@ class ManageTestserver(SimpleTestCase):
             force_color=False,
         )
 
-    @mock.patch("django.db.connection.creation.create_test_db", return_value="test_db")
+    @mock.patch("django_orm.db.connection.creation.create_test_db", return_value="test_db")
     @mock.patch.object(LoaddataCommand, "handle", return_value="")
     @mock.patch.object(RunserverCommand, "handle", return_value="")
     def test_params_to_runserver(
@@ -1821,7 +1821,7 @@ class CommandTypes(AdminScriptTestCase):
         self.assertOutput(
             out, "Type 'manage.py help <subcommand>' for help on a specific subcommand."
         )
-        self.assertOutput(out, "[django]")
+        self.assertOutput(out, "[django_orm]")
         self.assertOutput(out, "startapp")
         self.assertOutput(out, "startproject")
 
@@ -1831,7 +1831,7 @@ class CommandTypes(AdminScriptTestCase):
         out, err = self.run_manage(args)
         self.assertNotInOutput(out, "usage:")
         self.assertNotInOutput(out, "Options:")
-        self.assertNotInOutput(out, "[django]")
+        self.assertNotInOutput(out, "[django_orm]")
         self.assertOutput(out, "startapp")
         self.assertOutput(out, "startproject")
         self.assertNotInOutput(out, "\n\n")
@@ -2105,7 +2105,7 @@ class CommandTypes(AdminScriptTestCase):
         command = BaseCommand()
         command.check = lambda: []
         command.handle = lambda *args, **kwargs: args
-        with mock.patch("django.core.management.base.connections") as mock_connections:
+        with mock.patch("django_orm.core.management.base.connections") as mock_connections:
             command.run_from_argv(["", ""])
         # Test connections have been closed
         self.assertTrue(mock_connections.close_all.called)
@@ -2133,7 +2133,7 @@ class CommandTypes(AdminScriptTestCase):
         args = ["app_command", "auth"]
         out, err = self.run_manage(args)
         self.assertNoOutput(err)
-        self.assertOutput(out, "EXECUTE:AppCommand name=django.contrib.auth, options=")
+        self.assertOutput(out, "EXECUTE:AppCommand name=django_orm.contrib.auth, options=")
         self.assertOutput(
             out,
             ", options=[('force_color', False), ('no_color', False), "
@@ -2152,7 +2152,7 @@ class CommandTypes(AdminScriptTestCase):
         args = ["app_command", "auth", "contenttypes"]
         out, err = self.run_manage(args)
         self.assertNoOutput(err)
-        self.assertOutput(out, "EXECUTE:AppCommand name=django.contrib.auth, options=")
+        self.assertOutput(out, "EXECUTE:AppCommand name=django_orm.contrib.auth, options=")
         self.assertOutput(
             out,
             ", options=[('force_color', False), ('no_color', False), "
@@ -2160,7 +2160,7 @@ class CommandTypes(AdminScriptTestCase):
             "('verbosity', 1)]",
         )
         self.assertOutput(
-            out, "EXECUTE:AppCommand name=django.contrib.contenttypes, options="
+            out, "EXECUTE:AppCommand name=django_orm.contrib.contenttypes, options="
         )
         self.assertOutput(
             out,
@@ -2255,8 +2255,8 @@ class Discovery(SimpleTestCase):
             INSTALLED_APPS=[
                 "admin_scripts.complex_app",
                 "admin_scripts.simple_app",
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
+                "django_orm.contrib.auth",
+                "django_orm.contrib.contenttypes",
             ]
         ):
             out = StringIO()
@@ -2266,8 +2266,8 @@ class Discovery(SimpleTestCase):
             INSTALLED_APPS=[
                 "admin_scripts.simple_app",
                 "admin_scripts.complex_app",
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
+                "django_orm.contrib.auth",
+                "django_orm.contrib.contenttypes",
             ]
         ):
             out = StringIO()
@@ -2278,7 +2278,7 @@ class Discovery(SimpleTestCase):
 class ArgumentOrder(AdminScriptTestCase):
     """Tests for 2-stage argument parsing scheme.
 
-    django-admin command arguments are parsed in 2 parts; the core arguments
+    django_orm-admin command arguments are parsed in 2 parts; the core arguments
     (--settings, --traceback and --pythonpath) are parsed using a basic parser,
     ignoring any unknown options. Then the full settings are
     passed to the command parser, which extracts commands of interest to the
@@ -2288,7 +2288,7 @@ class ArgumentOrder(AdminScriptTestCase):
     def setUp(self):
         super().setUp()
         self.write_settings(
-            "settings.py", apps=["django.contrib.auth", "django.contrib.contenttypes"]
+            "settings.py", apps=["django_orm.contrib.auth", "django_orm.contrib.contenttypes"]
         )
         self.write_settings("alternate_settings.py")
 
@@ -2356,8 +2356,8 @@ class ExecuteFromCommandLine(SimpleTestCase):
         args = ["help", "shell"]
         with captured_stdout() as out, captured_stderr() as err:
             with mock.patch("sys.argv", [None] + args):
-                execute_from_command_line(["django-admin"] + args)
-        self.assertIn("usage: django-admin shell", out.getvalue())
+                execute_from_command_line(["django_orm-admin"] + args)
+        self.assertIn("usage: django_orm-admin shell", out.getvalue())
         self.assertEqual(err.getvalue(), "")
 
 
@@ -2365,9 +2365,9 @@ class ExecuteFromCommandLine(SimpleTestCase):
 class StartProject(LiveServerTestCase, AdminScriptTestCase):
     available_apps = [
         "admin_scripts",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
-        "django.contrib.sessions",
+        "django_orm.contrib.auth",
+        "django_orm.contrib.contenttypes",
+        "django_orm.contrib.sessions",
     ]
 
     def test_wrong_args(self):
@@ -2902,9 +2902,9 @@ class StartApp(AdminScriptTestCase):
             content = f.read()
             self.assertIn("class NewAppConfig(AppConfig)", content)
             if HAS_BLACK:
-                test_str = 'default_auto_field = "django.db.models.BigAutoField"'
+                test_str = 'default_auto_field = "django_orm.db.models.BigAutoField"'
             else:
-                test_str = "default_auto_field = 'django.db.models.BigAutoField'"
+                test_str = "default_auto_field = 'django_orm.db.models.BigAutoField'"
             self.assertIn(test_str, content)
             self.assertIn(
                 'name = "new_app"' if HAS_BLACK else "name = 'new_app'",
@@ -2922,7 +2922,7 @@ class DiffSettings(AdminScriptTestCase):
         out, err = self.run_manage(args)
         self.assertNoOutput(err)
         self.assertOutput(out, "FOO = 'bar'  ###")
-        # Attributes from django.conf.Settings don't appear.
+        # Attributes from django_orm.conf.Settings don't appear.
         self.assertNotInOutput(out, "is_overridden = ")
 
     def test_settings_configured(self):
@@ -2931,7 +2931,7 @@ class DiffSettings(AdminScriptTestCase):
         )
         self.assertNoOutput(err)
         self.assertOutput(out, "CUSTOM = 1  ###\nDEBUG = True")
-        # Attributes from django.conf.UserSettingsHolder don't appear.
+        # Attributes from django_orm.conf.UserSettingsHolder don't appear.
         self.assertNotInOutput(out, "default_settings = ")
 
     def test_dynamic_settings_configured(self):
@@ -3021,13 +3021,13 @@ class Dumpdata(AdminScriptTestCase):
 
 
 class MainModule(AdminScriptTestCase):
-    """python -m django works like django-admin."""
+    """python -m django_orm works like django_orm-admin."""
 
     def test_program_name_in_help(self):
-        out, err = self.run_test(["-m", "django", "help"])
+        out, err = self.run_test(["-m", "django_orm", "help"])
         self.assertOutput(
             out,
-            "Type 'python -m django help <subcommand>' for help on a specific "
+            "Type 'python -m django_orm help <subcommand>' for help on a specific "
             "subcommand.",
         )
 

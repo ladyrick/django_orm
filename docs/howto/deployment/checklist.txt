@@ -225,7 +225,7 @@ This helps a lot on virtualized hosts with limited network performance.
 Enabling the cached template loader often improves performance drastically, as
 it avoids compiling each template every time it needs to be rendered. When
 :setting:`DEBUG = False <DEBUG>`, the cached template loader is enabled
-automatically. See :class:`django.template.loaders.cached.Loader` for more
+automatically. See :class:`django_orm.template.loaders.cached.Loader` for more
 information.
 
 Error reporting

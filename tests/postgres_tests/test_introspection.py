@@ -1,12 +1,12 @@
 from io import StringIO
 
-from django.core.management import call_command
-from django.test.utils import modify_settings
+from django_orm.core.management import call_command
+from django_orm.test.utils import modify_settings
 
 from . import PostgreSQLTestCase
 
 
-@modify_settings(INSTALLED_APPS={"append": "django.contrib.postgres"})
+@modify_settings(INSTALLED_APPS={"append": "django_orm.contrib.postgres"})
 class InspectDBTests(PostgreSQLTestCase):
     def assertFieldsInModel(self, model, field_outputs):
         out = StringIO()
@@ -23,15 +23,15 @@ class InspectDBTests(PostgreSQLTestCase):
         self.assertFieldsInModel(
             "postgres_tests_rangesmodel",
             [
-                "ints = django.contrib.postgres.fields.IntegerRangeField(blank=True, "
+                "ints = django_orm.contrib.postgres.fields.IntegerRangeField(blank=True, "
                 "null=True)",
-                "bigints = django.contrib.postgres.fields.BigIntegerRangeField("
+                "bigints = django_orm.contrib.postgres.fields.BigIntegerRangeField("
                 "blank=True, null=True)",
-                "decimals = django.contrib.postgres.fields.DecimalRangeField("
+                "decimals = django_orm.contrib.postgres.fields.DecimalRangeField("
                 "blank=True, null=True)",
-                "timestamps = django.contrib.postgres.fields.DateTimeRangeField("
+                "timestamps = django_orm.contrib.postgres.fields.DateTimeRangeField("
                 "blank=True, null=True)",
-                "dates = django.contrib.postgres.fields.DateRangeField(blank=True, "
+                "dates = django_orm.contrib.postgres.fields.DateRangeField(blank=True, "
                 "null=True)",
             ],
         )

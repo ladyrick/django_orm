@@ -1,14 +1,14 @@
-from django.conf import settings
-from django.core.checks.messages import Error, Warning
-from django.core.checks.urls import (
+from django_orm.conf import settings
+from django_orm.core.checks.messages import Error, Warning
+from django_orm.core.checks.urls import (
     E006,
     check_url_config,
     check_url_namespaces_unique,
     check_url_settings,
     get_warning_for_invalid_pattern,
 )
-from django.test import SimpleTestCase
-from django.test.utils import override_settings
+from django_orm.test import SimpleTestCase
+from django_orm.test.utils import override_settings
 
 
 class CheckUrlConfigTests(SimpleTestCase):
@@ -248,14 +248,14 @@ class CheckCustomErrorHandlersTests(SimpleTestCase):
     def test_bad_handlers_invalid_path(self):
         result = check_url_config(None)
         paths = [
-            "django.views.bad_handler",
-            "django.invalid_module.bad_handler",
+            "django_orm.views.bad_handler",
+            "django_orm.invalid_module.bad_handler",
             "invalid_module.bad_handler",
-            "django",
+            "django_orm",
         ]
         hints = [
-            "Could not import '{}'. View does not exist in module django.views.",
-            "Could not import '{}'. Parent module django.invalid_module does not "
+            "Could not import '{}'. View does not exist in module django_orm.views.",
+            "Could not import '{}'. Parent module django_orm.invalid_module does not "
             "exist.",
             "No module named 'invalid_module'",
             "Could not import '{}'. The path must be fully qualified.",

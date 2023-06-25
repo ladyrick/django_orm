@@ -1,6 +1,6 @@
-from django.template import Context, Template
-from django.test import SimpleTestCase
-from django.utils import translation
+from django_orm.template import Context, Template
+from django_orm.test import SimpleTestCase
+from django_orm.utils import translation
 
 from ...utils import setup
 from .base import MultipleLocaleActivationTestCase
@@ -79,7 +79,7 @@ class MultipleLocaleActivationTests(MultipleLocaleActivationTestCase):
 class I18nStringLiteralTests(SimpleTestCase):
     """translation of constant strings"""
 
-    libraries = {"i18n": "django.templatetags.i18n"}
+    libraries = {"i18n": "django_orm.templatetags.i18n"}
 
     @setup({"i18n13": '{{ _("Password") }}'})
     def test_i18n13(self):

@@ -35,35 +35,35 @@ should know the email you use in the ``user.email`` field, as this will be
 used to associate your commits with your GitHub account.
 
 .. _Git: https://git-scm.com/
-.. _Git repository: https://github.com/django/django/
+.. _Git repository: https://github.com/django_orm/django_orm/
 .. _GitHub: https://github.com/
 
 Setting up local repository
 ===========================
 
 When you have created your GitHub account, with the nick "GitHub_nick", and
-`forked Django's repository <https://github.com/django/django/fork>`__,
+`forked Django's repository <https://github.com/django_orm/django_orm/fork>`__,
 create a local copy of your fork::
 
-    git clone https://github.com/GitHub_nick/django.git
+    git clone https://github.com/GitHub_nick/django_orm.git
 
-This will create a new directory "django", containing a clone of your GitHub
+This will create a new directory "django_orm", containing a clone of your GitHub
 repository. The rest of the git commands on this page need to be run within the
 cloned directory, so switch to it now::
 
-    cd django
+    cd django_orm
 
 Your GitHub repository will be called "origin" in Git.
 
-You should also set up ``django/django`` as an "upstream" remote (that is, tell
+You should also set up ``django_orm/django_orm`` as an "upstream" remote (that is, tell
 git that the reference Django repository was the source of your fork of it)::
 
-    git remote add upstream https://github.com/django/django.git
+    git remote add upstream https://github.com/django_orm/django_orm.git
     git fetch upstream
 
 You can add other remotes similarly, for example::
 
-    git remote add akaariai https://github.com/akaariai/django.git
+    git remote add akaariai https://github.com/akaariai/django_orm.git
 
 Working on a ticket
 ===================
@@ -116,7 +116,7 @@ their clone would become corrupt when you edit commits.
 There are also "public branches". These are branches other people are supposed
 to fork, so the history of these branches should never change. Good examples
 of public branches are the ``main`` and ``stable/A.B.x`` branches in the
-``django/django`` repository.
+``django_orm/django_orm`` repository.
 
 When you think your work is ready to be pulled into Django, you should create
 a pull request at GitHub. A good pull request means:
@@ -192,7 +192,7 @@ branch, and nobody should be basing their work on it.
 After upstream has changed
 --------------------------
 
-When upstream (``django/django``) has changed, you should rebase your work. To
+When upstream (``django_orm/django_orm``) has changed, you should rebase your work. To
 do this, use::
 
   git fetch upstream
@@ -255,7 +255,7 @@ patches. Those patches will typically exist as pull requests on GitHub and
 can be easily integrated into your local repository::
 
     git checkout -b pull_xxxxx upstream/main
-    curl -L https://github.com/django/django/pull/xxxxx.patch | git am
+    curl -L https://github.com/django_orm/django_orm/pull/xxxxx.patch | git am
 
 This will create a new branch and then apply the changes from the pull request
 to it. At this point you can run the tests or do anything else you need to

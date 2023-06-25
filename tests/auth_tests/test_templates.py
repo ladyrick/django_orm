@@ -1,18 +1,18 @@
 from datetime import date
 
-from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.contrib.auth.views import (
+from django_orm.contrib.auth import authenticate
+from django_orm.contrib.auth.models import User
+from django_orm.contrib.auth.tokens import PasswordResetTokenGenerator
+from django_orm.contrib.auth.views import (
     PasswordChangeDoneView,
     PasswordChangeView,
     PasswordResetCompleteView,
     PasswordResetDoneView,
     PasswordResetView,
 )
-from django.test import RequestFactory, TestCase, override_settings
-from django.urls import reverse
-from django.utils.http import urlsafe_base64_encode
+from django_orm.test import RequestFactory, TestCase, override_settings
+from django_orm.urls import reverse
+from django_orm.utils.http import urlsafe_base64_encode
 
 from .client import PasswordResetConfirmClient
 from .models import CustomUser

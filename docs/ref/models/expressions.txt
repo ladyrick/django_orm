@@ -2,7 +2,7 @@
 Query Expressions
 =================
 
-.. currentmodule:: django.db.models
+.. currentmodule:: django_orm.db.models
 
 Query expressions describe a value or a computation that can be used as part of
 an update, create, filter, order by, annotation, or aggregate. When an
@@ -23,9 +23,9 @@ Some examples
 
 .. code-block:: python
 
-    from django.db.models import Count, F, Value
-    from django.db.models.functions import Length, Upper
-    from django.db.models.lookups import GreaterThan
+    from django_orm.db.models import Count, F, Value
+    from django_orm.db.models.functions import Length, Upper
+    from django_orm.db.models.lookups import GreaterThan
 
     # Find companies that have more employees than chairs.
     Company.objects.filter(num_employees__gt=F('num_chairs'))
@@ -66,13 +66,13 @@ Some examples
     Company.objects.order_by(Length('name').asc())
     Company.objects.order_by(Length('name').desc())
     # or using the double underscore lookup syntax.
-    from django.db.models import CharField
-    from django.db.models.functions import Length
+    from django_orm.db.models import CharField
+    from django_orm.db.models.functions import Length
     CharField.register_lookup(Length)
     Company.objects.order_by('name__length')
 
     # Boolean expression can be used directly in filters.
-    from django.db.models import Exists
+    from django_orm.db.models import Exists
     Company.objects.filter(
         Exists(Employee.objects.filter(company=OuterRef('pk'), salary__gt=10))
     )
@@ -89,9 +89,9 @@ Built-in Expressions
 
 .. note::
 
-    These expressions are defined in ``django.db.models.expressions`` and
-    ``django.db.models.aggregates``, but for convenience they're available and
-    usually imported from :mod:`django.db.models`.
+    These expressions are defined in ``django_orm.db.models.expressions`` and
+    ``django_orm.db.models.aggregates``, but for convenience they're available and
+    usually imported from :mod:`django_orm.db.models`.
 
 ``F()`` expressions
 -------------------
@@ -117,7 +117,7 @@ Here, we have pulled the value of ``reporter.stories_filed`` from the database
 into memory and manipulated it using familiar Python operators, and then saved
 the object back to the database. But instead we could also have done::
 
-    from django.db.models import F
+    from django_orm.db.models import F
 
     reporter = Reporters.objects.get(name='Tintin')
     reporter.stories_filed = F('stories_filed') + 1
@@ -151,7 +151,7 @@ the two queries we were using above - the ``get()`` and the
     reporter = Reporters.objects.filter(name='Tintin')
     reporter.update(stories_filed=F('stories_filed') + 1)
 
-We can also use :meth:`~django.db.models.query.QuerySet.update()` to increment
+We can also use :meth:`~django_orm.db.models.query.QuerySet.update()` to increment
 the field value on multiple objects - which could be very much faster than
 pulling them all into Python from the database, looping over them, incrementing
 the field value of each one, and saving each one back to the database::
@@ -225,7 +225,7 @@ to tell Django what kind of field will be returned. Since ``F()`` does not
 directly support ``output_field`` you will need to wrap the expression with
 :class:`ExpressionWrapper`::
 
-    from django.db.models import DateTimeField, ExpressionWrapper, F
+    from django_orm.db.models import DateTimeField, ExpressionWrapper, F
 
     Ticket.objects.annotate(
         expires=ExpressionWrapper(
@@ -252,7 +252,7 @@ a field's null values. By default, the ordering depends on your database.
 For example, to sort companies that haven't been contacted (``last_contacted``
 is null) after companies that have been contacted::
 
-    from django.db.models import F
+    from django_orm.db.models import F
     Company.objects.order_by(F('last_contacted').desc(nulls_last=True))
 
 .. _func-expressions:
@@ -264,7 +264,7 @@ is null) after companies that have been contacted::
 database functions like ``COALESCE`` and ``LOWER``, or aggregates like ``SUM``.
 They can be used directly::
 
-    from django.db.models import F, Func
+    from django_orm.db.models import F, Func
 
     queryset.annotate(field_lower=Func(F('field'), function='LOWER'))
 
@@ -331,7 +331,7 @@ The ``Func`` API is as follows:
         customize the SQL as needed. For example:
 
         .. code-block:: python
-            :caption: ``django/db/models/functions.py``
+            :caption: ``django_orm/db/models/functions.py``
 
             class ConcatPair(Func):
                 ...
@@ -382,7 +382,7 @@ like ``Sum()`` and ``Count()``, inherit from ``Aggregate()``.
 Since ``Aggregate``\s are expressions and wrap expressions, you can represent
 some complex computations::
 
-    from django.db.models import Count
+    from django_orm.db.models import Count
 
     Company.objects.annotate(
         managers_required=(Count('num_employees') / 4) + Count('num_managers'))
@@ -406,7 +406,7 @@ The ``Aggregate`` API is as follows:
     .. attribute:: window_compatible
 
         Defaults to ``True`` since most aggregate functions can be used as the
-        source expression in :class:`~django.db.models.expressions.Window`.
+        source expression in :class:`~django_orm.db.models.expressions.Window`.
 
     .. attribute:: allow_distinct
 
@@ -443,12 +443,12 @@ should be invoked for each distinct value of ``expressions`` (or set of
 values, for multiple ``expressions``). The argument is only supported on
 aggregates that have :attr:`~Aggregate.allow_distinct` set to ``True``.
 
-The ``filter`` argument takes a :class:`Q object <django.db.models.Q>` that's
+The ``filter`` argument takes a :class:`Q object <django_orm.db.models.Q>` that's
 used to filter the rows that are aggregated. See :ref:`conditional-aggregation`
 and :ref:`filtering-on-annotations` for example usage.
 
 The ``default`` argument takes a value that will be passed along with the
-aggregate to :class:`~django.db.models.functions.Coalesce`. This is useful for
+aggregate to :class:`~django_orm.db.models.functions.Coalesce`. This is useful for
 specifying a value to be returned other than ``None`` when the queryset (or
 grouping) contains no entries.
 
@@ -466,7 +466,7 @@ You can create your own aggregate functions, too. At a minimum, you need to
 define ``function``, but you can also completely customize the SQL that is
 generated. Here's a brief example::
 
-    from django.db.models import Aggregate
+    from django_orm.db.models import Aggregate
 
     class Sum(Aggregate):
         # Supports SUM(ALL field).
@@ -511,7 +511,7 @@ instantiating the model field as any arguments relating to data validation
 output value. If no ``output_field`` is specified it will be tentatively
 inferred from the :py:class:`type` of the provided ``value``, if possible. For
 example, passing an instance of :py:class:`datetime.datetime` as ``value``
-would default ``output_field`` to :class:`~django.db.models.DateTimeField`.
+would default ``output_field`` to :class:`~django_orm.db.models.DateTimeField`.
 
 ``ExpressionWrapper()`` expressions
 -----------------------------------
@@ -542,7 +542,7 @@ expression.
 For example, to annotate each post with the email address of the author of the
 newest comment on that post::
 
-    >>> from django.db.models import OuterRef, Subquery
+    >>> from django_orm.db.models import OuterRef, Subquery
     >>> newest = Comment.objects.filter(post=OuterRef('pk')).order_by('-created_at')
     >>> Post.objects.annotate(newest_commenter_email=Subquery(newest.values('email')[:1]))
 
@@ -589,7 +589,7 @@ instance, to use a ``Subquery`` as the target of an ``__in`` lookup. To return
 all comments for posts published within the last day::
 
     >>> from datetime import timedelta
-    >>> from django.utils import timezone
+    >>> from django_orm.utils import timezone
     >>> one_day_ago = timezone.now() - timedelta(days=1)
     >>> posts = Post.objects.filter(published_at__gte=one_day_ago)
     >>> Comment.objects.filter(post__in=Subquery(posts.values('pk')))
@@ -625,9 +625,9 @@ stop evaluation of the subquery when a first matching row is found.
 For example, to annotate each post with whether or not it has a comment from
 within the last day::
 
-    >>> from django.db.models import Exists, OuterRef
+    >>> from django_orm.db.models import Exists, OuterRef
     >>> from datetime import timedelta
-    >>> from django.utils import timezone
+    >>> from django_orm.utils import timezone
     >>> one_day_ago = timezone.now() - timedelta(days=1)
     >>> recent_comments = Comment.objects.filter(
     ...     post=OuterRef('pk'),
@@ -660,7 +660,7 @@ Filtering on a ``Subquery()`` or ``Exists()`` expressions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``Subquery()`` that returns a boolean value and ``Exists()`` may be used as a
-``condition`` in :class:`~django.db.models.expressions.When` expressions, or to
+``condition`` in :class:`~django_orm.db.models.expressions.When` expressions, or to
 directly filter a queryset::
 
     >>> recent_comments = Comment.objects.filter(...)  # From above
@@ -679,13 +679,13 @@ combination of :meth:`~.QuerySet.filter`, :meth:`~.QuerySet.values`, and
 Assuming both models have a ``length`` field, to find posts where the post
 length is greater than the total length of all combined comments::
 
-    >>> from django.db.models import OuterRef, Subquery, Sum
+    >>> from django_orm.db.models import OuterRef, Subquery, Sum
     >>> comments = Comment.objects.filter(post=OuterRef('pk')).order_by().values('post')
     >>> total_comments = comments.annotate(total=Sum('length')).values('total')
     >>> Post.objects.filter(length__gt=Subquery(total_comments))
 
 The initial ``filter(...)`` limits the subquery to the relevant parameters.
-``order_by()`` removes the default :attr:`~django.db.models.Options.ordering`
+``order_by()`` removes the default :attr:`~django_orm.db.models.Options.ordering`
 (if any) on the ``Comment`` model. ``values('post')`` aggregates comments by
 ``Post``. Finally, ``annotate(...)`` performs the aggregation. The order in
 which these queryset methods are applied is important. In this case, since the
@@ -698,14 +698,14 @@ there is an ``OuterRef``, this will not be possible to resolve).
 Raw SQL expressions
 -------------------
 
-.. currentmodule:: django.db.models.expressions
+.. currentmodule:: django_orm.db.models.expressions
 
 .. class:: RawSQL(sql, params, output_field=None)
 
 Sometimes database expressions can't easily express a complex ``WHERE`` clause.
 In these edge cases, use the ``RawSQL`` expression. For example::
 
-    >>> from django.db.models.expressions import RawSQL
+    >>> from django_orm.db.models.expressions import RawSQL
     >>> queryset.annotate(val=RawSQL("select col from sometable where othercol = %s", (param,)))
 
 These extra lookups may not be portable to different database engines (because
@@ -772,8 +772,8 @@ compute the result set.
 The ``output_field`` is specified either as an argument or by the expression.
 
 The ``order_by`` argument accepts an expression on which you can call
-:meth:`~django.db.models.Expression.asc` and
-:meth:`~django.db.models.Expression.desc`, a string of a field name (with an
+:meth:`~django_orm.db.models.Expression.asc` and
+:meth:`~django_orm.db.models.Expression.desc`, a string of a field name (with an
 optional ``"-"`` prefix which indicates descending order), or a tuple or list
 of strings and/or expressions. The ordering controls the order in which the
 expression is applied. For example, if you sum over the rows in a partition,
@@ -790,7 +790,7 @@ computation. See :ref:`window-frames` for details.
 For example, to annotate each movie with the average rating for the movies by
 the same studio in the same genre and release year::
 
-    >>> from django.db.models import Avg, F, Window
+    >>> from django_orm.db.models import Avg, F, Window
     >>> Movie.objects.annotate(
     >>>     avg_rating=Window(
     >>>         expression=Avg('rating'),
@@ -808,7 +808,7 @@ genre, and release year) by using three window functions in the same query. The
 partition and ordering from the previous example is extracted into a dictionary
 to reduce repetition::
 
-    >>> from django.db.models import Avg, F, Max, Min, Window
+    >>> from django_orm.db.models import Avg, F, Max, Min, Window
     >>> window = {
     >>>    'partition_by': [F('studio'), F('genre')],
     >>>    'order_by': 'released__year',
@@ -828,8 +828,8 @@ to reduce repetition::
 Among Django's built-in database backends, MySQL 8.0.2+, PostgreSQL, and Oracle
 support window expressions. Support for different window expression features
 varies among the different databases. For example, the options in
-:meth:`~django.db.models.Expression.asc` and
-:meth:`~django.db.models.Expression.desc` may not be supported. Consult the
+:meth:`~django_orm.db.models.Expression.asc` and
+:meth:`~django_orm.db.models.Expression.desc` may not be supported. Consult the
 documentation for your database as needed.
 
 .. _window-frames:
@@ -889,7 +889,7 @@ If a movie's "peers" are described as movies released by the same studio in the
 same genre in the same year, this ``RowRange`` example annotates each movie
 with the average rating of a movie's two prior and two following peers::
 
-    >>> from django.db.models import Avg, F, RowRange, Window
+    >>> from django_orm.db.models import Avg, F, RowRange, Window
     >>> Movie.objects.annotate(
     >>>     avg_rating=Window(
     >>>         expression=Avg('rating'),
@@ -905,7 +905,7 @@ values of an expression in the partition. If the ``released`` field of the
 example annotates each movie with the average rating of a movie's peers
 released between twelve months before and twelve months after the each movie::
 
-    >>> from django.db.models import Avg, F, ValueRange, Window
+    >>> from django_orm.db.models import Avg, F, ValueRange, Window
     >>> Movie.objects.annotate(
     >>>     avg_rating=Window(
     >>>         expression=Avg('rating'),
@@ -915,7 +915,7 @@ released between twelve months before and twelve months after the each movie::
     >>>     ),
     >>> )
 
-.. currentmodule:: django.db.models
+.. currentmodule:: django_orm.db.models
 
 Technical Information
 =====================
@@ -946,7 +946,7 @@ calling the appropriate methods on the wrapped expression.
     .. attribute:: contains_over_clause
 
         Tells Django that this expression contains a
-        :class:`~django.db.models.expressions.Window` expression. It's used,
+        :class:`~django_orm.db.models.expressions.Window` expression. It's used,
         for example, to disallow window function expressions in queries that
         modify data.
 
@@ -958,7 +958,7 @@ calling the appropriate methods on the wrapped expression.
     .. attribute:: window_compatible
 
         Tells Django that this expression can be used as the source expression
-        in :class:`~django.db.models.expressions.Window`. Defaults to
+        in :class:`~django_orm.db.models.expressions.Window`. Defaults to
         ``False``.
 
     .. attribute:: empty_result_set_value
@@ -1074,7 +1074,7 @@ calling the appropriate methods on the wrapped expression.
         implementing ``NULLS LAST`` would change its value to be
         ``NULLS FIRST``. Modifications are only required for expressions that
         implement sort order like ``OrderBy``. This method is called when
-        :meth:`~django.db.models.query.QuerySet.reverse()` is called on a
+        :meth:`~django_orm.db.models.query.QuerySet.reverse()` is called on a
         queryset.
 
 Writing your own Query Expressions
@@ -1092,7 +1092,7 @@ We'll start by defining the template to be used for SQL generation and
 an ``__init__()`` method to set some attributes::
 
   import copy
-  from django.db.models import Expression
+  from django_orm.db.models import Expression
 
   class Coalesce(Expression):
       template = 'COALESCE( %(expressions)s )'
@@ -1169,7 +1169,7 @@ to play nice with other query expressions::
 
 Let's see how it works::
 
-    >>> from django.db.models import F, Value, CharField
+    >>> from django_orm.db.models import F, Value, CharField
     >>> qs = Company.objects.annotate(
     ...    tagline=Coalesce([
     ...        F('motto'),
@@ -1198,7 +1198,7 @@ they must not contain untrusted user input.
 For example, if ``substring`` is user-provided, this function is vulnerable to
 SQL injection::
 
-    from django.db.models import Func
+    from django_orm.db.models import Func
 
     class Position(Func):
         function = 'POSITION'
@@ -1236,7 +1236,7 @@ Let's say we're writing a backend for Microsoft's SQL Server which uses the SQL
 We'll monkey patch a new method called ``as_sqlserver()`` onto the ``Length``
 class::
 
-    from django.db.models.functions import Length
+    from django_orm.db.models.functions import Length
 
     def sqlserver_length(self, compiler, connection):
         return self.as_sql(compiler, connection, function='LEN')
@@ -1245,7 +1245,7 @@ class::
 
 You can also customize the SQL using the ``template`` parameter of ``as_sql()``.
 
-We use ``as_sqlserver()`` because ``django.db.connection.vendor`` returns
+We use ``as_sqlserver()`` because ``django_orm.db.connection.vendor`` returns
 ``sqlserver`` for the backend.
 
 Third-party backends can register their functions in the top level
@@ -1253,4 +1253,4 @@ Third-party backends can register their functions in the top level
 file (or package) that is imported from the top level ``__init__.py``.
 
 For user projects wishing to patch the backend that they're using, this code
-should live in an :meth:`AppConfig.ready()<django.apps.AppConfig.ready>` method.
+should live in an :meth:`AppConfig.ready()<django_orm.apps.AppConfig.ready>` method.

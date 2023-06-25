@@ -2,18 +2,18 @@
 Django Utils
 ============
 
-.. module:: django.utils
+.. module:: django_orm.utils
    :synopsis: Django's built-in utilities.
 
-This document covers all stable modules in ``django.utils``. Most of the
-modules in ``django.utils`` are designed for internal use and only the
+This document covers all stable modules in ``django_orm.utils``. Most of the
+modules in ``django_orm.utils`` are designed for internal use and only the
 following parts can be considered stable and thus backwards compatible as per
 the :ref:`internal release deprecation policy <internal-release-deprecation-policy>`.
 
-``django.utils.cache``
+``django_orm.utils.cache``
 ======================
 
-.. module:: django.utils.cache
+.. module:: django_orm.utils.cache
    :synopsis: Helper functions for controlling caching.
 
 This module contains helper functions for controlling HTTP caching. It does so
@@ -102,10 +102,10 @@ need to distinguish caches by the ``Accept-language`` header.
     cache, this means that we have to build the response once to get at the
     Vary header and so at the list of headers to use for the cache key.
 
-``django.utils.dateparse``
+``django_orm.utils.dateparse``
 ==========================
 
-.. module:: django.utils.dateparse
+.. module:: django_orm.utils.dateparse
    :synopsis: Functions to parse strings to datetime objects.
 
 The functions defined in this module share the following properties:
@@ -146,10 +146,10 @@ The functions defined in this module share the following properties:
     ``P4DT1H15M20S`` which is equivalent to ``4 1:15:20``) or PostgreSQL's
     day-time interval format (e.g. ``3 days 04:05:06``).
 
-``django.utils.decorators``
+``django_orm.utils.decorators``
 ===========================
 
-.. module:: django.utils.decorators
+.. module:: django_orm.utils.decorators
     :synopsis: Functions that help with creating decorators for views.
 
 .. function:: method_decorator(decorator, name='')
@@ -179,7 +179,7 @@ The functions defined in this module share the following properties:
 
     Like ``decorator_from_middleware``, but returns a function
     that accepts the arguments to be passed to the middleware_class.
-    For example, the :func:`~django.views.decorators.cache.cache_page`
+    For example, the :func:`~django_orm.views.decorators.cache.cache_page`
     decorator is created from the ``CacheMiddleware`` like this::
 
          cache_page = decorator_from_middleware_with_args(CacheMiddleware)
@@ -207,10 +207,10 @@ The functions defined in this module share the following properties:
     the current request type to use this decorator. See :ref:`asynchronous
     middleware documentation <async-middleware>` for details.
 
-``django.utils.encoding``
+``django_orm.utils.encoding``
 =========================
 
-.. module:: django.utils.encoding
+.. module:: django_orm.utils.encoding
    :synopsis: A series of helper functions to manage character encoding.
 
 .. function:: smart_str(s, encoding='utf-8', strings_only=False, errors='strict')
@@ -292,15 +292,15 @@ The functions defined in this module share the following properties:
     Escapes the unsafe characters from the path portion of a Uniform Resource
     Identifier (URI).
 
-``django.utils.feedgenerator``
+``django_orm.utils.feedgenerator``
 ==============================
 
-.. module:: django.utils.feedgenerator
+.. module:: django_orm.utils.feedgenerator
    :synopsis: Syndication feed generation library -- used for generating RSS, etc.
 
 Sample usage::
 
-    >>> from django.utils import feedgenerator
+    >>> from django_orm.utils import feedgenerator
     >>> feed = feedgenerator.Rss201rev2Feed(
     ...     title="Poynter E-Media Tidbits",
     ...     link="http://www.poynter.org/column.asp?id=31",
@@ -421,10 +421,10 @@ https://web.archive.org/web/20110718035220/http://diveintomark.org/archives/2004
 
     Spec: :rfc:`4287`
 
-``django.utils.functional``
+``django_orm.utils.functional``
 ===========================
 
-.. module:: django.utils.functional
+.. module:: django_orm.utils.functional
     :synopsis: Functional programming tools.
 
 .. class:: cached_property(func, name=None)
@@ -452,7 +452,7 @@ https://web.archive.org/web/20110718035220/http://diveintomark.org/archives/2004
 
     And in the template you would have:
 
-    .. code-block:: html+django
+    .. code-block:: html+django_orm
 
         {% for friend in person.friends %}
 
@@ -460,7 +460,7 @@ https://web.archive.org/web/20110718035220/http://diveintomark.org/archives/2004
     the view and the template are the same, decorating the ``friends()`` method
     with ``@cached_property`` can avoid that::
 
-        from django.utils.functional import cached_property
+        from django_orm.utils.functional import cached_property
 
         class Person(models.Model):
 
@@ -522,7 +522,7 @@ https://web.archive.org/web/20110718035220/http://diveintomark.org/archives/2004
 
 .. function:: keep_lazy(func, *resultclasses)
 
-    Django offers many utility functions (particularly in ``django.utils``)
+    Django offers many utility functions (particularly in ``django_orm.utils``)
     that take a string as their first argument and do something to that string.
     These functions are used by template filters as well as directly in other
     code.
@@ -533,14 +533,14 @@ https://web.archive.org/web/20110718035220/http://diveintomark.org/archives/2004
     because you might be using this function outside of a view (and hence the
     current thread's locale setting will not be correct).
 
-    For cases like this, use the ``django.utils.functional.keep_lazy()``
+    For cases like this, use the ``django_orm.utils.functional.keep_lazy()``
     decorator. It modifies the function so that *if* it's called with a lazy
     translation as one of its arguments, the function evaluation is delayed
     until it needs to be converted to a string.
 
     For example::
 
-        from django.utils.functional import keep_lazy, keep_lazy_text
+        from django_orm.utils.functional import keep_lazy, keep_lazy_text
 
         def fancy_utility_function(s, ...):
             # Do some conversion on string 's'
@@ -570,7 +570,7 @@ https://web.archive.org/web/20110718035220/http://diveintomark.org/archives/2004
     lazy arguments while delaying their evaluation, you can use this
     decorator::
 
-        from django.utils.functional import keep_lazy, keep_lazy_text
+        from django_orm.utils.functional import keep_lazy, keep_lazy_text
 
         # Our previous example was:
         @keep_lazy(str)
@@ -582,14 +582,14 @@ https://web.archive.org/web/20110718035220/http://diveintomark.org/archives/2004
         def fancy_utility_function(s, ...):
             ...
 
-``django.utils.html``
+``django_orm.utils.html``
 =====================
 
-.. module:: django.utils.html
+.. module:: django_orm.utils.html
    :synopsis: HTML helper functions
 
 Usually you should build up HTML using Django's templates to make use of its
-autoescape mechanism, using the utilities in :mod:`django.utils.safestring`
+autoescape mechanism, using the utilities in :mod:`django_orm.utils.safestring`
 where appropriate. This module provides some additional low level utilities for
 escaping HTML.
 
@@ -597,7 +597,7 @@ escaping HTML.
 
     Returns the given text with ampersands, quotes and angle brackets encoded
     for use in HTML. The input is first coerced to a string and the output has
-    :func:`~django.utils.safestring.mark_safe` applied.
+    :func:`~django_orm.utils.safestring.mark_safe` applied.
 
 .. function:: conditional_escape(text)
 
@@ -638,7 +638,7 @@ escaping HTML.
     interpolation, some of the formatting options provided by ``str.format()``
     (e.g. number formatting) will not work, since all arguments are passed
     through :func:`conditional_escape` which (ultimately) calls
-    :func:`~django.utils.encoding.force_str` on the values.
+    :func:`~django_orm.utils.encoding.force_str` on the values.
 
 .. function:: format_html_join(sep, format_string, args_generator)
 
@@ -676,7 +676,7 @@ escaping HTML.
 
     Absolutely NO guarantee is provided about the resulting string being
     HTML safe. So NEVER mark safe the result of a ``strip_tag`` call without
-    escaping it first, for example with :func:`~django.utils.html.escape`.
+    escaping it first, for example with :func:`~django_orm.utils.html.escape`.
 
     For example::
 
@@ -694,14 +694,14 @@ escaping HTML.
     classes whose output doesn't require HTML escaping.
 
     This decorator defines the ``__html__()`` method on the decorated class
-    by wrapping ``__str__()`` in :meth:`~django.utils.safestring.mark_safe`.
+    by wrapping ``__str__()`` in :meth:`~django_orm.utils.safestring.mark_safe`.
     Ensure the ``__str__()`` method does indeed return text that doesn't
     require HTML escaping.
 
-``django.utils.http``
+``django_orm.utils.http``
 =====================
 
-.. module:: django.utils.http
+.. module:: django_orm.utils.http
    :synopsis: HTTP helper functions. (URL encoding, cookie handling, ...)
 
 .. function:: urlencode(query, doseq=False)
@@ -738,10 +738,10 @@ escaping HTML.
     Decodes a base64 encoded string, adding back any trailing equal signs that
     might have been stripped.
 
-``django.utils.module_loading``
+``django_orm.utils.module_loading``
 ===============================
 
-.. module:: django.utils.module_loading
+.. module:: django_orm.utils.module_loading
    :synopsis: Functions for working with Python modules.
 
 Functions for working with Python modules.
@@ -752,17 +752,17 @@ Functions for working with Python modules.
     the last name in the path. Raises ``ImportError`` if the import failed. For
     example::
 
-        from django.utils.module_loading import import_string
-        ValidationError = import_string('django.core.exceptions.ValidationError')
+        from django_orm.utils.module_loading import import_string
+        ValidationError = import_string('django_orm.core.exceptions.ValidationError')
 
     is equivalent to::
 
-        from django.core.exceptions import ValidationError
+        from django_orm.core.exceptions import ValidationError
 
-``django.utils.safestring``
+``django_orm.utils.safestring``
 ===========================
 
-.. module:: django.utils.safestring
+.. module:: django_orm.utils.safestring
    :synopsis: Functions and classes for working with strings that can be displayed safely without further escaping in HTML.
 
 Functions and classes for working with "safe strings": strings that can be
@@ -786,23 +786,23 @@ appropriate entities.
     Can also be used as a decorator.
 
     For building up fragments of HTML, you should normally be using
-    :func:`django.utils.html.format_html` instead.
+    :func:`django_orm.utils.html.format_html` instead.
 
     String marked safe will become unsafe again if modified. For example::
 
         >>> mystr = '<b>Hello World</b>   '
         >>> mystr = mark_safe(mystr)
         >>> type(mystr)
-        <class 'django.utils.safestring.SafeString'>
+        <class 'django_orm.utils.safestring.SafeString'>
 
         >>> mystr = mystr.strip()  # removing whitespace
         >>> type(mystr)
         <type 'str'>
 
-``django.utils.text``
+``django_orm.utils.text``
 =====================
 
-.. module:: django.utils.text
+.. module:: django_orm.utils.text
     :synopsis: Text manipulation.
 
 .. function:: format_lazy(format_string, *args, **kwargs)
@@ -811,8 +811,8 @@ appropriate entities.
     and/or ``kwargs`` contain lazy objects. The first argument is the string to
     be formatted. For example::
 
-        from django.utils.text import format_lazy
-        from django.utils.translation import pgettext_lazy
+        from django_orm.utils.text import format_lazy
+        from django_orm.utils.translation import pgettext_lazy
 
         urlpatterns = [
             path(format_lazy('{person}/<int:pk>/', person=pgettext_lazy('URL', 'person')),
@@ -847,10 +847,10 @@ appropriate entities.
 
 .. _time-zone-selection-functions:
 
-``django.utils.timezone``
+``django_orm.utils.timezone``
 =========================
 
-.. module:: django.utils.timezone
+.. module:: django_orm.utils.timezone
     :synopsis: Timezone support.
 
 .. data:: utc
@@ -997,10 +997,10 @@ appropriate entities.
     aware :class:`~datetime.datetime`. If ``timezone`` is set to ``None``, it
     defaults to the :ref:`current time zone <default-current-time-zone>`.
 
-``django.utils.translation``
+``django_orm.utils.translation``
 ============================
 
-.. module:: django.utils.translation
+.. module:: django_orm.utils.translation
    :synopsis: Internationalization support.
 
 For a complete discussion on the usage of the following see the
@@ -1066,11 +1066,11 @@ For a complete discussion on the usage of the following see the
 .. function:: override(language, deactivate=False)
 
     A Python context manager that uses
-    :func:`django.utils.translation.activate` to fetch the translation object
+    :func:`django_orm.utils.translation.activate` to fetch the translation object
     for a given language, activates it as the translation object for the
     current thread and reactivates the previous active language on exit.
     Optionally, it can deactivate the temporary translation on exit with
-    :func:`django.utils.translation.deactivate` if the ``deactivate`` argument
+    :func:`django_orm.utils.translation.deactivate` if the ``deactivate`` argument
     is ``True``. If you pass ``None`` as the language argument, a
     ``NullTranslations()`` instance is activated within the context.
 

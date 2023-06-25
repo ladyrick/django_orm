@@ -9,8 +9,8 @@ Django 4.0.6 fixes a security issue with severity "high" in 4.0.5.
 CVE-2022-34265: Potential SQL injection via ``Trunc(kind)`` and ``Extract(lookup_name)`` arguments
 ==================================================================================================
 
-:class:`Trunc() <django.db.models.functions.Trunc>` and
-:class:`Extract() <django.db.models.functions.Extract>` database functions were
+:class:`Trunc() <django_orm.db.models.functions.Trunc>` and
+:class:`Extract() <django_orm.db.models.functions.Extract>` database functions were
 subject to SQL injection if untrusted data was used as a
 ``kind``/``lookup_name`` value.
 

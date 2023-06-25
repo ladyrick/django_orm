@@ -2,7 +2,7 @@
 The Forms API
 =============
 
-.. module:: django.forms
+.. module:: django_orm.forms
 
 .. admonition:: About this document
 
@@ -184,7 +184,7 @@ from a view.
 The ``field`` argument is the name of the field to which the errors
 should be added. If its value is ``None`` the error will be treated as
 a non-field error as returned by :meth:`Form.non_field_errors()
-<django.forms.Form.non_field_errors>`.
+<django_orm.forms.Form.non_field_errors>`.
 
 The ``error`` argument can be a string, or preferably an instance of
 ``ValidationError``. See :ref:`raising-validation-error` for best practices
@@ -200,15 +200,15 @@ a specific error ``code``. If ``code`` is ``None``, it will return ``True``
 if the field contains any errors at all.
 
 To check for non-field errors use
-:data:`~django.core.exceptions.NON_FIELD_ERRORS` as the ``field`` parameter.
+:data:`~django_orm.core.exceptions.NON_FIELD_ERRORS` as the ``field`` parameter.
 
 .. method:: Form.non_field_errors()
 
 This method returns the list of errors from :attr:`Form.errors
-<django.forms.Form.errors>`  that aren't associated with a particular field.
+<django_orm.forms.Form.errors>`  that aren't associated with a particular field.
 This includes ``ValidationError``\s that are raised in :meth:`Form.clean()
-<django.forms.Form.clean>` and errors added using :meth:`Form.add_error(None,
-"...") <django.forms.Form.add_error>`.
+<django_orm.forms.Form.clean>` and errors added using :meth:`Form.add_error(None,
+"...") <django_orm.forms.Form.add_error>`.
 
 Behavior of unbound forms
 -------------------------
@@ -243,13 +243,13 @@ it's not necessary to include every field in your form. For example::
 These values are only displayed for unbound forms, and they're not used as
 fallback values if a particular value isn't provided.
 
-If a :class:`~django.forms.Field` defines :attr:`~Field.initial` *and* you
+If a :class:`~django_orm.forms.Field` defines :attr:`~Field.initial` *and* you
 include :attr:`~Form.initial` when instantiating the ``Form``, then the latter
 ``initial`` will have precedence. In this example, ``initial`` is provided both
 at the field level and at the form instance level, and the latter gets
 precedence::
 
-    >>> from django import forms
+    >>> from django_orm import forms
     >>> class CommentForm(forms.Form):
     ...     name = forms.CharField(initial='class')
     ...     url = forms.URLField()
@@ -336,11 +336,11 @@ attribute::
 
     >>> for row in f.fields.values(): print(row)
     ...
-    <django.forms.fields.CharField object at 0x7ffaac632510>
-    <django.forms.fields.URLField object at 0x7ffaac632f90>
-    <django.forms.fields.CharField object at 0x7ffaac3aa050>
+    <django_orm.forms.fields.CharField object at 0x7ffaac632510>
+    <django_orm.forms.fields.URLField object at 0x7ffaac632f90>
+    <django_orm.forms.fields.CharField object at 0x7ffaac3aa050>
     >>> f.fields['name']
-    <django.forms.fields.CharField object at 0x7ffaac6324d0>
+    <django_orm.forms.fields.CharField object at 0x7ffaac6324d0>
 
 You can alter the field and :class:`.BoundField` of :class:`Form` instance to
 change the way it is presented in the form::
@@ -370,7 +370,7 @@ data, but also for "cleaning" it -- normalizing it to a consistent format. This
 is a nice feature, because it allows data for a particular field to be input in
 a variety of ways, always resulting in consistent output.
 
-For example, :class:`~django.forms.DateField` normalizes input into a
+For example, :class:`~django_orm.forms.DateField` normalizes input into a
 Python ``datetime.date`` object. Regardless of whether you pass it a string in
 the format ``'1994-07-15'``, a ``datetime.date`` object, or a number of other
 formats, ``DateField`` will always normalize it to a ``datetime.date`` object
@@ -429,7 +429,7 @@ When the ``Form`` is valid, ``cleaned_data`` will include a key and value for
 fields. In this example, the data dictionary doesn't include a value for the
 ``nick_name`` field, but ``cleaned_data`` includes it, with an empty value::
 
-    >>> from django import forms
+    >>> from django_orm import forms
     >>> class OptionalPersonForm(forms.Form):
     ...     first_name = forms.CharField()
     ...     last_name = forms.CharField()
@@ -537,14 +537,14 @@ The name of the template rendered if the form is cast into a string, e.g. via
 ``print(form)`` or in a template via ``{{ form }}``.
 
 By default, a property returning the value of the renderer's
-:attr:`~django.forms.renderers.BaseRenderer.form_template_name`. You may set it
+:attr:`~django_orm.forms.renderers.BaseRenderer.form_template_name`. You may set it
 as a string template name in order to override that for a particular form
 class.
 
 .. versionchanged:: 4.1
 
     In older versions ``template_name`` defaulted to the string value
-    ``'django/forms/default.html'``.
+    ``'django_orm/forms/default.html'``.
 
 ``render()``
 ~~~~~~~~~~~~
@@ -614,7 +614,7 @@ template name.
 
 .. versionadded:: 4.1
 
-The template used by ``as_div()``. Default: ``'django/forms/div.html'``.
+The template used by ``as_div()``. Default: ``'django_orm/forms/div.html'``.
 
 .. method:: Form.as_div()
 
@@ -661,7 +661,7 @@ The template used by ``as_div()``. Default: ``'django/forms/div.html'``.
 
 .. attribute:: Form.template_name_p
 
-The template used by ``as_p()``. Default: ``'django/forms/p.html'``.
+The template used by ``as_p()``. Default: ``'django_orm/forms/p.html'``.
 
 .. method:: Form.as_p()
 
@@ -682,7 +682,7 @@ containing one field::
 
 .. attribute:: Form.template_name_ul
 
-The template used by ``as_ul()``. Default: ``'django/forms/ul.html'``.
+The template used by ``as_ul()``. Default: ``'django_orm/forms/ul.html'``.
 
 .. method:: Form.as_ul()
 
@@ -704,7 +704,7 @@ you can specify any HTML attributes on the ``<ul>`` for flexibility::
 
 .. attribute:: Form.template_name_table
 
-The template used by ``as_table()``. Default: ``'django/forms/table.html'``.
+The template used by ``as_table()``. Default: ``'django_orm/forms/table.html'``.
 
 .. method:: Form.as_table()
 
@@ -736,7 +736,7 @@ attributes to required rows or to rows with errors: set the
 :attr:`Form.error_css_class` and/or :attr:`Form.required_css_class`
 attributes::
 
-    from django import forms
+    from django_orm import forms
 
     class ContactForm(forms.Form):
         error_css_class = 'error'
@@ -850,12 +850,12 @@ Note that the label suffix is added only if the last character of the
 label isn't a punctuation character (in English, those are ``.``, ``!``, ``?``
 or ``:``).
 
-Fields can also define their own :attr:`~django.forms.Field.label_suffix`.
+Fields can also define their own :attr:`~django_orm.forms.Field.label_suffix`.
 This will take precedence over :attr:`Form.label_suffix
-<django.forms.Form.label_suffix>`. The suffix can also be overridden at runtime
+<django_orm.forms.Form.label_suffix>`. The suffix can also be overridden at runtime
 using the ``label_suffix`` parameter to
-:meth:`~django.forms.BoundField.label_tag`/
-:meth:`~django.forms.BoundField.legend_tag`.
+:meth:`~django_orm.forms.BoundField.label_tag`/
+:meth:`~django_orm.forms.BoundField.legend_tag`.
 
 .. attribute:: Form.use_required_attribute
 
@@ -878,7 +878,7 @@ Specifies the :doc:`renderer <renderers>` to use for the form. Defaults to
 You can set this as a class attribute when declaring your form or use the
 ``renderer`` argument to ``Form.__init__()``. For example::
 
-    from django import forms
+    from django_orm import forms
 
     class MyForm(forms.Form):
         default_renderer = MyRenderer()
@@ -908,14 +908,14 @@ ignored. This makes it possible to disable a field in a subclass by setting it
 to ``None`` without having to redefine ordering.
 
 You can also use the ``Form.field_order`` argument to a :class:`Form` to
-override the field order. If a :class:`~django.forms.Form` defines
+override the field order. If a :class:`~django_orm.forms.Form` defines
 :attr:`~Form.field_order` *and* you include ``field_order`` when instantiating
 the ``Form``, then the latter ``field_order`` will have precedence.
 
 .. method:: Form.order_fields(field_order)
 
 You may rearrange the fields any time using ``order_fields()`` with a list of
-field names as in :attr:`~django.forms.Form.field_order`.
+field names as in :attr:`~django_orm.forms.Form.field_order`.
 
 How errors are displayed
 ------------------------
@@ -961,7 +961,7 @@ Customizing the error list format
 
 .. class:: ErrorList(initlist=None, error_class=None, renderer=None)
 
-    By default, forms use ``django.forms.utils.ErrorList`` to format validation
+    By default, forms use ``django_orm.forms.utils.ErrorList`` to format validation
     errors. ``ErrorList`` is a list like object where ``initlist`` is the
     list of errors. In addition this class has the following attributes and
     methods.
@@ -985,7 +985,7 @@ Customizing the error list format
 
         The name of the template used when calling ``__str__`` or
         :meth:`render`. By default this is
-        ``'django/forms/errors/list/default.html'`` which is a proxy for the
+        ``'django_orm/forms/errors/list/default.html'`` which is a proxy for the
         ``'ul.html'`` template.
 
     .. attribute:: template_name_text
@@ -993,7 +993,7 @@ Customizing the error list format
         .. versionadded:: 4.0
 
         The name of the template used when calling :meth:`.as_text`. By default
-        this is ``'django/forms/errors/list/text.html'``. This template renders
+        this is ``'django_orm/forms/errors/list/text.html'``. This template renders
         the errors as a list of bullet points.
 
     .. attribute:: template_name_ul
@@ -1001,7 +1001,7 @@ Customizing the error list format
         .. versionadded:: 4.0
 
         The name of the template used when calling :meth:`.as_ul`. By default
-        this is ``'django/forms/errors/list/ul.html'``. This template renders
+        this is ``'django_orm/forms/errors/list/ul.html'``. This template renders
         the errors in ``<li>`` tags with a wrapping ``<ul>`` with the CSS
         classes as defined by :attr:`.error_class`.
 
@@ -1101,8 +1101,8 @@ Attributes of ``BoundField``
 
 .. attribute:: BoundField.data
 
-    This property returns the data for this :class:`~django.forms.BoundField`
-    extracted by the widget's :meth:`~django.forms.Widget.value_from_datadict`
+    This property returns the data for this :class:`~django_orm.forms.BoundField`
+    extracted by the widget's :meth:`~django_orm.forms.Widget.value_from_datadict`
     method, or ``None`` if it wasn't given::
 
         >>> unbound_form = ContactForm()
@@ -1134,22 +1134,22 @@ Attributes of ``BoundField``
 
 .. attribute:: BoundField.field
 
-    The form :class:`~django.forms.Field` instance from the form class that
-    this :class:`~django.forms.BoundField` wraps.
+    The form :class:`~django_orm.forms.Field` instance from the form class that
+    this :class:`~django_orm.forms.BoundField` wraps.
 
 .. attribute:: BoundField.form
 
-    The :class:`~django.forms.Form` instance this :class:`~django.forms.BoundField`
+    The :class:`~django_orm.forms.Form` instance this :class:`~django_orm.forms.BoundField`
     is bound to.
 
 .. attribute:: BoundField.help_text
 
-    The :attr:`~django.forms.Field.help_text` of the field.
+    The :attr:`~django_orm.forms.Field.help_text` of the field.
 
 .. attribute:: BoundField.html_name
 
     The name that will be used in the widget's HTML ``name`` attribute. It takes
-    the form :attr:`~django.forms.Form.prefix` into account.
+    the form :attr:`~django_orm.forms.Form.prefix` into account.
 
 .. attribute:: BoundField.id_for_label
 
@@ -1158,13 +1158,13 @@ Attributes of ``BoundField``
     :meth:`~BoundField.label_tag`/:meth:`~BoundField.legend_tag` will do this
     for you):
 
-    .. code-block:: html+django
+    .. code-block:: html+django_orm
 
         <label for="{{ form.my_field.id_for_label }}">...</label>{{ my_field }}
 
     By default, this will be the field's name prefixed by ``id_``
     ("``id_my_field``" for the example above). You may modify the ID by setting
-    :attr:`~django.forms.Widget.attrs` on the field's widget. For example,
+    :attr:`~django_orm.forms.Widget.attrs` on the field's widget. For example,
     declaring a field like this::
 
         my_field = forms.CharField(widget=forms.TextInput(attrs={'id': 'myFIELD'}))
@@ -1200,12 +1200,12 @@ Attributes of ``BoundField``
 
 .. attribute:: BoundField.is_hidden
 
-    Returns ``True`` if this :class:`~django.forms.BoundField`'s widget is
+    Returns ``True`` if this :class:`~django_orm.forms.BoundField`'s widget is
     hidden.
 
 .. attribute:: BoundField.label
 
-    The :attr:`~django.forms.Field.label` of the field. This is used in
+    The :attr:`~django_orm.forms.Field.label` of the field. This is used in
     :meth:`~BoundField.label_tag`/:meth:`~BoundField.legend_tag`.
 
 .. attribute:: BoundField.name
@@ -1246,7 +1246,7 @@ Methods of ``BoundField``
 
     Returns a string of HTML for representing this as an ``<input type="hidden">``.
 
-    ``**kwargs`` are passed to :meth:`~django.forms.BoundField.as_widget`.
+    ``**kwargs`` are passed to :meth:`~django_orm.forms.BoundField.as_widget`.
 
     This method is primarily used internally. You should use a widget instead.
 
@@ -1350,17 +1350,17 @@ Customizing ``BoundField``
 ==========================
 
 If you need to access some additional information about a form field in a
-template and using a subclass of :class:`~django.forms.Field` isn't
-sufficient, consider also customizing :class:`~django.forms.BoundField`.
+template and using a subclass of :class:`~django_orm.forms.Field` isn't
+sufficient, consider also customizing :class:`~django_orm.forms.BoundField`.
 
 A custom form field can override ``get_bound_field()``:
 
 .. method:: Field.get_bound_field(form, field_name)
 
-    Takes an instance of :class:`~django.forms.Form` and the name of the field.
+    Takes an instance of :class:`~django_orm.forms.Form` and the name of the field.
     The return value will be used when accessing the field in a template. Most
     likely it will be an instance of a subclass of
-    :class:`~django.forms.BoundField`.
+    :class:`~django_orm.forms.BoundField`.
 
 If you have a ``GPSCoordinatesField``, for example, and want to be able to
 access additional information about the coordinates in a template, this could
@@ -1408,7 +1408,7 @@ ContactForm to include an ``ImageField`` called ``mugshot``, we
 need to bind the file data containing the mugshot image::
 
     # Bound form with an image field
-    >>> from django.core.files.uploadedfile import SimpleUploadedFile
+    >>> from django_orm.core.files.uploadedfile import SimpleUploadedFile
     >>> data = {'subject': 'hello',
     ...         'message': 'Hi there',
     ...         'sender': 'foo@example.com',
@@ -1481,7 +1481,7 @@ example, ``BeatleForm`` subclasses both ``PersonForm`` and ``InstrumentForm``
 (in that order), and its field list includes the fields from the parent
 classes::
 
-    >>> from django import forms
+    >>> from django_orm import forms
     >>> class PersonForm(forms.Form):
     ...     first_name = forms.CharField()
     ...     last_name = forms.CharField()
@@ -1499,7 +1499,7 @@ classes::
 It's possible to declaratively remove a ``Field`` inherited from a parent class
 by setting the name of the field to ``None`` on the subclass. For example::
 
-    >>> from django import forms
+    >>> from django_orm import forms
 
     >>> class ParentForm(forms.Form):
     ...     name = forms.CharField()

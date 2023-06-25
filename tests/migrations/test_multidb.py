@@ -1,6 +1,6 @@
-from django.db import connection, migrations, models
-from django.db.migrations.state import ProjectState
-from django.test import override_settings
+from django_orm.db import connection, migrations, models
+from django_orm.db.migrations.state import ProjectState
+from django_orm.test import override_settings
 
 from .test_base import OperationTestBase
 

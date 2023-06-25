@@ -14,8 +14,8 @@ from smtplib import SMTP, SMTPException
 from ssl import SSLError
 from unittest import mock, skipUnless
 
-from django.core import mail
-from django.core.mail import (
+from django_orm.core import mail
+from django_orm.core.mail import (
     DNS_NAME,
     EmailMessage,
     EmailMultiAlternatives,
@@ -24,12 +24,12 @@ from django.core.mail import (
     send_mail,
     send_mass_mail,
 )
-from django.core.mail.backends import console, dummy, filebased, locmem, smtp
-from django.core.mail.message import BadHeaderError, sanitize_address
-from django.test import SimpleTestCase, override_settings
-from django.test.utils import requires_tz_support
-from django.utils.translation import gettext_lazy
-from django.utils.version import PY311
+from django_orm.core.mail.backends import console, dummy, filebased, locmem, smtp
+from django_orm.core.mail.message import BadHeaderError, sanitize_address
+from django_orm.test import SimpleTestCase, override_settings
+from django_orm.test.utils import requires_tz_support
+from django_orm.utils.translation import gettext_lazy
+from django_orm.utils.version import PY311
 
 try:
     from aiosmtpd.controller import Controller
@@ -65,7 +65,7 @@ class MailTests(HeadersCheckMixin, SimpleTestCase):
 
     def get_decoded_attachments(self, django_message):
         """
-        Encode the specified django.core.mail.message.EmailMessage, then decode
+        Encode the specified django_orm.core.mail.message.EmailMessage, then decode
         it using Python's email.parser module and, for each attachment of the
         message, return a list of tuples with (filename, content, mimetype).
         """
@@ -767,25 +767,25 @@ class MailTests(HeadersCheckMixin, SimpleTestCase):
     def test_backend_arg(self):
         """Test backend argument of mail.get_connection()"""
         self.assertIsInstance(
-            mail.get_connection("django.core.mail.backends.smtp.EmailBackend"),
+            mail.get_connection("django_orm.core.mail.backends.smtp.EmailBackend"),
             smtp.EmailBackend,
         )
         self.assertIsInstance(
-            mail.get_connection("django.core.mail.backends.locmem.EmailBackend"),
+            mail.get_connection("django_orm.core.mail.backends.locmem.EmailBackend"),
             locmem.EmailBackend,
         )
         self.assertIsInstance(
-            mail.get_connection("django.core.mail.backends.dummy.EmailBackend"),
+            mail.get_connection("django_orm.core.mail.backends.dummy.EmailBackend"),
             dummy.EmailBackend,
         )
         self.assertIsInstance(
-            mail.get_connection("django.core.mail.backends.console.EmailBackend"),
+            mail.get_connection("django_orm.core.mail.backends.console.EmailBackend"),
             console.EmailBackend,
         )
         with tempfile.TemporaryDirectory() as tmp_dir:
             self.assertIsInstance(
                 mail.get_connection(
-                    "django.core.mail.backends.filebased.EmailBackend",
+                    "django_orm.core.mail.backends.filebased.EmailBackend",
                     file_path=tmp_dir,
                 ),
                 filebased.EmailBackend,
@@ -800,12 +800,12 @@ class MailTests(HeadersCheckMixin, SimpleTestCase):
             msg = "expected str, bytes or os.PathLike object, not object"
         with self.assertRaisesMessage(TypeError, msg):
             mail.get_connection(
-                "django.core.mail.backends.filebased.EmailBackend", file_path=object()
+                "django_orm.core.mail.backends.filebased.EmailBackend", file_path=object()
             )
         self.assertIsInstance(mail.get_connection(), locmem.EmailBackend)
 
     @override_settings(
-        EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+        EMAIL_BACKEND="django_orm.core.mail.backends.locmem.EmailBackend",
         ADMINS=[("nobody", "nobody@example.com")],
         MANAGERS=[("nobody", "nobody@example.com")],
     )
@@ -1144,7 +1144,7 @@ class PythonGlobalState(SimpleTestCase):
     """
     Tests for #12422 -- Django smarts (#2472/#11212) with charset of utf-8 text
     parts shouldn't pollute global email Python package charset registry when
-    django.mail.message is imported.
+    django_orm.mail.message is imported.
     """
 
     def test_utf8(self):
@@ -1451,21 +1451,21 @@ class BaseEmailBackendTests(HeadersCheckMixin):
         """
         Regression test for #15042
         """
-        self.assertTrue(send_mail("Subject", "Content", "tester", ["django"]))
+        self.assertTrue(send_mail("Subject", "Content", "tester", ["django_orm"]))
         message = self.get_the_message()
         self.assertEqual(message.get("subject"), "Subject")
         self.assertEqual(message.get("from"), "tester")
-        self.assertEqual(message.get("to"), "django")
+        self.assertEqual(message.get("to"), "django_orm")
 
     def test_lazy_addresses(self):
         """
         Email sending should support lazy email addresses (#24416).
         """
         _ = gettext_lazy
-        self.assertTrue(send_mail("Subject", "Content", _("tester"), [_("django")]))
+        self.assertTrue(send_mail("Subject", "Content", _("tester"), [_("django_orm")]))
         message = self.get_the_message()
         self.assertEqual(message.get("from"), "tester")
-        self.assertEqual(message.get("to"), "django")
+        self.assertEqual(message.get("to"), "django_orm")
 
         self.flush_mailbox()
         m = EmailMessage(
@@ -1517,7 +1517,7 @@ class BaseEmailBackendTests(HeadersCheckMixin):
 
 
 class LocmemBackendTests(BaseEmailBackendTests, SimpleTestCase):
-    email_backend = "django.core.mail.backends.locmem.EmailBackend"
+    email_backend = "django_orm.core.mail.backends.locmem.EmailBackend"
 
     def get_mailbox_content(self):
         return [m.message() for m in mail.outbox]
@@ -1555,7 +1555,7 @@ class LocmemBackendTests(BaseEmailBackendTests, SimpleTestCase):
 
 
 class FileBackendTests(BaseEmailBackendTests, SimpleTestCase):
-    email_backend = "django.core.mail.backends.filebased.EmailBackend"
+    email_backend = "django_orm.core.mail.backends.filebased.EmailBackend"
 
     def setUp(self):
         super().setUp()
@@ -1627,7 +1627,7 @@ class FileBackendPathLibTests(FileBackendTests):
 
 
 class ConsoleBackendTests(BaseEmailBackendTests, SimpleTestCase):
-    email_backend = "django.core.mail.backends.console.EmailBackend"
+    email_backend = "django_orm.core.mail.backends.console.EmailBackend"
 
     def setUp(self):
         super().setUp()
@@ -1653,7 +1653,7 @@ class ConsoleBackendTests(BaseEmailBackendTests, SimpleTestCase):
         """
         s = StringIO()
         connection = mail.get_connection(
-            "django.core.mail.backends.console.EmailBackend", stream=s
+            "django_orm.core.mail.backends.console.EmailBackend", stream=s
         )
         send_mail(
             "Subject",
@@ -1735,7 +1735,7 @@ class SMTPBackendTestsBase(SimpleTestCase):
 
 @skipUnless(HAS_AIOSMTPD, "No aiosmtpd library detected.")
 class SMTPBackendTests(BaseEmailBackendTests, SMTPBackendTestsBase):
-    email_backend = "django.core.mail.backends.smtp.EmailBackend"
+    email_backend = "django_orm.core.mail.backends.smtp.EmailBackend"
 
     def setUp(self):
         super().setUp()
@@ -1892,7 +1892,7 @@ class SMTPBackendTests(BaseEmailBackendTests, SMTPBackendTestsBase):
 
     def test_connection_timeout_default(self):
         """The connection's timeout value is None by default."""
-        connection = mail.get_connection("django.core.mail.backends.smtp.EmailBackend")
+        connection = mail.get_connection("django_orm.core.mail.backends.smtp.EmailBackend")
         self.assertIsNone(connection.timeout)
 
     def test_connection_timeout_custom(self):

@@ -4,7 +4,7 @@ How to deploy static files
 
 .. seealso::
 
-    For an introduction to the use of :mod:`django.contrib.staticfiles`, see
+    For an introduction to the use of :mod:`django_orm.contrib.staticfiles`, see
     :doc:`/howto/static-files/index`.
 
 .. _staticfiles-production:
@@ -18,7 +18,7 @@ arrange for the collected static files directory (:setting:`STATIC_ROOT`) to be
 moved to the static file server and served. Depending on
 :setting:`STATICFILES_STORAGE`, files may need to be moved to a new location
 manually or the :func:`post_process
-<django.contrib.staticfiles.storage.StaticFilesStorage.post_process>` method of
+<django_orm.contrib.staticfiles.storage.StaticFilesStorage.post_process>` method of
 the ``Storage`` class might take care of that.
 
 As with all deployment tasks, the devil's in the details. Every production
@@ -107,5 +107,5 @@ Learn more
 ==========
 
 For complete details on all the settings, commands, template tags, and other
-pieces included in :mod:`django.contrib.staticfiles`, see :doc:`the
+pieces included in :mod:`django_orm.contrib.staticfiles`, see :doc:`the
 staticfiles reference </ref/contrib/staticfiles>`.

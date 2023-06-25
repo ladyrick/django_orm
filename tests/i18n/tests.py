@@ -12,22 +12,22 @@ from unittest import mock
 
 from asgiref.local import Local
 
-from django import forms
-from django.apps import AppConfig
-from django.conf import settings
-from django.conf.locale import LANG_INFO
-from django.conf.urls.i18n import i18n_patterns
-from django.template import Context, Template
-from django.test import (
+from django_orm import forms
+from django_orm.apps import AppConfig
+from django_orm.conf import settings
+from django_orm.conf.locale import LANG_INFO
+from django_orm.conf.urls.i18n import i18n_patterns
+from django_orm.template import Context, Template
+from django_orm.test import (
     RequestFactory,
     SimpleTestCase,
     TestCase,
     ignore_warnings,
     override_settings,
 )
-from django.utils import translation
-from django.utils.deprecation import RemovedInDjango50Warning
-from django.utils.formats import (
+from django_orm.utils import translation
+from django_orm.utils.deprecation import RemovedInDjango50Warning
+from django_orm.utils.formats import (
     date_format,
     get_format,
     iter_format_modules,
@@ -38,9 +38,9 @@ from django.utils.formats import (
     sanitize_strftime_format,
     time_format,
 )
-from django.utils.numberformat import format as nformat
-from django.utils.safestring import SafeString, mark_safe
-from django.utils.translation import (
+from django_orm.utils.numberformat import format as nformat
+from django_orm.utils.safestring import SafeString, mark_safe
+from django_orm.utils.translation import (
     activate,
     check_for_language,
     deactivate,
@@ -61,7 +61,7 @@ from django.utils.translation import (
     trans_null,
     trans_real,
 )
-from django.utils.translation.reloader import (
+from django_orm.utils.translation.reloader import (
     translation_file_changed,
     watch_for_translation_changes,
 )
@@ -82,7 +82,7 @@ class AppModuleStub:
 
 @contextmanager
 def patch_formats(lang, **settings):
-    from django.utils.formats import _format_cache
+    from django_orm.utils.formats import _format_cache
 
     # Populate _format_cache with temporary values
     for key, value in settings.items():
@@ -124,7 +124,7 @@ class TranslationTests(SimpleTestCase):
     @translation.override("fr")
     def test_multiple_plurals_per_language(self):
         """
-        Normally, French has 2 plurals. As other/locale/fr/LC_MESSAGES/django.po
+        Normally, French has 2 plurals. As other/locale/fr/LC_MESSAGES/django_orm.po
         has a different plural equation with 3 plurals, this tests if those
         plural are honored.
         """
@@ -1422,7 +1422,7 @@ class FormattingTests(SimpleTestCase):
 
     def test_sanitize_separators(self):
         """
-        Tests django.utils.formats.sanitize_separators.
+        Tests django_orm.utils.formats.sanitize_separators.
         """
         # Non-strings are untouched
         self.assertEqual(sanitize_separators(123), 123)
@@ -1473,7 +1473,7 @@ class FormattingTests(SimpleTestCase):
         """
         # Importing some format modules so that we can compare the returned
         # modules with these expected modules
-        default_mod = import_module("django.conf.locale.de.formats")
+        default_mod = import_module("django_orm.conf.locale.de.formats")
         test_mod = import_module("i18n.other.locale.de.formats")
         test_mod2 = import_module("i18n.other2.locale.de.formats")
 
@@ -1504,8 +1504,8 @@ class FormattingTests(SimpleTestCase):
         Tests the iter_format_modules function always yields format modules in
         a stable and correct order in presence of both base ll and ll_CC formats.
         """
-        en_format_mod = import_module("django.conf.locale.en.formats")
-        en_gb_format_mod = import_module("django.conf.locale.en_GB.formats")
+        en_format_mod = import_module("django_orm.conf.locale.en.formats")
+        en_gb_format_mod = import_module("django_orm.conf.locale.en_GB.formats")
         self.assertEqual(
             list(iter_format_modules("en-gb")), [en_gb_format_mod, en_format_mod]
         )
@@ -2053,7 +2053,7 @@ class AppResolutionOrderI18NTests(ResolutionOrderI18NTests):
             self.assertGettext("Date/time", "Datum/Zeit")
 
             with self.modify_settings(
-                INSTALLED_APPS={"remove": "django.contrib.admin.apps.SimpleAdminConfig"}
+                INSTALLED_APPS={"remove": "django_orm.contrib.admin.apps.SimpleAdminConfig"}
             ):
                 # Force refreshing translations.
                 activate("de")
@@ -2146,8 +2146,8 @@ class TestLanguageInfo(SimpleTestCase):
         ("fr", "French"),
     ],
     MIDDLEWARE=[
-        "django.middleware.locale.LocaleMiddleware",
-        "django.middleware.common.CommonMiddleware",
+        "django_orm.middleware.locale.LocaleMiddleware",
+        "django_orm.middleware.common.CommonMiddleware",
     ],
     ROOT_URLCONF="i18n.urls",
 )
@@ -2168,8 +2168,8 @@ class LocaleMiddlewareTests(TestCase):
         ("fr", "French"),
     ],
     MIDDLEWARE=[
-        "django.middleware.locale.LocaleMiddleware",
-        "django.middleware.common.CommonMiddleware",
+        "django_orm.middleware.locale.LocaleMiddleware",
+        "django_orm.middleware.common.CommonMiddleware",
     ],
     ROOT_URLCONF="i18n.urls_default_unprefixed",
     LANGUAGE_CODE="en",
@@ -2219,8 +2219,8 @@ class UnprefixedDefaultLanguageTests(SimpleTestCase):
         ("pt-br", "Portuguese (Brazil)"),
     ],
     MIDDLEWARE=[
-        "django.middleware.locale.LocaleMiddleware",
-        "django.middleware.common.CommonMiddleware",
+        "django_orm.middleware.locale.LocaleMiddleware",
+        "django_orm.middleware.common.CommonMiddleware",
     ],
     ROOT_URLCONF="i18n.urls",
 )
@@ -2327,13 +2327,13 @@ class NonDjangoLanguageTests(SimpleTestCase):
             os.makedirs(os.path.join(app_dir, "locale", "dummy_Lang", "LC_MESSAGES"))
             open(
                 os.path.join(
-                    app_dir, "locale", "dummy_Lang", "LC_MESSAGES", "django.mo"
+                    app_dir, "locale", "dummy_Lang", "LC_MESSAGES", "django_orm.mo"
                 ),
                 "w",
             ).close()
             app_config = AppConfig("dummy_app", AppModuleStub(__path__=[app_dir]))
             with mock.patch(
-                "django.apps.apps.get_app_configs", return_value=[app_config]
+                "django_orm.apps.apps.get_app_configs", return_value=[app_config]
             ):
                 self.assertIs(check_for_language("dummy-lang"), True)
 
@@ -2380,7 +2380,7 @@ class WatchForTranslationChangesTests(SimpleTestCase):
 
     def test_i18n_app_dirs_ignore_django_apps(self):
         mocked_sender = mock.MagicMock()
-        with self.settings(INSTALLED_APPS=["django.contrib.admin"]):
+        with self.settings(INSTALLED_APPS=["django_orm.contrib.admin"]):
             watch_for_translation_changes(mocked_sender)
         mocked_sender.watch_dir.assert_called_once_with(Path("locale"), "**/*.mo")
 

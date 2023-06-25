@@ -1,11 +1,11 @@
 from decimal import Decimal
 
-from django.apps import apps
-from django.core import checks
-from django.core.exceptions import FieldError
-from django.db import models
-from django.test import TestCase, skipIfDBFeature
-from django.test.utils import isolate_apps
+from django_orm.apps import apps
+from django_orm.core import checks
+from django_orm.core.exceptions import FieldError
+from django_orm.db import models
+from django_orm.test import TestCase, skipIfDBFeature
+from django_orm.test.utils import isolate_apps
 
 from .models import Bar, FkToChar, Foo, PrimaryKeyCharModel
 

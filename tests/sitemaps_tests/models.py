@@ -1,5 +1,5 @@
-from django.db import models
-from django.urls import reverse
+from django_orm.db import models
+from django_orm.urls import reverse
 
 
 class TestModel(models.Model):

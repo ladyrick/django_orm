@@ -29,11 +29,11 @@ ticket here: https://code.djangoproject.com/newticket
 
 To get more help:
 
-* Join the ``#django`` channel on ``irc.libera.chat``. Lots of helpful people
+* Join the ``#django_orm`` channel on ``irc.libera.chat``. Lots of helpful people
   hang out there. See https://web.libera.chat if you're new to IRC.
 
-* Join the django-users mailing list, or read the archives, at
-  https://groups.google.com/group/django-users.
+* Join the django_orm-users mailing list, or read the archives, at
+  https://groups.google.com/group/django_orm-users.
 
 To contribute to Django:
 

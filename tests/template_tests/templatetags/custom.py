@@ -1,9 +1,9 @@
 import operator
 
-from django import template
-from django.template.defaultfilters import stringfilter
-from django.utils.html import escape, format_html
-from django.utils.safestring import mark_safe
+from django_orm import template
+from django_orm.template.defaultfilters import stringfilter
+from django_orm.utils.html import escape, format_html
+from django_orm.utils.safestring import mark_safe
 
 register = template.Library()
 

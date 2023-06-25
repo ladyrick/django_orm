@@ -6,7 +6,7 @@ Django 2.2.19 release notes
 
 Django 2.2.19 fixes a security issue in 2.2.18.
 
-CVE-2021-23336: Web cache poisoning via ``django.utils.http.limited_parse_qsl()``
+CVE-2021-23336: Web cache poisoning via ``django_orm.utils.http.limited_parse_qsl()``
 =================================================================================
 
 Django contains a copy of :func:`urllib.parse.parse_qsl` which was added to

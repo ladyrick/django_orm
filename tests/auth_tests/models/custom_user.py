@@ -1,4 +1,4 @@
-from django.contrib.auth.models import (
+from django_orm.contrib.auth.models import (
     AbstractBaseUser,
     AbstractUser,
     BaseUserManager,
@@ -7,7 +7,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
     UserManager,
 )
-from django.db import models
+from django_orm.db import models
 
 
 # The custom user uses email as the unique identifier, and requires

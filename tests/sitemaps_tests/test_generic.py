@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from django.contrib.sitemaps import GenericSitemap
-from django.test import ignore_warnings, override_settings
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.contrib.sitemaps import GenericSitemap
+from django_orm.test import ignore_warnings, override_settings
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from .base import SitemapTestsBase
 from .models import TestModel

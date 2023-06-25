@@ -21,7 +21,7 @@ For the ``formset:added`` event, ``event.target`` is the newly added row.
 In your custom ``change_form.html`` template, extend the
 ``admin_change_form_document_ready`` block and add the event listener code:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% extends 'admin/change_form.html' %}
     {% load static %}

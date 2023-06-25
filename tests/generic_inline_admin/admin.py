@@ -1,5 +1,5 @@
-from django.contrib import admin
-from django.contrib.contenttypes.admin import GenericTabularInline
+from django_orm.contrib import admin
+from django_orm.contrib.contenttypes.admin import GenericTabularInline
 
 from .models import Category, Contact, Episode, EpisodePermanent, Media, PhoneNumber
 

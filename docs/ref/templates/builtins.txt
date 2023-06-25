@@ -12,7 +12,7 @@ documentation for any custom tags or filters installed.
 Built-in tag reference
 ======================
 
-.. highlight:: html+django
+.. highlight:: html+django_orm
 
 .. templatetag:: autoescape
 
@@ -688,7 +688,7 @@ context. This allows you to reference a compiled ``Template`` in your context.
 
 Additionally, the variable may be an iterable of template names, in which case
 the first that can be loaded will be used, as per
-:func:`~django.template.loader.select_template`.
+:func:`~django_orm.template.loader.select_template`.
 
 An included template is rendered within the context of the template that
 includes it. This example produces the output ``"Hello, John!"``:
@@ -966,7 +966,7 @@ an attribute "description," you could use::
     {% regroup cities by country.description as country_list %}
 
 Or, if ``country`` is a field with ``choices``, it will have a
-:meth:`~django.db.models.Model.get_FOO_display` method available as an
+:meth:`~django_orm.db.models.Model.get_FOO_display` method available as an
 attribute, allowing  you to group on the display string rather than the
 ``choices`` key::
 
@@ -1093,7 +1093,7 @@ characters.
 
 Returns an absolute path reference (a URL without the domain name) matching a
 given view and optional parameters. Any special characters in the resulting
-path will be encoded using :func:`~django.utils.encoding.iri_to_uri`.
+path will be encoded using :func:`~django_orm.utils.encoding.iri_to_uri`.
 
 This is a way to output links without violating the DRY principle by having to
 hard-code URLs in your templates::
@@ -1133,7 +1133,7 @@ such as this:
 The template tag will output the string ``/clients/client/123/``.
 
 Note that if the URL you're reversing doesn't exist, you'll get an
-:exc:`~django.urls.NoReverseMatch` exception raised, which will cause your
+:exc:`~django_orm.urls.NoReverseMatch` exception raised, which will cause your
 site to display an error page.
 
 If you'd like to retrieve a URL without displaying it, you can use a slightly
@@ -1298,7 +1298,7 @@ For example::
 
     {{ value|capfirst }}
 
-If ``value`` is ``"django"``, the output will be ``"Django"``.
+If ``value`` is ``"django_orm"``, the output will be ``"Django"``.
 
 .. templatefilter:: center
 
@@ -2617,7 +2617,7 @@ Django comes with a couple of other template-tag libraries that you have to
 enable explicitly in your :setting:`INSTALLED_APPS` setting and enable in your
 template with the :ttag:`{% load %}<load>` tag.
 
-``django.contrib.humanize``
+``django_orm.contrib.humanize``
 ---------------------------
 
 A set of Django template filters useful for adding a "human touch" to data. See
@@ -2632,7 +2632,7 @@ A set of Django template filters useful for adding a "human touch" to data. See
 ~~~~~~~~~~
 
 To link to static files that are saved in :setting:`STATIC_ROOT` Django ships
-with a :ttag:`static` template tag. If the :mod:`django.contrib.staticfiles`
+with a :ttag:`static` template tag. If the :mod:`django_orm.contrib.staticfiles`
 app is installed, the tag will serve files using ``url()`` method of the
 storage specified by :setting:`STATICFILES_STORAGE`. For example::
 
@@ -2654,7 +2654,7 @@ slightly different call::
 
 .. admonition:: Using Jinja2 templates?
 
-    See :class:`~django.template.backends.jinja2.Jinja2` for information on
+    See :class:`~django_orm.template.backends.jinja2.Jinja2` for information on
     using the ``static`` tag with Jinja2.
 
 .. templatetag:: get_static_prefix

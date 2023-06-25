@@ -1,12 +1,12 @@
 import os
 
-from django.apps import AppConfig, apps
-from django.apps.registry import Apps
-from django.contrib.admin.models import LogEntry
-from django.core.exceptions import AppRegistryNotReady, ImproperlyConfigured
-from django.db import models
-from django.test import SimpleTestCase, override_settings
-from django.test.utils import extend_sys_path, isolate_apps
+from django_orm.apps import AppConfig, apps
+from django_orm.apps.registry import Apps
+from django_orm.contrib.admin.models import LogEntry
+from django_orm.core.exceptions import AppRegistryNotReady, ImproperlyConfigured
+from django_orm.db import models
+from django_orm.test import SimpleTestCase, override_settings
+from django_orm.test.utils import extend_sys_path, isolate_apps
 
 from .models import SoAlternative, TotallyNormal, new_apps
 from .one_config_app.apps import OneConfig
@@ -18,15 +18,15 @@ from .two_configs_one_default_app.apps import TwoConfig
 SOME_INSTALLED_APPS = [
     "apps.apps.MyAdmin",
     "apps.apps.MyAuth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
+    "django_orm.contrib.contenttypes",
+    "django_orm.contrib.sessions",
+    "django_orm.contrib.messages",
+    "django_orm.contrib.staticfiles",
 ]
 
 SOME_INSTALLED_APPS_NAMES = [
-    "django.contrib.admin",
-    "django.contrib.auth",
+    "django_orm.contrib.admin",
+    "django_orm.contrib.auth",
 ] + SOME_INSTALLED_APPS[2:]
 
 HERE = os.path.dirname(__file__)
@@ -154,27 +154,27 @@ class AppsTests(SimpleTestCase):
         Tests apps.get_app_config().
         """
         app_config = apps.get_app_config("admin")
-        self.assertEqual(app_config.name, "django.contrib.admin")
+        self.assertEqual(app_config.name, "django_orm.contrib.admin")
 
         app_config = apps.get_app_config("staticfiles")
-        self.assertEqual(app_config.name, "django.contrib.staticfiles")
+        self.assertEqual(app_config.name, "django_orm.contrib.staticfiles")
 
         with self.assertRaises(LookupError):
             apps.get_app_config("admindocs")
 
-        msg = "No installed app with label 'django.contrib.auth'. Did you mean 'myauth'"
+        msg = "No installed app with label 'django_orm.contrib.auth'. Did you mean 'myauth'"
         with self.assertRaisesMessage(LookupError, msg):
-            apps.get_app_config("django.contrib.auth")
+            apps.get_app_config("django_orm.contrib.auth")
 
     @override_settings(INSTALLED_APPS=SOME_INSTALLED_APPS)
     def test_is_installed(self):
         """
         Tests apps.is_installed().
         """
-        self.assertIs(apps.is_installed("django.contrib.admin"), True)
-        self.assertIs(apps.is_installed("django.contrib.auth"), True)
-        self.assertIs(apps.is_installed("django.contrib.staticfiles"), True)
-        self.assertIs(apps.is_installed("django.contrib.admindocs"), False)
+        self.assertIs(apps.is_installed("django_orm.contrib.admin"), True)
+        self.assertIs(apps.is_installed("django_orm.contrib.auth"), True)
+        self.assertIs(apps.is_installed("django_orm.contrib.staticfiles"), True)
+        self.assertIs(apps.is_installed("django_orm.contrib.admindocs"), False)
 
     @override_settings(INSTALLED_APPS=SOME_INSTALLED_APPS)
     def test_get_model(self):
@@ -463,25 +463,25 @@ class AppConfigTests(SimpleTestCase):
 
     @override_settings(
         INSTALLED_APPS=["apps.apps.ModelPKAppsConfig"],
-        DEFAULT_AUTO_FIELD="django.db.models.SmallAutoField",
+        DEFAULT_AUTO_FIELD="django_orm.db.models.SmallAutoField",
     )
     def test_app_default_auto_field(self):
         apps_config = apps.get_app_config("apps")
         self.assertEqual(
             apps_config.default_auto_field,
-            "django.db.models.BigAutoField",
+            "django_orm.db.models.BigAutoField",
         )
         self.assertIs(apps_config._is_default_auto_field_overridden, True)
 
     @override_settings(
         INSTALLED_APPS=["apps.apps.PlainAppsConfig"],
-        DEFAULT_AUTO_FIELD="django.db.models.SmallAutoField",
+        DEFAULT_AUTO_FIELD="django_orm.db.models.SmallAutoField",
     )
     def test_default_auto_field_setting(self):
         apps_config = apps.get_app_config("apps")
         self.assertEqual(
             apps_config.default_auto_field,
-            "django.db.models.SmallAutoField",
+            "django_orm.db.models.SmallAutoField",
         )
         self.assertIs(apps_config._is_default_auto_field_overridden, False)
 

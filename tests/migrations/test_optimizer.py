@@ -1,8 +1,8 @@
-from django.db import migrations, models
-from django.db.migrations import operations
-from django.db.migrations.optimizer import MigrationOptimizer
-from django.db.migrations.serializer import serializer_factory
-from django.test import SimpleTestCase
+from django_orm.db import migrations, models
+from django_orm.db.migrations import operations
+from django_orm.db.migrations.optimizer import MigrationOptimizer
+from django_orm.db.migrations.serializer import serializer_factory
+from django_orm.test import SimpleTestCase
 
 from .models import EmptyManager, UnicodeModel
 

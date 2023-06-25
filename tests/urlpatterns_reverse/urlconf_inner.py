@@ -1,6 +1,6 @@
-from django.http import HttpResponse
-from django.template import Context, Template
-from django.urls import path
+from django_orm.http import HttpResponse
+from django_orm.template import Context, Template
+from django_orm.urls import path
 
 
 def inner_view(request):

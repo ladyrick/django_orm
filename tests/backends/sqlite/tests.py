@@ -6,16 +6,16 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-from django.db import NotSupportedError, connection, transaction
-from django.db.models import Aggregate, Avg, CharField, StdDev, Sum, Variance
-from django.db.utils import ConnectionHandler
-from django.test import (
+from django_orm.db import NotSupportedError, connection, transaction
+from django_orm.db.models import Aggregate, Avg, CharField, StdDev, Sum, Variance
+from django_orm.db.utils import ConnectionHandler
+from django_orm.test import (
     TestCase,
     TransactionTestCase,
     override_settings,
     skipIfDBFeature,
 )
-from django.test.utils import isolate_apps
+from django_orm.test.utils import isolate_apps
 
 from ..models import Author, Item, Object, Square
 
@@ -64,7 +64,7 @@ class Tests(TestCase):
 
     def test_memory_db_test_name(self):
         """A named in-memory db should be allowed where supported."""
-        from django.db.backends.sqlite3.base import DatabaseWrapper
+        from django_orm.db.backends.sqlite3.base import DatabaseWrapper
 
         settings_dict = {
             "TEST": {
@@ -97,7 +97,7 @@ class Tests(TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             settings_dict = {
                 "default": {
-                    "ENGINE": "django.db.backends.sqlite3",
+                    "ENGINE": "django_orm.db.backends.sqlite3",
                     "NAME": Path(tmp) / "test.db",
                 },
             }

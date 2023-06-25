@@ -1,8 +1,8 @@
 from datetime import date, datetime, timedelta
 from operator import attrgetter
 
-from django.db import IntegrityError
-from django.test import TestCase
+from django_orm.db import IntegrityError
+from django_orm.test import TestCase
 
 from .models import (
     CustomMembership,

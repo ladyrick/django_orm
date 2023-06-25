@@ -1,6 +1,6 @@
-from django.template.defaultfilters import escapejs_filter
-from django.test import SimpleTestCase
-from django.utils.functional import lazy
+from django_orm.template.defaultfilters import escapejs_filter
+from django_orm.test import SimpleTestCase
+from django_orm.utils.functional import lazy
 
 from ..utils import setup
 

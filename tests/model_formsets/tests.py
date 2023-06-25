@@ -3,18 +3,18 @@ import re
 from datetime import date
 from decimal import Decimal
 
-from django import forms
-from django.core.exceptions import ImproperlyConfigured
-from django.db import models
-from django.forms.formsets import formset_factory
-from django.forms.models import (
+from django_orm import forms
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.db import models
+from django_orm.forms.formsets import formset_factory
+from django_orm.forms.models import (
     BaseModelFormSet,
     _get_foreign_key,
     inlineformset_factory,
     modelformset_factory,
 )
-from django.http import QueryDict
-from django.test import TestCase, skipUnlessDBFeature
+from django_orm.http import QueryDict
+from django_orm.test import TestCase, skipUnlessDBFeature
 
 from .models import (
     AlternateBook,
@@ -1672,7 +1672,7 @@ class ModelFormsetTest(TestCase):
 
     def test_inlineformset_with_arrayfield(self):
         class SimpleArrayField(forms.CharField):
-            """A proxy for django.contrib.postgres.forms.SimpleArrayField."""
+            """A proxy for django_orm.contrib.postgres.forms.SimpleArrayField."""
 
             def to_python(self, value):
                 value = super().to_python(value)
@@ -2346,7 +2346,7 @@ class TestModelFormsetOverridesTroughFormMeta(TestCase):
         self.assertNotIn("DELETE", formset.forms[1].fields)
 
     def test_inlineformset_factory_passes_renderer(self):
-        from django.forms.renderers import Jinja2
+        from django_orm.forms.renderers import Jinja2
 
         renderer = Jinja2()
         BookFormSet = inlineformset_factory(
@@ -2359,7 +2359,7 @@ class TestModelFormsetOverridesTroughFormMeta(TestCase):
         self.assertEqual(formset.renderer, renderer)
 
     def test_modelformset_factory_passes_renderer(self):
-        from django.forms.renderers import Jinja2
+        from django_orm.forms.renderers import Jinja2
 
         renderer = Jinja2()
         BookFormSet = modelformset_factory(Author, fields="__all__", renderer=renderer)

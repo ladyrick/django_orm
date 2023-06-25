@@ -5,14 +5,14 @@ Many-to-many relationships
 .. highlight:: pycon
 
 To define a many-to-many relationship, use
-:class:`~django.db.models.ManyToManyField`.
+:class:`~django_orm.db.models.ManyToManyField`.
 
 In this example, an ``Article`` can be published in multiple ``Publication``
 objects, and a ``Publication`` has multiple ``Article`` objects:
 
 .. code-block:: python
 
-    from django.db import models
+    from django_orm.db import models
 
     class Publication(models.Model):
         title = models.CharField(max_length=30)
@@ -84,7 +84,7 @@ Adding an object of the wrong type raises :exc:`TypeError`::
     TypeError: 'Publication' instance expected
 
 Create and add a ``Publication`` to an ``Article`` in one step using
-:meth:`~django.db.models.fields.related.RelatedManager.create`::
+:meth:`~django_orm.db.models.fields.related.RelatedManager.create`::
 
     >>> new_publication = a2.publications.create(title='Highlights for Children')
 
@@ -122,8 +122,8 @@ relationships <lookups-that-span-relationships>`::
     >>> Article.objects.filter(publications__title__startswith="Science").distinct()
     <QuerySet [<Article: NASA uses Python>]>
 
-The :meth:`~django.db.models.query.QuerySet.count` function respects
-:meth:`~django.db.models.query.QuerySet.distinct` as well::
+The :meth:`~django_orm.db.models.query.QuerySet.count` function respects
+:meth:`~django_orm.db.models.query.QuerySet.distinct` as well::
 
     >>> Article.objects.filter(publications__title__startswith="Science").count()
     2
@@ -137,7 +137,7 @@ The :meth:`~django.db.models.query.QuerySet.count` function respects
     <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
 
 Reverse m2m queries are supported (i.e., starting at the table that doesn't have
-a :class:`~django.db.models.ManyToManyField`)::
+a :class:`~django_orm.db.models.ManyToManyField`)::
 
     >>> Publication.objects.filter(id=1)
     <QuerySet [<Publication: The Python Journal>]>
@@ -272,8 +272,8 @@ Bulk delete some articles - references to deleted objects should go::
     <QuerySet [<Article: Django lets you build web apps easily>]>
     >>> q.delete()
 
-After the :meth:`~django.db.models.query.QuerySet.delete`, the
-:class:`~django.db.models.query.QuerySet` cache needs to be cleared, and the
+After the :meth:`~django_orm.db.models.query.QuerySet.delete`, the
+:class:`~django_orm.db.models.query.QuerySet` cache needs to be cleared, and the
 referenced objects should be gone::
 
     >>> print(q)

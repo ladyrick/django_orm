@@ -44,7 +44,7 @@ Bugfixes
   records so that many-to-many relationships can be used on the new objects
   (:ticket:`27026`).
 
-* Fixed crash of ``django.views.static.serve()`` with ``show_indexes`` enabled
+* Fixed crash of ``django_orm.views.static.serve()`` with ``show_indexes`` enabled
   (:ticket:`26973`).
 
 * Fixed ``ClearableFileInput`` to avoid the ``required`` HTML attribute when

@@ -1,4 +1,4 @@
-from django.test.runner import DiscoverRunner
+from django_orm.test.runner import DiscoverRunner
 
 
 class CustomOptionsTestRunner(DiscoverRunner):

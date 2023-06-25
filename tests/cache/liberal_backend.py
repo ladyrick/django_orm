@@ -1,4 +1,4 @@
-from django.core.cache.backends.locmem import LocMemCache
+from django_orm.core.cache.backends.locmem import LocMemCache
 
 
 class LiberalKeyValidationMixin:

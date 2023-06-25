@@ -1,6 +1,6 @@
-from django import test
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.db import models
+from django_orm import test
+from django_orm.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django_orm.db import models
 
 from .models import AllFieldsModel
 

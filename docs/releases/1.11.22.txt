@@ -10,10 +10,10 @@ CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting via HTTPS
 --------------------------------------------------------------------------------
 
 When deployed behind a reverse-proxy connecting to Django via HTTPS,
-:attr:`django.http.HttpRequest.scheme` would incorrectly detect client
+:attr:`django_orm.http.HttpRequest.scheme` would incorrectly detect client
 requests made via HTTP as using HTTPS. This entails incorrect results for
-:meth:`~django.http.HttpRequest.is_secure`, and
-:meth:`~django.http.HttpRequest.build_absolute_uri`, and that HTTP
+:meth:`~django_orm.http.HttpRequest.is_secure`, and
+:meth:`~django_orm.http.HttpRequest.build_absolute_uri`, and that HTTP
 requests would not be redirected to HTTPS in accordance with
 :setting:`SECURE_SSL_REDIRECT`.
 

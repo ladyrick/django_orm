@@ -1,7 +1,7 @@
 from unittest import mock
 
-from django.http import HttpRequest
-from django.template import (
+from django_orm.http import HttpRequest
+from django_orm.template import (
     Context,
     Engine,
     RequestContext,
@@ -9,8 +9,8 @@ from django.template import (
     Variable,
     VariableDoesNotExist,
 )
-from django.template.context import RenderContext
-from django.test import RequestFactory, SimpleTestCase
+from django_orm.template.context import RenderContext
+from django_orm.test import RequestFactory, SimpleTestCase
 
 
 class ContextTests(SimpleTestCase):
@@ -233,7 +233,7 @@ class RequestContextTests(SimpleTestCase):
         engine = Engine(
             loaders=[
                 (
-                    "django.template.loaders.locmem.Loader",
+                    "django_orm.template.loaders.locmem.Loader",
                     {
                         "child": '{{ var|default:"none" }}',
                     },

@@ -1,16 +1,16 @@
-from django.contrib import admin
-from django.contrib.auth import views
-from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.urls import urlpatterns as auth_urlpatterns
-from django.contrib.auth.views import LoginView
-from django.contrib.messages.api import info
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
-from django.template import RequestContext, Template
-from django.urls import path, re_path, reverse_lazy
-from django.views.decorators.cache import never_cache
-from django.views.i18n import set_language
+from django_orm.contrib import admin
+from django_orm.contrib.auth import views
+from django_orm.contrib.auth.decorators import login_required, permission_required
+from django_orm.contrib.auth.forms import AuthenticationForm
+from django_orm.contrib.auth.urls import urlpatterns as auth_urlpatterns
+from django_orm.contrib.auth.views import LoginView
+from django_orm.contrib.messages.api import info
+from django_orm.http import HttpRequest, HttpResponse
+from django_orm.shortcuts import render
+from django_orm.template import RequestContext, Template
+from django_orm.urls import path, re_path, reverse_lazy
+from django_orm.views.decorators.cache import never_cache
+from django_orm.views.i18n import set_language
 
 
 class CustomRequestAuthenticationForm(AuthenticationForm):
@@ -149,7 +149,7 @@ urlpatterns = auth_urlpatterns + [
         views.PasswordResetConfirmView.as_view(
             post_reset_login=True,
             post_reset_login_backend=(
-                "django.contrib.auth.backends.AllowAllUsersModelBackend"
+                "django_orm.contrib.auth.backends.AllowAllUsersModelBackend"
             ),
         ),
     ),

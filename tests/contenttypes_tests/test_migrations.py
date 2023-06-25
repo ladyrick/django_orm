@@ -1,19 +1,19 @@
 from importlib import import_module
 
-from django.apps import apps
-from django.contrib.auth.models import Permission
-from django.contrib.contenttypes.models import ContentType
-from django.db import DEFAULT_DB_ALIAS, connections
-from django.test import TransactionTestCase
+from django_orm.apps import apps
+from django_orm.contrib.auth.models import Permission
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.db import DEFAULT_DB_ALIAS, connections
+from django_orm.test import TransactionTestCase
 
 remove_content_type_name = import_module(
-    "django.contrib.contenttypes.migrations.0002_remove_content_type_name"
+    "django_orm.contrib.contenttypes.migrations.0002_remove_content_type_name"
 )
 
 
 class MultiDBRemoveContentTypeNameTests(TransactionTestCase):
     databases = {"default", "other"}
-    available_apps = ["django.contrib.auth", "django.contrib.contenttypes"]
+    available_apps = ["django_orm.contrib.auth", "django_orm.contrib.contenttypes"]
 
     def test_add_legacy_name_other_database(self):
         # add_legacy_name() should update ContentType objects in the specified

@@ -1,10 +1,10 @@
 from operator import attrgetter
 
-from django.core.exceptions import FieldError, ValidationError
-from django.db import connection, models
-from django.db.models.query_utils import DeferredAttribute
-from django.test import SimpleTestCase, TestCase
-from django.test.utils import CaptureQueriesContext, isolate_apps
+from django_orm.core.exceptions import FieldError, ValidationError
+from django_orm.db import connection, models
+from django_orm.db.models.query_utils import DeferredAttribute
+from django_orm.test import SimpleTestCase, TestCase
+from django_orm.test.utils import CaptureQueriesContext, isolate_apps
 
 from .models import (
     Base,

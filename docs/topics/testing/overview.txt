@@ -2,7 +2,7 @@
 Writing and running tests
 =========================
 
-.. module:: django.test
+.. module:: django_orm.test
    :synopsis: Testing tools for Django applications.
 
 .. seealso::
@@ -20,11 +20,11 @@ Writing tests
 Django's unit tests use a Python standard library module: :mod:`unittest`. This
 module defines tests using a class-based approach.
 
-Here is an example which subclasses from :class:`django.test.TestCase`,
+Here is an example which subclasses from :class:`django_orm.test.TestCase`,
 which is a subclass of :class:`unittest.TestCase` that runs each test inside a
 transaction to provide isolation::
 
-    from django.test import TestCase
+    from django_orm.test import TestCase
     from myapp.models import Animal
 
     class AnimalTestCase(TestCase):
@@ -61,7 +61,7 @@ For more details about :mod:`unittest`, see the Python documentation.
 
     If your tests rely on database access such as creating or querying models,
     be sure to create your test classes as subclasses of
-    :class:`django.test.TestCase` rather than :class:`unittest.TestCase`.
+    :class:`django_orm.test.TestCase` rather than :class:`unittest.TestCase`.
 
     Using :class:`unittest.TestCase` avoids the cost of running each test in a
     transaction and flushing the database, but if your tests interact with
@@ -198,7 +198,7 @@ with ability to share the database between threads.
     your code* anyway - rewrite your code so that it doesn't do this.
 
     This also applies to customized implementations of
-    :meth:`~django.apps.AppConfig.ready()`.
+    :meth:`~django_orm.apps.AppConfig.ready()`.
 
 .. seealso::
 
@@ -212,11 +212,11 @@ Order in which tests are executed
 In order to guarantee that all ``TestCase`` code starts with a clean database,
 the Django test runner reorders tests in the following way:
 
-* All :class:`~django.test.TestCase` subclasses are run first.
+* All :class:`~django_orm.test.TestCase` subclasses are run first.
 
 * Then, all other Django-based tests (test cases based on
-  :class:`~django.test.SimpleTestCase`, including
-  :class:`~django.test.TransactionTestCase`) are run with no particular
+  :class:`~django_orm.test.SimpleTestCase`, including
+  :class:`~django_orm.test.TransactionTestCase`) are run with no particular
   ordering guaranteed nor enforced among them.
 
 * Then any other :class:`unittest.TestCase` tests (including doctests) that may
@@ -226,7 +226,7 @@ the Django test runner reorders tests in the following way:
 
     The new ordering of tests may reveal unexpected dependencies on test case
     ordering. This is the case with doctests that relied on state left in the
-    database by a given :class:`~django.test.TransactionTestCase` test, they
+    database by a given :class:`~django_orm.test.TransactionTestCase` test, they
     must be updated to be able to run independently.
 
 .. note::
@@ -254,7 +254,7 @@ tests and not in ``TransactionTestCase`` tests, and additionally only on
 backends where transactions are supported (the most important exception being
 MyISAM). This is also true for tests which rely on ``TransactionTestCase``
 such as :class:`LiveServerTestCase` and
-:class:`~django.contrib.staticfiles.testing.StaticLiveServerTestCase`.
+:class:`~django_orm.contrib.staticfiles.testing.StaticLiveServerTestCase`.
 
 Django can reload that data for you on a per-testcase basis by
 setting the ``serialized_rollback`` option to ``True`` in the body of the
@@ -272,7 +272,7 @@ those apps to :setting:`TEST_NON_SERIALIZED_APPS`.
 
 To prevent serialized data from being loaded twice, setting
 ``serialized_rollback=True`` disables the
-:data:`~django.db.models.signals.post_migrate` signal when flushing the test
+:data:`~django_orm.db.models.signals.post_migrate` signal when flushing the test
 database.
 
 Other test conditions
@@ -359,7 +359,7 @@ many users in your tests, you may want to use a custom settings file and set
 the :setting:`PASSWORD_HASHERS` setting to a faster hashing algorithm::
 
     PASSWORD_HASHERS = [
-        'django.contrib.auth.hashers.MD5PasswordHasher',
+        'django_orm.contrib.auth.hashers.MD5PasswordHasher',
     ]
 
 Don't forget to also include in :setting:`PASSWORD_HASHERS` any hashing

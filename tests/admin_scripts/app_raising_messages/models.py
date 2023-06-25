@@ -1,5 +1,5 @@
-from django.core import checks
-from django.db import models
+from django_orm.core import checks
+from django_orm.db import models
 
 
 class ModelRaisingMessages(models.Model):

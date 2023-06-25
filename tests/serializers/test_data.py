@@ -10,9 +10,9 @@ import datetime
 import decimal
 import uuid
 
-from django.core import serializers
-from django.db import connection, models
-from django.test import TestCase
+from django_orm.core import serializers
+from django_orm.db import connection, models
+from django_orm.test import TestCase
 
 from .models import (
     Anchor,

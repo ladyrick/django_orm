@@ -1,12 +1,12 @@
 from unittest import skipUnless
 
-from django.contrib.gis.db.models import fields
-from django.contrib.gis.geos import MultiPolygon, Polygon
-from django.core.exceptions import ImproperlyConfigured
-from django.db import connection, migrations, models
-from django.db.migrations.migration import Migration
-from django.db.migrations.state import ProjectState
-from django.test import TransactionTestCase, skipIfDBFeature, skipUnlessDBFeature
+from django_orm.contrib.gis.db.models import fields
+from django_orm.contrib.gis.geos import MultiPolygon, Polygon
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.db import connection, migrations, models
+from django_orm.db.migrations.migration import Migration
+from django_orm.db.migrations.state import ProjectState
+from django_orm.test import TransactionTestCase, skipIfDBFeature, skipUnlessDBFeature
 
 try:
     GeometryColumns = connection.ops.geometry_columns()

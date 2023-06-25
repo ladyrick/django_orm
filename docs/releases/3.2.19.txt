@@ -14,8 +14,8 @@ Uploading multiple files using one form field has never been supported by
 uploaded file was validated. Unfortunately, :ref:`uploading_multiple_files`
 topic suggested otherwise.
 
-In order to avoid the vulnerability, :class:`~django.forms.ClearableFileInput`
-and :class:`~django.forms.FileInput` form widgets now raise ``ValueError`` when
+In order to avoid the vulnerability, :class:`~django_orm.forms.ClearableFileInput`
+and :class:`~django_orm.forms.FileInput` form widgets now raise ``ValueError`` when
 the ``multiple`` HTML attribute is set on them. To prevent the exception and
 keep the old behavior, set ``allow_multiple_selected`` to ``True``.
 

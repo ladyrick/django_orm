@@ -91,8 +91,8 @@ such classes perform explicit conversion of query arguments to the
 correct database-level type before querying. However, three model
 field classes did not correctly convert their arguments:
 
-* :class:`~django.db.models.FilePathField`
-* :class:`~django.db.models.GenericIPAddressField`
+* :class:`~django_orm.db.models.FilePathField`
+* :class:`~django_orm.db.models.GenericIPAddressField`
 * ``IPAddressField``
 
 These three fields have been updated to convert their arguments to the
@@ -101,17 +101,17 @@ correct types before querying.
 Additionally, developers of custom model fields are now warned via
 documentation to ensure their custom field classes will perform
 appropriate type conversions, and users of the :meth:`raw()
-<django.db.models.query.QuerySet.raw>` and :meth:`extra()
-<django.db.models.query.QuerySet.extra>` query methods -- which allow the
+<django_orm.db.models.query.QuerySet.raw>` and :meth:`extra()
+<django_orm.db.models.query.QuerySet.extra>` query methods -- which allow the
 developer to supply raw SQL or SQL fragments -- will be advised to ensure they
 perform appropriate manual type conversions prior to executing queries.
 
 Bugfixes
 ========
 
-* Fixed :class:`~django.contrib.auth.backends.ModelBackend` raising
-  ``UnboundLocalError`` if :func:`~django.contrib.auth.get_user_model`
+* Fixed :class:`~django_orm.contrib.auth.backends.ModelBackend` raising
+  ``UnboundLocalError`` if :func:`~django_orm.contrib.auth.get_user_model`
   raised an error (#21439).
 
-Additionally, Django's vendored version of six, ``django.utils.six``,
+Additionally, Django's vendored version of six, ``django_orm.utils.six``,
 has been upgraded to the latest release (1.6.1).

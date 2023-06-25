@@ -36,7 +36,7 @@
             base = "";
         }
         // Tags are keywords, class '.k'
-        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+        $("div.highlight\\-html\\+django_orm span.k").each(function(i, elem) {
              var tagname = $(elem).text();
              if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
                  var fragment = tagname.replace(/_/, '-');
@@ -44,7 +44,7 @@
              }
         });
         // Filters are functions, class '.nf'
-        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+        $("div.highlight\\-html\\+django_orm span.nf").each(function(i, elem) {
              var filtername = $(elem).text();
              if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
                  var fragment = filtername.replace(/_/, '-');

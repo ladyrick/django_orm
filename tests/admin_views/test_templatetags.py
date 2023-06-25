@@ -1,12 +1,12 @@
 import datetime
 
-from django.contrib.admin import ModelAdmin
-from django.contrib.admin.templatetags.admin_list import date_hierarchy
-from django.contrib.admin.templatetags.admin_modify import submit_row
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
-from django.test import RequestFactory, TestCase
-from django.urls import reverse
+from django_orm.contrib.admin import ModelAdmin
+from django_orm.contrib.admin.templatetags.admin_list import date_hierarchy
+from django_orm.contrib.admin.templatetags.admin_modify import submit_row
+from django_orm.contrib.auth.admin import UserAdmin
+from django_orm.contrib.auth.models import User
+from django_orm.test import RequestFactory, TestCase
+from django_orm.urls import reverse
 
 from .admin import ArticleAdmin, site
 from .models import Article, Question

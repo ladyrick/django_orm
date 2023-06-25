@@ -2,12 +2,12 @@
 ``SchemaEditor``
 ================
 
-.. module:: django.db.backends.base.schema
+.. module:: django_orm.db.backends.base.schema
 
 .. class:: BaseDatabaseSchemaEditor
 
 Django's migration system is split into two parts; the logic for calculating
-and storing what operations should be run (``django.db.migrations``), and the
+and storing what operations should be run (``django_orm.db.migrations``), and the
 database abstraction layer that turns things like "create a model" or
 "delete a field" into SQL - which is the job of the ``SchemaEditor``.
 
@@ -107,7 +107,7 @@ Removes ``constraint`` from ``model``'s table.
 
 .. method:: BaseDatabaseSchemaEditor.alter_unique_together(model, old_unique_together, new_unique_together)
 
-Changes a model's :attr:`~django.db.models.Options.unique_together` value; this
+Changes a model's :attr:`~django_orm.db.models.Options.unique_together` value; this
 will add or remove unique constraints from the model's table until they match
 the new value.
 
@@ -116,7 +116,7 @@ the new value.
 
 .. method:: BaseDatabaseSchemaEditor.alter_index_together(model, old_index_together, new_index_together)
 
-Changes a model's :attr:`~django.db.models.Options.index_together` value; this
+Changes a model's :attr:`~django_orm.db.models.Options.index_together` value; this
 will add or remove indexes from the model's table until they match the new
 value.
 
@@ -170,7 +170,7 @@ remove the table created to track the relationship. If
 
 This transforms the field on the model from the old field to the new one. This
 includes changing the name of the column (the
-:attr:`~django.db.models.Field.db_column` attribute), changing the type of the
+:attr:`~django_orm.db.models.Field.db_column` attribute), changing the type of the
 field (if the field class changes), changing the ``NULL`` status of the field,
 adding or removing field-only unique constraints and indexes, changing primary
 key, and changing the destination of ``ForeignKey`` constraints.

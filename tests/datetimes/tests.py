@@ -6,9 +6,9 @@ try:
 except ImportError:
     pytz = None
 
-from django.test import TestCase, ignore_warnings, override_settings
-from django.utils import timezone
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.test import TestCase, ignore_warnings, override_settings
+from django_orm.utils import timezone
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from .models import Article, Category, Comment
 

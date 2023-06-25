@@ -1,9 +1,9 @@
 import unittest
 from unittest import mock
 
-from django.db import DatabaseError, NotSupportedError, connection
-from django.db.models import BooleanField
-from django.test import TestCase, TransactionTestCase
+from django_orm.db import DatabaseError, NotSupportedError, connection
+from django_orm.db.models import BooleanField
+from django_orm.test import TestCase, TransactionTestCase
 
 from ..models import Square, VeryLongModelNameZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 

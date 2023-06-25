@@ -1,13 +1,13 @@
 import os
 from datetime import date
 
-from django.contrib.sitemaps import Sitemap
-from django.contrib.sites.models import Site
-from django.core.exceptions import ImproperlyConfigured
-from django.test import ignore_warnings, modify_settings, override_settings
-from django.utils import translation
-from django.utils.deprecation import RemovedInDjango50Warning
-from django.utils.formats import localize
+from django_orm.contrib.sitemaps import Sitemap
+from django_orm.contrib.sites.models import Site
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.test import ignore_warnings, modify_settings, override_settings
+from django_orm.utils import translation
+from django_orm.utils.deprecation import RemovedInDjango50Warning
+from django_orm.utils.formats import localize
 
 from .base import SitemapTestsBase
 from .models import TestModel
@@ -60,7 +60,7 @@ class HTTPSitemapTests(SitemapTestsBase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "DIRS": [os.path.join(os.path.dirname(__file__), "templates")],
             }
         ]
@@ -132,7 +132,7 @@ class HTTPSitemapTests(SitemapTestsBase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "DIRS": [os.path.join(os.path.dirname(__file__), "templates")],
             }
         ]
@@ -256,7 +256,7 @@ class HTTPSitemapTests(SitemapTestsBase):
             self.assertContains(response, "<priority>0.5</priority>")
             self.assertContains(response, "<lastmod>%s</lastmod>" % date.today())
 
-    @modify_settings(INSTALLED_APPS={"remove": "django.contrib.sites"})
+    @modify_settings(INSTALLED_APPS={"remove": "django_orm.contrib.sites"})
     def test_requestsite_sitemap(self):
         # Hitting the flatpages sitemap without the sites framework installed
         # doesn't raise an exception.
@@ -281,7 +281,7 @@ class HTTPSitemapTests(SitemapTestsBase):
         with self.assertRaisesMessage(ImproperlyConfigured, self.use_sitemap_err_msg):
             Sitemap().get_urls()
 
-    @modify_settings(INSTALLED_APPS={"remove": "django.contrib.sites"})
+    @modify_settings(INSTALLED_APPS={"remove": "django_orm.contrib.sites"})
     @ignore_warnings(category=RemovedInDjango50Warning)
     def test_sitemap_get_urls_no_site_2(self):
         """
@@ -339,7 +339,7 @@ class HTTPSitemapTests(SitemapTestsBase):
         A simple i18n sitemap index can be rendered, without logging variable
         lookup errors.
         """
-        with self.assertNoLogs("django.template", "DEBUG"):
+        with self.assertNoLogs("django_orm.template", "DEBUG"):
             response = self.client.get("/simple/i18n.xml")
         expected_content = (
             '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -523,7 +523,7 @@ class DeprecatedTests(SitemapTestsBase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "DIRS": [os.path.join(os.path.dirname(__file__), "templates")],
             }
         ]
@@ -540,7 +540,7 @@ class DeprecatedTests(SitemapTestsBase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "DIRS": [os.path.join(os.path.dirname(__file__), "templates")],
             }
         ]

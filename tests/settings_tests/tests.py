@@ -4,16 +4,16 @@ import unittest
 from types import ModuleType, SimpleNamespace
 from unittest import mock
 
-from django.conf import (
+from django_orm.conf import (
     ENVIRONMENT_VARIABLE,
     USE_DEPRECATED_PYTZ_DEPRECATED_MSG,
     LazySettings,
     Settings,
     settings,
 )
-from django.core.exceptions import ImproperlyConfigured
-from django.http import HttpRequest
-from django.test import (
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.http import HttpRequest
+from django_orm.test import (
     SimpleTestCase,
     TestCase,
     TransactionTestCase,
@@ -21,9 +21,9 @@ from django.test import (
     override_settings,
     signals,
 )
-from django.test.utils import requires_tz_support
-from django.urls import clear_script_prefix, set_script_prefix
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.test.utils import requires_tz_support
+from django_orm.urls import clear_script_prefix, set_script_prefix
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 
 @modify_settings(ITEMS={"prepend": ["b"], "append": ["d"], "remove": ["a", "e"]})
@@ -342,7 +342,7 @@ class SettingsTests(SimpleTestCase):
             getattr(s, "foo")
 
     @requires_tz_support
-    @mock.patch("django.conf.global_settings.TIME_ZONE", "test")
+    @mock.patch("django_orm.conf.global_settings.TIME_ZONE", "test")
     def test_incorrect_timezone(self):
         with self.assertRaisesMessage(ValueError, "Incorrect timezone setting: test"):
             settings._setup()

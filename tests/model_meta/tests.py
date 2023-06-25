@@ -1,9 +1,9 @@
-from django.apps import apps
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.core.exceptions import FieldDoesNotExist
-from django.db.models import CharField, Field, ForeignObjectRel, ManyToManyField
-from django.db.models.options import EMPTY_RELATION_TREE, IMMUTABLE_WARNING
-from django.test import SimpleTestCase
+from django_orm.apps import apps
+from django_orm.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django_orm.core.exceptions import FieldDoesNotExist
+from django_orm.db.models import CharField, Field, ForeignObjectRel, ManyToManyField
+from django_orm.db.models.options import EMPTY_RELATION_TREE, IMMUTABLE_WARNING
+from django_orm.test import SimpleTestCase
 
 from .models import (
     AbstractPerson,

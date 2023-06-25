@@ -9,30 +9,30 @@ codebase, a few of those applications have been moved out to separate projects.
 Localflavor
 ===========
 
-``django-localflavor`` is a collection of utilities for particular countries
+``django_orm-localflavor`` is a collection of utilities for particular countries
 and cultures.
 
-* `GitHub <https://github.com/django/django-localflavor>`__
-* `Documentation <https://django-localflavor.readthedocs.io/>`__
-* `PyPI <https://pypi.org/project/django-localflavor/>`__
+* `GitHub <https://github.com/django_orm/django_orm-localflavor>`__
+* `Documentation <https://django_orm-localflavor.readthedocs.io/>`__
+* `PyPI <https://pypi.org/project/django_orm-localflavor/>`__
 
 Comments
 ========
 
-``django-contrib-comments`` can be used to attach comments to any model, so you
+``django_orm-contrib-comments`` can be used to attach comments to any model, so you
 can use it for comments on blog entries, photos, book chapters, or anything
 else. Most users will be better served with a custom solution, or a hosted
 product like Disqus.
 
-* `GitHub <https://github.com/django/django-contrib-comments>`__
-* `Documentation <https://django-contrib-comments.readthedocs.io/>`__
-* `PyPI <https://pypi.org/project/django-contrib-comments/>`__
+* `GitHub <https://github.com/django_orm/django_orm-contrib-comments>`__
+* `Documentation <https://django_orm-contrib-comments.readthedocs.io/>`__
+* `PyPI <https://pypi.org/project/django_orm-contrib-comments/>`__
 
 Formtools
 =========
 
-``django-formtools`` is a collection of assorted utilities to work with forms.
+``django_orm-formtools`` is a collection of assorted utilities to work with forms.
 
-* `GitHub <https://github.com/jazzband/django-formtools/>`__
-* `Documentation <https://django-formtools.readthedocs.io/>`__
-* `PyPI <https://pypi.org/project/django-formtools/>`__
+* `GitHub <https://github.com/jazzband/django_orm-formtools/>`__
+* `Documentation <https://django_orm-formtools.readthedocs.io/>`__
+* `PyPI <https://pypi.org/project/django_orm-formtools/>`__

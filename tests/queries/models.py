@@ -1,8 +1,8 @@
 """
 Various complex queries that have been problematic in the past.
 """
-from django.db import models
-from django.db.models.functions import Now
+from django_orm.db import models
+from django_orm.db.models.functions import Now
 
 
 class DumbCategory(models.Model):

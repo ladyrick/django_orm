@@ -1,17 +1,17 @@
 import decimal
 
-from django.core.management.color import no_style
-from django.db import NotSupportedError, connection, transaction
-from django.db.backends.base.operations import BaseDatabaseOperations
-from django.db.models import DurationField, Value
-from django.test import (
+from django_orm.core.management.color import no_style
+from django_orm.db import NotSupportedError, connection, transaction
+from django_orm.db.backends.base.operations import BaseDatabaseOperations
+from django_orm.db.models import DurationField, Value
+from django_orm.test import (
     SimpleTestCase,
     TestCase,
     TransactionTestCase,
     override_settings,
     skipIfDBFeature,
 )
-from django.utils import timezone
+from django_orm.utils import timezone
 
 from ..models import Author, Book
 

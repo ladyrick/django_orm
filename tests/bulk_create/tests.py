@@ -1,17 +1,17 @@
 from math import ceil
 from operator import attrgetter
 
-from django.core.exceptions import FieldDoesNotExist
-from django.db import (
+from django_orm.core.exceptions import FieldDoesNotExist
+from django_orm.db import (
     IntegrityError,
     NotSupportedError,
     OperationalError,
     ProgrammingError,
     connection,
 )
-from django.db.models import FileField, Value
-from django.db.models.functions import Lower
-from django.test import (
+from django_orm.db.models import FileField, Value
+from django_orm.db.models.functions import Lower
+from django_orm.test import (
     TestCase,
     override_settings,
     skipIfDBFeature,

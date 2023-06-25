@@ -1,6 +1,6 @@
 from operator import attrgetter
 
-from django.test.testcases import TestCase
+from django_orm.test.testcases import TestCase
 
 from .models import Address, Contact, Customer
 

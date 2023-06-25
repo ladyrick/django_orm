@@ -2,7 +2,7 @@
 Working with forms
 ==================
 
-.. currentmodule:: django.forms
+.. currentmodule:: django_orm.forms
 
 .. admonition:: About this document
 
@@ -184,7 +184,7 @@ The work that needs to be done
 Suppose you want to create a simple form on your website, in order to obtain
 the user's name. You'd need something like this in your template:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     <form action="/your-name/" method="post">
         <label for="your_name">Your name: </label>
@@ -229,7 +229,7 @@ it in Django is this:
 .. code-block:: python
     :caption: ``forms.py``
 
-    from django import forms
+    from django_orm import forms
 
     class NameForm(forms.Form):
         your_name = forms.CharField(label='Your name', max_length=100)
@@ -256,7 +256,7 @@ fields contain valid data, it will:
 
 The whole form, when rendered for the first time, will look like:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     <label for="your_name">Your name: </label>
     <input id="your_name" type="text" name="your_name" maxlength="100" required>
@@ -279,8 +279,8 @@ want it to be published:
 .. code-block:: python
     :caption: ``views.py``
 
-    from django.http import HttpResponseRedirect
-    from django.shortcuts import render
+    from django_orm.http import HttpResponseRedirect
+    from django_orm.shortcuts import render
 
     from .forms import NameForm
 
@@ -328,7 +328,7 @@ The template
 
 We don't need to do much in our ``name.html`` template:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     <form action="/your-name/" method="post">
         {% csrf_token %}
@@ -350,8 +350,8 @@ from that ``{{ form }}`` by Django's template language.
 
 .. admonition:: HTML5 input types and browser validation
 
-    If your form includes a :class:`~django.forms.URLField`, an
-    :class:`~django.forms.EmailField` or any integer field type, Django will
+    If your form includes a :class:`~django_orm.forms.URLField`, an
+    :class:`~django_orm.forms.EmailField` or any integer field type, Django will
     use the ``url``, ``email`` and ``number`` HTML5 input types. By default,
     browsers may apply their own validation on these fields, which may be
     stricter than Django's validation. If you would like to disable this
@@ -369,8 +369,8 @@ ready to learn a bit more about the underlying machinery.
 More about Django :class:`Form` classes
 =======================================
 
-All form classes are created as subclasses of either :class:`django.forms.Form`
-or :class:`django.forms.ModelForm`. You can think of ``ModelForm`` as a
+All form classes are created as subclasses of either :class:`django_orm.forms.Form`
+or :class:`django_orm.forms.ModelForm`. You can think of ``ModelForm`` as a
 subclass of ``Form``. ``Form`` and ``ModelForm`` actually inherit common
 functionality from a (private) ``BaseForm`` class, but this implementation
 detail is rarely important.
@@ -406,7 +406,7 @@ to implement "contact me" functionality on a personal website:
 .. code-block:: python
     :caption: ``forms.py``
 
-    from django import forms
+    from django_orm import forms
 
     class ContactForm(forms.Form):
         subject = forms.CharField(max_length=100)
@@ -455,7 +455,7 @@ Here's how the form data could be processed in the view that handles this form:
 .. code-block:: python
     :caption: ``views.py``
 
-    from django.core.mail import send_mail
+    from django_orm.core.mail import send_mail
 
     if form.is_valid():
         subject = form.cleaned_data['subject']
@@ -499,9 +499,9 @@ Reusable form templates
 The HTML output when rendering a form is itself generated via a template. You
 can control this by creating an appropriate template file and setting a custom
 :setting:`FORM_RENDERER` to use that
-:attr:`~django.forms.renderers.BaseRenderer.form_template_name` site-wide. You
+:attr:`~django_orm.forms.renderers.BaseRenderer.form_template_name` site-wide. You
 can also customize per-form by overriding the form's
-:attr:`~django.forms.Form.template_name` attribute to render the form using the
+:attr:`~django_orm.forms.Form.template_name` attribute to render the form using the
 custom template, or by passing the template name directly to
 :meth:`.Form.render`.
 
@@ -510,7 +510,7 @@ the ``form_snippet.html`` template.
 
 In your templates:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     # In your template:
     {{ form }}
@@ -528,7 +528,7 @@ Then you can configure the :setting:`FORM_RENDERER` setting:
 .. code-block:: python
     :caption: ``settings.py``
 
-    from django.forms.renderers import TemplatesSetting
+    from django_orm.forms.renderers import TemplatesSetting
 
     class CustomFormRenderer(TemplatesSetting):
         form_template_name = "form_snippet.html"
@@ -580,7 +580,7 @@ elements yourself.
 
 Here's the output of ``{{ form.as_p }}`` for our ``ContactForm`` instance:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     <p><label for="id_subject">Subject:</label>
         <input id="id_subject" type="text" name="subject" maxlength="100" required></p>
@@ -607,7 +607,7 @@ we like (allowing us to reorder the fields, for example). Each field is
 available as an attribute of the form using ``{{ form.name_of_field }}``, and
 in a Django template, will be rendered appropriately. For example:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {{ form.non_field_errors }}
     <div class="fieldWrapper">
@@ -632,9 +632,9 @@ in a Django template, will be rendered appropriately. For example:
     </div>
 
 Complete ``<label>`` elements can also be generated using the
-:meth:`~django.forms.BoundField.label_tag`. For example:
+:meth:`~django_orm.forms.BoundField.label_tag`. For example:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     <div class="fieldWrapper">
         {{ form.subject.errors }}
@@ -655,7 +655,7 @@ the top of the form and the template lookup for errors on each field.
 Using ``{{ form.name_of_field.errors }}`` displays a list of form errors,
 rendered as an unordered list. This might look like:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     <ul class="errorlist">
         <li>Sender is required.</li>
@@ -665,7 +665,7 @@ The list has a CSS class of ``errorlist`` to allow you to style its appearance.
 If you wish to further customize the display of errors you can do so by looping
 over them:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% if form.subject.errors %}
         <ol>
@@ -680,7 +680,7 @@ the form when using helpers like ``form.as_p()``) will be rendered with an
 additional class of ``nonfield`` to help distinguish them from field-specific
 errors. For example, ``{{ form.non_field_errors }}`` would look like:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     <ul class="errorlist nonfield">
         <li>Generic validation error</li>
@@ -696,7 +696,7 @@ If you're using the same HTML for each of your form fields, you can reduce
 duplicate code by looping through each field in turn using a ``{% for %}``
 loop:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% for field in form %}
         <div class="fieldWrapper">
@@ -717,9 +717,9 @@ Useful attributes on ``{{ field }}`` include:
     case, each object in the loop is a string containing the error message.
 
 ``{{ field.field }}``
-    The :class:`~django.forms.Field` instance from the form class that
-    this :class:`~django.forms.BoundField` wraps. You can use it to access
-    :class:`~django.forms.Field` attributes, e.g.
+    The :class:`~django_orm.forms.Field` instance from the form class that
+    this :class:`~django_orm.forms.BoundField` wraps. You can use it to access
+    :class:`~django_orm.forms.Field` attributes, e.g.
     ``{{ char_field.field.max_length }}``.
 
 ``{{ field.help_text }}``
@@ -740,7 +740,7 @@ Useful attributes on ``{{ field }}`` include:
     ``False`` otherwise. It's not particularly useful as a template
     variable, but could be useful in conditional tests such as:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% if field.is_hidden %}
        {# Do something special #}
@@ -751,7 +751,7 @@ Useful attributes on ``{{ field }}`` include:
 
 ``{{ field.label_tag }}``
     The field's label wrapped in the appropriate HTML ``<label>`` tag. This
-    includes the form's :attr:`~django.forms.Form.label_suffix`. For example,
+    includes the form's :attr:`~django_orm.forms.Form.label_suffix`. For example,
     the default ``label_suffix`` is a colon::
 
         <label for="id_email">Email address:</label>
@@ -771,7 +771,7 @@ Useful attributes on ``{{ field }}`` include:
     inputs that should be semantically grouped in a ``<fieldset>`` with a
     ``<legend>`` to improve accessibility. An example use in a template:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% if field.use_fieldset %}
       <fieldset>
@@ -788,7 +788,7 @@ Useful attributes on ``{{ field }}`` include:
 .. seealso::
 
     For a complete list of attributes and methods, see
-    :class:`~django.forms.BoundField`.
+    :class:`~django_orm.forms.BoundField`.
 
 Looping over hidden and visible fields
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -805,7 +805,7 @@ and visible fields independently: ``hidden_fields()`` and
 ``visible_fields()``. Here's a modification of an earlier example that uses
 these two methods:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {# Include the hidden fields #}
     {% for hidden in form.hidden_fields %}

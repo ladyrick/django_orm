@@ -76,11 +76,11 @@ The other major highlights of Django 1.0 are:
 Refactored admin application
 ----------------------------
 
-The Django administrative interface (``django.contrib.admin``) has been
+The Django administrative interface (``django_orm.contrib.admin``) has been
 completely refactored; admin definitions are now completely decoupled from model
 definitions (no more ``class Admin`` declaration in models!), rewritten to use
 Django's new form-handling library (introduced in the 0.96 release as
-``django.newforms``, and now available as simply ``django.forms``) and
+``django_orm.newforms``, and now available as simply ``django_orm.forms``) and
 redesigned with extensibility and customization in mind. Full documentation for
 the admin application is available online in the official Django documentation:
 
@@ -122,7 +122,7 @@ constructs to be marked as safe (requiring no escaping) or unsafe (requiring
 escaping). A full guide to this feature is in the documentation for the
 :ttag:`autoescape` tag.
 
-``django.contrib.gis`` (GeoDjango)
+``django_orm.contrib.gis`` (GeoDjango)
 ----------------------------------
 
 A project over a year in the making, this adds world-class GIS (`Geographic
@@ -159,7 +159,7 @@ Jython 2.5 release.
 Generic relations in forms and admin
 ------------------------------------
 
-Classes are now included in ``django.contrib.contenttypes`` which can be used to
+Classes are now included in ``django_orm.contrib.contenttypes`` which can be used to
 support generic relations in both the admin interface and in end-user forms. See
 :ref:`the documentation for generic relations <generic-relations>` for details.
 
@@ -187,7 +187,7 @@ functions into a single middleware posed problems.
 Full details, including updated notes on appropriate use, are in :doc:`the
 caching documentation </topics/cache>`.
 
-Refactored ``django.contrib.comments``
+Refactored ``django_orm.contrib.comments``
 --------------------------------------
 
 As part of a Google Summer of Code project, Thejaswi Puthraya carried out a
@@ -200,7 +200,7 @@ Removal of deprecated features
 A number of features and methods which had previously been marked as deprecated,
 and which were scheduled for removal prior to the 1.0 release, are no longer
 present in Django. These include imports of the form library from
-``django.newforms`` (now located simply at ``django.forms``), the
+``django_orm.newforms`` (now located simply at ``django_orm.forms``), the
 ``form_for_model`` and ``form_for_instance`` helper functions (which have been
 replaced by ``ModelForm``) and a number of deprecated features which were
 replaced by the dispatcher, file-uploading and file-storage refactoring

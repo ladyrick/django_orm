@@ -2,16 +2,16 @@
 Applications
 ============
 
-.. module:: django.apps
+.. module:: django_orm.apps
 
 Django contains a registry of installed applications that stores configuration
 and provides introspection. It also maintains a list of available :doc:`models
 </topics/db/models>`.
 
-This registry is called :attr:`~django.apps.apps` and it's available in
-:mod:`django.apps`::
+This registry is called :attr:`~django_orm.apps.apps` and it's available in
+:mod:`django_orm.apps`::
 
-    >>> from django.apps import apps
+    >>> from django_orm.apps import apps
     >>> apps.get_app_config('admin').verbose_name
     'Administration'
 
@@ -20,7 +20,7 @@ Projects and applications
 
 The term **project** describes a Django web application. The project Python
 package is defined primarily by a settings module, but it usually contains
-other things. For example, when you run  ``django-admin startproject mysite``
+other things. For example, when you run  ``django_orm-admin startproject mysite``
 you'll get a ``mysite`` project directory that contains a ``mysite`` Python
 package with ``settings.py``, ``urls.py``, ``asgi.py`` and ``wsgi.py``. The
 project package is often extended to include things like fixtures, CSS, and
@@ -45,7 +45,7 @@ that interacts with various parts of the framework. There's no such thing as
 an ``Application`` object. However, there's a few places where Django needs to
 interact with installed applications, mainly for configuration and also for
 introspection. That's why the application registry maintains metadata in an
-:class:`~django.apps.AppConfig` instance for each installed application.
+:class:`~django_orm.apps.AppConfig` instance for each installed application.
 
 There's no restriction that a project package can't also be considered an
 application and have models, etc. (which would require adding it to
@@ -87,7 +87,7 @@ would provide a proper name for the admin::
 
     # rock_n_roll/apps.py
 
-    from django.apps import AppConfig
+    from django_orm.apps import AppConfig
 
     class RockNRollConfig(AppConfig):
         name = 'rock_n_roll'
@@ -105,7 +105,7 @@ specific class in their :setting:`INSTALLED_APPS` setting.
 
 The :attr:`AppConfig.name` attribute tells Django which application this
 configuration applies to. You can define any other attribute documented in the
-:class:`~django.apps.AppConfig` API reference.
+:class:`~django_orm.apps.AppConfig` API reference.
 
 :class:`AppConfig` subclasses may be defined anywhere. The ``apps.py``
 convention merely allows Django to load them automatically when
@@ -119,7 +119,7 @@ than the path to a configuration class.
     The best practice is to move that code to a submodule and import it. A
     workaround is to import the registry under a different name::
 
-        from django.apps import apps as django_apps
+        from django_orm.apps import apps as django_apps
 
 For application users
 ---------------------
@@ -156,7 +156,7 @@ Application configuration
 .. class:: AppConfig
 
     Application configuration objects store metadata for an application. Some
-    attributes can be configured in :class:`~django.apps.AppConfig`
+    attributes can be configured in :class:`~django_orm.apps.AppConfig`
     subclasses. Others are set by Django and read-only.
 
 Configurable attributes
@@ -164,10 +164,10 @@ Configurable attributes
 
 .. attribute:: AppConfig.name
 
-    Full Python path to the application, e.g. ``'django.contrib.admin'``.
+    Full Python path to the application, e.g. ``'django_orm.contrib.admin'``.
 
     This attribute defines which application the configuration applies to. It
-    must be set in all :class:`~django.apps.AppConfig` subclasses.
+    must be set in all :class:`~django_orm.apps.AppConfig` subclasses.
 
     It must be unique across a Django project.
 
@@ -190,11 +190,11 @@ Configurable attributes
 .. attribute:: AppConfig.path
 
     Filesystem path to the application directory, e.g.
-    ``'/usr/lib/pythonX.Y/dist-packages/django/contrib/admin'``.
+    ``'/usr/lib/pythonX.Y/dist-packages/django_orm/contrib/admin'``.
 
     In most cases, Django can automatically detect and set this, but you can
     also provide an explicit override as a class attribute on your
-    :class:`~django.apps.AppConfig` subclass. In a few situations this is
+    :class:`~django_orm.apps.AppConfig` subclass. In a few situations this is
     required; for instance if the app package is a `namespace package`_ with
     multiple paths.
 
@@ -215,7 +215,7 @@ Configurable attributes
 .. attribute:: AppConfig.default_auto_field
 
     The implicit primary key type to add to models within this app. You can
-    use this to keep :class:`~django.db.models.AutoField` as the primary key
+    use this to keep :class:`~django_orm.db.models.AutoField` as the primary key
     type for third party applications.
 
     By default, this is the value of :setting:`DEFAULT_AUTO_FIELD`.
@@ -225,18 +225,18 @@ Read-only attributes
 
 .. attribute:: AppConfig.module
 
-    Root module for the application, e.g. ``<module 'django.contrib.admin' from
-    'django/contrib/admin/__init__.py'>``.
+    Root module for the application, e.g. ``<module 'django_orm.contrib.admin' from
+    'django_orm/contrib/admin/__init__.py'>``.
 
 .. attribute:: AppConfig.models_module
 
-    Module containing the models, e.g. ``<module 'django.contrib.admin.models'
-    from 'django/contrib/admin/models.py'>``.
+    Module containing the models, e.g. ``<module 'django_orm.contrib.admin.models'
+    from 'django_orm/contrib/admin/models.py'>``.
 
     It may be ``None`` if the application doesn't contain a ``models`` module.
     Note that the database related signals such as
-    :data:`~django.db.models.signals.pre_migrate` and
-    :data:`~django.db.models.signals.post_migrate`
+    :data:`~django_orm.db.models.signals.pre_migrate` and
+    :data:`~django_orm.db.models.signals.post_migrate`
     are only emitted for applications that have a ``models`` module.
 
 Methods
@@ -244,14 +244,14 @@ Methods
 
 .. method:: AppConfig.get_models(include_auto_created=False, include_swapped=False)
 
-    Returns an iterable of :class:`~django.db.models.Model` classes for this
+    Returns an iterable of :class:`~django_orm.db.models.Model` classes for this
     application.
 
     Requires the app registry to be fully populated.
 
 .. method:: AppConfig.get_model(model_name, require_ready=True)
 
-    Returns the :class:`~django.db.models.Model` with the given
+    Returns the :class:`~django_orm.db.models.Model` with the given
     ``model_name``. ``model_name`` is case-insensitive.
 
     Raises :exc:`LookupError` if no such model exists in this application.
@@ -267,18 +267,18 @@ Methods
     populated.
 
     Although you can't import models at the module-level where
-    :class:`~django.apps.AppConfig` classes are defined, you can import them in
+    :class:`~django_orm.apps.AppConfig` classes are defined, you can import them in
     ``ready()``, using either an ``import`` statement or
     :meth:`~AppConfig.get_model`.
 
-    If you're registering :mod:`model signals <django.db.models.signals>`, you
+    If you're registering :mod:`model signals <django_orm.db.models.signals>`, you
     can refer to the sender by its string label instead of using the model
     class itself.
 
     Example::
 
-        from django.apps import AppConfig
-        from django.db.models.signals import pre_save
+        from django_orm.apps import AppConfig
+        from django_orm.db.models.signals import pre_save
 
 
         class RockNRollConfig(AppConfig):
@@ -297,9 +297,9 @@ Methods
         Although you can access model classes as described above, avoid
         interacting with the database in your :meth:`ready()` implementation.
         This includes model methods that execute queries
-        (:meth:`~django.db.models.Model.save()`,
-        :meth:`~django.db.models.Model.delete()`, manager methods etc.), and
-        also raw SQL queries via ``django.db.connection``. Your
+        (:meth:`~django_orm.db.models.Model.save()`,
+        :meth:`~django_orm.db.models.Model.delete()`, manager methods etc.), and
+        also raw SQL queries via ``django_orm.db.connection``. Your
         :meth:`ready()` method will run during startup of every management
         command. For example, even though the test database configuration is
         separate from the production settings, ``manage.py test`` would still
@@ -331,13 +331,13 @@ following is true:
 #. The namespace package actually has only a single location (i.e. is not
    spread across more than one directory.)
 
-#. The :class:`~django.apps.AppConfig` class used to configure the application
-   has a :attr:`~django.apps.AppConfig.path` class attribute, which is the
+#. The :class:`~django_orm.apps.AppConfig` class used to configure the application
+   has a :attr:`~django_orm.apps.AppConfig.path` class attribute, which is the
    absolute directory path Django will use as the single base path for the
    application.
 
 If neither of these conditions is met, Django will raise
-:exc:`~django.core.exceptions.ImproperlyConfigured`.
+:exc:`~django_orm.core.exceptions.ImproperlyConfigured`.
 
 Application registry
 ====================
@@ -354,22 +354,22 @@ Application registry
 
 .. method:: apps.get_app_configs()
 
-    Returns an iterable of :class:`~django.apps.AppConfig` instances.
+    Returns an iterable of :class:`~django_orm.apps.AppConfig` instances.
 
 .. method:: apps.get_app_config(app_label)
 
-    Returns an :class:`~django.apps.AppConfig` for the application with the
+    Returns an :class:`~django_orm.apps.AppConfig` for the application with the
     given ``app_label``. Raises :exc:`LookupError` if no such application
     exists.
 
 .. method:: apps.is_installed(app_name)
 
     Checks whether an application with the given name exists in the registry.
-    ``app_name`` is the full name of the app, e.g. ``'django.contrib.admin'``.
+    ``app_name`` is the full name of the app, e.g. ``'django_orm.contrib.admin'``.
 
 .. method:: apps.get_model(app_label, model_name, require_ready=True)
 
-    Returns the :class:`~django.db.models.Model` with the given ``app_label``
+    Returns the :class:`~django_orm.db.models.Model` with the given ``app_label``
     and ``model_name``. As a shortcut, this method also accepts a single
     argument in the form ``app_label.model_name``. ``model_name`` is
     case-insensitive.
@@ -402,10 +402,10 @@ Initialization process
 How applications are loaded
 ---------------------------
 
-When Django starts, :func:`django.setup()` is responsible for populating the
+When Django starts, :func:`django_orm.setup()` is responsible for populating the
 application registry.
 
-.. currentmodule:: django
+.. currentmodule:: django_orm
 
 .. function:: setup(set_prefix=True)
 
@@ -425,7 +425,7 @@ application registry.
     It must be called explicitly in other cases, for instance in plain Python
     scripts.
 
-.. currentmodule:: django.apps
+.. currentmodule:: django_orm.apps
 
 The application registry is initialized in three stages. At each stage, Django
 processes all applications in the order of :setting:`INSTALLED_APPS`.
@@ -471,14 +471,14 @@ Troubleshooting
 
 Here are some common problems that you may encounter during initialization:
 
-* :class:`~django.core.exceptions.AppRegistryNotReady`: This happens when
+* :class:`~django_orm.core.exceptions.AppRegistryNotReady`: This happens when
   importing an application configuration or a models module triggers code that
   depends on the app registry.
 
-  For example, :func:`~django.utils.translation.gettext()` uses the app
+  For example, :func:`~django_orm.utils.translation.gettext()` uses the app
   registry to look up translation catalogs in applications. To translate at
-  import time, you need :func:`~django.utils.translation.gettext_lazy()`
-  instead. (Using :func:`~django.utils.translation.gettext()` would be a bug,
+  import time, you need :func:`~django_orm.utils.translation.gettext_lazy()`
+  instead. (Using :func:`~django_orm.utils.translation.gettext()` would be a bug,
   because the translation would happen at import time, rather than at each
   request depending on the active language.)
 
@@ -486,7 +486,7 @@ Here are some common problems that you may encounter during initialization:
   will also trigger this exception. The ORM cannot function properly until all
   models are available.
 
-  This exception also happens if you forget to call :func:`django.setup()` in
+  This exception also happens if you forget to call :func:`django_orm.setup()` in
   a standalone Python script.
 
 * ``ImportError: cannot import name ...`` This happens if the import sequence
@@ -498,8 +498,8 @@ Here are some common problems that you may encounter during initialization:
   results. The code will be executed when you first need its results. This
   concept is known as "lazy evaluation".
 
-* ``django.contrib.admin`` automatically performs autodiscovery of ``admin``
+* ``django_orm.contrib.admin`` automatically performs autodiscovery of ``admin``
   modules in installed applications. To prevent it, change your
   :setting:`INSTALLED_APPS` to contain
-  ``'django.contrib.admin.apps.SimpleAdminConfig'`` instead of
-  ``'django.contrib.admin'``.
+  ``'django_orm.contrib.admin.apps.SimpleAdminConfig'`` instead of
+  ``'django_orm.contrib.admin'``.

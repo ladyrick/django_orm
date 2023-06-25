@@ -2,10 +2,10 @@
 File Uploads
 ============
 
-.. currentmodule:: django.core.files.uploadedfile
+.. currentmodule:: django_orm.core.files.uploadedfile
 
 When Django handles a file upload, the file data ends up placed in
-:attr:`request.FILES <django.http.HttpRequest.FILES>` (for more on the
+:attr:`request.FILES <django_orm.http.HttpRequest.FILES>` (for more on the
 ``request`` object see the documentation for :doc:`request and response objects
 </ref/request-response>`). This document explains how files are stored on disk
 and in memory, and how to customize the default behavior.
@@ -19,25 +19,25 @@ and in memory, and how to customize the default behavior.
 Basic file uploads
 ==================
 
-Consider a form containing a :class:`~django.forms.FileField`:
+Consider a form containing a :class:`~django_orm.forms.FileField`:
 
 .. code-block:: python
     :caption: ``forms.py``
 
-    from django import forms
+    from django_orm import forms
 
     class UploadFileForm(forms.Form):
         title = forms.CharField(max_length=50)
         file = forms.FileField()
 
 A view handling this form will receive the file data in
-:attr:`request.FILES <django.http.HttpRequest.FILES>`, which is a dictionary
-containing a key for each :class:`~django.forms.FileField` (or
-:class:`~django.forms.ImageField`, or other :class:`~django.forms.FileField`
+:attr:`request.FILES <django_orm.http.HttpRequest.FILES>`, which is a dictionary
+containing a key for each :class:`~django_orm.forms.FileField` (or
+:class:`~django_orm.forms.ImageField`, or other :class:`~django_orm.forms.FileField`
 subclass) in the form. So the data from the above form would
 be accessible as ``request.FILES['file']``.
 
-Note that :attr:`request.FILES <django.http.HttpRequest.FILES>` will only
+Note that :attr:`request.FILES <django_orm.http.HttpRequest.FILES>` will only
 contain data if the request method was ``POST``, at least one file field was
 actually posted, and the ``<form>`` that posted the request has the attribute
 ``enctype="multipart/form-data"``. Otherwise, ``request.FILES`` will be empty.
@@ -48,8 +48,8 @@ described in :ref:`binding-uploaded-files`. This would look something like:
 .. code-block:: python
     :caption: ``views.py``
 
-    from django.http import HttpResponseRedirect
-    from django.shortcuts import render
+    from django_orm.http import HttpResponseRedirect
+    from django_orm.shortcuts import render
     from .forms import UploadFileForm
 
     # Imaginary function to handle an uploaded file.
@@ -65,7 +65,7 @@ described in :ref:`binding-uploaded-files`. This would look something like:
             form = UploadFileForm()
         return render(request, 'upload.html', {'form': form})
 
-Notice that we have to pass :attr:`request.FILES <django.http.HttpRequest.FILES>`
+Notice that we have to pass :attr:`request.FILES <django_orm.http.HttpRequest.FILES>`
 into the form's constructor; this is how file data gets bound into a form.
 
 Here's a common way you might handle an uploaded file::
@@ -84,15 +84,15 @@ objects; see :class:`UploadedFile` for a complete reference.
 Handling uploaded files with a model
 ------------------------------------
 
-If you're saving a file on a :class:`~django.db.models.Model` with a
-:class:`~django.db.models.FileField`, using a :class:`~django.forms.ModelForm`
+If you're saving a file on a :class:`~django_orm.db.models.Model` with a
+:class:`~django_orm.db.models.FileField`, using a :class:`~django_orm.forms.ModelForm`
 makes this process much easier. The file object will be saved to the location
-specified by the :attr:`~django.db.models.FileField.upload_to` argument of the
-corresponding :class:`~django.db.models.FileField` when calling
+specified by the :attr:`~django_orm.db.models.FileField.upload_to` argument of the
+corresponding :class:`~django_orm.db.models.FileField` when calling
 ``form.save()``::
 
-    from django.http import HttpResponseRedirect
-    from django.shortcuts import render
+    from django_orm.http import HttpResponseRedirect
+    from django_orm.shortcuts import render
     from .forms import ModelFormWithFileField
 
     def upload_file(request):
@@ -107,11 +107,11 @@ corresponding :class:`~django.db.models.FileField` when calling
         return render(request, 'upload.html', {'form': form})
 
 If you are constructing an object manually, you can assign the file object from
-:attr:`request.FILES <django.http.HttpRequest.FILES>` to the file field in the
+:attr:`request.FILES <django_orm.http.HttpRequest.FILES>` to the file field in the
 model::
 
-    from django.http import HttpResponseRedirect
-    from django.shortcuts import render
+    from django_orm.http import HttpResponseRedirect
+    from django_orm.shortcuts import render
     from .forms import UploadFileForm
     from .models import ModelWithFileField
 
@@ -127,11 +127,11 @@ model::
         return render(request, 'upload.html', {'form': form})
 
 If you are constructing an object manually outside of a request, you can assign
-a :class:`~django.core.files.File` like object to the
-:class:`~django.db.models.FileField`::
+a :class:`~django_orm.core.files.File` like object to the
+:class:`~django_orm.db.models.FileField`::
 
-    from django.core.management.base import BaseCommand
-    from django.core.files.base import ContentFile
+    from django_orm.core.management.base import BaseCommand
+    from django_orm.core.files.base import ContentFile
 
     class MyCommand(BaseCommand):
         def handle(self, *args, **options):
@@ -164,7 +164,7 @@ below for an example.
 .. code-block:: python
     :caption: ``forms.py``
 
-    from django import forms
+    from django_orm import forms
 
     class MultipleFileInput(forms.ClearableFileInput):
         allow_multiple_selected = True
@@ -188,13 +188,13 @@ below for an example.
         file_field = MultipleFileField()
 
 Then override the ``post`` method of your
-:class:`~django.views.generic.edit.FormView` subclass to handle multiple file
+:class:`~django_orm.views.generic.edit.FormView` subclass to handle multiple file
 uploads:
 
 .. code-block:: python
     :caption: ``views.py``
 
-    from django.views.generic.edit import FormView
+    from django_orm.views.generic.edit import FormView
     from .forms import FileFieldForm
 
     class FileFieldFormView(FormView):
@@ -234,15 +234,15 @@ uploads:
 Upload Handlers
 ===============
 
-.. currentmodule:: django.core.files.uploadhandler
+.. currentmodule:: django_orm.core.files.uploadhandler
 
 When a user uploads a file, Django passes off the file data to an *upload
 handler* -- a small class that handles file data as it gets uploaded. Upload
 handlers are initially defined in the :setting:`FILE_UPLOAD_HANDLERS` setting,
 which defaults to::
 
-    ["django.core.files.uploadhandler.MemoryFileUploadHandler",
-     "django.core.files.uploadhandler.TemporaryFileUploadHandler"]
+    ["django_orm.core.files.uploadhandler.MemoryFileUploadHandler",
+     "django_orm.core.files.uploadhandler.TemporaryFileUploadHandler"]
 
 Together :class:`MemoryFileUploadHandler` and
 :class:`TemporaryFileUploadHandler` provide Django's default file upload
@@ -317,16 +317,16 @@ list::
     possible.
 
     Also, ``request.POST`` is accessed by
-    :class:`~django.middleware.csrf.CsrfViewMiddleware` which is enabled by
+    :class:`~django_orm.middleware.csrf.CsrfViewMiddleware` which is enabled by
     default. This means you will need to use
-    :func:`~django.views.decorators.csrf.csrf_exempt` on your view to allow you
+    :func:`~django_orm.views.decorators.csrf.csrf_exempt` on your view to allow you
     to change the upload handlers.  You will then need to use
-    :func:`~django.views.decorators.csrf.csrf_protect` on the function that
+    :func:`~django_orm.views.decorators.csrf.csrf_protect` on the function that
     actually processes the request.  Note that this means that the handlers may
     start receiving the file upload before the CSRF checks have been done.
     Example code::
 
-        from django.views.decorators.csrf import csrf_exempt, csrf_protect
+        from django_orm.views.decorators.csrf import csrf_exempt, csrf_protect
 
         @csrf_exempt
         def upload_file_view(request):
@@ -338,14 +338,14 @@ list::
             ... # Process request
 
     If you are using a class-based view, you will need to use
-    :func:`~django.views.decorators.csrf.csrf_exempt` on its
-    :meth:`~django.views.generic.base.View.dispatch` method and
-    :func:`~django.views.decorators.csrf.csrf_protect` on the method that
+    :func:`~django_orm.views.decorators.csrf.csrf_exempt` on its
+    :meth:`~django_orm.views.generic.base.View.dispatch` method and
+    :func:`~django_orm.views.decorators.csrf.csrf_protect` on the method that
     actually processes the request. Example code::
 
-        from django.utils.decorators import method_decorator
-        from django.views import View
-        from django.views.decorators.csrf import csrf_exempt, csrf_protect
+        from django_orm.utils.decorators import method_decorator
+        from django_orm.views import View
+        from django_orm.views.decorators.csrf import csrf_exempt, csrf_protect
 
         @method_decorator(csrf_exempt, name='dispatch')
         class UploadFileView(View):

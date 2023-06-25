@@ -2,7 +2,7 @@
 System check framework
 ======================
 
-.. currentmodule:: django.core.checks
+.. currentmodule:: django_orm.core.checks
 
 The system check framework is a set of static checks for validating Django
 projects. It detects common problems and provides hints for how to fix them.
@@ -86,8 +86,8 @@ Django's system checks are organized using the following tags:
 * ``models``: Checks of model, field, and manager definitions.
 * ``security``: Checks security related configuration.
 * ``signals``: Checks on signal declarations and handler registrations.
-* ``sites``: Checks :mod:`django.contrib.sites` configuration.
-* ``staticfiles``: Checks :mod:`django.contrib.staticfiles` configuration.
+* ``sites``: Checks :mod:`django_orm.contrib.sites` configuration.
+* ``staticfiles``: Checks :mod:`django_orm.contrib.staticfiles` configuration.
 * ``templates``: Checks template related configuration.
 * ``translation``: Checks translation related configuration.
 * ``urls``: Checks URL configuration.
@@ -118,7 +118,7 @@ upgrading Django.
 
 * **2_0.W001**: Your URL pattern ``<pattern>`` has a ``route`` that contains
   ``(?P<``, begins with a ``^``, or ends with a ``$``. This was likely an
-  oversight when migrating from ``url()`` to :func:`~django.urls.path`.
+  oversight when migrating from ``url()`` to :func:`~django_orm.urls.path`.
 * **4_0.E001**: As of Django 4.0, the values in the
   :setting:`CSRF_TRUSTED_ORIGINS` setting must start with a scheme (usually
   ``http://`` or ``https://``) but found ``<hostname>``.
@@ -224,10 +224,10 @@ Model fields
   in Django 3.1 and 3.2*.
 * **fields.E903**: ``NullBooleanField`` is removed except for support in
   historical migrations.
-* **fields.W904**: ``django.contrib.postgres.fields.JSONField`` is deprecated.
+* **fields.W904**: ``django_orm.contrib.postgres.fields.JSONField`` is deprecated.
   Support for it (except in historical migrations) will be removed in Django
   4.0. *This check appeared in Django 3.1 and 3.2*.
-* **fields.E904**: ``django.contrib.postgres.fields.JSONField`` is removed
+* **fields.E904**: ``django_orm.contrib.postgres.fields.JSONField`` is removed
   except for support in historical migrations.
 
 File fields
@@ -391,7 +391,7 @@ Models
   columns.
 * **models.E041**: ``constraints`` refers to the joined field ``<field name>``.
 * **models.W042**: Auto-created primary key used when not defining a primary
-  key type, by default ``django.db.models.AutoField``.
+  key type, by default ``django_orm.db.models.AutoField``.
 * **models.W043**: ``<database>`` does not support indexes on expressions.
 * **models.W044**: ``<database>`` does not support unique constraints on
   expressions.
@@ -415,20 +415,20 @@ silence unneeded checks.
 The following checks are run if you use the :option:`check --deploy` option:
 
 * **security.W001**: You do not have
-  :class:`django.middleware.security.SecurityMiddleware` in your
+  :class:`django_orm.middleware.security.SecurityMiddleware` in your
   :setting:`MIDDLEWARE` so the :setting:`SECURE_HSTS_SECONDS`,
   :setting:`SECURE_CONTENT_TYPE_NOSNIFF`, :setting:`SECURE_REFERRER_POLICY`,
   :setting:`SECURE_CROSS_ORIGIN_OPENER_POLICY`, and
   :setting:`SECURE_SSL_REDIRECT` settings will have no effect.
 * **security.W002**: You do not have
-  :class:`django.middleware.clickjacking.XFrameOptionsMiddleware` in your
+  :class:`django_orm.middleware.clickjacking.XFrameOptionsMiddleware` in your
   :setting:`MIDDLEWARE`, so your pages will not be served with an
   ``'x-frame-options'`` header. Unless there is a good reason for your
   site to be served in a frame, you should consider enabling this
   header to help prevent clickjacking attacks.
 * **security.W003**: You don't appear to be using Django's built-in cross-site
   request forgery protection via the middleware
-  (:class:`django.middleware.csrf.CsrfViewMiddleware` is not in your
+  (:class:`django_orm.middleware.csrf.CsrfViewMiddleware` is not in your
   :setting:`MIDDLEWARE`). Enabling the middleware is the safest
   approach to ensure you don't leave any holes.
 * **security.W004**: You have not set a value for the
@@ -457,30 +457,30 @@ The following checks are run if you use the :option:`check --deploy` option:
   connections, you may want to either set this setting to ``True`` or configure
   a load balancer or reverse-proxy server  to redirect all connections to HTTPS.
 * **security.W009**: Your :setting:`SECRET_KEY` has less than 50 characters,
-  less than 5 unique characters, or it's prefixed with ``'django-insecure-'``
+  less than 5 unique characters, or it's prefixed with ``'django_orm-insecure-'``
   indicating that it was generated automatically by Django. Please generate a
   long and random value, otherwise many of Django's security-critical features
   will be vulnerable to attack.
-* **security.W010**: You have :mod:`django.contrib.sessions` in your
+* **security.W010**: You have :mod:`django_orm.contrib.sessions` in your
   :setting:`INSTALLED_APPS` but you have not set
   :setting:`SESSION_COOKIE_SECURE` to ``True``. Using a secure-only session
   cookie makes it more difficult for network traffic sniffers to hijack user
   sessions.
 * **security.W011**: You have
-  :class:`django.contrib.sessions.middleware.SessionMiddleware` in your
+  :class:`django_orm.contrib.sessions.middleware.SessionMiddleware` in your
   :setting:`MIDDLEWARE`, but you have not set :setting:`SESSION_COOKIE_SECURE`
   to ``True``. Using a secure-only session cookie makes it more difficult for
   network traffic sniffers to hijack user sessions.
 * **security.W012**: :setting:`SESSION_COOKIE_SECURE` is not set to ``True``.
   Using a secure-only session cookie makes it more difficult for network traffic
   sniffers to hijack user sessions.
-* **security.W013**: You have :mod:`django.contrib.sessions` in your
+* **security.W013**: You have :mod:`django_orm.contrib.sessions` in your
   :setting:`INSTALLED_APPS`, but you have not set
   :setting:`SESSION_COOKIE_HTTPONLY` to ``True``. Using an ``HttpOnly`` session
   cookie makes it more difficult for cross-site scripting attacks to hijack user
   sessions.
 * **security.W014**: You have
-  :class:`django.contrib.sessions.middleware.SessionMiddleware` in your
+  :class:`django_orm.contrib.sessions.middleware.SessionMiddleware` in your
   :setting:`MIDDLEWARE`, but you have not set :setting:`SESSION_COOKIE_HTTPONLY`
   to ``True``. Using an ``HttpOnly`` session cookie makes it more difficult for
   cross-site scripting attacks to hijack user sessions.
@@ -498,7 +498,7 @@ The following checks are run if you use the :option:`check --deploy` option:
 * **security.W018**: You should not have :setting:`DEBUG` set to ``True`` in
   deployment.
 * **security.W019**: You have
-  :class:`django.middleware.clickjacking.XFrameOptionsMiddleware` in your
+  :class:`django_orm.middleware.clickjacking.XFrameOptionsMiddleware` in your
   :setting:`MIDDLEWARE`, but :setting:`X_FRAME_OPTIONS` is not set to
   ``'DENY'``. Unless there is a good reason for your site to serve other parts
   of itself in a frame, you should change it to ``'DENY'``.
@@ -516,7 +516,7 @@ The following checks are run if you use the :option:`check --deploy` option:
 * **security.W025**: Your
   :setting:`SECRET_KEY_FALLBACKS[n] <SECRET_KEY_FALLBACKS>` has less than 50
   characters, less than 5 unique characters, or it's prefixed with
-  ``'django-insecure-'`` indicating that it was generated automatically by
+  ``'django_orm-insecure-'`` indicating that it was generated automatically by
   Django. Please generate a long and random value, otherwise many of Django's
   security-critical features will be vulnerable to attack.
 
@@ -576,18 +576,18 @@ URLs
 The following checks are performed on your URL configuration:
 
 * **urls.W001**: Your URL pattern ``<pattern>`` uses
-  :func:`~django.urls.include` with a ``route`` ending with a ``$``. Remove the
+  :func:`~django_orm.urls.include` with a ``route`` ending with a ``$``. Remove the
   dollar from the ``route`` to avoid problems including URLs.
 * **urls.W002**: Your URL pattern ``<pattern>`` has a ``route`` beginning with
   a ``/``. Remove this slash as it is unnecessary. If this pattern is targeted
-  in an :func:`~django.urls.include`, ensure the :func:`~django.urls.include`
+  in an :func:`~django_orm.urls.include`, ensure the :func:`~django_orm.urls.include`
   pattern has a trailing ``/``.
 * **urls.W003**: Your URL pattern ``<pattern>`` has a ``name``
   including a ``:``. Remove the colon, to avoid ambiguous namespace
   references.
 * **urls.E004**: Your URL pattern ``<pattern>`` is invalid. Ensure that
-  ``urlpatterns`` is a list of :func:`~django.urls.path` and/or
-  :func:`~django.urls.re_path` instances.
+  ``urlpatterns`` is a list of :func:`~django_orm.urls.path` and/or
+  :func:`~django_orm.urls.re_path` instances.
 * **urls.W005**: URL namespace ``<namespace>`` isn't unique. You may not be
   able to reverse all URLs in this namespace.
 * **urls.E006**: The :setting:`MEDIA_URL`/ :setting:`STATIC_URL` setting must
@@ -608,7 +608,7 @@ The following checks are performed on your URL configuration:
 Admin checks are all performed as part of the ``admin`` tag.
 
 The following checks are performed on any
-:class:`~django.contrib.admin.ModelAdmin` (or subclass) that is registered
+:class:`~django_orm.contrib.admin.ModelAdmin` (or subclass) that is registered
 with the admin site:
 
 * **admin.E001**: The value of ``raw_id_fields`` must be a list or tuple.
@@ -680,7 +680,7 @@ with the admin site:
 ~~~~~~~~~~~~~~
 
 The following checks are performed on any
-:class:`~django.contrib.admin.ModelAdmin` that is registered
+:class:`~django_orm.contrib.admin.ModelAdmin` that is registered
 with the admin site:
 
 * **admin.E101**: The value of ``save_as`` must be a boolean.
@@ -740,8 +740,8 @@ with the admin site:
 ~~~~~~~~~~~~~~~~~~~~
 
 The following checks are performed on any
-:class:`~django.contrib.admin.InlineModelAdmin` that is registered as an
-inline on a :class:`~django.contrib.admin.ModelAdmin`.
+:class:`~django_orm.contrib.admin.InlineModelAdmin` that is registered as an
+inline on a :class:`~django_orm.contrib.admin.ModelAdmin`.
 
 * **admin.E201**: Cannot exclude the field ``<field name>``, because it is the
   foreign key to the parent model ``<app_label>.<model>``.
@@ -758,8 +758,8 @@ inline on a :class:`~django.contrib.admin.ModelAdmin`.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following checks are performed on any
-:class:`~django.contrib.contenttypes.admin.GenericInlineModelAdmin` that is
-registered as an inline on a :class:`~django.contrib.admin.ModelAdmin`.
+:class:`~django_orm.contrib.contenttypes.admin.GenericInlineModelAdmin` that is
+registered as an inline on a :class:`~django_orm.contrib.admin.ModelAdmin`.
 
 * **admin.E301**: ``'ct_field'`` references ``<label>``, which is not a field
   on ``<model>``.
@@ -773,33 +773,33 @@ registered as an inline on a :class:`~django.contrib.admin.ModelAdmin`.
 ~~~~~~~~~~~~~
 
 The following checks are performed on the default
-:class:`~django.contrib.admin.AdminSite`:
+:class:`~django_orm.contrib.admin.AdminSite`:
 
-* **admin.E401**: :mod:`django.contrib.contenttypes` must be in
+* **admin.E401**: :mod:`django_orm.contrib.contenttypes` must be in
   :setting:`INSTALLED_APPS` in order to use the admin application.
-* **admin.E402**: :mod:`django.contrib.auth.context_processors.auth`
-  must be enabled in :class:`~django.template.backends.django.DjangoTemplates`
+* **admin.E402**: :mod:`django_orm.contrib.auth.context_processors.auth`
+  must be enabled in :class:`~django_orm.template.backends.django_orm.DjangoTemplates`
   (:setting:`TEMPLATES`) if using the default auth backend in order to use the
   admin application.
-* **admin.E403**: A :class:`django.template.backends.django.DjangoTemplates`
+* **admin.E403**: A :class:`django_orm.template.backends.django_orm.DjangoTemplates`
   instance must be configured in :setting:`TEMPLATES` in order to use the
   admin application.
-* **admin.E404**: ``django.contrib.messages.context_processors.messages``
-  must be enabled in :class:`~django.template.backends.django.DjangoTemplates`
+* **admin.E404**: ``django_orm.contrib.messages.context_processors.messages``
+  must be enabled in :class:`~django_orm.template.backends.django_orm.DjangoTemplates`
   (:setting:`TEMPLATES`) in order to use the admin application.
-* **admin.E405**: :mod:`django.contrib.auth` must be in
+* **admin.E405**: :mod:`django_orm.contrib.auth` must be in
   :setting:`INSTALLED_APPS` in order to use the admin application.
-* **admin.E406**: :mod:`django.contrib.messages` must be in
+* **admin.E406**: :mod:`django_orm.contrib.messages` must be in
   :setting:`INSTALLED_APPS` in order to use the admin application.
 * **admin.E408**:
-  :class:`django.contrib.auth.middleware.AuthenticationMiddleware` must be in
+  :class:`django_orm.contrib.auth.middleware.AuthenticationMiddleware` must be in
   :setting:`MIDDLEWARE` in order to use the admin application.
-* **admin.E409**: :class:`django.contrib.messages.middleware.MessageMiddleware`
+* **admin.E409**: :class:`django_orm.contrib.messages.middleware.MessageMiddleware`
   must be in :setting:`MIDDLEWARE` in order to use the admin application.
-* **admin.E410**: :class:`django.contrib.sessions.middleware.SessionMiddleware`
+* **admin.E410**: :class:`django_orm.contrib.sessions.middleware.SessionMiddleware`
   must be in :setting:`MIDDLEWARE` in order to use the admin application.
-* **admin.W411**: ``django.template.context_processors.request`` must be
-  enabled in :class:`~django.template.backends.django.DjangoTemplates`
+* **admin.W411**: ``django_orm.template.context_processors.request`` must be
+  enabled in :class:`~django_orm.template.backends.django_orm.DjangoTemplates`
   (:setting:`TEMPLATES`) in order to use the admin navigation sidebar.
 
 ``auth``
@@ -817,7 +817,7 @@ The following checks are performed on the default
 * **auth.E006**: The permission codenamed ``<codename>`` is duplicated for model
   ``<model>``.
 * **auth.E007**: The :attr:`verbose_name
-  <django.db.models.Options.verbose_name>` of model ``<model>`` must be at most
+  <django_orm.db.models.Options.verbose_name>` of model ``<model>`` must be at most
   244 characters for its builtin permission names
   to be at most 255 characters.
 * **auth.E008**: The permission named ``<name>`` of model ``<model>`` is longer
@@ -837,8 +837,8 @@ The following checks are performed on the default
 ----------------
 
 The following checks are performed when a model contains a
-:class:`~django.contrib.contenttypes.fields.GenericForeignKey` or
-:class:`~django.contrib.contenttypes.fields.GenericRelation`:
+:class:`~django_orm.contrib.contenttypes.fields.GenericForeignKey` or
+:class:`~django_orm.contrib.contenttypes.fields.GenericRelation`:
 
 * **contenttypes.E001**: The ``GenericForeignKey`` object ID references the
   nonexistent field ``<field>``.
@@ -852,7 +852,7 @@ The following checks are performed when a model contains a
 ``postgres``
 ------------
 
-The following checks are performed on :mod:`django.contrib.postgres` model
+The following checks are performed on :mod:`django_orm.contrib.postgres` model
 fields:
 
 * **postgres.E001**: Base field for array has errors: ...
@@ -865,14 +865,14 @@ fields:
 ---------
 
 The following checks are performed on any model using a
-:class:`~django.contrib.sites.managers.CurrentSiteManager`:
+:class:`~django_orm.contrib.sites.managers.CurrentSiteManager`:
 
 * **sites.E001**: ``CurrentSiteManager`` could not find a field named
   ``<field name>``.
 * **sites.E002**: ``CurrentSiteManager`` cannot use ``<field>`` as it is not a
   foreign key or a many-to-many field.
 
-The following checks verify that :mod:`django.contrib.sites` is correctly
+The following checks verify that :mod:`django_orm.contrib.sites` is correctly
 configured:
 
 * **sites.E101**: The :setting:`SITE_ID` setting must be an integer.
@@ -880,7 +880,7 @@ configured:
 ``staticfiles``
 ---------------
 
-The following checks verify that :mod:`django.contrib.staticfiles` is correctly
+The following checks verify that :mod:`django_orm.contrib.staticfiles` is correctly
 configured:
 
 * **staticfiles.E001**: The :setting:`STATICFILES_DIRS` setting is not a tuple

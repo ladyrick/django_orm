@@ -32,7 +32,7 @@ but far more common, subset:
 * Port, if specified, is numeric.
 
 Any deviation from this will now be rejected, raising the exception
-:exc:`django.core.exceptions.SuspiciousOperation`.
+:exc:`django_orm.core.exceptions.SuspiciousOperation`.
 
 Redirect poisoning
 ==================
@@ -49,7 +49,7 @@ tighter validation in response to reported problems (primarily with third-party
 applications, but to a certain extent also within Django itself). This comes in
 two parts:
 
-1. A new utility function, ``django.utils.http.is_safe_url``, is added; this
+1. A new utility function, ``django_orm.utils.http.is_safe_url``, is added; this
 function takes a URL and a hostname, and checks that the URL is either
 relative, or if absolute matches the supplied hostname. This function is
 intended for use whenever user-supplied redirect targets are accepted, to

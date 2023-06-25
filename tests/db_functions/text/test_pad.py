@@ -1,7 +1,7 @@
-from django.db import connection
-from django.db.models import Value
-from django.db.models.functions import Length, LPad, RPad
-from django.test import TestCase
+from django_orm.db import connection
+from django_orm.db.models import Value
+from django_orm.db.models.functions import Length, LPad, RPad
+from django_orm.test import TestCase
 
 from ..models import Author
 

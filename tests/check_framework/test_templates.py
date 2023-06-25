@@ -1,7 +1,7 @@
 from copy import copy, deepcopy
 
-from django.core.checks import Warning
-from django.core.checks.templates import (
+from django_orm.core.checks import Warning
+from django_orm.core.checks.templates import (
     E001,
     E002,
     W003,
@@ -9,17 +9,17 @@ from django.core.checks.templates import (
     check_setting_app_dirs_loaders,
     check_string_if_invalid_is_string,
 )
-from django.test import SimpleTestCase
-from django.test.utils import override_settings
+from django_orm.test import SimpleTestCase
+from django_orm.test.utils import override_settings
 
 
 class CheckTemplateSettingsAppDirsTest(SimpleTestCase):
     TEMPLATES_APP_DIRS_AND_LOADERS = [
         {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
             "APP_DIRS": True,
             "OPTIONS": {
-                "loaders": ["django.template.loaders.filesystem.Loader"],
+                "loaders": ["django_orm.template.loaders.filesystem.Loader"],
             },
         },
     ]
@@ -47,13 +47,13 @@ class CheckTemplateSettingsAppDirsTest(SimpleTestCase):
 class CheckTemplateStringIfInvalidTest(SimpleTestCase):
     TEMPLATES_STRING_IF_INVALID = [
         {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
             "OPTIONS": {
                 "string_if_invalid": False,
             },
         },
         {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
             "OPTIONS": {
                 "string_if_invalid": 42,
             },
@@ -122,7 +122,7 @@ class CheckTemplateTagLibrariesWithSameName(SimpleTestCase):
     @staticmethod
     def get_settings(module_name, module_path):
         return {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
             "OPTIONS": {
                 "libraries": {
                     module_name: f"check_framework.template_test_apps.{module_path}",

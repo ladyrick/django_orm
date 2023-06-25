@@ -1,8 +1,8 @@
 import hashlib
 import unittest
 
-from django.test import SimpleTestCase
-from django.utils.crypto import (
+from django_orm.test import SimpleTestCase
+from django_orm.utils.crypto import (
     InvalidAlgorithm,
     constant_time_compare,
     pbkdf2,

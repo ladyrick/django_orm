@@ -1,8 +1,8 @@
-from django.contrib.gis.db import models
-from django.db import connection
-from django.db.models import Index
-from django.test import TransactionTestCase
-from django.test.utils import isolate_apps
+from django_orm.contrib.gis.db import models
+from django_orm.db import connection
+from django_orm.db.models import Index
+from django_orm.test import TransactionTestCase
+from django_orm.test.utils import isolate_apps
 
 from .models import City
 

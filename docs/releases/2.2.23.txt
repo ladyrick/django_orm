@@ -11,5 +11,5 @@ Bugfixes
 
 * Fixed a regression in Django 2.2.21 where saving ``FileField`` would raise a
   ``SuspiciousFileOperation`` even when a custom
-  :attr:`~django.db.models.FileField.upload_to` returns a valid file path
+  :attr:`~django_orm.db.models.FileField.upload_to` returns a valid file path
   (:ticket:`32718`).

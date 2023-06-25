@@ -2,17 +2,17 @@ from pathlib import Path
 
 from template_tests.test_response import test_processor_name
 
-from django.template import Context, EngineHandler, RequestContext
-from django.template.backends.django import DjangoTemplates
-from django.template.library import InvalidTemplateLibrary
-from django.test import RequestFactory, override_settings
+from django_orm.template import Context, EngineHandler, RequestContext
+from django_orm.template.backends.django_orm import DjangoTemplates
+from django_orm.template.library import InvalidTemplateLibrary
+from django_orm.test import RequestFactory, override_settings
 
 from .test_dummy import TemplateStringsTests
 
 
 class DjangoTemplatesTests(TemplateStringsTests):
     engine_class = DjangoTemplates
-    backend_name = "django"
+    backend_name = "django_orm"
     request_factory = RequestFactory()
 
     def test_context_has_priority_over_template_context_processors(self):
@@ -21,7 +21,7 @@ class DjangoTemplatesTests(TemplateStringsTests):
             {
                 "DIRS": [],
                 "APP_DIRS": False,
-                "NAME": "django",
+                "NAME": "django_orm",
                 "OPTIONS": {
                     "context_processors": [test_processor_name],
                 },
@@ -40,12 +40,12 @@ class DjangoTemplatesTests(TemplateStringsTests):
         self.assertEqual(content, "no")
 
     def test_render_requires_dict(self):
-        """django.Template.render() requires a dict."""
+        """django_orm.Template.render() requires a dict."""
         engine = DjangoTemplates(
             {
                 "DIRS": [],
                 "APP_DIRS": False,
-                "NAME": "django",
+                "NAME": "django_orm",
                 "OPTIONS": {},
             }
         )
@@ -65,7 +65,7 @@ class DjangoTemplatesTests(TemplateStringsTests):
             {
                 "DIRS": [],
                 "APP_DIRS": False,
-                "NAME": "django",
+                "NAME": "django_orm",
                 "OPTIONS": {
                     "libraries": {
                         "alternate": (
@@ -88,10 +88,10 @@ class DjangoTemplatesTests(TemplateStringsTests):
             engine.engine.libraries["subpackage.tags"],
             "template_backends.apps.good.templatetags.subpackage.tags",
         )
-        # libraries are discovered from django.templatetags
+        # libraries are discovered from django_orm.templatetags
         self.assertEqual(
             engine.engine.libraries["static"],
-            "django.templatetags.static",
+            "django_orm.templatetags.static",
         )
         # libraries passed in OPTIONS are registered
         self.assertEqual(
@@ -118,7 +118,7 @@ class DjangoTemplatesTests(TemplateStringsTests):
                 {
                     "DIRS": [],
                     "APP_DIRS": False,
-                    "NAME": "django",
+                    "NAME": "django_orm",
                     "OPTIONS": {},
                 }
             )
@@ -129,7 +129,7 @@ class DjangoTemplatesTests(TemplateStringsTests):
             {
                 "DIRS": [],
                 "APP_DIRS": False,
-                "NAME": "django",
+                "NAME": "django_orm",
                 "OPTIONS": {
                     "builtins": ["template_backends.apps.good.templatetags.good_tags"],
                 },
@@ -139,9 +139,9 @@ class DjangoTemplatesTests(TemplateStringsTests):
         self.assertEqual(
             engine.engine.builtins,
             [
-                "django.template.defaulttags",
-                "django.template.defaultfilters",
-                "django.template.loader_tags",
+                "django_orm.template.defaulttags",
+                "django_orm.template.defaultfilters",
+                "django_orm.template.loader_tags",
                 "template_backends.apps.good.templatetags.good_tags",
             ],
         )
@@ -149,13 +149,13 @@ class DjangoTemplatesTests(TemplateStringsTests):
     def test_autoescape_off(self):
         templates = [
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "OPTIONS": {"autoescape": False},
             }
         ]
         engines = EngineHandler(templates=templates)
         self.assertEqual(
-            engines["django"]
+            engines["django_orm"]
             .from_string("Hello, {{ name }}")
             .render({"name": "Bob & Jim"}),
             "Hello, Bob & Jim",
@@ -164,12 +164,12 @@ class DjangoTemplatesTests(TemplateStringsTests):
     def test_autoescape_default(self):
         templates = [
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
             }
         ]
         engines = EngineHandler(templates=templates)
         self.assertEqual(
-            engines["django"]
+            engines["django_orm"]
             .from_string("Hello, {{ name }}")
             .render({"name": "Bob & Jim"}),
             "Hello, Bob &amp; Jim",
@@ -180,16 +180,16 @@ class DjangoTemplatesTests(TemplateStringsTests):
         for debug in (True, False):
             with self.subTest(DEBUG=debug), self.settings(DEBUG=debug):
                 engine = DjangoTemplates(
-                    {"DIRS": [], "APP_DIRS": True, "NAME": "django", "OPTIONS": {}}
+                    {"DIRS": [], "APP_DIRS": True, "NAME": "django_orm", "OPTIONS": {}}
                 )
                 self.assertEqual(
                     engine.engine.loaders,
                     [
                         (
-                            "django.template.loaders.cached.Loader",
+                            "django_orm.template.loaders.cached.Loader",
                             [
-                                "django.template.loaders.filesystem.Loader",
-                                "django.template.loaders.app_directories.Loader",
+                                "django_orm.template.loaders.filesystem.Loader",
+                                "django_orm.template.loaders.app_directories.Loader",
                             ],
                         )
                     ],
@@ -200,7 +200,7 @@ class DjangoTemplatesTests(TemplateStringsTests):
             {
                 "DIRS": [Path(__file__).parent / "templates" / "template_backends"],
                 "APP_DIRS": False,
-                "NAME": "django",
+                "NAME": "django_orm",
                 "OPTIONS": {},
             }
         )

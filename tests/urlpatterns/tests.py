@@ -1,11 +1,11 @@
 import string
 import uuid
 
-from django.core.exceptions import ImproperlyConfigured
-from django.test import SimpleTestCase
-from django.test.utils import override_settings
-from django.urls import NoReverseMatch, Resolver404, path, re_path, resolve, reverse
-from django.views import View
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.test import SimpleTestCase
+from django_orm.test.utils import override_settings
+from django_orm.urls import NoReverseMatch, Resolver404, path, re_path, resolve, reverse
+from django_orm.views import View
 
 from .converters import DynamicConverter
 from .views import empty_view

@@ -1,6 +1,6 @@
 from datetime import date, datetime, time
 
-from django.forms import Form, SplitDateTimeField, SplitDateTimeWidget
+from django_orm.forms import Form, SplitDateTimeField, SplitDateTimeWidget
 
 from .base import WidgetTest
 

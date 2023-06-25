@@ -1,7 +1,7 @@
-from django.http import HttpResponse
-from django.utils.decorators import method_decorator
-from django.views.decorators.common import no_append_slash
-from django.views.generic import View
+from django_orm.http import HttpResponse
+from django_orm.utils.decorators import method_decorator
+from django_orm.views.decorators.common import no_append_slash
+from django_orm.views.generic import View
 
 
 def empty_view(request, *args, **kwargs):

@@ -1,10 +1,10 @@
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.core.checks import Error
-from django.core.exceptions import FieldDoesNotExist, FieldError
-from django.db import models
-from django.test import SimpleTestCase
-from django.test.utils import isolate_apps
+from django_orm.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.core.checks import Error
+from django_orm.core.exceptions import FieldDoesNotExist, FieldError
+from django_orm.db import models
+from django_orm.test import SimpleTestCase
+from django_orm.test.utils import isolate_apps
 
 
 @isolate_apps("model_inheritance")

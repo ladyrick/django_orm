@@ -1,7 +1,7 @@
-from django.template.defaultfilters import slugify
-from django.test import SimpleTestCase
-from django.utils.functional import lazy
-from django.utils.safestring import mark_safe
+from django_orm.template.defaultfilters import slugify
+from django_orm.test import SimpleTestCase
+from django_orm.utils.functional import lazy
+from django_orm.utils.safestring import mark_safe
 
 from ..utils import setup
 

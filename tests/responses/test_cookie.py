@@ -2,10 +2,10 @@ import time
 from datetime import datetime, timedelta, timezone
 from http import cookies
 
-from django.http import HttpResponse
-from django.test import SimpleTestCase
-from django.test.utils import freeze_time
-from django.utils.http import http_date
+from django_orm.http import HttpResponse
+from django_orm.test import SimpleTestCase
+from django_orm.test.utils import freeze_time
+from django_orm.utils.http import http_date
 
 
 class SetCookieTests(SimpleTestCase):

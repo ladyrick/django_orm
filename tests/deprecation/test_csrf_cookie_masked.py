@@ -1,9 +1,9 @@
 import sys
 from types import ModuleType
 
-from django.conf import CSRF_COOKIE_MASKED_DEPRECATED_MSG, Settings, settings
-from django.test import SimpleTestCase
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.conf import CSRF_COOKIE_MASKED_DEPRECATED_MSG, Settings, settings
+from django_orm.test import SimpleTestCase
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 
 class CsrfCookieMaskedDeprecationTests(SimpleTestCase):

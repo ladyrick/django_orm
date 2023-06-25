@@ -1,24 +1,24 @@
-from django.template import TemplateDoesNotExist
-from django.template.loader import get_template, render_to_string, select_template
-from django.test import SimpleTestCase, override_settings
-from django.test.client import RequestFactory
+from django_orm.template import TemplateDoesNotExist
+from django_orm.template.loader import get_template, render_to_string, select_template
+from django_orm.test import SimpleTestCase, override_settings
+from django_orm.test.client import RequestFactory
 
 
 @override_settings(
     TEMPLATES=[
         {
-            "BACKEND": "django.template.backends.dummy.TemplateStrings",
+            "BACKEND": "django_orm.template.backends.dummy.TemplateStrings",
             "APP_DIRS": True,
         },
         {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
             "OPTIONS": {
                 "context_processors": [
-                    "django.template.context_processors.request",
+                    "django_orm.template.context_processors.request",
                 ],
                 "loaders": [
-                    "django.template.loaders.filesystem.Loader",
-                    "django.template.loaders.app_directories.Loader",
+                    "django_orm.template.loaders.filesystem.Loader",
+                    "django_orm.template.loaders.app_directories.Loader",
                 ],
             },
         },
@@ -34,7 +34,7 @@ class TemplateLoaderTests(SimpleTestCase):
         self.assertEqual(template.render(), "Goodbye! (Django templates)\n")
 
     def test_get_template_using_engine(self):
-        template = get_template("template_loader/hello.html", using="django")
+        template = get_template("template_loader/hello.html", using="django_orm")
         self.assertEqual(template.render(), "Hello! (Django templates)\n")
 
     def test_get_template_not_found(self):
@@ -44,7 +44,7 @@ class TemplateLoaderTests(SimpleTestCase):
             e.exception.chain[-1].tried[0][0].template_name,
             "template_loader/unknown.html",
         )
-        self.assertEqual(e.exception.chain[-1].backend.name, "django")
+        self.assertEqual(e.exception.chain[-1].backend.name, "django_orm")
 
     def test_select_template_first_engine(self):
         template = select_template(
@@ -61,7 +61,7 @@ class TemplateLoaderTests(SimpleTestCase):
     def test_select_template_using_engine(self):
         template = select_template(
             ["template_loader/unknown.html", "template_loader/hello.html"],
-            using="django",
+            using="django_orm",
         )
         self.assertEqual(template.render(), "Hello! (Django templates)\n")
 
@@ -92,7 +92,7 @@ class TemplateLoaderTests(SimpleTestCase):
             e.exception.chain[-1].tried[0][0].template_name,
             "template_loader/missing.html",
         )
-        self.assertEqual(e.exception.chain[-1].backend.name, "django")
+        self.assertEqual(e.exception.chain[-1].backend.name, "django_orm")
 
     def test_select_template_tries_all_engines_before_names(self):
         template = select_template(
@@ -114,7 +114,7 @@ class TemplateLoaderTests(SimpleTestCase):
         self.assertEqual(content, "/foobar/\n")
 
     def test_render_to_string_using_engine(self):
-        content = render_to_string("template_loader/hello.html", using="django")
+        content = render_to_string("template_loader/hello.html", using="django_orm")
         self.assertEqual(content, "Hello! (Django templates)\n")
 
     def test_render_to_string_not_found(self):
@@ -124,7 +124,7 @@ class TemplateLoaderTests(SimpleTestCase):
             e.exception.chain[-1].tried[0][0].template_name,
             "template_loader/unknown.html",
         )
-        self.assertEqual(e.exception.chain[-1].backend.name, "django")
+        self.assertEqual(e.exception.chain[-1].backend.name, "django_orm")
 
     def test_render_to_string_with_list_first_engine(self):
         content = render_to_string(
@@ -141,7 +141,7 @@ class TemplateLoaderTests(SimpleTestCase):
     def test_render_to_string_with_list_using_engine(self):
         content = render_to_string(
             ["template_loader/unknown.html", "template_loader/hello.html"],
-            using="django",
+            using="django_orm",
         )
         self.assertEqual(content, "Hello! (Django templates)\n")
 
@@ -163,7 +163,7 @@ class TemplateLoaderTests(SimpleTestCase):
             e.exception.chain[1].tried[0][0].template_name,
             "template_loader/unknown.html",
         )
-        self.assertEqual(e.exception.chain[1].backend.name, "django")
+        self.assertEqual(e.exception.chain[1].backend.name, "django_orm")
         self.assertEqual(
             e.exception.chain[2].tried[0][0].template_name,
             "template_loader/missing.html",
@@ -173,7 +173,7 @@ class TemplateLoaderTests(SimpleTestCase):
             e.exception.chain[3].tried[0][0].template_name,
             "template_loader/missing.html",
         )
-        self.assertEqual(e.exception.chain[3].backend.name, "django")
+        self.assertEqual(e.exception.chain[3].backend.name, "django_orm")
 
     def test_render_to_string_with_list_tries_all_engines_before_names(self):
         content = render_to_string(

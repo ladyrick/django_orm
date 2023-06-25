@@ -1,10 +1,10 @@
-from django.contrib.messages import constants
-from django.contrib.messages.storage.base import Message
-from django.contrib.messages.storage.session import SessionStorage
-from django.core.exceptions import ImproperlyConfigured
-from django.http import HttpRequest
-from django.test import TestCase
-from django.utils.safestring import SafeData, mark_safe
+from django_orm.contrib.messages import constants
+from django_orm.contrib.messages.storage.base import Message
+from django_orm.contrib.messages.storage.session import SessionStorage
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.http import HttpRequest
+from django_orm.test import TestCase
+from django_orm.utils.safestring import SafeData, mark_safe
 
 from .base import BaseTests
 

@@ -4,9 +4,9 @@ from datetime import datetime
 
 from asgiref.sync import async_to_sync, sync_to_async
 
-from django.db import NotSupportedError, connection
-from django.db.models import Sum
-from django.test import TestCase, skipIfDBFeature, skipUnlessDBFeature
+from django_orm.db import NotSupportedError, connection
+from django_orm.db.models import Sum
+from django_orm.test import TestCase, skipIfDBFeature, skipUnlessDBFeature
 
 from .models import SimpleModel
 

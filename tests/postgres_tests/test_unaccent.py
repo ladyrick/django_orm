@@ -1,11 +1,11 @@
-from django.db import connection
-from django.test import modify_settings
+from django_orm.db import connection
+from django_orm.test import modify_settings
 
 from . import PostgreSQLTestCase
 from .models import CharFieldModel, TextFieldModel
 
 
-@modify_settings(INSTALLED_APPS={"append": "django.contrib.postgres"})
+@modify_settings(INSTALLED_APPS={"append": "django_orm.contrib.postgres"})
 class UnaccentTest(PostgreSQLTestCase):
     Model = CharFieldModel
 

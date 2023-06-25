@@ -1,7 +1,7 @@
-from django.template import TemplateDoesNotExist
-from django.test import Client, RequestFactory, SimpleTestCase, override_settings
-from django.utils.translation import override
-from django.views.csrf import CSRF_FAILURE_TEMPLATE_NAME, csrf_failure
+from django_orm.template import TemplateDoesNotExist
+from django_orm.test import Client, RequestFactory, SimpleTestCase, override_settings
+from django_orm.utils.translation import override
+from django_orm.views.csrf import CSRF_FAILURE_TEMPLATE_NAME, csrf_failure
 
 
 @override_settings(ROOT_URLCONF="view_tests.urls")
@@ -13,9 +13,9 @@ class CsrfViewTests(SimpleTestCase):
     @override_settings(
         USE_I18N=True,
         MIDDLEWARE=[
-            "django.middleware.locale.LocaleMiddleware",
-            "django.middleware.common.CommonMiddleware",
-            "django.middleware.csrf.CsrfViewMiddleware",
+            "django_orm.middleware.locale.LocaleMiddleware",
+            "django_orm.middleware.common.CommonMiddleware",
+            "django_orm.middleware.csrf.CsrfViewMiddleware",
         ],
     )
     def test_translation(self):
@@ -90,11 +90,11 @@ class CsrfViewTests(SimpleTestCase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "OPTIONS": {
                     "loaders": [
                         (
-                            "django.template.loaders.locmem.Loader",
+                            "django_orm.template.loaders.locmem.Loader",
                             {
                                 CSRF_FAILURE_TEMPLATE_NAME: (
                                     "Test template for CSRF failure"

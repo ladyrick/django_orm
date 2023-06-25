@@ -4,16 +4,16 @@ import json
 import unittest
 import uuid
 
-from django import forms
-from django.core import checks, exceptions, serializers, validators
-from django.core.exceptions import FieldError
-from django.core.management import call_command
-from django.db import IntegrityError, connection, models
-from django.db.models.expressions import Exists, OuterRef, RawSQL, Value
-from django.db.models.functions import Cast, JSONObject, Upper
-from django.test import TransactionTestCase, modify_settings, override_settings
-from django.test.utils import isolate_apps
-from django.utils import timezone
+from django_orm import forms
+from django_orm.core import checks, exceptions, serializers, validators
+from django_orm.core.exceptions import FieldError
+from django_orm.core.management import call_command
+from django_orm.db import IntegrityError, connection, models
+from django_orm.db.models.expressions import Exists, OuterRef, RawSQL, Value
+from django_orm.db.models.functions import Cast, JSONObject, Upper
+from django_orm.test import TransactionTestCase, modify_settings, override_settings
+from django_orm.test.utils import isolate_apps
+from django_orm.utils import timezone
 
 from . import PostgreSQLSimpleTestCase, PostgreSQLTestCase, PostgreSQLWidgetTestCase
 from .models import (
@@ -32,11 +32,11 @@ from .models import (
 try:
     from psycopg2.extras import NumericRange
 
-    from django.contrib.postgres.aggregates import ArrayAgg
-    from django.contrib.postgres.expressions import ArraySubquery
-    from django.contrib.postgres.fields import ArrayField
-    from django.contrib.postgres.fields.array import IndexTransform, SliceTransform
-    from django.contrib.postgres.forms import (
+    from django_orm.contrib.postgres.aggregates import ArrayAgg
+    from django_orm.contrib.postgres.expressions import ArraySubquery
+    from django_orm.contrib.postgres.fields import ArrayField
+    from django_orm.contrib.postgres.fields.array import IndexTransform, SliceTransform
+    from django_orm.contrib.postgres.forms import (
         SimpleArrayField,
         SplitArrayField,
         SplitArrayWidget,
@@ -822,7 +822,7 @@ class TestMigrations(TransactionTestCase):
     def test_subclass_deconstruct(self):
         field = ArrayField(models.IntegerField())
         name, path, args, kwargs = field.deconstruct()
-        self.assertEqual(path, "django.contrib.postgres.fields.ArrayField")
+        self.assertEqual(path, "django_orm.contrib.postgres.fields.ArrayField")
 
         field = ArrayFieldSubclass()
         name, path, args, kwargs = field.deconstruct()
@@ -1187,7 +1187,7 @@ class TestSplitFormField(PostgreSQLSimpleTestCase):
             SplitArrayField(forms.IntegerField(max_value=100), size=2).clean([0, 101])
 
     # To locate the widget's template.
-    @modify_settings(INSTALLED_APPS={"append": "django.contrib.postgres"})
+    @modify_settings(INSTALLED_APPS={"append": "django_orm.contrib.postgres"})
     def test_rendering(self):
         class SplitForm(forms.Form):
             array = SplitArrayField(forms.CharField(), size=3)
@@ -1297,7 +1297,7 @@ class TestSplitFormWidget(PostgreSQLWidgetTestCase):
                             "required": False,
                             "value": "val1",
                             "attrs": {},
-                            "template_name": "django/forms/widgets/text.html",
+                            "template_name": "django_orm/forms/widgets/text.html",
                             "type": "text",
                         },
                         {
@@ -1306,7 +1306,7 @@ class TestSplitFormWidget(PostgreSQLWidgetTestCase):
                             "required": False,
                             "value": "val2",
                             "attrs": {},
-                            "template_name": "django/forms/widgets/text.html",
+                            "template_name": "django_orm/forms/widgets/text.html",
                             "type": "text",
                         },
                     ],

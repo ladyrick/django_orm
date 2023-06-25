@@ -1,6 +1,6 @@
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.forms import FileField, FileInput, Form
-from django.utils.datastructures import MultiValueDict
+from django_orm.core.files.uploadedfile import SimpleUploadedFile
+from django_orm.forms import FileField, FileInput, Form
+from django_orm.utils.datastructures import MultiValueDict
 
 from .base import WidgetTest
 

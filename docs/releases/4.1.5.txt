@@ -12,5 +12,5 @@ Bugfixes
 
 * Fixed a long standing bug in the ``__len`` lookup for ``ArrayField`` that
   caused a crash of model validation on
-  :attr:`Meta.constraints <django.db.models.Options.constraints>`
+  :attr:`Meta.constraints <django_orm.db.models.Options.constraints>`
   (:ticket:`34205`).

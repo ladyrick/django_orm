@@ -4,7 +4,7 @@ How to override templates
 
 In your project, you might want to override a template in another Django
 application, whether it be a third-party application or a contrib application
-such as ``django.contrib.admin``. You can either put template overrides in your
+such as ``django_orm.contrib.admin``. You can either put template overrides in your
 project's templates directory or in an application's templates directory.
 
 If you have app and project templates directories that both contain overrides,
@@ -39,7 +39,7 @@ called ``blog``, which provides the templates ``blog/post.html`` and
 
     TEMPLATES = [
         {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'BACKEND': 'django_orm.template.backends.django_orm.DjangoTemplates',
             'DIRS': [BASE_DIR / 'templates'],
             'APP_DIRS': True,
             ...
@@ -111,7 +111,7 @@ reimplement the entire template.
 For example, you can use this technique to add a custom logo to the
 ``admin/base_site.html`` template:
 
-    .. code-block:: html+django
+    .. code-block:: html+django_orm
        :caption: ``templates/admin/base_site.html``
 
         {% extends "admin/base_site.html" %}

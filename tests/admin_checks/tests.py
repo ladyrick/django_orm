@@ -1,13 +1,13 @@
-from django import forms
-from django.contrib import admin
-from django.contrib.admin import AdminSite
-from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth.middleware import AuthenticationMiddleware
-from django.contrib.contenttypes.admin import GenericStackedInline
-from django.contrib.messages.middleware import MessageMiddleware
-from django.contrib.sessions.middleware import SessionMiddleware
-from django.core import checks
-from django.test import SimpleTestCase, override_settings
+from django_orm import forms
+from django_orm.contrib import admin
+from django_orm.contrib.admin import AdminSite
+from django_orm.contrib.auth.backends import ModelBackend
+from django_orm.contrib.auth.middleware import AuthenticationMiddleware
+from django_orm.contrib.contenttypes.admin import GenericStackedInline
+from django_orm.contrib.messages.middleware import MessageMiddleware
+from django_orm.contrib.sessions.middleware import SessionMiddleware
+from django_orm.core import checks
+from django_orm.test import SimpleTestCase, override_settings
 
 from .models import Album, Author, Book, City, Influence, Song, State, TwoAlbumFKAndAnE
 
@@ -62,10 +62,10 @@ class SessionMiddlewareSubclass(SessionMiddleware):
 @override_settings(
     SILENCED_SYSTEM_CHECKS=["fields.W342"],  # ForeignKey(unique=True)
     INSTALLED_APPS=[
-        "django.contrib.admin",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
-        "django.contrib.messages",
+        "django_orm.contrib.admin",
+        "django_orm.contrib.auth",
+        "django_orm.contrib.contenttypes",
+        "django_orm.contrib.messages",
         "admin_checks",
     ],
 )
@@ -81,22 +81,22 @@ class SystemChecksTestCase(SimpleTestCase):
         finally:
             admin.site.unregister(Song)
 
-    @override_settings(INSTALLED_APPS=["django.contrib.admin"])
+    @override_settings(INSTALLED_APPS=["django_orm.contrib.admin"])
     def test_apps_dependencies(self):
         errors = admin.checks.check_dependencies()
         expected = [
             checks.Error(
-                "'django.contrib.contenttypes' must be in "
+                "'django_orm.contrib.contenttypes' must be in "
                 "INSTALLED_APPS in order to use the admin application.",
                 id="admin.E401",
             ),
             checks.Error(
-                "'django.contrib.auth' must be in INSTALLED_APPS in order "
+                "'django_orm.contrib.auth' must be in INSTALLED_APPS in order "
                 "to use the admin application.",
                 id="admin.E405",
             ),
             checks.Error(
-                "'django.contrib.messages' must be in INSTALLED_APPS in order "
+                "'django_orm.contrib.messages' must be in INSTALLED_APPS in order "
                 "to use the admin application.",
                 id="admin.E406",
             ),
@@ -109,7 +109,7 @@ class SystemChecksTestCase(SimpleTestCase):
             admin.checks.check_dependencies(),
             [
                 checks.Error(
-                    "A 'django.template.backends.django.DjangoTemplates' "
+                    "A 'django_orm.template.backends.django_orm.DjangoTemplates' "
                     "instance must be configured in TEMPLATES in order to use "
                     "the admin application.",
                     id="admin.E403",
@@ -120,7 +120,7 @@ class SystemChecksTestCase(SimpleTestCase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "DIRS": [],
                 "APP_DIRS": True,
                 "OPTIONS": {
@@ -132,19 +132,19 @@ class SystemChecksTestCase(SimpleTestCase):
     def test_context_processor_dependencies(self):
         expected = [
             checks.Error(
-                "'django.contrib.auth.context_processors.auth' must be "
+                "'django_orm.contrib.auth.context_processors.auth' must be "
                 "enabled in DjangoTemplates (TEMPLATES) if using the default "
                 "auth backend in order to use the admin application.",
                 id="admin.E402",
             ),
             checks.Error(
-                "'django.contrib.messages.context_processors.messages' must "
+                "'django_orm.contrib.messages.context_processors.messages' must "
                 "be enabled in DjangoTemplates (TEMPLATES) in order to use "
                 "the admin application.",
                 id="admin.E404",
             ),
             checks.Warning(
-                "'django.template.context_processors.request' must be enabled "
+                "'django_orm.template.context_processors.request' must be enabled "
                 "in DjangoTemplates (TEMPLATES) in order to use the admin "
                 "navigation sidebar.",
                 id="admin.W411",
@@ -152,7 +152,7 @@ class SystemChecksTestCase(SimpleTestCase):
         ]
         self.assertEqual(admin.checks.check_dependencies(), expected)
         # The first error doesn't happen if
-        # 'django.contrib.auth.backends.ModelBackend' isn't in
+        # 'django_orm.contrib.auth.backends.ModelBackend' isn't in
         # AUTHENTICATION_BACKENDS.
         with self.settings(AUTHENTICATION_BACKENDS=[]):
             self.assertEqual(admin.checks.check_dependencies(), expected[1:])
@@ -161,13 +161,13 @@ class SystemChecksTestCase(SimpleTestCase):
         AUTHENTICATION_BACKENDS=["admin_checks.tests.ModelBackendSubclass"],
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "DIRS": [],
                 "APP_DIRS": True,
                 "OPTIONS": {
                     "context_processors": [
-                        "django.template.context_processors.request",
-                        "django.contrib.messages.context_processors.messages",
+                        "django_orm.template.context_processors.request",
+                        "django_orm.contrib.messages.context_processors.messages",
                     ],
                 },
             }
@@ -178,7 +178,7 @@ class SystemChecksTestCase(SimpleTestCase):
             admin.checks.check_dependencies(),
             [
                 checks.Error(
-                    "'django.contrib.auth.context_processors.auth' must be "
+                    "'django_orm.contrib.auth.context_processors.auth' must be "
                     "enabled in DjangoTemplates (TEMPLATES) if using the default "
                     "auth backend in order to use the admin application.",
                     id="admin.E402",
@@ -189,19 +189,19 @@ class SystemChecksTestCase(SimpleTestCase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.dummy.TemplateStrings",
+                "BACKEND": "django_orm.template.backends.dummy.TemplateStrings",
                 "DIRS": [],
                 "APP_DIRS": True,
             },
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "DIRS": [],
                 "APP_DIRS": True,
                 "OPTIONS": {
                     "context_processors": [
-                        "django.template.context_processors.request",
-                        "django.contrib.auth.context_processors.auth",
-                        "django.contrib.messages.context_processors.messages",
+                        "django_orm.template.context_processors.request",
+                        "django_orm.contrib.auth.context_processors.auth",
+                        "django_orm.contrib.messages.context_processors.messages",
                     ],
                 },
             },
@@ -215,23 +215,23 @@ class SystemChecksTestCase(SimpleTestCase):
         errors = admin.checks.check_dependencies()
         expected = [
             checks.Error(
-                "'django.contrib.auth.middleware.AuthenticationMiddleware' "
+                "'django_orm.contrib.auth.middleware.AuthenticationMiddleware' "
                 "must be in MIDDLEWARE in order to use the admin application.",
                 id="admin.E408",
             ),
             checks.Error(
-                "'django.contrib.messages.middleware.MessageMiddleware' "
+                "'django_orm.contrib.messages.middleware.MessageMiddleware' "
                 "must be in MIDDLEWARE in order to use the admin application.",
                 id="admin.E409",
             ),
             checks.Error(
-                "'django.contrib.sessions.middleware.SessionMiddleware' "
+                "'django_orm.contrib.sessions.middleware.SessionMiddleware' "
                 "must be in MIDDLEWARE in order to use the admin application.",
                 hint=(
                     "Insert "
-                    "'django.contrib.sessions.middleware.SessionMiddleware' "
+                    "'django_orm.contrib.sessions.middleware.SessionMiddleware' "
                     "before "
-                    "'django.contrib.auth.middleware.AuthenticationMiddleware'."
+                    "'django_orm.contrib.auth.middleware.AuthenticationMiddleware'."
                 ),
                 id="admin.E410",
             ),
@@ -250,10 +250,10 @@ class SystemChecksTestCase(SimpleTestCase):
 
     @override_settings(
         MIDDLEWARE=[
-            "django.contrib.does.not.Exist",
-            "django.contrib.auth.middleware.AuthenticationMiddleware",
-            "django.contrib.messages.middleware.MessageMiddleware",
-            "django.contrib.sessions.middleware.SessionMiddleware",
+            "django_orm.contrib.does.not.Exist",
+            "django_orm.contrib.auth.middleware.AuthenticationMiddleware",
+            "django_orm.contrib.messages.middleware.MessageMiddleware",
+            "django_orm.contrib.sessions.middleware.SessionMiddleware",
         ]
     )
     def test_admin_check_ignores_import_error_in_middleware(self):

@@ -7,10 +7,10 @@ from contextlib import contextmanager
 from importlib import import_module
 from unittest import TestSuite, TextTestRunner, defaultTestLoader, mock
 
-from django.db import connections
-from django.test import SimpleTestCase
-from django.test.runner import DiscoverRunner, get_max_test_processes
-from django.test.utils import (
+from django_orm.db import connections
+from django_orm.test import SimpleTestCase
+from django_orm.test.runner import DiscoverRunner, get_max_test_processes
+from django_orm.test.utils import (
     NullTimeKeeper,
     TimeKeeper,
     captured_stderr,

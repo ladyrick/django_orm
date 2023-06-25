@@ -1,7 +1,7 @@
 import warnings
 
-from django.test import SimpleTestCase
-from django.utils.deprecation import (
+from django_orm.test import SimpleTestCase
+from django_orm.utils.deprecation import (
     DeprecationInstanceCheck,
     RemovedAfterNextVersionWarning,
     RemovedInNextVersionWarning,

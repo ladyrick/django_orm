@@ -1,6 +1,6 @@
-from django.db import models
-from django.test import SimpleTestCase
-from django.test.utils import isolate_apps
+from django_orm.db import models
+from django_orm.test import SimpleTestCase
+from django_orm.test.utils import isolate_apps
 
 
 @isolate_apps("invalid_models_tests")

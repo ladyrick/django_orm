@@ -1,5 +1,5 @@
-from django import forms
-from django.contrib import admin
+from django_orm import forms
+from django_orm.contrib import admin
 
 from .models import Article, ArticleProxy, Site
 

@@ -1,5 +1,5 @@
-from django.forms import Widget
-from django.forms.widgets import Input
+from django_orm.forms import Widget
+from django_orm.forms.widgets import Input
 
 from .base import WidgetTest
 

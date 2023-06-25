@@ -2,7 +2,7 @@
 Geolocation with GeoIP2
 =======================
 
-.. module:: django.contrib.gis.geoip2
+.. module:: django_orm.contrib.gis.geoip2
     :synopsis: Python interface for MaxMind's GeoIP2 databases.
 
 The :class:`GeoIP2` object is a wrapper for the `MaxMind geoip2 Python
@@ -27,7 +27,7 @@ Example
 
 Here is an example of its usage::
 
-    >>> from django.contrib.gis.geoip2 import GeoIP2
+    >>> from django_orm.contrib.gis.geoip2 import GeoIP2
     >>> g = GeoIP2()
     >>> g.country('google.com')
     {'country_code': 'US', 'country_name': 'United States'}
@@ -140,7 +140,7 @@ Returns a coordinate tuple of (latitude, longitude),
 
 .. method:: GeoIP2.geos(query)
 
-Returns a :class:`~django.contrib.gis.geos.Point` object corresponding to the
+Returns a :class:`~django_orm.contrib.gis.geos.Point` object corresponding to the
 query.
 
 Settings

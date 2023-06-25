@@ -1,5 +1,5 @@
-from django.core.exceptions import FieldError
-from django.test import SimpleTestCase, TestCase
+from django_orm.core.exceptions import FieldError
+from django_orm.test import SimpleTestCase, TestCase
 
 from .models import (
     Bookmark,

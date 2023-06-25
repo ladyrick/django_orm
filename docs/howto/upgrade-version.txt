@@ -127,6 +127,6 @@ If you are using caching provided by Django, you should consider clearing your
 cache after upgrading. Otherwise you may run into problems, for example, if you
 are caching pickled objects as these objects are not guaranteed to be
 pickle-compatible across Django versions. A past instance of incompatibility
-was caching pickled :class:`~django.http.HttpResponse` objects, either
-directly or indirectly via the :func:`~django.views.decorators.cache.cache_page`
+was caching pickled :class:`~django_orm.http.HttpResponse` objects, either
+directly or indirectly via the :func:`~django_orm.views.decorators.cache.cache_page`
 decorator.

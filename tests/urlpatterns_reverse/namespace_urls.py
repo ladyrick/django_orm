@@ -1,4 +1,4 @@
-from django.urls import include, path, re_path
+from django_orm.urls import include, path, re_path
 
 from . import views
 from .utils import URLObject

@@ -1,13 +1,13 @@
 import os
 import unittest
 
-from django.forms.renderers import (
+from django_orm.forms.renderers import (
     BaseRenderer,
     DjangoTemplates,
     Jinja2,
     TemplatesSetting,
 )
-from django.test import SimpleTestCase
+from django_orm.test import SimpleTestCase
 
 try:
     import jinja2

@@ -31,7 +31,7 @@ several bugs in 1.6.1:
 * Fixed a regression in multiple-table inheritance ``exclude()`` queries
   (:ticket:`21787`).
 
-* Added missing items to ``django.utils.timezone.__all__``
+* Added missing items to ``django_orm.utils.timezone.__all__``
   (:ticket:`21880`).
 
 * Fixed a field misalignment issue with ``select_related()`` and model
@@ -45,8 +45,8 @@ several bugs in 1.6.1:
   (:ticket:`19884`).
 
 * Fixed an issue where lazy objects weren't actually marked as safe when passed
-  through :func:`~django.utils.safestring.mark_safe` and could end up being
+  through :func:`~django_orm.utils.safestring.mark_safe` and could end up being
   double-escaped (:ticket:`21882`).
 
-Additionally, Django's vendored version of six, ``django.utils.six`` has been
+Additionally, Django's vendored version of six, ``django_orm.utils.six`` has been
 upgraded to the latest release (1.5.2).

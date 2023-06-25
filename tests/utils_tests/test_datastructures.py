@@ -1,12 +1,12 @@
 """
-Tests for stuff in django.utils.datastructures.
+Tests for stuff in django_orm.utils.datastructures.
 """
 import collections.abc
 import copy
 import pickle
 
-from django.test import SimpleTestCase
-from django.utils.datastructures import (
+from django_orm.test import SimpleTestCase
+from django_orm.utils.datastructures import (
     CaseInsensitiveMapping,
     DictWrapper,
     ImmutableList,

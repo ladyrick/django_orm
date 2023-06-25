@@ -26,6 +26,6 @@ Bugfixes
 ========
 
 * Fixed a data loss possibility in
-  :class:`~django.contrib.postgres.forms.SplitArrayField`. When using with
+  :class:`~django_orm.contrib.postgres.forms.SplitArrayField`. When using with
   ``ArrayField(BooleanField())``, all values after the first ``True`` value
   were marked as checked instead of preserving passed values (:ticket:`31073`).

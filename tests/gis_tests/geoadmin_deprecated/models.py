@@ -1,6 +1,6 @@
-from django.contrib.gis.db import models
-from django.test import ignore_warnings
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.contrib.gis.db import models
+from django_orm.test import ignore_warnings
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from ..admin import admin
 

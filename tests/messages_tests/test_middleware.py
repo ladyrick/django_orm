@@ -1,7 +1,7 @@
 import unittest
 
-from django.contrib.messages.middleware import MessageMiddleware
-from django.http import HttpRequest, HttpResponse
+from django_orm.contrib.messages.middleware import MessageMiddleware
+from django_orm.http import HttpRequest, HttpResponse
 
 
 class MiddlewareTests(unittest.TestCase):

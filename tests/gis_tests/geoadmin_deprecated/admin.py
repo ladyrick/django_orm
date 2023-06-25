@@ -1,4 +1,4 @@
-from django.contrib.gis import admin
+from django_orm.contrib.gis import admin
 
 
 class UnmodifiableAdmin(admin.OSMGeoAdmin):

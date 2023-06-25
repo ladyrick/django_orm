@@ -38,7 +38,7 @@ uWSGI model
 -----------
 
 uWSGI operates on a client-server model. Your web server (e.g., nginx, Apache)
-communicates with a ``django-uwsgi`` "worker" process to serve dynamic content.
+communicates with a ``django_orm-uwsgi`` "worker" process to serve dynamic content.
 
 Configuring and starting the uWSGI server for Django
 ----------------------------------------------------
@@ -65,7 +65,7 @@ Here's an example command to start a uWSGI server::
 
 This assumes you have a top-level project package named ``mysite``, and
 within it a module :file:`mysite/wsgi.py` that contains a WSGI ``application``
-object. This is the layout you'll have if you ran ``django-admin
+object. This is the layout you'll have if you ran ``django_orm-admin
 startproject mysite`` (using your own project name in place of ``mysite``) with
 a recent version of Django. If this file doesn't exist, you'll need to create
 it. See the :doc:`/howto/deployment/wsgi/index` documentation for the default

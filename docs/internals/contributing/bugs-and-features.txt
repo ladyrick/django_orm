@@ -17,14 +17,14 @@ Otherwise, before reporting a bug or requesting a new feature on the
   `searching`_ or running `custom queries`_ in the ticket tracker.
 
 * Don't use the ticket system to ask support questions. Use the
-  |django-users| list or the `#django`_ IRC channel for that.
+  |django_orm-users| list or the `#django_orm`_ IRC channel for that.
 
 * Don't reopen issues that have been marked "wontfix" without finding consensus
-  to do so on |django-developers|.
+  to do so on |django_orm-developers|.
 
 * Don't use the ticket tracker for lengthy discussions, because they're
   likely to get lost. If a particular ticket is controversial, please move the
-  discussion to |django-developers|.
+  discussion to |django_orm-developers|.
 
 .. _reporting-bugs:
 
@@ -39,7 +39,7 @@ particular:
 * **Do** read the :doc:`FAQ </faq/index>` to see if your issue might
   be a well-known question.
 
-* **Do** ask on |django-users| or `#django`_ *first* if you're not sure if
+* **Do** ask on |django_orm-users| or `#django_orm`_ *first* if you're not sure if
   what you're seeing is a bug.
 
 * **Do** write complete, reproducible, specific bug reports. You must
@@ -49,8 +49,8 @@ particular:
   small test case is the best way to report a bug, as it gives us a
   helpful way to confirm the bug quickly.
 
-* **Don't** post to |django-developers| only to announce that you have filed a
-  bug report. All the tickets are mailed to another list, |django-updates|,
+* **Don't** post to |django_orm-developers| only to announce that you have filed a
+  bug report. All the tickets are mailed to another list, |django_orm-updates|,
   which is tracked by developers and interested community members; we see them
   as they are filed.
 
@@ -94,7 +94,7 @@ part of that. Here are some tips on how to make a request most effectively:
   suggest that you develop it independently. Then, if your project gathers
   sufficient community support, we may consider it for inclusion in Django.
 
-* First request the feature on the |django-developers| list, not in the
+* First request the feature on the |django_orm-developers| list, not in the
   ticket tracker. It'll get read more closely if it's on the mailing list.
   This is even more important for large-scale feature requests. We like to
   discuss any big changes to Django's core on the mailing list before
@@ -109,7 +109,7 @@ part of that. Here are some tips on how to make a request most effectively:
   achieving the same thing.
 
 If there's a consensus agreement on the feature, then it's appropriate to
-create a ticket. Include a link to the discussion on |django-developers| in the
+create a ticket. Include a link to the discussion on |django_orm-developers| in the
 ticket description.
 
 As with most open-source projects, code talks. If you are willing to write the
@@ -125,7 +125,7 @@ How we make decisions
 =====================
 
 Whenever possible, we strive for a rough consensus. To that end, we'll often
-have informal votes on |django-developers| or the Django Forum about a feature.
+have informal votes on |django_orm-developers| or the Django Forum about a feature.
 In these votes we follow the voting style invented by Apache and used on Python
 itself, where votes are given as +1, +0, -0, or -1.
 Roughly translated, these votes mean:
@@ -160,8 +160,8 @@ Since this process allows any steering council member to veto a proposal, a
 convert that "-1" into at least a "+0".
 
 Votes on technical matters should be announced and held in public on the
-|django-developers| mailing list or on the Django Forum.
+|django_orm-developers| mailing list or on the Django Forum.
 
 .. _searching: https://code.djangoproject.com/search
 .. _custom queries: https://code.djangoproject.com/query
-.. _#django: https://web.libera.chat/#django
+.. _#django_orm: https://web.libera.chat/#django_orm

@@ -1,12 +1,12 @@
-from django.contrib import admin
-from django.contrib.admin.sites import AdminSite
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.admin import GenericTabularInline
-from django.contrib.contenttypes.models import ContentType
-from django.forms.formsets import DEFAULT_MAX_NUM
-from django.forms.models import ModelForm
-from django.test import RequestFactory, SimpleTestCase, TestCase, override_settings
-from django.urls import reverse
+from django_orm.contrib import admin
+from django_orm.contrib.admin.sites import AdminSite
+from django_orm.contrib.auth.models import User
+from django_orm.contrib.contenttypes.admin import GenericTabularInline
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.forms.formsets import DEFAULT_MAX_NUM
+from django_orm.forms.models import ModelForm
+from django_orm.test import RequestFactory, SimpleTestCase, TestCase, override_settings
+from django_orm.urls import reverse
 
 from .admin import MediaInline, MediaPermanentInline
 from .admin import site as admin_site

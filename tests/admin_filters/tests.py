@@ -2,7 +2,7 @@ import datetime
 import sys
 import unittest
 
-from django.contrib.admin import (
+from django_orm.contrib.admin import (
     AllValuesFieldListFilter,
     BooleanFieldListFilter,
     EmptyFieldListFilter,
@@ -12,11 +12,11 @@ from django.contrib.admin import (
     SimpleListFilter,
     site,
 )
-from django.contrib.admin.options import IncorrectLookupParameters
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
-from django.core.exceptions import ImproperlyConfigured
-from django.test import RequestFactory, TestCase, override_settings
+from django_orm.contrib.admin.options import IncorrectLookupParameters
+from django_orm.contrib.auth.admin import UserAdmin
+from django_orm.contrib.auth.models import User
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.test import RequestFactory, TestCase, override_settings
 
 from .models import Book, Bookmark, Department, Employee, ImprovedBook, TaggedItem
 

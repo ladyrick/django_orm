@@ -9,16 +9,16 @@ from unittest import mock
 
 from admin_scripts.tests import AdminScriptTestCase
 
-from django.conf import settings
-from django.contrib.staticfiles import storage
-from django.contrib.staticfiles.management.commands import collectstatic, runserver
-from django.core.exceptions import ImproperlyConfigured
-from django.core.management import CommandError, call_command
-from django.core.management.base import SystemCheckError
-from django.test import RequestFactory, override_settings
-from django.test.utils import extend_sys_path
-from django.utils._os import symlinks_supported
-from django.utils.functional import empty
+from django_orm.conf import settings
+from django_orm.contrib.staticfiles import storage
+from django_orm.contrib.staticfiles.management.commands import collectstatic, runserver
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.core.management import CommandError, call_command
+from django_orm.core.management.base import SystemCheckError
+from django_orm.test import RequestFactory, override_settings
+from django_orm.test.utils import extend_sys_path
+from django_orm.utils._os import symlinks_supported
+from django_orm.utils.functional import empty
 
 from .cases import CollectionTestCase, StaticFilesTestCase, TestDefaults
 from .settings import TEST_ROOT, TEST_SETTINGS
@@ -34,10 +34,10 @@ class TestNoFilesCreated:
 
 
 class TestRunserver(StaticFilesTestCase):
-    @override_settings(MIDDLEWARE=["django.middleware.common.CommonMiddleware"])
+    @override_settings(MIDDLEWARE=["django_orm.middleware.common.CommonMiddleware"])
     def test_middleware_loaded_only_once(self):
         command = runserver.Command()
-        with mock.patch("django.middleware.common.CommonMiddleware") as mocked:
+        with mock.patch("django_orm.middleware.common.CommonMiddleware") as mocked:
             command.get_handler(use_static_handler=True, insecure_serving=True)
             self.assertEqual(mocked.call_count, 1)
 
@@ -142,7 +142,7 @@ class TestConfiguration(StaticFilesTestCase):
             storage.staticfiles_storage._wrapped = empty
             with self.settings(
                 STATICFILES_STORAGE=(
-                    "django.contrib.staticfiles.storage.StaticFilesStorage"
+                    "django_orm.contrib.staticfiles.storage.StaticFilesStorage"
                 )
             ):
                 command = collectstatic.Command()
@@ -181,7 +181,7 @@ class TestCollectionHelpSubcommand(AdminScriptTestCase):
         Even if the STATIC_ROOT setting is not set, one can still call the
         `manage.py help collectstatic` command.
         """
-        self.write_settings("settings.py", apps=["django.contrib.staticfiles"])
+        self.write_settings("settings.py", apps=["django_orm.contrib.staticfiles"])
         out, err = self.run_manage(["help", "collectstatic"])
         self.assertNoOutput(err)
 
@@ -242,7 +242,7 @@ class TestCollectionVerbosity(CollectionTestCase):
 
     @override_settings(
         STATICFILES_STORAGE=(
-            "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+            "django_orm.contrib.staticfiles.storage.ManifestStaticFilesStorage"
         )
     )
     def test_verbosity_1_with_post_process(self):
@@ -252,7 +252,7 @@ class TestCollectionVerbosity(CollectionTestCase):
 
     @override_settings(
         STATICFILES_STORAGE=(
-            "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+            "django_orm.contrib.staticfiles.storage.ManifestStaticFilesStorage"
         )
     )
     def test_verbosity_2_with_post_process(self):
@@ -395,7 +395,7 @@ class TestCollectionDryRun(TestNoFilesCreated, CollectionTestCase):
 
 
 @override_settings(
-    STATICFILES_STORAGE="django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+    STATICFILES_STORAGE="django_orm.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 )
 class TestCollectionDryRunManifestStaticFilesStorage(TestCollectionDryRun):
     pass

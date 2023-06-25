@@ -1,8 +1,8 @@
 from functools import wraps
 
-from django.db import IntegrityError, connections, transaction
-from django.test import TestCase, skipUnlessDBFeature
-from django.test.testcases import DatabaseOperationForbidden, TestData
+from django_orm.db import IntegrityError, connections, transaction
+from django_orm.test import TestCase, skipUnlessDBFeature
+from django_orm.test.testcases import DatabaseOperationForbidden, TestData
 
 from .models import Car, Person, PossessedCar
 

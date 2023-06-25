@@ -2,7 +2,7 @@
 Tests for forcing insert and update queries (instead of Django's normal
 automatic behavior).
 """
-from django.db import models
+from django_orm.db import models
 
 
 class Counter(models.Model):

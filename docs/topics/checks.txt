@@ -2,7 +2,7 @@
 System check framework
 ======================
 
-.. module:: django.core.checks
+.. module:: django_orm.core.checks
 
 The system check framework is a set of static checks for validating Django
 projects. It detects common problems and provides hints for how to fix them.
@@ -29,7 +29,7 @@ The framework is flexible and allows you to write functions that perform
 any other kind of check you may require. The following is an example stub
 check function::
 
-    from django.core.checks import Error, register
+    from django_orm.core.checks import Error, register
 
     @register()
     def example_check(app_configs, **kwargs):
@@ -64,8 +64,8 @@ The function must return a list of messages. If no problems are found as a resul
 of the check, the check function must return an empty list.
 
 The warnings and errors raised by the check method must be instances of
-:class:`~django.core.checks.CheckMessage`. An instance of
-:class:`~django.core.checks.CheckMessage` encapsulates a single reportable
+:class:`~django_orm.core.checks.CheckMessage`. An instance of
+:class:`~django_orm.core.checks.CheckMessage` encapsulates a single reportable
 error or warning. It also provides context and hints applicable to the
 message, and a unique identifier that is used for filtering purposes.
 
@@ -91,7 +91,7 @@ Registering and labeling checks
 Lastly, your check function must be registered explicitly with system check
 registry. Checks should be registered in a file that's loaded when your
 application is loaded; for example, in the :meth:`AppConfig.ready()
-<django.apps.AppConfig.ready>` method.
+<django_orm.apps.AppConfig.ready>` method.
 
 .. function:: register(*tags)(function)
 
@@ -100,7 +100,7 @@ check. Tagging checks is useful since it allows you to run only a certain
 group of checks. For example, to register a compatibility check, you would
 make the following call::
 
-    from django.core.checks import register, Tags
+    from django_orm.core.checks import register, Tags
 
     @register(Tags.compatibility)
     def my_check(app_configs, **kwargs):
@@ -147,8 +147,8 @@ constructor of ``IntegerField``. You may want to add a check to ensure that user
 provide a min value that is less than or equal to the max value. The following
 code snippet shows how you can implement this check::
 
-    from django.core import checks
-    from django.db import models
+    from django_orm.core import checks
+    from django_orm.db import models
 
     class RangedIntegerField(models.IntegerField):
         def __init__(self, min=None, max=None, **kwargs):
@@ -182,7 +182,7 @@ code snippet shows how you can implement this check::
             return []
 
 If you wanted to add checks to a model manager, you would take the same
-approach on your subclass of :class:`~django.db.models.Manager`.
+approach on your subclass of :class:`~django_orm.db.models.Manager`.
 
 If you want to add a check to a model class, the approach is *almost* the same:
 the only difference is that the check is a classmethod, not an instance method::
@@ -199,7 +199,7 @@ Writing tests
 
 Messages are comparable. That allows you to easily write tests::
 
-    from django.core.checks import Error
+    from django_orm.core.checks import Error
     errors = checked_object.check()
     expected_errors = [
         Error(

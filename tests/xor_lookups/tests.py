@@ -1,5 +1,5 @@
-from django.db.models import Q
-from django.test import TestCase
+from django_orm.db.models import Q
+from django_orm.test import TestCase
 
 from .models import Number
 

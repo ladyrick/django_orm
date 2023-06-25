@@ -1,4 +1,4 @@
-from django.contrib.gis.db.models.functions import (
+from django_orm.contrib.gis.db.models.functions import (
     Area,
     Distance,
     Length,
@@ -6,10 +6,10 @@ from django.contrib.gis.db.models.functions import (
     Transform,
     Union,
 )
-from django.contrib.gis.geos import GEOSGeometry, LineString, Point
-from django.contrib.gis.measure import D  # alias for Distance
-from django.db import NotSupportedError, connection
-from django.db.models import (
+from django_orm.contrib.gis.geos import GEOSGeometry, LineString, Point
+from django_orm.contrib.gis.measure import D  # alias for Distance
+from django_orm.db import NotSupportedError, connection
+from django_orm.db.models import (
     Case,
     Count,
     Exists,
@@ -20,7 +20,7 @@ from django.db.models import (
     Value,
     When,
 )
-from django.test import TestCase, skipIfDBFeature, skipUnlessDBFeature
+from django_orm.test import TestCase, skipIfDBFeature, skipUnlessDBFeature
 
 from ..utils import FuncTestMixin
 from .models import (

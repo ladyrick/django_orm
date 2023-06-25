@@ -101,8 +101,8 @@ Python style
 * In docstrings, follow the style of existing docstrings and :pep:`257`.
 
 * In tests, use
-  :meth:`~django.test.SimpleTestCase.assertRaisesMessage` and
-  :meth:`~django.test.SimpleTestCase.assertWarnsMessage`
+  :meth:`~django_orm.test.SimpleTestCase.assertRaisesMessage` and
+  :meth:`~django_orm.test.SimpleTestCase.assertWarnsMessage`
   instead of :meth:`~unittest.TestCase.assertRaises` and
   :meth:`~unittest.TestCase.assertWarns` so you can check the
   exception or warning message. Use :meth:`~unittest.TestCase.assertRaisesRegex`
@@ -171,7 +171,7 @@ Imports
   For example (comments are for explanatory purposes only):
 
   .. code-block:: python
-      :caption: ``django/contrib/admin/example.py``
+      :caption: ``django_orm/contrib/admin/example.py``
 
       # future
       from __future__ import unicode_literals
@@ -184,8 +184,8 @@ Imports
       import bcrypt
 
       # Django
-      from django.http import Http404
-      from django.http.response import (
+      from django_orm.http import Http404
+      from django_orm.http.response import (
           Http404, HttpResponse, HttpResponseNotAllowed, StreamingHttpResponse,
           cookie,
       )
@@ -207,11 +207,11 @@ Imports
 
 * Use convenience imports whenever available. For example, do this::
 
-      from django.views import View
+      from django_orm.views import View
 
   instead of::
 
-      from django.views.generic.base import View
+      from django_orm.views.generic.base import View
 
 Template style
 ==============
@@ -221,13 +221,13 @@ Template style
 
   Do this:
 
-  .. code-block:: html+django
+  .. code-block:: html+django_orm
 
       {{ foo }}
 
   Don't do this:
 
-  .. code-block:: html+django
+  .. code-block:: html+django_orm
 
       {{foo}}
 
@@ -317,10 +317,10 @@ Model style
             (DIRECTION_DOWN, 'Down'),
         ]
 
-Use of ``django.conf.settings``
+Use of ``django_orm.conf.settings``
 ===============================
 
-Modules should not in general use settings stored in ``django.conf.settings``
+Modules should not in general use settings stored in ``django_orm.conf.settings``
 at the top level (i.e. evaluated when the module is imported). The explanation
 for this is as follows:
 
@@ -328,7 +328,7 @@ Manual configuration of settings (i.e. not relying on the
 :envvar:`DJANGO_SETTINGS_MODULE` environment variable) is allowed and possible
 as follows::
 
-    from django.conf import settings
+    from django_orm.conf import settings
 
     settings.configure({}, SOME_SETTING='foo')
 
@@ -339,8 +339,8 @@ already been configured).
 
 So, if there is a module containing some code as follows::
 
-    from django.conf import settings
-    from django.urls import get_callable
+    from django_orm.conf import settings
+    from django_orm.urls import get_callable
 
     default_foo_view = get_callable(settings.FOO_VIEW)
 
@@ -350,8 +350,8 @@ level is incompatible with the ability to configure the settings object
 manually, or makes it very difficult in some circumstances.
 
 Instead of the above code, a level of laziness or indirection must be used,
-such as ``django.utils.functional.LazyObject``,
-``django.utils.functional.lazy()`` or ``lambda``.
+such as ``django_orm.utils.functional.LazyObject``,
+``django_orm.utils.functional.lazy()`` or ``lambda``.
 
 Miscellaneous
 =============

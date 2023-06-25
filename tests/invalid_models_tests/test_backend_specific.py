@@ -1,9 +1,9 @@
 from unittest import mock
 
-from django.core.checks import Error
-from django.db import connections, models
-from django.test import SimpleTestCase
-from django.test.utils import isolate_apps
+from django_orm.core.checks import Error
+from django_orm.db import connections, models
+from django_orm.test import SimpleTestCase
+from django_orm.test.utils import isolate_apps
 
 
 def dummy_allow_migrate(db, app_label, **hints):
@@ -14,7 +14,7 @@ def dummy_allow_migrate(db, app_label, **hints):
 
 @isolate_apps("invalid_models_tests")
 class BackendSpecificChecksTests(SimpleTestCase):
-    @mock.patch("django.db.models.fields.router.allow_migrate", new=dummy_allow_migrate)
+    @mock.patch("django_orm.db.models.fields.router.allow_migrate", new=dummy_allow_migrate)
     def test_check_field(self):
         """Test if backend specific checks are performed."""
         error = Error("an error")

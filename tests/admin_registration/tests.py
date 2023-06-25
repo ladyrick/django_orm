@@ -1,8 +1,8 @@
-from django.contrib import admin
-from django.contrib.admin.decorators import register
-from django.contrib.admin.sites import site
-from django.core.exceptions import ImproperlyConfigured
-from django.test import SimpleTestCase
+from django_orm.contrib import admin
+from django_orm.contrib.admin.decorators import register
+from django_orm.contrib.admin.sites import site
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.test import SimpleTestCase
 
 from .models import Location, Person, Place, Traveler
 

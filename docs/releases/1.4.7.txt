@@ -16,7 +16,7 @@ template tag by specifying a relative path that starts with one of the allowed
 roots. For example, if ``ALLOWED_INCLUDE_ROOTS = ("/var/www",)`` the following
 would be possible:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% ssi "/var/www/../../etc/passwd" %}
 

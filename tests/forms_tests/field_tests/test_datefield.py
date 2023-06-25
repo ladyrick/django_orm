@@ -1,9 +1,9 @@
 from datetime import date, datetime
 
-from django.core.exceptions import ValidationError
-from django.forms import DateField, Form, HiddenInput, SelectDateWidget
-from django.test import SimpleTestCase
-from django.utils import translation
+from django_orm.core.exceptions import ValidationError
+from django_orm.forms import DateField, Form, HiddenInput, SelectDateWidget
+from django_orm.test import SimpleTestCase
+from django_orm.utils import translation
 
 
 class GetDate(Form):

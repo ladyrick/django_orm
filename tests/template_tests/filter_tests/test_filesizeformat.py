@@ -1,6 +1,6 @@
-from django.template.defaultfilters import filesizeformat
-from django.test import SimpleTestCase
-from django.utils import translation
+from django_orm.template.defaultfilters import filesizeformat
+from django_orm.test import SimpleTestCase
+from django_orm.utils import translation
 
 
 class FunctionTests(SimpleTestCase):

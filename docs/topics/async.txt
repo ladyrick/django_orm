@@ -54,7 +54,7 @@ If you want to use these, you will need to deploy Django using
     Middleware can be built to support :ref:`both sync and async
     <async-middleware>` contexts. Some of Django's middleware is built like
     this, but not all. To see what middleware Django has to adapt for, you can
-    turn on debug logging for the ``django.request`` logger and look for log
+    turn on debug logging for the ``django_orm.request`` logger and look for log
     messages about *"Asynchronous handler adapted for middleware ..."*.
 
 In both ASGI and WSGI mode, you can still safely use asynchronous support to
@@ -136,7 +136,7 @@ that are also protected in this way.
 
 If you try to run any of these parts from a thread where there is a *running
 event loop*, you will get a
-:exc:`~django.core.exceptions.SynchronousOnlyOperation` error. Note that you
+:exc:`~django_orm.core.exceptions.SynchronousOnlyOperation` error. Note that you
 don't have to be inside an async function directly to have this error occur. If
 you have called a sync function directly from an async function,
 without using :func:`sync_to_async` or similar, then it can also occur. This is
@@ -159,7 +159,7 @@ If you're using an IPython shell, you can disable this event loop by running::
     %autoawait off
 
 as a command at the IPython prompt. This will allow you to run synchronous code
-without generating :exc:`~django.core.exceptions.SynchronousOnlyOperation`
+without generating :exc:`~django_orm.core.exceptions.SynchronousOnlyOperation`
 errors; however, you also won't be able to ``await`` asynchronous APIs. To turn
 the event loop back on, run::
 
@@ -301,16 +301,16 @@ trigger the thread safety checks:
     # DJANGO_SETTINGS_MODULE=settings.py python -m asyncio
     >>> import asyncio
     >>> from asgiref.sync import sync_to_async
-    >>> from django.db import connection
+    >>> from django_orm.db import connection
     >>> # In an async context so you cannot use the database directly:
     >>> connection.cursor()
     ...
-    django.core.exceptions.SynchronousOnlyOperation: You cannot call this from
+    django_orm.core.exceptions.SynchronousOnlyOperation: You cannot call this from
     an async context - use a thread or sync_to_async.
     >>> # Nor can you pass resolved connection attributes across threads:
     >>> await sync_to_async(connection.cursor)()
     ...
-    django.db.utils.DatabaseError: DatabaseWrapper objects created in a thread
+    django_orm.db.utils.DatabaseError: DatabaseWrapper objects created in a thread
     can only be used in that same thread. The object with alias 'default' was
     created in thread id 4371465600 and this is thread id 6131478528.
 

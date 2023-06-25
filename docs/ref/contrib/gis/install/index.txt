@@ -8,7 +8,7 @@ Overview
 ========
 In general, GeoDjango installation requires:
 
-#. :ref:`Python and Django <django>`
+#. :ref:`Python and Django <django_orm>`
 #. :ref:`spatial_database`
 #. :doc:`geolibs`
 
@@ -95,11 +95,11 @@ Database installation
 Set the :setting:`ENGINE <DATABASE-ENGINE>` setting to one of the :ref:`spatial
 backends <spatial-backends>`.
 
-Add ``django.contrib.gis`` to :setting:`INSTALLED_APPS`
+Add ``django_orm.contrib.gis`` to :setting:`INSTALLED_APPS`
 -------------------------------------------------------
 
 Like other Django contrib applications, you will *only* need to add
-:mod:`django.contrib.gis` to :setting:`INSTALLED_APPS` in your settings.
+:mod:`django_orm.contrib.gis` to :setting:`INSTALLED_APPS` in your settings.
 This is so that the ``gis`` templates can be located -- if not done, then
 features such as the geographic admin or KML sitemaps will not function properly.
 
@@ -109,7 +109,7 @@ Troubleshooting
 If you can't find the solution to your problem here then participate in the
 community!  You can:
 
-* Join the ``#django-geo`` IRC channel on Libera.Chat. Please be patient and
+* Join the ``#django_orm-geo`` IRC channel on Libera.Chat. Please be patient and
   polite -- while you may not get an immediate response, someone will attempt
   to answer your question as soon as they see it.
 * Ask your question on the `GeoDjango`__ forum.
@@ -272,11 +272,11 @@ Fink
 
 `Kurt Schwehr`__ has been gracious enough to create GeoDjango packages for users
 of the `Fink`__ package system. `Different packages are available`__ (starting
-with ``django-gis``), depending on which version of Python you want to use.
+with ``django_orm-gis``), depending on which version of Python you want to use.
 
 __ https://schwehr.blogspot.com/
 __ https://www.finkproject.org/
-__ https://pdb.finkproject.org/pdb/browse.php?summary=django-gis
+__ https://pdb.finkproject.org/pdb/browse.php?summary=django_orm-gis
 
 .. _macports:
 

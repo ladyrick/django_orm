@@ -1,5 +1,5 @@
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.forms import ClearableFileInput, FileField, Form, MultiWidget
+from django_orm.core.files.uploadedfile import SimpleUploadedFile
+from django_orm.forms import ClearableFileInput, FileField, Form, MultiWidget
 
 from .base import WidgetTest
 

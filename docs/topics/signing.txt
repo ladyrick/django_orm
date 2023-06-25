@@ -2,7 +2,7 @@
 Cryptographic signing
 =====================
 
-.. module:: django.core.signing
+.. module:: django_orm.core.signing
    :synopsis: Django's signing framework.
 
 The golden rule of web application security is to never trust data from
@@ -45,10 +45,10 @@ validate signed data and must be kept secure.
 Using the low-level API
 =======================
 
-Django's signing methods live in the ``django.core.signing`` module.
+Django's signing methods live in the ``django_orm.core.signing`` module.
 To sign a value, first instantiate a ``Signer`` instance::
 
-    >>> from django.core.signing import Signer
+    >>> from django_orm.core.signing import Signer
     >>> signer = Signer()
     >>> value = signer.sign('My string')
     >>> value
@@ -83,9 +83,9 @@ If you wish to protect a list, tuple, or dictionary you can do so using the
 See :ref:`signing-complex-data` for more details.
 
 If the signature or value have been altered in any way, a
-``django.core.signing.BadSignature`` exception will be raised::
+``django_orm.core.signing.BadSignature`` exception will be raised::
 
-    >>> from django.core import signing
+    >>> from django_orm.core import signing
     >>> value += 'm'
     >>> try:
     ...    original = signer.unsign(value)
@@ -157,7 +157,7 @@ timestamp to the value. This allows you to confirm that a signed value was
 created within a specified period of time::
 
     >>> from datetime import timedelta
-    >>> from django.core.signing import TimestampSigner
+    >>> from django_orm.core.signing import TimestampSigner
     >>> signer = TimestampSigner()
     >>> value = signer.sign('hello')
     >>> value
@@ -203,12 +203,12 @@ Protecting complex data structures
 If you wish to protect a list, tuple or dictionary you can do so using the
 ``Signer.sign_object()`` and ``unsign_object()`` methods, or signing module's
 ``dumps()`` or ``loads()`` functions (which are shortcuts for
-``TimestampSigner(salt='django.core.signing').sign_object()/unsign_object()``).
+``TimestampSigner(salt='django_orm.core.signing').sign_object()/unsign_object()``).
 These use JSON serialization under the hood. JSON ensures that even if your
 :setting:`SECRET_KEY` is stolen an attacker will not be able to execute
 arbitrary commands by exploiting the pickle format::
 
-    >>> from django.core import signing
+    >>> from django_orm.core import signing
     >>> signer = signing.TimestampSigner()
     >>> value = signer.sign_object({'foo': 'bar'})
     >>> value
@@ -225,17 +225,17 @@ Because of the nature of JSON (there is no native distinction between lists
 and tuples) if you pass in a tuple, you will get a list from
 ``signing.loads(object)``::
 
-    >>> from django.core import signing
+    >>> from django_orm.core import signing
     >>> value = signing.dumps(('a','b','c'))
     >>> signing.loads(value)
     ['a', 'b', 'c']
 
-.. function:: dumps(obj, key=None, salt='django.core.signing', serializer=JSONSerializer, compress=False)
+.. function:: dumps(obj, key=None, salt='django_orm.core.signing', serializer=JSONSerializer, compress=False)
 
     Returns URL-safe, signed base64 compressed JSON string. Serialized object
     is signed using :class:`~TimestampSigner`.
 
-.. function:: loads(string, key=None, salt='django.core.signing', serializer=JSONSerializer, max_age=None, fallback_keys=None)
+.. function:: loads(string, key=None, salt='django_orm.core.signing', serializer=JSONSerializer, max_age=None, fallback_keys=None)
 
     Reverse of ``dumps()``, raises ``BadSignature`` if signature fails.
     Checks ``max_age`` (in seconds) if given.

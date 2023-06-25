@@ -1,10 +1,10 @@
 import decimal
 
-from django.core.exceptions import ValidationError
-from django.forms import DecimalField, NumberInput, Widget
-from django.test import SimpleTestCase, ignore_warnings, override_settings
-from django.utils import formats, translation
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.core.exceptions import ValidationError
+from django_orm.forms import DecimalField, NumberInput, Widget
+from django_orm.test import SimpleTestCase, ignore_warnings, override_settings
+from django_orm.utils import formats, translation
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from . import FormFieldAssertionsMixin
 

@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from django.contrib.gis.db.models import Extent
-from django.contrib.gis.shortcuts import render_to_kmz
-from django.db.models import Count, Min
-from django.test import TestCase, skipUnlessDBFeature
+from django_orm.contrib.gis.db.models import Extent
+from django_orm.contrib.gis.shortcuts import render_to_kmz
+from django_orm.db.models import Count, Min
+from django_orm.test import TestCase, skipUnlessDBFeature
 
 from .models import City, PennsylvaniaCity, State, Truth
 

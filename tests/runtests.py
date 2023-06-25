@@ -14,22 +14,22 @@ import warnings
 from pathlib import Path
 
 try:
-    import django
+    import django_orm
 except ImportError as e:
     raise RuntimeError(
         "Django module not found, reference tests/README.rst for instructions."
     ) from e
 else:
-    from django.apps import apps
-    from django.conf import settings
-    from django.core.exceptions import ImproperlyConfigured
-    from django.db import connection, connections
-    from django.test import TestCase, TransactionTestCase
-    from django.test.runner import get_max_test_processes, parallel_type
-    from django.test.selenium import SeleniumTestCaseBase
-    from django.test.utils import NullTimeKeeper, TimeKeeper, get_runner
-    from django.utils.deprecation import RemovedInDjango50Warning
-    from django.utils.log import DEFAULT_LOGGING
+    from django_orm.apps import apps
+    from django_orm.conf import settings
+    from django_orm.core.exceptions import ImproperlyConfigured
+    from django_orm.db import connection, connections
+    from django_orm.test import TestCase, TransactionTestCase
+    from django_orm.test.runner import get_max_test_processes, parallel_type
+    from django_orm.test.selenium import SeleniumTestCaseBase
+    from django_orm.test.utils import NullTimeKeeper, TimeKeeper, get_runner
+    from django_orm.utils.deprecation import RemovedInDjango50Warning
+    from django_orm.utils.log import DEFAULT_LOGGING
 
 try:
     import MySQLdb
@@ -79,30 +79,30 @@ SUBDIRS_TO_SKIP = {
 }
 
 ALWAYS_INSTALLED_APPS = [
-    "django.contrib.contenttypes",
-    "django.contrib.auth",
-    "django.contrib.sites",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.admin.apps.SimpleAdminConfig",
-    "django.contrib.staticfiles",
+    "django_orm.contrib.contenttypes",
+    "django_orm.contrib.auth",
+    "django_orm.contrib.sites",
+    "django_orm.contrib.sessions",
+    "django_orm.contrib.messages",
+    "django_orm.contrib.admin.apps.SimpleAdminConfig",
+    "django_orm.contrib.staticfiles",
 ]
 
 ALWAYS_MIDDLEWARE = [
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
+    "django_orm.contrib.sessions.middleware.SessionMiddleware",
+    "django_orm.middleware.common.CommonMiddleware",
+    "django_orm.middleware.csrf.CsrfViewMiddleware",
+    "django_orm.contrib.auth.middleware.AuthenticationMiddleware",
+    "django_orm.contrib.messages.middleware.MessageMiddleware",
 ]
 
 # Need to add the associated contrib app to INSTALLED_APPS in some cases to
 # avoid "RuntimeError: Model class X doesn't declare an explicit app_label
 # and isn't in an application in INSTALLED_APPS."
 CONTRIB_TESTS_TO_APPS = {
-    "deprecation": ["django.contrib.flatpages", "django.contrib.redirects"],
-    "flatpages_tests": ["django.contrib.flatpages"],
-    "redirects_tests": ["django.contrib.redirects"],
+    "deprecation": ["django_orm.contrib.flatpages", "django_orm.contrib.redirects"],
+    "flatpages_tests": ["django_orm.contrib.flatpages"],
+    "redirects_tests": ["django_orm.contrib.redirects"],
 }
 
 
@@ -164,7 +164,7 @@ def get_filtered_test_modules(start_at, start_after, gis_enabled, test_labels=No
         label_modules.add(test_module)
 
     # It would be nice to put this validation earlier but it must come after
-    # django.setup() so that connection.features.gis_enabled can be accessed.
+    # django_orm.setup() so that connection.features.gis_enabled can be accessed.
     if "gis_tests" in label_modules and not gis_enabled:
         print("Aborting: A GIS database backend is required to run gis_tests.")
         sys.exit(1)
@@ -210,15 +210,15 @@ def setup_collect_tests(start_at, start_after, test_labels=None):
     settings.STATIC_ROOT = os.path.join(TMPDIR, "static")
     settings.TEMPLATES = [
         {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
             "DIRS": [TEMPLATE_DIR],
             "APP_DIRS": True,
             "OPTIONS": {
                 "context_processors": [
-                    "django.template.context_processors.debug",
-                    "django.template.context_processors.request",
-                    "django.contrib.auth.context_processors.auth",
-                    "django.contrib.messages.context_processors.messages",
+                    "django_orm.template.context_processors.debug",
+                    "django_orm.template.context_processors.request",
+                    "django_orm.contrib.auth.context_processors.auth",
+                    "django_orm.contrib.messages.context_processors.messages",
                 ],
             },
         }
@@ -236,19 +236,19 @@ def setup_collect_tests(start_at, start_after, test_labels=None):
     log_config = copy.deepcopy(DEFAULT_LOGGING)
     # Filter out non-error logging so we don't have to capture it in lots of
     # tests.
-    log_config["loggers"]["django"]["level"] = "ERROR"
+    log_config["loggers"]["django_orm"]["level"] = "ERROR"
     settings.LOGGING = log_config
     settings.SILENCED_SYSTEM_CHECKS = [
         "fields.W342",  # ForeignKey(unique=True) -> OneToOneField
     ]
 
     # RemovedInDjango50Warning
-    settings.FORM_RENDERER = "django.forms.renderers.DjangoDivFormRenderer"
+    settings.FORM_RENDERER = "django_orm.forms.renderers.DjangoDivFormRenderer"
 
     # Load all the ALWAYS_INSTALLED_APPS.
-    django.setup()
+    django_orm.setup()
 
-    # This flag must be evaluated after django.setup() because otherwise it can
+    # This flag must be evaluated after django_orm.setup() because otherwise it can
     # raise AppRegistryNotReady when running gis_tests in isolation on some
     # backends (e.g. PostGIS).
     gis_enabled = connection.features.gis_enabled
@@ -274,7 +274,7 @@ def get_installed():
     return [app_config.name for app_config in apps.get_app_configs()]
 
 
-# This function should be called only after calling django.setup(),
+# This function should be called only after calling django_orm.setup(),
 # since it calls connection.features.gis_enabled.
 def get_apps_to_install(test_modules):
     for test_module in test_modules:
@@ -285,7 +285,7 @@ def get_apps_to_install(test_modules):
     # Add contrib.gis to INSTALLED_APPS if needed (rather than requiring
     # @override_settings(INSTALLED_APPS=...) on all test cases.
     if connection.features.gis_enabled:
-        yield "django.contrib.gis"
+        yield "django_orm.contrib.gis"
 
 
 def setup_run_tests(verbosity, start_at, start_after, test_labels=None):
@@ -380,7 +380,7 @@ def django_tests(
 
     if verbosity >= 1:
         msg = "Testing against Django installed in '%s'" % os.path.dirname(
-            django.__file__
+            django_orm.__file__
         )
         if max_parallel > 1:
             msg += " with up to %d processes" % max_parallel
@@ -390,10 +390,10 @@ def django_tests(
     test_labels, state = setup_run_tests(*process_setup_args)
     # Run the test suite, including the extra validation tests.
     if not hasattr(settings, "TEST_RUNNER"):
-        settings.TEST_RUNNER = "django.test.runner.DiscoverRunner"
+        settings.TEST_RUNNER = "django_orm.test.runner.DiscoverRunner"
 
     if parallel in {0, "auto"}:
-        # This doesn't work before django.setup() on some databases.
+        # This doesn't work before django_orm.setup() on some databases.
         if all(conn.features.can_clone_databases for conn in connections.all()):
             parallel = max_parallel
         else:

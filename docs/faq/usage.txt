@@ -35,8 +35,8 @@ Django database layer.
 How do I use image and file fields?
 ===================================
 
-Using a :class:`~django.db.models.FileField` or an
-:class:`~django.db.models.ImageField` in a model takes a few steps:
+Using a :class:`~django_orm.db.models.FileField` or an
+:class:`~django_orm.db.models.ImageField` in a model takes a few steps:
 
 #. In your settings file, you'll need to define :setting:`MEDIA_ROOT` as
    the full path to a directory where you'd like Django to store uploaded
@@ -45,16 +45,16 @@ Using a :class:`~django.db.models.FileField` or an
    Make sure that this directory is writable by the web server's user
    account.
 
-#. Add the :class:`~django.db.models.FileField` or
-   :class:`~django.db.models.ImageField` to your model, defining the
-   :attr:`~django.db.models.FileField.upload_to` option to specify a
+#. Add the :class:`~django_orm.db.models.FileField` or
+   :class:`~django_orm.db.models.ImageField` to your model, defining the
+   :attr:`~django_orm.db.models.FileField.upload_to` option to specify a
    subdirectory of :setting:`MEDIA_ROOT` to use for uploaded files.
 
 #. All that will be stored in your database is a path to the file
    (relative to :setting:`MEDIA_ROOT`). You'll most likely want to use the
-   convenience :attr:`~django.db.models.fields.files.FieldFile.url` attribute
+   convenience :attr:`~django_orm.db.models.fields.files.FieldFile.url` attribute
    provided by Django. For example, if your
-   :class:`~django.db.models.ImageField` is called ``mug_shot``, you can get
+   :class:`~django_orm.db.models.ImageField` is called ``mug_shot``, you can get
    the absolute path to your image in a template with
    ``{{ object.mug_shot.url }}``.
 

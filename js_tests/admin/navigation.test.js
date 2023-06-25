@@ -3,7 +3,7 @@
 
 QUnit.module('admin.sidebar: filter', {
     beforeEach: function() {
-        const $ = django.jQuery;
+        const $ = django_orm.jQuery;
         $('#qunit-fixture').append($('#nav-sidebar-filter').text());
         this.navSidebar = $('#nav-sidebar');
         this.navFilter = $('#nav-filter');

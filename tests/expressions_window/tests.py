@@ -2,9 +2,9 @@ import datetime
 from decimal import Decimal
 from unittest import mock
 
-from django.core.exceptions import FieldError
-from django.db import NotSupportedError, connection
-from django.db.models import (
+from django_orm.core.exceptions import FieldError
+from django_orm.db import NotSupportedError, connection
+from django_orm.db.models import (
     Avg,
     BooleanField,
     Case,
@@ -24,8 +24,8 @@ from django.db.models import (
     Window,
     WindowFrame,
 )
-from django.db.models.fields.json import KeyTextTransform, KeyTransform
-from django.db.models.functions import (
+from django_orm.db.models.fields.json import KeyTextTransform, KeyTransform
+from django_orm.db.models.functions import (
     Cast,
     CumeDist,
     DenseRank,
@@ -41,7 +41,7 @@ from django.db.models.functions import (
     RowNumber,
     Upper,
 )
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
+from django_orm.test import SimpleTestCase, TestCase, skipUnlessDBFeature
 
 from .models import Detail, Employee
 

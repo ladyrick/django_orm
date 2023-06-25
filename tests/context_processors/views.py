@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django_orm.shortcuts import render
 
 from .models import DebugObject
 

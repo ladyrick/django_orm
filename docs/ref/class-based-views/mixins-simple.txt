@@ -5,7 +5,7 @@ Simple mixins
 ``ContextMixin``
 ================
 
-.. class:: django.views.generic.base.ContextMixin
+.. class:: django_orm.views.generic.base.ContextMixin
 
     **Attributes**
 
@@ -13,9 +13,9 @@ Simple mixins
 
         A dictionary to include in the context. This is a convenient way of
         specifying some context in
-        :meth:`~django.views.generic.base.View.as_view`. Example usage::
+        :meth:`~django_orm.views.generic.base.View.as_view`. Example usage::
 
-            from django.views.generic import TemplateView
+            from django_orm.views.generic import TemplateView
             TemplateView.as_view(extra_context={'title': 'Custom Title'})
 
     **Methods**
@@ -45,10 +45,10 @@ Simple mixins
 ``TemplateResponseMixin``
 =========================
 
-.. class:: django.views.generic.base.TemplateResponseMixin
+.. class:: django_orm.views.generic.base.TemplateResponseMixin
 
     Provides a mechanism to construct a
-    :class:`~django.template.response.TemplateResponse`, given
+    :class:`~django_orm.template.response.TemplateResponse`, given
     suitable context. The template to use is configurable and can be
     further customized by subclasses.
 
@@ -58,7 +58,7 @@ Simple mixins
 
         The full name of a template to use as defined by a string. Not defining
         a ``template_name`` will raise a
-        :class:`django.core.exceptions.ImproperlyConfigured` exception.
+        :class:`django_orm.core.exceptions.ImproperlyConfigured` exception.
 
     .. attribute:: template_engine
 
@@ -71,7 +71,7 @@ Simple mixins
 
         The response class to be returned by ``render_to_response`` method.
         Default is :class:`TemplateResponse
-        <django.template.response.TemplateResponse>`. The template and context
+        <django_orm.template.response.TemplateResponse>`. The template and context
         of ``TemplateResponse`` instances can be altered later (e.g. in
         :ref:`template response middleware <template-response-middleware>`).
 

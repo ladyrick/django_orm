@@ -1,4 +1,4 @@
-from django.urls import path, register_converter
+from django_orm.urls import path, register_converter
 
 from . import converters, views
 

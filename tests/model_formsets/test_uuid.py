@@ -1,5 +1,5 @@
-from django.forms.models import inlineformset_factory
-from django.test import TestCase
+from django_orm.forms.models import inlineformset_factory
+from django_orm.test import TestCase
 
 from .models import (
     AutoPKChildOfUUIDPKParent,

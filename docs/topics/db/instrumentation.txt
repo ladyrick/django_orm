@@ -25,8 +25,8 @@ could look like this::
 
 And it would be used in a view to block queries from the template like so::
 
-    from django.db import connection
-    from django.shortcuts import render
+    from django_orm.db import connection
+    from django_orm.shortcuts import render
 
     def my_view(request):
         context = {...}  # Code to generate context with all data.
@@ -86,7 +86,7 @@ For a more complete example, a query logger could look like this::
 
 To use this, you would create a logger object and install it as a wrapper::
 
-    from django.db import connection
+    from django_orm.db import connection
 
     ql = QueryLogger()
     with connection.execute_wrapper(ql):
@@ -94,7 +94,7 @@ To use this, you would create a logger object and install it as a wrapper::
     # Now we can print the log.
     print(ql.queries)
 
-.. currentmodule:: django.db.backends.base.DatabaseWrapper
+.. currentmodule:: django_orm.db.backends.base.DatabaseWrapper
 
 ``connection.execute_wrapper()``
 --------------------------------

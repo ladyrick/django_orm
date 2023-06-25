@@ -1,10 +1,10 @@
 """
 A custom AdminSite for AdminViewPermissionsTest.test_login_has_permission().
 """
-from django.contrib import admin
-from django.contrib.auth import get_permission_codename
-from django.contrib.auth.forms import AuthenticationForm
-from django.core.exceptions import ValidationError
+from django_orm.contrib import admin
+from django_orm.contrib.auth import get_permission_codename
+from django_orm.contrib.auth.forms import AuthenticationForm
+from django_orm.core.exceptions import ValidationError
 
 from . import admin as base_admin
 from . import models

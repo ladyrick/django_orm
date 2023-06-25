@@ -1,9 +1,9 @@
 import os
 from datetime import datetime
 
-from django.test import SimpleTestCase
-from django.utils.functional import lazystr
-from django.utils.html import (
+from django_orm.test import SimpleTestCase
+from django_orm.utils.functional import lazystr
+from django_orm.utils.html import (
     conditional_escape,
     escape,
     escapejs,
@@ -16,7 +16,7 @@ from django.utils.html import (
     strip_tags,
     urlize,
 )
-from django.utils.safestring import mark_safe
+from django_orm.utils.safestring import mark_safe
 
 
 class TestUtilsHtml(SimpleTestCase):
@@ -231,15 +231,15 @@ class TestUtilsHtml(SimpleTestCase):
             ("http://example.com/?x=1&y=2+3&z=", "http://example.com/?x=1&y=2+3&z="),
             ("http://example.com/?x=<>\"'", "http://example.com/?x=%3C%3E%22%27"),
             (
-                "http://example.com/?q=http://example.com/?x=1%26q=django",
+                "http://example.com/?q=http://example.com/?x=1%26q=django_orm",
                 "http://example.com/?q=http%3A%2F%2Fexample.com%2F%3Fx%3D1%26q%3D"
-                "django",
+                "django_orm",
             ),
             (
                 "http://example.com/?q=http%3A%2F%2Fexample.com%2F%3Fx%3D1%26q%3D"
-                "django",
+                "django_orm",
                 "http://example.com/?q=http%3A%2F%2Fexample.com%2F%3Fx%3D1%26q%3D"
-                "django",
+                "django_orm",
             ),
             ("http://.www.f oo.bar/", "http://.www.f%20oo.bar/"),
         )

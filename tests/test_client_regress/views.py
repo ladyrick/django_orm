@@ -1,12 +1,12 @@
 from urllib.parse import urlencode
 
-from django.conf import settings
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
-from django.template.loader import render_to_string
-from django.test import Client
-from django.test.client import CONTENT_TYPE_RE
+from django_orm.conf import settings
+from django_orm.contrib.auth.decorators import login_required
+from django_orm.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django_orm.shortcuts import render
+from django_orm.template.loader import render_to_string
+from django_orm.test import Client
+from django_orm.test.client import CONTENT_TYPE_RE
 
 
 class CustomTestException(Exception):

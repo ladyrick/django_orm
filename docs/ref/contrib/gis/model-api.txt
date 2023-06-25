@@ -2,14 +2,14 @@
 GeoDjango Model API
 ===================
 
-.. module:: django.contrib.gis.db.models
+.. module:: django_orm.contrib.gis.db.models
     :synopsis: GeoDjango model and field API.
 
 This document explores the details of the GeoDjango Model API.  Throughout this
 section, we'll be using the following geographic model of a `ZIP code`__ and
 of a `Digital Elevation Model`__ as our examples::
 
-    from django.contrib.gis.db import models
+    from django_orm.contrib.gis.db import models
 
     class Zipcode(models.Model):
         code = models.CharField(max_length=5)
@@ -41,56 +41,56 @@ The base class for geometry fields.
 
 .. class:: PointField
 
-Stores a :class:`~django.contrib.gis.geos.Point`.
+Stores a :class:`~django_orm.contrib.gis.geos.Point`.
 
 ``LineStringField``
 -------------------
 
 .. class:: LineStringField
 
-Stores a :class:`~django.contrib.gis.geos.LineString`.
+Stores a :class:`~django_orm.contrib.gis.geos.LineString`.
 
 ``PolygonField``
 ----------------
 
 .. class:: PolygonField
 
-Stores a :class:`~django.contrib.gis.geos.Polygon`.
+Stores a :class:`~django_orm.contrib.gis.geos.Polygon`.
 
 ``MultiPointField``
 -------------------
 
 .. class:: MultiPointField
 
-Stores a :class:`~django.contrib.gis.geos.MultiPoint`.
+Stores a :class:`~django_orm.contrib.gis.geos.MultiPoint`.
 
 ``MultiLineStringField``
 ------------------------
 
 .. class:: MultiLineStringField
 
-Stores a :class:`~django.contrib.gis.geos.MultiLineString`.
+Stores a :class:`~django_orm.contrib.gis.geos.MultiLineString`.
 
 ``MultiPolygonField``
 ---------------------
 
 .. class:: MultiPolygonField
 
-Stores a :class:`~django.contrib.gis.geos.MultiPolygon`.
+Stores a :class:`~django_orm.contrib.gis.geos.MultiPolygon`.
 
 ``GeometryCollectionField``
 ---------------------------
 
 .. class:: GeometryCollectionField
 
-Stores a :class:`~django.contrib.gis.geos.GeometryCollection`.
+Stores a :class:`~django_orm.contrib.gis.geos.GeometryCollection`.
 
 ``RasterField``
 ---------------
 
 .. class:: RasterField
 
-Stores a :class:`~django.contrib.gis.gdal.GDALRaster`.
+Stores a :class:`~django_orm.contrib.gis.gdal.GDALRaster`.
 
 ``RasterField`` is currently only implemented for the PostGIS backend.
 
@@ -248,11 +248,11 @@ available for geography columns:
 
 If you need to use a spatial lookup or aggregate that doesn't support the
 geography type as input, you can use the
-:class:`~django.db.models.functions.Cast` database function to convert the
+:class:`~django_orm.db.models.functions.Cast` database function to convert the
 geography column to a geometry type in the query::
 
-    from django.contrib.gis.db.models import PointField
-    from django.db.models.functions import Cast
+    from django_orm.contrib.gis.db.models import PointField
+    from django_orm.db.models.functions import Cast
 
     Zipcode.objects.annotate(
         geom=Cast('geography_field', PointField())

@@ -2,7 +2,7 @@
 Tests for defer() and only().
 """
 
-from django.db import models
+from django_orm.db import models
 
 
 class Secondary(models.Model):

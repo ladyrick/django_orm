@@ -1,8 +1,8 @@
 import doctest
 from unittest import TestCase
 
-from django.test import SimpleTestCase
-from django.test import TestCase as DjangoTestCase
+from django_orm.test import SimpleTestCase
+from django_orm.test import TestCase as DjangoTestCase
 
 from . import doctests
 

@@ -1,10 +1,10 @@
 from datetime import date
 
-from django.forms import DateField, Form, SelectDateWidget
-from django.test import ignore_warnings, override_settings
-from django.utils import translation
-from django.utils.dates import MONTHS_AP
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.forms import DateField, Form, SelectDateWidget
+from django_orm.test import ignore_warnings, override_settings
+from django_orm.utils import translation
+from django_orm.utils.dates import MONTHS_AP
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from .base import WidgetTest
 

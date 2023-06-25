@@ -10,7 +10,7 @@ Bugfixes
 ========
 
 * ``GZipMiddleware`` now supports streaming responses. As part of the 1.4.18
-  security release, the ``django.views.static.serve()`` function was altered
+  security release, the ``django_orm.views.static.serve()`` function was altered
   to stream the files it serves. Unfortunately, the ``GZipMiddleware`` consumed
   the stream prematurely and prevented files from being served properly
   (:ticket:`24158`).

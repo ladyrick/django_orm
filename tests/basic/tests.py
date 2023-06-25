@@ -2,17 +2,17 @@ import threading
 from datetime import datetime, timedelta
 from unittest import mock
 
-from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
-from django.db import DEFAULT_DB_ALIAS, DatabaseError, connections, models
-from django.db.models.manager import BaseManager
-from django.db.models.query import MAX_GET_RESULTS, EmptyQuerySet
-from django.test import (
+from django_orm.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
+from django_orm.db import DEFAULT_DB_ALIAS, DatabaseError, connections, models
+from django_orm.db.models.manager import BaseManager
+from django_orm.db.models.query import MAX_GET_RESULTS, EmptyQuerySet
+from django_orm.test import (
     SimpleTestCase,
     TestCase,
     TransactionTestCase,
     skipUnlessDBFeature,
 )
-from django.utils.translation import gettext_lazy
+from django_orm.utils.translation import gettext_lazy
 
 from .models import (
     Article,

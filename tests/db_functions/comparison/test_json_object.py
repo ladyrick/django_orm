@@ -1,9 +1,9 @@
-from django.db import NotSupportedError
-from django.db.models import F, Value
-from django.db.models.functions import JSONObject, Lower
-from django.test import TestCase
-from django.test.testcases import skipIfDBFeature, skipUnlessDBFeature
-from django.utils import timezone
+from django_orm.db import NotSupportedError
+from django_orm.db.models import F, Value
+from django_orm.db.models.functions import JSONObject, Lower
+from django_orm.test import TestCase
+from django_orm.test.testcases import skipIfDBFeature, skipUnlessDBFeature
+from django_orm.utils import timezone
 
 from ..models import Article, Author
 

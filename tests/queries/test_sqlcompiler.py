@@ -1,6 +1,6 @@
-from django.db import DEFAULT_DB_ALIAS, connection
-from django.db.models.sql import Query
-from django.test import SimpleTestCase
+from django_orm.db import DEFAULT_DB_ALIAS, connection
+from django_orm.db.models.sql import Query
+from django_orm.test import SimpleTestCase
 
 from .models import Item
 

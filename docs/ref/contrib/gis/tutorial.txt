@@ -55,12 +55,12 @@ would for any other project. We provide some tips for selected databases:
 Create a New Project
 --------------------
 
-Use the standard ``django-admin`` script to create a project called
+Use the standard ``django_orm-admin`` script to create a project called
 ``geodjango``:
 
 .. console::
 
-    $ django-admin startproject geodjango
+    $ django_orm-admin startproject geodjango
 
 This will initialize a new project. Now, create a ``world`` Django application
 within the ``geodjango`` project:
@@ -78,24 +78,24 @@ file. Edit the database connection settings to match your setup::
 
     DATABASES = {
         'default': {
-            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'ENGINE': 'django_orm.contrib.gis.db.backends.postgis',
             'NAME': 'geodjango',
             'USER': 'geo',
         },
     }
 
 In addition, modify the :setting:`INSTALLED_APPS` setting to include
-:mod:`django.contrib.admin`, :mod:`django.contrib.gis`,
+:mod:`django_orm.contrib.admin`, :mod:`django_orm.contrib.gis`,
 and ``world`` (your newly created application)::
 
     INSTALLED_APPS = [
-        'django.contrib.admin',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
-        'django.contrib.gis',
+        'django_orm.contrib.admin',
+        'django_orm.contrib.auth',
+        'django_orm.contrib.contenttypes',
+        'django_orm.contrib.sessions',
+        'django_orm.contrib.messages',
+        'django_orm.contrib.staticfiles',
+        'django_orm.contrib.gis',
         'world',
     ]
 
@@ -195,7 +195,7 @@ Defining a Geographic Model
 Now that you've examined your dataset using ``ogrinfo``, create a GeoDjango
 model to represent this data::
 
-    from django.contrib.gis.db import models
+    from django_orm.contrib.gis.db import models
 
     class WorldBorder(models.Model):
         # Regular Django fields corresponding to the attributes in the
@@ -219,7 +219,7 @@ model to represent this data::
         def __str__(self):
             return self.name
 
-Note that the ``models`` module is imported from ``django.contrib.gis.db``.
+Note that the ``models`` module is imported from ``django_orm.contrib.gis.db``.
 
 The default spatial reference system for geometry fields is WGS84 (meaning
 the `SRID`__ is 4326) -- in other words, the field coordinates are in
@@ -328,9 +328,9 @@ you can determine its path using Python's :class:`pathlib.Path`::
     >>> world_shp = Path(world.__file__).resolve().parent / 'data' / 'TM_WORLD_BORDERS-0.3.shp'
 
 Now, open the world borders shapefile using GeoDjango's
-:class:`~django.contrib.gis.gdal.DataSource` interface::
+:class:`~django_orm.contrib.gis.gdal.DataSource` interface::
 
-    >>> from django.contrib.gis.gdal import DataSource
+    >>> from django_orm.contrib.gis.gdal import DataSource
     >>> ds = DataSource(world_shp)
     >>> print(ds)
     / ... /geodjango/world/data/TM_WORLD_BORDERS-0.3.shp (ESRI Shapefile)
@@ -361,9 +361,9 @@ You can see the layer's geometry type and how many features it contains::
     ``PolygonField`` will not accept a ``MultiPolygon`` type geometry.  This
     is why the ``WorldBorder`` model defined above uses a ``MultiPolygonField``.
 
-The :class:`~django.contrib.gis.gdal.Layer` may also have a spatial reference
+The :class:`~django_orm.contrib.gis.gdal.Layer` may also have a spatial reference
 system associated with it.  If it does, the ``srs`` attribute will return a
-:class:`~django.contrib.gis.gdal.SpatialReference` object::
+:class:`~django_orm.contrib.gis.gdal.SpatialReference` object::
 
     >>> srs = lyr.srs
     >>> print(srs)
@@ -411,10 +411,10 @@ method)::
     South Georgia South Sandwich Islands 338
     Taiwan 363
 
-:class:`~django.contrib.gis.gdal.Layer` objects may be sliced::
+:class:`~django_orm.contrib.gis.gdal.Layer` objects may be sliced::
 
     >>> lyr[0:2]
-    [<django.contrib.gis.gdal.feature.Feature object at 0x2f47690>, <django.contrib.gis.gdal.feature.Feature object at 0x2f47650>]
+    [<django_orm.contrib.gis.gdal.feature.Feature object at 0x2f47690>, <django_orm.contrib.gis.gdal.feature.Feature object at 0x2f47650>]
 
 And individual features may be retrieved by their feature ID::
 
@@ -438,7 +438,7 @@ Create a file called ``load.py`` inside the ``world`` application,
 with the following code::
 
     from pathlib import Path
-    from django.contrib.gis.utils import LayerMapping
+    from django_orm.contrib.gis.utils import LayerMapping
     from .models import WorldBorder
 
     world_mapping = {
@@ -522,16 +522,16 @@ A few notes about the command-line options given above:
 * The ``--srid=4326`` option sets the SRID for the geographic field.
 * The ``--mapping`` option tells ``ogrinspect`` to also generate a
   mapping dictionary for use with
-  :class:`~django.contrib.gis.utils.LayerMapping`.
+  :class:`~django_orm.contrib.gis.utils.LayerMapping`.
 * The ``--multi`` option is specified so that the geographic field is a
-  :class:`~django.contrib.gis.db.models.MultiPolygonField` instead of just a
-  :class:`~django.contrib.gis.db.models.PolygonField`.
+  :class:`~django_orm.contrib.gis.db.models.MultiPolygonField` instead of just a
+  :class:`~django_orm.contrib.gis.db.models.PolygonField`.
 
 The command produces the following output, which may be copied
 directly into the ``models.py`` of a GeoDjango application::
 
     # This is an auto-generated Django model module created by ogrinspect.
-    from django.contrib.gis.db import models
+    from django_orm.contrib.gis.db import models
 
     class WorldBorder(models.Model):
         fips = models.CharField(max_length=2)
@@ -598,7 +598,7 @@ Here, you can combine the ``intersects`` spatial lookup with the ``get``
 method to retrieve only the ``WorldBorder`` instance for San Marino instead
 of a queryset::
 
-    >>> from django.contrib.gis.geos import Point
+    >>> from django_orm.contrib.gis.geos import Point
     >>> pnt = Point(12.4604, 43.9420)
     >>> WorldBorder.objects.get(mpoly__intersects=pnt)
     <WorldBorder: San Marino>
@@ -616,7 +616,7 @@ example, coordinates will be expressed in `EPSG SRID 32140`__,
 a coordinate system specific to south Texas **only** and in units of
 **meters**, not degrees::
 
-    >>> from django.contrib.gis.geos import GEOSGeometry, Point
+    >>> from django_orm.contrib.gis.geos import GEOSGeometry, Point
     >>> pnt = Point(954158.1, 4215137.1, srid=32140)
 
 Note that ``pnt`` may also be constructed with EWKT, an "extended" form of
@@ -648,9 +648,9 @@ __ https://spatialreference.org/ref/epsg/32140/
     When using :doc:`raw queries </topics/db/sql>`, you must wrap your geometry
     fields so that the field value can be recognized by GEOS::
 
-        from django.db import connection
+        from django_orm.db import connection
         # or if you're querying a non-default database:
-        from django.db import connections
+        from django_orm.db import connections
         connection = connections['your_gis_db_alias']
 
         City.objects.raw('SELECT id, name, %s as point from myapp_city' % (connection.ops.select % 'point'))
@@ -661,7 +661,7 @@ Lazy Geometries
 ---------------
 GeoDjango loads geometries in a standardized textual representation.  When the
 geometry field is first accessed, GeoDjango creates a
-:class:`~django.contrib.gis.geos.GEOSGeometry` object, exposing powerful
+:class:`~django_orm.contrib.gis.geos.GEOSGeometry` object, exposing powerful
 functionality, such as serialization properties for popular geospatial
 formats::
 
@@ -709,15 +709,15 @@ slippy map (powered by `OpenLayers`_).
 Let's dive right in. Create a file called ``admin.py`` inside the ``world``
 application with the following code::
 
-    from django.contrib.gis import admin
+    from django_orm.contrib.gis import admin
     from .models import WorldBorder
 
     admin.site.register(WorldBorder, admin.ModelAdmin)
 
 Next, edit your ``urls.py`` in the ``geodjango`` application folder as follows::
 
-    from django.contrib import admin
-    from django.urls import include, path
+    from django_orm.contrib import admin
+    from django_orm.urls import include, path
 
     urlpatterns = [
         path('admin/', admin.site.urls),
@@ -748,10 +748,10 @@ position.
 ``GISModelAdmin``
 ~~~~~~~~~~~~~~~~~
 
-With the :class:`~django.contrib.gis.admin.GISModelAdmin`, GeoDjango uses an
+With the :class:`~django_orm.contrib.gis.admin.GISModelAdmin`, GeoDjango uses an
 `OpenStreetMap`_ layer in the admin.
 This provides more context (including street and thoroughfare details) than
-available with the :class:`~django.contrib.admin.ModelAdmin` (which uses the
+available with the :class:`~django_orm.contrib.admin.ModelAdmin` (which uses the
 `Vector Map Level 0`_ WMS dataset hosted at `OSGeo`_).
 
 The PROJ datum shifting files must be installed (see the :ref:`PROJ

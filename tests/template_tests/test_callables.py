@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from django.template import Context, Engine
+from django_orm.template import Context, Engine
 
 
 class CallableVariablesTests(TestCase):

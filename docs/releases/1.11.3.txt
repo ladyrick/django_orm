@@ -41,7 +41,7 @@ Bugfixes
   ``login()`` view) if the corresponding parameter isn't sent in a request (in
   particular, when the login page is accessed directly) (:ticket:`28229`).
 
-* Prevented attribute values in the ``django/forms/widgets/attrs.html``
+* Prevented attribute values in the ``django_orm/forms/widgets/attrs.html``
   template from being localized so that numeric attributes (e.g. ``max`` and
   ``min``) of ``NumberInput`` work correctly (:ticket:`28303`).
 

@@ -1,7 +1,7 @@
-from django.db.models import Subquery, TextField
-from django.db.models.functions import Coalesce, Lower
-from django.test import TestCase
-from django.utils import timezone
+from django_orm.db.models import Subquery, TextField
+from django_orm.db.models.functions import Coalesce, Lower
+from django_orm.test import TestCase
+from django_orm.utils import timezone
 
 from ..models import Article, Author
 

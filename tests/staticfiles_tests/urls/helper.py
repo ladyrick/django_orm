@@ -1,3 +1,3 @@
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django_orm.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = staticfiles_urlpatterns()

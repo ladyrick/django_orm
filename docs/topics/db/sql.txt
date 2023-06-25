@@ -2,7 +2,7 @@
 Performing raw SQL queries
 ==========================
 
-.. currentmodule:: django.db.models
+.. currentmodule:: django_orm.db.models
 
 Django gives you two ways of performing raw SQL queries: you can use
 :meth:`Manager.raw()` to `perform raw queries and return model instances`__, or
@@ -45,8 +45,8 @@ return model instances:
 .. method:: Manager.raw(raw_query, params=(), translations=None)
 
 This method takes a raw SQL query, executes it, and returns a
-``django.db.models.query.RawQuerySet`` instance. This ``RawQuerySet`` instance
-can be iterated over like a normal :class:`~django.db.models.query.QuerySet` to
+``django_orm.db.models.query.RawQuerySet`` instance. This ``RawQuerySet`` instance
+can be iterated over like a normal :class:`~django_orm.db.models.query.QuerySet` to
 provide object instances.
 
 This is best illustrated with an example. Suppose you have the following model::
@@ -153,7 +153,7 @@ Fields may also be left out::
     >>> people = Person.objects.raw('SELECT id, first_name FROM myapp_person')
 
 The ``Person`` objects returned by this query will be deferred model instances
-(see :meth:`~django.db.models.query.QuerySet.defer()`). This means that the
+(see :meth:`~django_orm.db.models.query.QuerySet.defer()`). This means that the
 fields that are omitted from the query will be loaded on demand. For example::
 
     >>> for p in Person.objects.raw('SELECT id, first_name FROM myapp_person'):
@@ -171,7 +171,7 @@ last names were both retrieved on demand when they were printed.
 There is only one field that you can't leave out - the primary key
 field. Django uses the primary key to identify model instances, so it
 must always be included in a raw query. A
-:class:`~django.core.exceptions.FieldDoesNotExist` exception will be raised if
+:class:`~django_orm.core.exceptions.FieldDoesNotExist` exception will be raised if
 you forget to include the primary key.
 
 Adding annotations
@@ -250,7 +250,7 @@ perform queries that don't map cleanly to models, or directly execute
 In these cases, you can always access the database directly, routing around
 the model layer entirely.
 
-The object ``django.db.connection`` represents the default database
+The object ``django_orm.db.connection`` represents the default database
 connection. To use the database connection, call ``connection.cursor()`` to
 get a cursor object. Then, call ``cursor.execute(sql, [params])`` to execute
 the SQL and ``cursor.fetchone()`` or ``cursor.fetchall()`` to return the
@@ -258,7 +258,7 @@ resulting rows.
 
 For example::
 
-    from django.db import connection
+    from django_orm.db import connection
 
     def my_custom_sql(self):
         with connection.cursor() as cursor:
@@ -278,12 +278,12 @@ double them in the case you are passing parameters::
      cursor.execute("SELECT foo FROM bar WHERE baz = '30%%' AND id = %s", [self.id])
 
 If you are using :doc:`more than one database </topics/db/multi-db>`, you can
-use ``django.db.connections`` to obtain the connection (and cursor) for a
-specific database. ``django.db.connections`` is a dictionary-like
+use ``django_orm.db.connections`` to obtain the connection (and cursor) for a
+specific database. ``django_orm.db.connections`` is a dictionary-like
 object that allows you to retrieve a specific connection using its
 alias::
 
-    from django.db import connections
+    from django_orm.db import connections
     with connections['my_db_alias'].cursor() as cursor:
         # Your code here...
 

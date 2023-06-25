@@ -55,8 +55,8 @@ code.
 Django tools
 ~~~~~~~~~~~~
 
-`django-debug-toolbar
-<https://github.com/jazzband/django-debug-toolbar/>`_ is a very handy tool that
+`django_orm-debug-toolbar
+<https://github.com/jazzband/django_orm-debug-toolbar/>`_ is a very handy tool that
 provides insights into what your code is doing and how much time it spends
 doing it. In particular it can show you all the SQL queries your page is
 generating, and how long each one has taken.
@@ -168,13 +168,13 @@ Implementing caching should not be regarded as an alternative to improving code
 that's performing poorly because it has been written badly. It's one of the
 final steps toward producing well-performing code, not a shortcut.
 
-:class:`~django.utils.functional.cached_property`
+:class:`~django_orm.utils.functional.cached_property`
 -------------------------------------------------
 
 It's common to have to call a class instance's method more than once. If
 that function is expensive, then doing so can be wasteful.
 
-Using the :class:`~django.utils.functional.cached_property` decorator saves the
+Using the :class:`~django_orm.utils.functional.cached_property` decorator saves the
 value returned by a property; the next time the function is called on that
 instance, it will return the saved value rather than re-computing it. Note that
 this only works on methods that take ``self`` as their only argument and that
@@ -223,7 +223,7 @@ QuerySet <when-querysets-are-evaluated>`. Avoiding the premature evaluation of
 a ``QuerySet`` can save making an expensive and unnecessary trip to the
 database.
 
-Django also offers a :meth:`~django.utils.functional.keep_lazy` decorator.
+Django also offers a :meth:`~django_orm.utils.functional.keep_lazy` decorator.
 This allows a function that has been called with a lazy argument to behave
 lazily itself, only being evaluated when it needs to be. Thus the lazy argument
 - which could be an expensive one - will not be called upon for evaluation
@@ -258,20 +258,20 @@ Middleware
 Django comes with a few helpful pieces of :doc:`middleware </ref/middleware>`
 that can help optimize your site's performance. They include:
 
-:class:`~django.middleware.http.ConditionalGetMiddleware`
+:class:`~django_orm.middleware.http.ConditionalGetMiddleware`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Adds support for modern browsers to conditionally GET responses based on the
 ``ETag`` and ``Last-Modified`` headers. It also calculates and sets an ETag if
 needed.
 
-:class:`~django.middleware.gzip.GZipMiddleware`
+:class:`~django_orm.middleware.gzip.GZipMiddleware`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Compresses responses for all modern browsers, saving bandwidth and transfer
 time. Note that GZipMiddleware is currently considered a security risk, and is
 vulnerable to attacks that nullify the protection provided by TLS/SSL. See the
-warning in :class:`~django.middleware.gzip.GZipMiddleware` for more information.
+warning in :class:`~django_orm.middleware.gzip.GZipMiddleware` for more information.
 
 Sessions
 --------
@@ -290,13 +290,13 @@ Static files
 Static files, which by definition are not dynamic, make an excellent target for
 optimization gains.
 
-:class:`~django.contrib.staticfiles.storage.ManifestStaticFilesStorage`
+:class:`~django_orm.contrib.staticfiles.storage.ManifestStaticFilesStorage`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By taking advantage of web browsers' caching abilities, you can
 eliminate network hits entirely for a given file after the initial download.
 
-:class:`~django.contrib.staticfiles.storage.ManifestStaticFilesStorage` appends a
+:class:`~django_orm.contrib.staticfiles.storage.ManifestStaticFilesStorage` appends a
 content-dependent tag to the filenames of :doc:`static files
 </ref/contrib/staticfiles>` to make it safe for browsers to cache them
 long-term without missing future changes - when a file changes, so will the
@@ -323,7 +323,7 @@ The cached template loader
 --------------------------
 
 Enabling the :class:`cached template loader
-<django.template.loaders.cached.Loader>` often improves performance
+<django_orm.template.loaders.cached.Loader>` often improves performance
 drastically, as it avoids compiling each template every time it needs to be
 rendered.
 

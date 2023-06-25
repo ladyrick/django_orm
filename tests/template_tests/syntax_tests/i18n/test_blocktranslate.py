@@ -4,13 +4,13 @@ from functools import partial, wraps
 
 from asgiref.local import Local
 
-from django.template import Context, Template, TemplateSyntaxError
-from django.template.base import Token, TokenType
-from django.templatetags.i18n import BlockTranslateNode
-from django.test import SimpleTestCase, override_settings
-from django.utils import translation
-from django.utils.safestring import mark_safe
-from django.utils.translation import trans_real
+from django_orm.template import Context, Template, TemplateSyntaxError
+from django_orm.template.base import Token, TokenType
+from django_orm.templatetags.i18n import BlockTranslateNode
+from django_orm.test import SimpleTestCase, override_settings
+from django_orm.utils import translation
+from django_orm.utils.safestring import mark_safe
+from django_orm.utils.translation import trans_real
 
 from ...utils import setup as base_setup
 from .base import MultipleLocaleActivationTestCase, extended_locale_paths, here
@@ -48,7 +48,7 @@ def setup(templates, *args, **kwargs):
 
 
 class I18nBlockTransTagTests(SimpleTestCase):
-    libraries = {"i18n": "django.templatetags.i18n"}
+    libraries = {"i18n": "django_orm.templatetags.i18n"}
 
     @setup(
         {

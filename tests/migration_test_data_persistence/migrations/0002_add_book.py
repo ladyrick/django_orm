@@ -1,4 +1,4 @@
-from django.db import migrations
+from django_orm.db import migrations
 
 
 def add_book(apps, schema_editor):

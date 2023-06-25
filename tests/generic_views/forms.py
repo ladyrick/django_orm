@@ -1,4 +1,4 @@
-from django import forms
+from django_orm import forms
 
 from .models import Author
 

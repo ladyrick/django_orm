@@ -2,11 +2,11 @@ import operator
 import uuid
 from unittest import mock
 
-from django import forms
-from django.core import serializers
-from django.core.exceptions import ValidationError
-from django.core.serializers.json import DjangoJSONEncoder
-from django.db import (
+from django_orm import forms
+from django_orm.core import serializers
+from django_orm.core.exceptions import ValidationError
+from django_orm.core.serializers.json import DjangoJSONEncoder
+from django_orm.db import (
     DataError,
     IntegrityError,
     NotSupportedError,
@@ -14,7 +14,7 @@ from django.db import (
     connection,
     models,
 )
-from django.db.models import (
+from django_orm.db.models import (
     Count,
     ExpressionWrapper,
     F,
@@ -25,16 +25,16 @@ from django.db.models import (
     Transform,
     Value,
 )
-from django.db.models.expressions import RawSQL
-from django.db.models.fields.json import (
+from django_orm.db.models.expressions import RawSQL
+from django_orm.db.models.fields.json import (
     KeyTextTransform,
     KeyTransform,
     KeyTransformFactory,
     KeyTransformTextLookupMixin,
 )
-from django.db.models.functions import Cast
-from django.test import SimpleTestCase, TestCase, skipIfDBFeature, skipUnlessDBFeature
-from django.test.utils import CaptureQueriesContext
+from django_orm.db.models.functions import Cast
+from django_orm.test import SimpleTestCase, TestCase, skipIfDBFeature, skipUnlessDBFeature
+from django_orm.test.utils import CaptureQueriesContext
 
 from .models import CustomJSONDecoder, JSONModel, NullableJSONModel, RelatedJSONModel
 
@@ -69,7 +69,7 @@ class TestMethods(SimpleTestCase):
     def test_deconstruct(self):
         field = models.JSONField()
         name, path, args, kwargs = field.deconstruct()
-        self.assertEqual(path, "django.db.models.JSONField")
+        self.assertEqual(path, "django_orm.db.models.JSONField")
         self.assertEqual(args, [])
         self.assertEqual(kwargs, {})
 
@@ -168,10 +168,10 @@ class TestSerialization(SimpleTestCase):
 
     def test_xml_serialization(self):
         test_xml_data = (
-            '<django-objects version="1.0">'
+            '<django_orm-objects version="1.0">'
             '<object model="model_fields.nullablejsonmodel">'
             '<field name="value" type="JSONField">%s'
-            "</field></object></django-objects>"
+            "</field></object></django_orm-objects>"
         )
         for value, serialized in self.test_values:
             with self.subTest(value=value):

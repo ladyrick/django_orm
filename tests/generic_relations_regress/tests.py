@@ -1,6 +1,6 @@
-from django.db.models import ProtectedError, Q, Sum
-from django.forms.models import modelform_factory
-from django.test import TestCase, skipIfDBFeature
+from django_orm.db.models import ProtectedError, Q, Sum
+from django_orm.forms.models import modelform_factory
+from django_orm.test import TestCase, skipIfDBFeature
 
 from .models import (
     A,

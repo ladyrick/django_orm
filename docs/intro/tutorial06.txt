@@ -16,7 +16,7 @@ files somewhere your web server can find it. However, in bigger projects --
 especially those comprised of multiple apps -- dealing with the multiple sets
 of static files provided by each application starts to get tricky.
 
-That's what ``django.contrib.staticfiles`` is for: it collects static files
+That's what ``django_orm.contrib.staticfiles`` is for: it collects static files
 from each of your applications (and any other places you specify) into a
 single location that can easily be served in production.
 
@@ -69,7 +69,7 @@ Put the following code in that stylesheet (``polls/static/polls/style.css``):
 
 Next, add the following at the top of ``polls/templates/polls/index.html``:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
     :caption: ``polls/templates/polls/index.html``
 
     {% load static %}

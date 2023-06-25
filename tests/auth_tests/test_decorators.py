@@ -1,10 +1,10 @@
-from django.conf import settings
-from django.contrib.auth import models
-from django.contrib.auth.decorators import login_required, permission_required
-from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
-from django.test import TestCase, override_settings
-from django.test.client import RequestFactory
+from django_orm.conf import settings
+from django_orm.contrib.auth import models
+from django_orm.contrib.auth.decorators import login_required, permission_required
+from django_orm.core.exceptions import PermissionDenied
+from django_orm.http import HttpResponse
+from django_orm.test import TestCase, override_settings
+from django_orm.test.client import RequestFactory
 
 from .test_views import AuthViewsTestCase
 

@@ -1,7 +1,7 @@
 from datetime import date, datetime
 
-from django.test import SimpleTestCase
-from django.utils import timezone
+from django_orm.test import SimpleTestCase
+from django_orm.utils import timezone
 
 
 class TimezoneTestCase(SimpleTestCase):

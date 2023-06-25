@@ -7,9 +7,9 @@ from copy import deepcopy
 from decimal import Decimal
 from unittest import mock
 
-from django.core.exceptions import FieldError
-from django.db import DatabaseError, NotSupportedError, connection
-from django.db.models import (
+from django_orm.core.exceptions import FieldError
+from django_orm.db import DatabaseError, NotSupportedError, connection
+from django_orm.db.models import (
     AutoField,
     Avg,
     BinaryField,
@@ -44,14 +44,14 @@ from django.db.models import (
     Variance,
     When,
 )
-from django.db.models.expressions import (
+from django_orm.db.models.expressions import (
     Col,
     Combinable,
     CombinedExpression,
     RawSQL,
     Ref,
 )
-from django.db.models.functions import (
+from django_orm.db.models.functions import (
     Coalesce,
     Concat,
     Left,
@@ -60,17 +60,17 @@ from django.db.models.functions import (
     Substr,
     Upper,
 )
-from django.db.models.sql import constants
-from django.db.models.sql.datastructures import Join
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
-from django.test.utils import (
+from django_orm.db.models.sql import constants
+from django_orm.db.models.sql.datastructures import Join
+from django_orm.test import SimpleTestCase, TestCase, skipUnlessDBFeature
+from django_orm.test.utils import (
     Approximate,
     CaptureQueriesContext,
     isolate_apps,
     register_lookup,
 )
-from django.utils.deprecation import RemovedInDjango50Warning
-from django.utils.functional import SimpleLazyObject
+from django_orm.utils.deprecation import RemovedInDjango50Warning
+from django_orm.utils.functional import SimpleLazyObject
 
 from .models import (
     UUID,
@@ -1126,7 +1126,7 @@ class FTests(SimpleTestCase):
     def test_deconstruct(self):
         f = F("name")
         path, args, kwargs = f.deconstruct()
-        self.assertEqual(path, "django.db.models.F")
+        self.assertEqual(path, "django_orm.db.models.F")
         self.assertEqual(args, (f.name,))
         self.assertEqual(kwargs, {})
 
@@ -2093,14 +2093,14 @@ class ValueTests(TestCase):
     def test_deconstruct(self):
         value = Value("name")
         path, args, kwargs = value.deconstruct()
-        self.assertEqual(path, "django.db.models.Value")
+        self.assertEqual(path, "django_orm.db.models.Value")
         self.assertEqual(args, (value.value,))
         self.assertEqual(kwargs, {})
 
     def test_deconstruct_output_field(self):
         value = Value("name", output_field=CharField())
         path, args, kwargs = value.deconstruct()
-        self.assertEqual(path, "django.db.models.Value")
+        self.assertEqual(path, "django_orm.db.models.Value")
         self.assertEqual(args, (value.value,))
         self.assertEqual(len(kwargs), 1)
         self.assertEqual(

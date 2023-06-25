@@ -1,26 +1,26 @@
 from datetime import date
 
-from django import forms
-from django.contrib.admin.models import ADDITION, CHANGE, DELETION, LogEntry
-from django.contrib.admin.options import (
+from django_orm import forms
+from django_orm.contrib.admin.models import ADDITION, CHANGE, DELETION, LogEntry
+from django_orm.contrib.admin.options import (
     HORIZONTAL,
     VERTICAL,
     ModelAdmin,
     TabularInline,
     get_content_type_for_model,
 )
-from django.contrib.admin.sites import AdminSite
-from django.contrib.admin.widgets import (
+from django_orm.contrib.admin.sites import AdminSite
+from django_orm.contrib.admin.widgets import (
     AdminDateWidget,
     AdminRadioSelect,
     AutocompleteSelect,
     AutocompleteSelectMultiple,
 )
-from django.contrib.auth.models import User
-from django.db import models
-from django.forms.widgets import Select
-from django.test import SimpleTestCase, TestCase
-from django.test.utils import isolate_apps
+from django_orm.contrib.auth.models import User
+from django_orm.db import models
+from django_orm.forms.widgets import Select
+from django_orm.test import SimpleTestCase, TestCase
+from django_orm.test.utils import isolate_apps
 
 from .models import Band, Concert, Song
 

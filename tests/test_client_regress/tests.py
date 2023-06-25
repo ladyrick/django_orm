@@ -4,22 +4,22 @@ Regression tests for the Test Client, especially the customized assertions.
 import itertools
 import os
 
-from django.contrib.auth.models import User
-from django.contrib.auth.signals import user_logged_in, user_logged_out
-from django.http import HttpResponse
-from django.template import Context, RequestContext, TemplateSyntaxError, engines
-from django.template.response import SimpleTemplateResponse
-from django.test import (
+from django_orm.contrib.auth.models import User
+from django_orm.contrib.auth.signals import user_logged_in, user_logged_out
+from django_orm.http import HttpResponse
+from django_orm.template import Context, RequestContext, TemplateSyntaxError, engines
+from django_orm.template.response import SimpleTemplateResponse
+from django_orm.test import (
     Client,
     SimpleTestCase,
     TestCase,
     modify_settings,
     override_settings,
 )
-from django.test.client import RedirectCycleError, RequestFactory, encode_file
-from django.test.utils import ContextList
-from django.urls import NoReverseMatch, reverse
-from django.utils.translation import gettext_lazy
+from django_orm.test.client import RedirectCycleError, RequestFactory, encode_file
+from django_orm.test.utils import ContextList
+from django_orm.urls import NoReverseMatch, reverse
+from django_orm.utils.translation import gettext_lazy
 
 from .models import CustomUser
 from .views import CustomTestException
@@ -198,7 +198,7 @@ class AssertContainsTests(SimpleTestCase):
         """
         An unrendered SimpleTemplateResponse may be used in assertContains().
         """
-        template = engines["django"].from_string("Hello")
+        template = engines["django_orm"].from_string("Hello")
         response = SimpleTemplateResponse(template)
         self.assertContains(response, "Hello")
 
@@ -214,7 +214,7 @@ class AssertContainsTests(SimpleTestCase):
         """
         An unrendered SimpleTemplateResponse may be used in assertNotContains().
         """
-        template = engines["django"].from_string("Hello")
+        template = engines["django_orm"].from_string("Hello")
         response = SimpleTemplateResponse(template)
         self.assertNotContains(response, "Bye")
 
@@ -587,7 +587,7 @@ class AssertRedirectsTests(SimpleTestCase):
                 )
 
     def test_redirect_fetch_redirect_response(self):
-        """Preserve extra headers of requests made with django.test.Client."""
+        """Preserve extra headers of requests made with django_orm.test.Client."""
         methods = (
             "get",
             "post",
@@ -701,7 +701,7 @@ class TemplateExceptionTests(SimpleTestCase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "DIRS": [os.path.join(os.path.dirname(__file__), "bad_templates")],
             }
         ]
@@ -791,7 +791,7 @@ class ContextTests(TestDataMixin, TestCase):
         with self.settings(
             TEMPLATES=[
                 {
-                    "BACKEND": "django.template.backends.django.DjangoTemplates",
+                    "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                     "APP_DIRS": True,
                     "OPTIONS": {
                         "context_processors": [
@@ -893,7 +893,7 @@ class SessionTests(TestDataMixin, TestCase):
 
     @override_settings(
         AUTHENTICATION_BACKENDS=(
-            "django.contrib.auth.backends.ModelBackend",
+            "django_orm.contrib.auth.backends.ModelBackend",
             "test_client_regress.auth_backends.CustomUserBackend",
         )
     )

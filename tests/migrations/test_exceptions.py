@@ -1,5 +1,5 @@
-from django.db.migrations.exceptions import NodeNotFoundError
-from django.test import SimpleTestCase
+from django_orm.db.migrations.exceptions import NodeNotFoundError
+from django_orm.test import SimpleTestCase
 
 
 class ExceptionTests(SimpleTestCase):

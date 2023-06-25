@@ -5,15 +5,15 @@ import unittest
 from operator import attrgetter
 from threading import Lock
 
-from django.core.exceptions import EmptyResultSet, FieldError
-from django.db import DEFAULT_DB_ALIAS, connection
-from django.db.models import Count, Exists, F, Max, OuterRef, Q
-from django.db.models.expressions import RawSQL
-from django.db.models.sql.constants import LOUTER
-from django.db.models.sql.where import NothingNode, WhereNode
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
-from django.test.utils import CaptureQueriesContext, ignore_warnings
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.core.exceptions import EmptyResultSet, FieldError
+from django_orm.db import DEFAULT_DB_ALIAS, connection
+from django_orm.db.models import Count, Exists, F, Max, OuterRef, Q
+from django_orm.db.models.expressions import RawSQL
+from django_orm.db.models.sql.constants import LOUTER
+from django_orm.db.models.sql.where import NothingNode, WhereNode
+from django_orm.test import SimpleTestCase, TestCase, skipUnlessDBFeature
+from django_orm.test.utils import CaptureQueriesContext, ignore_warnings
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from .models import (
     FK1,

@@ -1,5 +1,5 @@
-from django.template import TemplateSyntaxError
-from django.test import SimpleTestCase
+from django_orm.template import TemplateSyntaxError
+from django_orm.test import SimpleTestCase
 
 from ..utils import SomeClass, SomeOtherException, UTF8Class, setup
 
@@ -23,7 +23,7 @@ class FilterSyntaxTests(SimpleTestCase):
         output = self.engine.render_to_string(
             "filter-syntax02", {"var": "Django is the greatest!"}
         )
-        self.assertEqual(output, "django is the greatest!")
+        self.assertEqual(output, "django_orm is the greatest!")
 
     @setup({"filter-syntax03": "{{ var |upper }}"})
     def test_filter_syntax03(self):

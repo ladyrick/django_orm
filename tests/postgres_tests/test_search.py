@@ -5,15 +5,15 @@ These tests use dialogue from the 1975 film Monty Python and the Holy Grail.
 All text copyright Python (Monty) Pictures. Thanks to sacred-texts.com for the
 transcript.
 """
-from django.db import connection
-from django.db.models import F, Value
-from django.test import modify_settings
+from django_orm.db import connection
+from django_orm.db.models import F, Value
+from django_orm.test import modify_settings
 
 from . import PostgreSQLSimpleTestCase, PostgreSQLTestCase
 from .models import Character, Line, LineSavedSearch, Scene
 
 try:
-    from django.contrib.postgres.search import (
+    from django_orm.contrib.postgres.search import (
         SearchConfig,
         SearchHeadline,
         SearchQuery,
@@ -103,7 +103,7 @@ class GrailTestData:
         )
 
 
-@modify_settings(INSTALLED_APPS={"append": "django.contrib.postgres"})
+@modify_settings(INSTALLED_APPS={"append": "django_orm.contrib.postgres"})
 class SimpleSearchTest(GrailTestData, PostgreSQLTestCase):
     def test_simple(self):
         searched = Line.objects.filter(dialogue__search="elbows")
@@ -140,7 +140,7 @@ class SimpleSearchTest(GrailTestData, PostgreSQLTestCase):
                 self.assertSequenceEqual(searched, [match])
 
 
-@modify_settings(INSTALLED_APPS={"append": "django.contrib.postgres"})
+@modify_settings(INSTALLED_APPS={"append": "django_orm.contrib.postgres"})
 class SearchVectorFieldTest(GrailTestData, PostgreSQLTestCase):
     def test_existing_vector(self):
         Line.objects.update(dialogue_search_vector=SearchVector("dialogue"))
@@ -339,7 +339,7 @@ class MultipleFieldsTest(GrailTestData, PostgreSQLTestCase):
         self.assertSequenceEqual(searched, [self.french])
 
 
-@modify_settings(INSTALLED_APPS={"append": "django.contrib.postgres"})
+@modify_settings(INSTALLED_APPS={"append": "django_orm.contrib.postgres"})
 class TestCombinations(GrailTestData, PostgreSQLTestCase):
     def test_vector_add(self):
         searched = Line.objects.annotate(
@@ -462,7 +462,7 @@ class TestCombinations(GrailTestData, PostgreSQLTestCase):
             Line.objects.filter(dialogue__search=None & SearchQuery("kneecaps"))
 
 
-@modify_settings(INSTALLED_APPS={"append": "django.contrib.postgres"})
+@modify_settings(INSTALLED_APPS={"append": "django_orm.contrib.postgres"})
 class TestRankingAndWeights(GrailTestData, PostgreSQLTestCase):
     def test_ranking(self):
         searched = (
@@ -661,7 +661,7 @@ class SearchQueryTests(PostgreSQLSimpleTestCase):
                 self.assertEqual(str(query), expected_str)
 
 
-@modify_settings(INSTALLED_APPS={"append": "django.contrib.postgres"})
+@modify_settings(INSTALLED_APPS={"append": "django_orm.contrib.postgres"})
 class SearchHeadlineTests(GrailTestData, PostgreSQLTestCase):
     def test_headline(self):
         searched = Line.objects.annotate(

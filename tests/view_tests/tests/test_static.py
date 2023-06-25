@@ -3,12 +3,12 @@ import unittest
 from os import path
 from urllib.parse import quote
 
-from django.conf.urls.static import static
-from django.core.exceptions import ImproperlyConfigured
-from django.http import FileResponse, HttpResponseNotModified
-from django.test import SimpleTestCase, override_settings
-from django.utils.http import http_date
-from django.views.static import was_modified_since
+from django_orm.conf.urls.static import static
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.http import FileResponse, HttpResponseNotModified
+from django_orm.test import SimpleTestCase, override_settings
+from django_orm.utils.http import http_date
+from django_orm.views.static import was_modified_since
 
 from .. import urls
 from ..urls import media_dir
@@ -16,7 +16,7 @@ from ..urls import media_dir
 
 @override_settings(DEBUG=True, ROOT_URLCONF="view_tests.urls")
 class StaticTests(SimpleTestCase):
-    """Tests django views in django/views/static.py"""
+    """Tests django_orm views in django_orm/views/static.py"""
 
     prefix = "site_media"
 
@@ -130,11 +130,11 @@ class StaticTests(SimpleTestCase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "django_orm.template.backends.django_orm.DjangoTemplates",
                 "OPTIONS": {
                     "loaders": [
                         (
-                            "django.template.loaders.locmem.Loader",
+                            "django_orm.template.loaders.locmem.Loader",
                             {
                                 "static/directory_index.html": "Test index",
                             },

@@ -1,5 +1,5 @@
-from django.db import models
-from django.test import SimpleTestCase
+from django_orm.db import models
+from django_orm.test import SimpleTestCase
 
 from .models import AutoModel, BigAutoModel, SmallAutoModel
 from .test_integerfield import (

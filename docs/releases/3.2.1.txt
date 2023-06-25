@@ -51,7 +51,7 @@ Bugfixes
   (:ticket:`32645`).
 
 * Fixed a regression in Django 3.2 that caused a crash when decoding a cookie
-  value, used by ``django.contrib.messages.storage.cookie.CookieStorage``, in
+  value, used by ``django_orm.contrib.messages.storage.cookie.CookieStorage``, in
   the pre-Django 3.2 format (:ticket:`32643`).
 
 * Fixed a regression in Django 3.2 that stopped the shift-key modifier
@@ -80,4 +80,4 @@ Bugfixes
 
 * Fixed a performance regression in Django 3.2 when building complex filters
   with subqueries (:ticket:`32632`). As a side-effect the private API to check
-  ``django.db.sql.query.Query`` equality is removed.
+  ``django_orm.db.sql.query.Query`` equality is removed.

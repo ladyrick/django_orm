@@ -1,9 +1,9 @@
 from urllib.parse import urljoin
 
-from django.contrib.staticfiles import storage
-from django.forms import Media
-from django.templatetags.static import static
-from django.test import SimpleTestCase, override_settings
+from django_orm.contrib.staticfiles import storage
+from django_orm.forms import Media
+from django_orm.templatetags.static import static
+from django_orm.test import SimpleTestCase, override_settings
 
 
 class StaticTestStorage(storage.StaticFilesStorage):
@@ -13,7 +13,7 @@ class StaticTestStorage(storage.StaticFilesStorage):
 
 @override_settings(
     STATIC_URL="http://media.example.com/static/",
-    INSTALLED_APPS=("django.contrib.staticfiles",),
+    INSTALLED_APPS=("django_orm.contrib.staticfiles",),
     STATICFILES_STORAGE="staticfiles_tests.test_forms.StaticTestStorage",
 )
 class StaticFilesFormsMediaTestCase(SimpleTestCase):

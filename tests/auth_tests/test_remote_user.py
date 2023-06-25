@@ -1,25 +1,25 @@
 from datetime import datetime, timezone
 
-from django.conf import settings
-from django.contrib.auth import authenticate
-from django.contrib.auth.backends import RemoteUserBackend
-from django.contrib.auth.middleware import RemoteUserMiddleware
-from django.contrib.auth.models import User
-from django.middleware.csrf import _get_new_csrf_string, _mask_cipher_secret
-from django.test import (
+from django_orm.conf import settings
+from django_orm.contrib.auth import authenticate
+from django_orm.contrib.auth.backends import RemoteUserBackend
+from django_orm.contrib.auth.middleware import RemoteUserMiddleware
+from django_orm.contrib.auth.models import User
+from django_orm.middleware.csrf import _get_new_csrf_string, _mask_cipher_secret
+from django_orm.test import (
     Client,
     TestCase,
     ignore_warnings,
     modify_settings,
     override_settings,
 )
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 
 @override_settings(ROOT_URLCONF="auth_tests.urls")
 class RemoteUserTest(TestCase):
-    middleware = "django.contrib.auth.middleware.RemoteUserMiddleware"
-    backend = "django.contrib.auth.backends.RemoteUserBackend"
+    middleware = "django_orm.contrib.auth.middleware.RemoteUserMiddleware"
+    backend = "django_orm.contrib.auth.backends.RemoteUserBackend"
     header = "REMOTE_USER"
     email_header = "REMOTE_EMAIL"
 
@@ -72,8 +72,8 @@ class RemoteUserTest(TestCase):
         self.assertEqual(response.status_code, 403)
         self.assertIn(b"CSRF verification failed.", response.content)
 
-        # This request will call django.contrib.auth.login() which will call
-        # django.middleware.csrf.rotate_token() thus changing the value of
+        # This request will call django_orm.contrib.auth.login() which will call
+        # django_orm.middleware.csrf.rotate_token() thus changing the value of
         # request.META['CSRF_COOKIE'] from the user submitted value set by
         # CsrfViewMiddleware.process_request() to the new csrftoken value set
         # by rotate_token(). Csrf validation should still pass when the view is
@@ -201,7 +201,7 @@ class RemoteUserNoCreateTest(RemoteUserTest):
 class AllowAllUsersRemoteUserBackendTest(RemoteUserTest):
     """Backend that allows inactive users."""
 
-    backend = "django.contrib.auth.backends.AllowAllUsersRemoteUserBackend"
+    backend = "django_orm.contrib.auth.backends.AllowAllUsersRemoteUserBackend"
 
     def test_inactive_user(self):
         user = User.objects.create(username="knownuser", is_active=False)
@@ -294,7 +294,7 @@ class RemoteUserCustomNoCreatedArgumentTest(RemoteUserTest):
     AUTHENTICATION_BACKENDS={
         "append": "auth_tests.test_remote_user.CustomRemoteUserNoCreatedArgumentBackend"
     },
-    MIDDLEWARE={"append": "django.contrib.auth.middleware.RemoteUserMiddleware"},
+    MIDDLEWARE={"append": "django_orm.contrib.auth.middleware.RemoteUserMiddleware"},
 )
 class RemoteUserCustomNoCreatedArgumentDeprecationTest(TestCase):
     def test_known_user_sync(self):
@@ -330,7 +330,7 @@ class PersistentRemoteUserTest(RemoteUserTest):
     subsequent calls do not contain the header value.
     """
 
-    middleware = "django.contrib.auth.middleware.PersistentRemoteUserMiddleware"
+    middleware = "django_orm.contrib.auth.middleware.PersistentRemoteUserMiddleware"
     require_header = False
 
     def test_header_disappears(self):

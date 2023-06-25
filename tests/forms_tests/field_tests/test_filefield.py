@@ -1,10 +1,10 @@
 import pickle
 
-from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.core.validators import validate_image_file_extension
-from django.forms import FileField, FileInput
-from django.test import SimpleTestCase
+from django_orm.core.exceptions import ValidationError
+from django_orm.core.files.uploadedfile import SimpleUploadedFile
+from django_orm.core.validators import validate_image_file_extension
+from django_orm.forms import FileField, FileInput
+from django_orm.test import SimpleTestCase
 
 
 class FileFieldTest(SimpleTestCase):

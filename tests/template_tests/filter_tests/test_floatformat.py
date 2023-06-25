@@ -1,9 +1,9 @@
 from decimal import Decimal, localcontext
 
-from django.template.defaultfilters import floatformat
-from django.test import SimpleTestCase
-from django.utils import translation
-from django.utils.safestring import mark_safe
+from django_orm.template.defaultfilters import floatformat
+from django_orm.test import SimpleTestCase
+from django_orm.utils import translation
+from django_orm.utils.safestring import mark_safe
 
 from ..utils import setup
 

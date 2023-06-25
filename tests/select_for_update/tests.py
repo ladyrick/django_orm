@@ -4,8 +4,8 @@ from unittest import mock
 
 from multiple_database.routers import TestRouter
 
-from django.core.exceptions import FieldError
-from django.db import (
+from django_orm.core.exceptions import FieldError
+from django_orm.db import (
     DatabaseError,
     NotSupportedError,
     connection,
@@ -13,13 +13,13 @@ from django.db import (
     router,
     transaction,
 )
-from django.test import (
+from django_orm.test import (
     TransactionTestCase,
     override_settings,
     skipIfDBFeature,
     skipUnlessDBFeature,
 )
-from django.test.utils import CaptureQueriesContext
+from django_orm.test.utils import CaptureQueriesContext
 
 from .models import (
     City,

@@ -1,16 +1,16 @@
 import json
 
-from django.contrib.gis.db.models.fields import BaseSpatialField
-from django.contrib.gis.db.models.functions import Distance
-from django.contrib.gis.db.models.lookups import DistanceLookupBase, GISLookup
-from django.contrib.gis.gdal import GDALRaster
-from django.contrib.gis.geos import GEOSGeometry
-from django.contrib.gis.measure import D
-from django.contrib.gis.shortcuts import numpy
-from django.db import connection
-from django.db.models import F, Func, Q
-from django.test import TransactionTestCase, skipUnlessDBFeature
-from django.test.utils import CaptureQueriesContext
+from django_orm.contrib.gis.db.models.fields import BaseSpatialField
+from django_orm.contrib.gis.db.models.functions import Distance
+from django_orm.contrib.gis.db.models.lookups import DistanceLookupBase, GISLookup
+from django_orm.contrib.gis.gdal import GDALRaster
+from django_orm.contrib.gis.geos import GEOSGeometry
+from django_orm.contrib.gis.measure import D
+from django_orm.contrib.gis.shortcuts import numpy
+from django_orm.db import connection
+from django_orm.db.models import F, Func, Q
+from django_orm.test import TransactionTestCase, skipUnlessDBFeature
+from django_orm.test.utils import CaptureQueriesContext
 
 from ..data.rasters.textrasters import JSON_RASTER
 from .models import RasterModel, RasterRelatedModel
@@ -170,7 +170,7 @@ class RasterFieldTest(TransactionTestCase):
         unprojected coordinate systems. This test just checks that the lookup
         can be called, but doesn't check if the result makes logical sense.
         """
-        from django.contrib.gis.db.backends.postgis.operations import PostGISOperations
+        from django_orm.contrib.gis.db.backends.postgis.operations import PostGISOperations
 
         # Create test raster and geom.
         rast = GDALRaster(json.loads(JSON_RASTER))

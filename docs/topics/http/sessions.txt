@@ -2,7 +2,7 @@
 How to use sessions
 ===================
 
-.. module:: django.contrib.sessions
+.. module:: django_orm.contrib.sessions
    :synopsis: Provides session management for Django projects.
 
 Django provides full support for anonymous sessions. The session framework
@@ -19,13 +19,13 @@ Sessions are implemented via a piece of :doc:`middleware </ref/middleware>`.
 To enable session functionality, do the following:
 
 * Edit the :setting:`MIDDLEWARE` setting and make sure it contains
-  ``'django.contrib.sessions.middleware.SessionMiddleware'``. The default
-  ``settings.py`` created by ``django-admin startproject`` has
+  ``'django_orm.contrib.sessions.middleware.SessionMiddleware'``. The default
+  ``settings.py`` created by ``django_orm-admin startproject`` has
   ``SessionMiddleware`` activated.
 
 If you don't want to use sessions, you might as well remove the
 ``SessionMiddleware`` line from :setting:`MIDDLEWARE` and
-``'django.contrib.sessions'`` from your :setting:`INSTALLED_APPS`.
+``'django_orm.contrib.sessions'`` from your :setting:`INSTALLED_APPS`.
 It'll save you a small bit of overhead.
 
 .. _configuring-sessions:
@@ -34,7 +34,7 @@ Configuring the session engine
 ==============================
 
 By default, Django stores sessions in your database (using the model
-``django.contrib.sessions.models.Session``). Though this is convenient, in
+``django_orm.contrib.sessions.models.Session``). Though this is convenient, in
 some setups it's faster to store session data elsewhere, so Django can be
 configured to store session data on your filesystem or in your cache.
 
@@ -42,7 +42,7 @@ Using database-backed sessions
 ------------------------------
 
 If you want to use a database-backed session, you need to add
-``'django.contrib.sessions'`` to your :setting:`INSTALLED_APPS` setting.
+``'django_orm.contrib.sessions'`` to your :setting:`INSTALLED_APPS` setting.
 
 Once you have configured your installation, run ``manage.py migrate``
 to install the single database table that stores session data.
@@ -79,7 +79,7 @@ The cached database backend (``cached_db``) uses a write-through cache --
 session writes are applied to both the cache and the database. Session reads
 use the cache, or the database if the data has been evicted from the cache. To
 use this backend, set :setting:`SESSION_ENGINE` to
-``"django.contrib.sessions.backends.cached_db"``, and follow the configuration
+``"django_orm.contrib.sessions.backends.cached_db"``, and follow the configuration
 instructions for the `using database-backed sessions`_.
 
 The cache backend (``cache``) stores session data only in your cache. This is
@@ -87,7 +87,7 @@ faster because it avoids database persistence, but you will have to consider
 what happens when cache data is evicted. Eviction can occur if the cache fills
 up or the cache server is restarted, and it will mean session data is lost,
 including logging out users. To use this backend, set :setting:`SESSION_ENGINE`
-to ``"django.contrib.sessions.backends.cache"``.
+to ``"django_orm.contrib.sessions.backends.cache"``.
 
 The cache backend can be made persistent by using a persistent cache, such as
 Redis with appropriate configuration. But unless your cache is definitely
@@ -98,7 +98,7 @@ Using file-based sessions
 -------------------------
 
 To use file-based sessions, set the :setting:`SESSION_ENGINE` setting to
-``"django.contrib.sessions.backends.file"``.
+``"django_orm.contrib.sessions.backends.file"``.
 
 You might also want to set the :setting:`SESSION_FILE_PATH` setting (which
 defaults to output from ``tempfile.gettempdir()``, most likely ``/tmp``) to
@@ -111,7 +111,7 @@ Using cookie-based sessions
 ---------------------------
 
 To use cookies-based sessions, set the :setting:`SESSION_ENGINE` setting to
-``"django.contrib.sessions.backends.signed_cookies"``. The session data will be
+``"django_orm.contrib.sessions.backends.signed_cookies"``. The session data will be
 stored using Django's tools for :doc:`cryptographic signing </topics/signing>`
 and the :setting:`SECRET_KEY` setting.
 
@@ -124,7 +124,7 @@ and the :setting:`SECRET_KEY` setting.
 
     **If the** ``SECRET_KEY`` **or** ``SECRET_KEY_FALLBACKS`` **are not kept
     secret and you are using the**
-    ``django.contrib.sessions.serializers.PickleSerializer``, **this can lead
+    ``django_orm.contrib.sessions.serializers.PickleSerializer``, **this can lead
     to arbitrary remote code execution.**
 
     An attacker in possession of the :setting:`SECRET_KEY` or
@@ -172,7 +172,7 @@ and the :setting:`SECRET_KEY` setting.
 Using sessions in views
 =======================
 
-When ``SessionMiddleware`` is activated, each :class:`~django.http.HttpRequest`
+When ``SessionMiddleware`` is activated, each :class:`~django_orm.http.HttpRequest`
 object -- the first argument to any Django view function -- will have a
 ``session`` attribute, which is a dictionary-like object.
 
@@ -224,7 +224,7 @@ You can edit it multiple times.
       Deletes the current session data from the session and deletes the session
       cookie. This is used if you want to ensure that the previous session data
       can't be accessed again from the user's browser (for example, the
-      :func:`django.contrib.auth.logout()` function calls it).
+      :func:`django_orm.contrib.auth.logout()` function calls it).
 
     .. method:: set_test_cookie()
 
@@ -323,7 +323,7 @@ You can edit it multiple times.
     .. method:: cycle_key()
 
       Creates a new session key while retaining the current session data.
-      :func:`django.contrib.auth.login()` calls this method to mitigate against
+      :func:`django_orm.contrib.auth.login()` calls this method to mitigate against
       session fixation.
 
 .. _session_serialization:
@@ -353,7 +353,7 @@ Bundled serializers
 
 .. class:: serializers.JSONSerializer
 
-    A wrapper around the JSON serializer from :mod:`django.core.signing`. Can
+    A wrapper around the JSON serializer from :mod:`django_orm.core.signing`. Can
     only serialize basic data types.
 
     In addition, as JSON supports only string keys, note that using non-string
@@ -389,14 +389,14 @@ Bundled serializers
 Write your own serializer
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Note that the :class:`~django.contrib.sessions.serializers.JSONSerializer`
+Note that the :class:`~django_orm.contrib.sessions.serializers.JSONSerializer`
 cannot handle arbitrary Python data types. As is often the case, there is a
 trade-off between convenience and security. If you wish to store more advanced
 data types including ``datetime`` and ``Decimal`` in JSON backed sessions, you
 will need to write a custom serializer (or convert such values to a JSON
 serializable object before storing them in ``request.session``). While
 serializing these values is often straightforward
-(:class:`~django.core.serializers.json.DjangoJSONEncoder` may be helpful),
+(:class:`~django_orm.core.serializers.json.DjangoJSONEncoder` may be helpful),
 writing a decoder that can reliably get back the same thing that you put in is
 more fragile. For example, you run the risk of returning a ``datetime`` that
 was actually a string that just happened to be in the same format chosen for
@@ -451,7 +451,7 @@ This simplistic view logs in a "member" of the site::
             pass
         return HttpResponse("You're logged out.")
 
-The standard :meth:`django.contrib.auth.logout` function actually does a bit
+The standard :meth:`django_orm.contrib.auth.logout` function actually does a bit
 more than this to prevent inadvertent data leakage. It calls the
 :meth:`~backends.base.SessionBase.flush` method of ``request.session``.
 We are using this example as a demonstration of how to work with session
@@ -476,8 +476,8 @@ yourself. Do this after you've verified that the test cookie worked.
 
 Here's a typical usage example::
 
-    from django.http import HttpResponse
-    from django.shortcuts import render
+    from django_orm.http import HttpResponse
+    from django_orm.shortcuts import render
 
     def login(request):
         if request.method == 'POST':
@@ -495,17 +495,17 @@ Using sessions out of views
 .. note::
 
     The examples in this section import the ``SessionStore`` object directly
-    from the ``django.contrib.sessions.backends.db`` backend. In your own code,
+    from the ``django_orm.contrib.sessions.backends.db`` backend. In your own code,
     you should consider importing ``SessionStore`` from the session engine
     designated by :setting:`SESSION_ENGINE`, as below:
 
       >>> from importlib import import_module
-      >>> from django.conf import settings
+      >>> from django_orm.conf import settings
       >>> SessionStore = import_module(settings.SESSION_ENGINE).SessionStore
 
 An API is available to manipulate session data outside of a view::
 
-    >>> from django.contrib.sessions.backends.db import SessionStore
+    >>> from django_orm.contrib.sessions.backends.db import SessionStore
     >>> s = SessionStore()
     >>> # stored as seconds since epoch since datetimes are not serializable in JSON.
     >>> s['last_login'] = 1376587691
@@ -523,12 +523,12 @@ Calling ``save()`` on a new session may also work but has a small chance of
 generating a ``session_key`` that collides with an existing one. ``create()``
 calls ``save()`` and loops until an unused ``session_key`` is generated.
 
-If you're using the ``django.contrib.sessions.backends.db`` backend, each
+If you're using the ``django_orm.contrib.sessions.backends.db`` backend, each
 session is a normal Django model. The ``Session`` model is defined in
-``django/contrib/sessions/models.py``. Because it's a normal model, you can
+``django_orm/contrib/sessions/models.py``. Because it's a normal model, you can
 access sessions using the normal Django database API::
 
-    >>> from django.contrib.sessions.models import Session
+    >>> from django_orm.contrib.sessions.models import Session
     >>> s = Session.objects.get(pk='2b1189a188b44ad18c35e113ac6ceead')
     >>> s.expire_date
     datetime.datetime(2005, 8, 20, 13, 35, 12)
@@ -685,7 +685,7 @@ Technical details
 =================
 
 * The session dictionary accepts any :mod:`json` serializable value when using
-  :class:`~django.contrib.sessions.serializers.JSONSerializer`.
+  :class:`~django_orm.contrib.sessions.serializers.JSONSerializer`.
 
 * Session data is stored in a database table named ``django_session`` .
 
@@ -729,8 +729,8 @@ Django (namely ``db`` and ``cached_db``) may be done by inheriting
 :class:`~base_session.AbstractBaseSession` and either ``SessionStore`` class.
 
 ``AbstractBaseSession`` and ``BaseSessionManager`` are importable from
-``django.contrib.sessions.base_session`` so that they can be imported without
-including ``django.contrib.sessions`` in :setting:`INSTALLED_APPS`.
+``django_orm.contrib.sessions.base_session`` so that they can be imported without
+including ``django_orm.contrib.sessions`` in :setting:`INSTALLED_APPS`.
 
 .. class:: base_session.AbstractBaseSession
 
@@ -766,7 +766,7 @@ including ``django.contrib.sessions`` in :setting:`INSTALLED_APPS`.
         Decoding is performed by the session store class.
 
 You can also customize the model manager by subclassing
-:class:`~django.contrib.sessions.base_session.BaseSessionManager`:
+:class:`~django_orm.contrib.sessions.base_session.BaseSessionManager`:
 
 .. class:: base_session.BaseSessionManager
 
@@ -815,9 +815,9 @@ The example below shows a custom database-backed session engine that includes
 an additional database column to store an account ID (thus providing an option
 to query the database for all active sessions for an account)::
 
-    from django.contrib.sessions.backends.db import SessionStore as DBStore
-    from django.contrib.sessions.base_session import AbstractBaseSession
-    from django.db import models
+    from django_orm.contrib.sessions.backends.db import SessionStore as DBStore
+    from django_orm.contrib.sessions.base_session import AbstractBaseSession
+    from django_orm.db import models
 
     class CustomSession(AbstractBaseSession):
         account_id = models.IntegerField(null=True, db_index=True)

@@ -1,11 +1,11 @@
 import sys
 
-from django.template import Context, Engine, TemplateDoesNotExist, TemplateSyntaxError
-from django.template.base import UNKNOWN_SOURCE
-from django.test import SimpleTestCase, override_settings
-from django.urls import NoReverseMatch
-from django.utils import translation
-from django.utils.html import escape
+from django_orm.template import Context, Engine, TemplateDoesNotExist, TemplateSyntaxError
+from django_orm.template.base import UNKNOWN_SOURCE
+from django_orm.test import SimpleTestCase, override_settings
+from django_orm.urls import NoReverseMatch
+from django_orm.utils import translation
+from django_orm.utils.html import escape
 
 
 class TemplateTestMixin:
@@ -164,7 +164,7 @@ class TemplateTestMixin:
 
     def test_extends_generic_template(self):
         """
-        #24338 -- Allow extending django.template.backends.django.Template
+        #24338 -- Allow extending django_orm.template.backends.django_orm.Template
         objects.
         """
         engine = self._engine()

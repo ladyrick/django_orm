@@ -1,8 +1,8 @@
 from pathlib import Path
 from unittest import mock, skipIf
 
-from django.template import TemplateSyntaxError
-from django.test import RequestFactory
+from django_orm.template import TemplateSyntaxError
+from django_orm.test import RequestFactory
 
 from .test_dummy import TemplateStringsTests
 
@@ -12,7 +12,7 @@ except ImportError:
     jinja2 = None
     Jinja2 = None
 else:
-    from django.template.backends.jinja2 import Jinja2
+    from django_orm.template.backends.jinja2 import Jinja2
 
 
 @skipIf(jinja2 is None, "this test requires jinja2")
@@ -22,7 +22,7 @@ class Jinja2Tests(TemplateStringsTests):
     options = {
         "keep_trailing_newline": True,
         "context_processors": [
-            "django.template.context_processors.static",
+            "django_orm.template.context_processors.static",
         ],
     }
 

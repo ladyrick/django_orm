@@ -1,5 +1,5 @@
-from django.contrib.admin.views.decorators import staff_member_required
-from django.http import HttpResponse
+from django_orm.contrib.admin.views.decorators import staff_member_required
+from django_orm.http import HttpResponse
 
 
 @staff_member_required

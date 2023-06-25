@@ -60,7 +60,7 @@ or you could write your own as needed.
 Generic views of objects
 ========================
 
-:class:`~django.views.generic.base.TemplateView` certainly is useful, but
+:class:`~django_orm.views.generic.base.TemplateView` certainly is useful, but
 Django's generic views really shine when it comes to presenting views of your
 database content. Because it's such a common task, Django comes with a handful
 of built-in generic views to help generate list and detail views of objects.
@@ -71,7 +71,7 @@ individual object.
 We'll be using these models::
 
     # models.py
-    from django.db import models
+    from django_orm.db import models
 
     class Publisher(models.Model):
         name = models.CharField(max_length=30)
@@ -105,7 +105,7 @@ We'll be using these models::
 Now we need to define a view::
 
     # views.py
-    from django.views.generic import ListView
+    from django_orm.views.generic import ListView
     from books.models import Publisher
 
     class PublisherListView(ListView):
@@ -114,7 +114,7 @@ Now we need to define a view::
 Finally hook that view into your urls::
 
     # urls.py
-    from django.urls import path
+    from django_orm.urls import path
     from books.views import PublisherListView
 
     urlpatterns = [
@@ -139,7 +139,7 @@ This template will be rendered against a context containing a variable called
 ``object_list`` that contains all the publisher objects. A template might look
 like this:
 
-.. code-block:: html+django
+.. code-block:: html+django_orm
 
     {% extends "base.html" %}
 
@@ -178,7 +178,7 @@ context variable. The ``context_object_name`` attribute on a generic view
 specifies the context variable to use::
 
     # views.py
-    from django.views.generic import ListView
+    from django_orm.views.generic import ListView
     from books.models import Publisher
 
     class PublisherListView(ListView):
@@ -196,16 +196,16 @@ Adding extra context
 
 Often you need to present some extra information beyond that provided by the
 generic view. For example, think of showing a list of all the books on each
-publisher detail page. The :class:`~django.views.generic.detail.DetailView`
+publisher detail page. The :class:`~django_orm.views.generic.detail.DetailView`
 generic view provides the publisher to the context, but how do we get
 additional information in that template?
 
-The answer is to subclass :class:`~django.views.generic.detail.DetailView`
+The answer is to subclass :class:`~django_orm.views.generic.detail.DetailView`
 and provide your own implementation of the ``get_context_data`` method.
 The default implementation adds the object being displayed to the template, but
 you can override it to send more::
 
-    from django.views.generic import DetailView
+    from django_orm.views.generic import DetailView
     from books.models import Book, Publisher
 
     class PublisherDetailView(DetailView):
@@ -233,7 +233,7 @@ you can override it to send more::
 
     Another consideration is that the context data from class-based generic
     views will override data provided by context processors; see
-    :meth:`~django.views.generic.detail.SingleObjectMixin.get_context_data` for
+    :meth:`~django_orm.views.generic.detail.SingleObjectMixin.get_context_data` for
     an example.
 
 .. _generic-views-list-subsets:
@@ -249,7 +249,7 @@ objects. However, the ``model`` argument is not the only way to
 specify the objects that the view will operate upon -- you can also
 specify the list of objects using the ``queryset`` argument::
 
-    from django.views.generic import DetailView
+    from django_orm.views.generic import DetailView
     from books.models import Publisher
 
     class PublisherDetailView(DetailView):
@@ -261,14 +261,14 @@ Specifying ``model = Publisher`` is shorthand for saying ``queryset =
 Publisher.objects.all()``. However, by using ``queryset`` to define a filtered
 list of objects you can be more specific about the objects that will be visible
 in the view (see :doc:`/topics/db/queries` for more information about
-:class:`~django.db.models.query.QuerySet` objects, and see the
+:class:`~django_orm.db.models.query.QuerySet` objects, and see the
 :doc:`class-based views reference </ref/class-based-views/index>` for the
 complete details).
 
 To pick an example, we might want to order a list of books by publication date,
 with the most recent first::
 
-    from django.views.generic import ListView
+    from django_orm.views.generic import ListView
     from books.models import Book
 
     class BookListView(ListView):
@@ -279,7 +279,7 @@ That's a pretty minimal example, but it illustrates the idea nicely. You'll
 usually want to do more than just reorder objects. If you want to present a
 list of books by a particular publisher, you can use the same technique::
 
-    from django.views.generic import ListView
+    from django_orm.views.generic import ListView
     from books.models import Book
 
     class AcmeBookListView(ListView):
@@ -315,7 +315,7 @@ what if we wanted to write a view that displayed all the books by some arbitrary
 publisher?
 
 Handily, the ``ListView`` has a
-:meth:`~django.views.generic.list.MultipleObjectMixin.get_queryset` method we
+:meth:`~django_orm.views.generic.list.MultipleObjectMixin.get_queryset` method we
 can override. By default, it returns the value of the ``queryset`` attribute,
 but we can use it to add more logic.
 
@@ -327,7 +327,7 @@ various useful things are stored on ``self``; as well as the request
 Here, we have a URLconf with a single captured group::
 
     # urls.py
-    from django.urls import path
+    from django_orm.urls import path
     from books.views import PublisherBookListView
 
     urlpatterns = [
@@ -337,8 +337,8 @@ Here, we have a URLconf with a single captured group::
 Next, we'll write the ``PublisherBookListView`` view itself::
 
     # views.py
-    from django.shortcuts import get_object_or_404
-    from django.views.generic import ListView
+    from django_orm.shortcuts import get_object_or_404
+    from django_orm.views.generic import ListView
     from books.models import Book, Publisher
 
     class PublisherBookListView(ListView):
@@ -378,7 +378,7 @@ Imagine we had a ``last_accessed`` field on our ``Author`` model that we were
 using to keep track of the last time anybody looked at that author::
 
     # models.py
-    from django.db import models
+    from django_orm.db import models
 
     class Author(models.Model):
         salutation = models.CharField(max_length=10)
@@ -393,7 +393,7 @@ once again we could write a custom view to keep that field updated.
 First, we'd need to add an author detail bit in the URLconf to point to a
 custom view::
 
-    from django.urls import path
+    from django_orm.urls import path
     from books.views import AuthorDetailView
 
     urlpatterns = [
@@ -404,8 +404,8 @@ custom view::
 Then we'd write our new view -- ``get_object`` is the method that retrieves the
 object -- so we override it and wrap the call::
 
-    from django.utils import timezone
-    from django.views.generic import DetailView
+    from django_orm.utils import timezone
+    from django_orm.views.generic import DetailView
     from books.models import Author
 
     class AuthorDetailView(DetailView):
@@ -426,5 +426,5 @@ object -- so we override it and wrap the call::
     filter the queryset.
 
     If you want to call the group something else, you can set
-    :attr:`~django.views.generic.detail.SingleObjectMixin.pk_url_kwarg`
+    :attr:`~django_orm.views.generic.detail.SingleObjectMixin.pk_url_kwarg`
     on the view.

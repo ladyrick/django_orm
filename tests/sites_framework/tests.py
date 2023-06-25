@@ -1,10 +1,10 @@
-from django.conf import settings
-from django.contrib.sites.managers import CurrentSiteManager
-from django.contrib.sites.models import Site
-from django.core import checks
-from django.db import models
-from django.test import SimpleTestCase, TestCase
-from django.test.utils import isolate_apps
+from django_orm.conf import settings
+from django_orm.contrib.sites.managers import CurrentSiteManager
+from django_orm.contrib.sites.models import Site
+from django_orm.core import checks
+from django_orm.db import models
+from django_orm.test import SimpleTestCase, TestCase
+from django_orm.test.utils import isolate_apps
 
 from .models import CustomArticle, ExclusiveArticle, SyndicatedArticle
 

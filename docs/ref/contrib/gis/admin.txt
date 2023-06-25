@@ -2,7 +2,7 @@
 GeoDjango's admin site
 ======================
 
-.. module:: django.contrib.gis.admin
+.. module:: django_orm.contrib.gis.admin
     :synopsis: GeoDjango's extensions to the admin site.
 
 ``GISModelAdmin``
@@ -15,8 +15,8 @@ GeoDjango's admin site
     .. attribute:: gis_widget
 
         The widget class to be used for
-        :class:`~django.contrib.gis.db.models.GeometryField`. Defaults to
-        :class:`~django.contrib.gis.forms.widgets.OSMWidget`.
+        :class:`~django_orm.contrib.gis.db.models.GeometryField`. Defaults to
+        :class:`~django_orm.contrib.gis.forms.widgets.OSMWidget`.
 
     .. attribute:: gis_widget_kwargs
 
@@ -70,14 +70,14 @@ GeoDjango's admin site
     .. note::
 
         This is different from adding the geometry field to
-        :attr:`~django.contrib.admin.ModelAdmin.readonly_fields`,
+        :attr:`~django_orm.contrib.admin.ModelAdmin.readonly_fields`,
         which will only display the WKT of the geometry. Setting
         ``modifiable=False``, actually displays the geometry in a map,
         but disables the ability to edit its vertices.
 
     .. deprecated:: 4.0
 
-        This class is deprecated. Use :class:`~django.contrib.admin.ModelAdmin`
+        This class is deprecated. Use :class:`~django_orm.contrib.admin.ModelAdmin`
         instead.
 
 ``OSMGeoAdmin``

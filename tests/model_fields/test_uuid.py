@@ -1,11 +1,11 @@
 import json
 import uuid
 
-from django.core import exceptions, serializers
-from django.db import IntegrityError, connection, models
-from django.db.models import CharField, F, Value
-from django.db.models.functions import Concat, Repeat
-from django.test import (
+from django_orm.core import exceptions, serializers
+from django_orm.db import IntegrityError, connection, models
+from django_orm.db.models import CharField, F, Value
+from django_orm.db.models.functions import Concat, Repeat
+from django_orm.test import (
     SimpleTestCase,
     TestCase,
     TransactionTestCase,

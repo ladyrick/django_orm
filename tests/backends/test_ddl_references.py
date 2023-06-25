@@ -1,5 +1,5 @@
-from django.db import connection
-from django.db.backends.ddl_references import (
+from django_orm.db import connection
+from django_orm.db.backends.ddl_references import (
     Columns,
     Expressions,
     ForeignKeyName,
@@ -7,11 +7,11 @@ from django.db.backends.ddl_references import (
     Statement,
     Table,
 )
-from django.db.models import ExpressionList, F
-from django.db.models.functions import Upper
-from django.db.models.indexes import IndexExpression
-from django.db.models.sql import Query
-from django.test import SimpleTestCase, TransactionTestCase
+from django_orm.db.models import ExpressionList, F
+from django_orm.db.models.functions import Upper
+from django_orm.db.models.indexes import IndexExpression
+from django_orm.db.models.sql import Query
+from django_orm.test import SimpleTestCase, TransactionTestCase
 
 from .models import Person
 

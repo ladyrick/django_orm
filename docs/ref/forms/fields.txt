@@ -2,10 +2,10 @@
 Form fields
 ===========
 
-.. module:: django.forms.fields
+.. module:: django_orm.forms.fields
    :synopsis: Django's built-in form fields.
 
-.. currentmodule:: django.forms
+.. currentmodule:: django_orm.forms
 
 .. class:: Field(**kwargs)
 
@@ -19,10 +19,10 @@ Although the primary way you'll use ``Field`` classes is in ``Form`` classes,
 you can also instantiate them and use them directly to get a better idea of
 how they work. Each ``Field`` instance has a ``clean()`` method, which takes
 a single argument and either raises a
-``django.core.exceptions.ValidationError`` exception or returns the clean
+``django_orm.core.exceptions.ValidationError`` exception or returns the clean
 value::
 
-    >>> from django import forms
+    >>> from django_orm import forms
     >>> f = forms.EmailField()
     >>> f.clean('foo@example.com')
     'foo@example.com'
@@ -49,7 +49,7 @@ By default, each ``Field`` class assumes the value is required, so if you pass
 an empty value -- either ``None`` or the empty string (``""``) -- then
 ``clean()`` will raise a ``ValidationError`` exception::
 
-    >>> from django import forms
+    >>> from django_orm import forms
     >>> f = forms.CharField()
     >>> f.clean('foo')
     'foo'
@@ -114,7 +114,7 @@ behavior doesn't result in an adequate label.
 Here's a full example ``Form`` that implements ``label`` for two of its fields.
 We've specified ``auto_id=False`` to simplify the output::
 
-    >>> from django import forms
+    >>> from django_orm import forms
     >>> class CommentForm(forms.Form):
     ...     name = forms.CharField(label='Your name')
     ...     url = forms.URLField(label='Your website', required=False)
@@ -131,7 +131,7 @@ We've specified ``auto_id=False`` to simplify the output::
 .. attribute:: Field.label_suffix
 
 The ``label_suffix`` argument lets you override the form's
-:attr:`~django.forms.Form.label_suffix` on a per-field basis::
+:attr:`~django_orm.forms.Form.label_suffix` on a per-field basis::
 
     >>> class ContactForm(forms.Form):
     ...     age = forms.IntegerField()
@@ -156,7 +156,7 @@ To specify dynamic initial data, see the :attr:`Form.initial` parameter.
 The use-case for this is when you want to display an "empty" form in which a
 field is initialized to a particular value. For example::
 
-    >>> from django import forms
+    >>> from django_orm import forms
     >>> class CommentForm(forms.Form):
     ...     name = forms.CharField(initial='Your name')
     ...     url = forms.URLField(initial='http://')
@@ -229,13 +229,13 @@ The ``help_text`` argument lets you specify descriptive text for this
 ``Field`` when the ``Field`` is rendered by one of the convenience ``Form``
 methods (e.g., ``as_ul()``).
 
-Like the model field's :attr:`~django.db.models.Field.help_text`, this value
+Like the model field's :attr:`~django_orm.db.models.Field.help_text`, this value
 isn't HTML-escaped in automatically-generated forms.
 
 Here's a full example ``Form`` that implements ``help_text`` for two of its
 fields. We've specified ``auto_id=False`` to simplify the output::
 
-    >>> from django import forms
+    >>> from django_orm import forms
     >>> class HelpTextContactForm(forms.Form):
     ...     subject = forms.CharField(max_length=100, help_text='100 characters max.')
     ...     message = forms.CharField()
@@ -267,7 +267,7 @@ The ``error_messages`` argument lets you override the default messages that the
 field will raise. Pass in a dictionary with keys matching the error messages you
 want to override. For example, here is the default error message::
 
-    >>> from django import forms
+    >>> from django_orm import forms
     >>> generic = forms.CharField()
     >>> generic.clean('')
     Traceback (most recent call last):
@@ -369,8 +369,8 @@ For each field, we describe the default widget used if you don't specify
     * Default widget: :class:`TextInput`
     * Empty value: Whatever you've given as :attr:`empty_value`.
     * Normalizes to: A string.
-    * Uses :class:`~django.core.validators.MaxLengthValidator` and
-      :class:`~django.core.validators.MinLengthValidator` if ``max_length`` and
+    * Uses :class:`~django_orm.core.validators.MaxLengthValidator` and
+      :class:`~django_orm.core.validators.MinLengthValidator` if ``max_length`` and
       ``min_length`` are provided. Otherwise, all inputs are valid.
     * Error message keys: ``required``, ``max_length``, ``min_length``
 
@@ -463,7 +463,7 @@ For each field, we describe the default widget used if you don't specify
         ``datetime.datetime`` object, in addition to ISO 8601 formats.
 
     The field always accepts strings in ISO 8601 formatted dates or similar
-    recognized by :func:`~django.utils.dateparse.parse_datetime`. Some examples
+    recognized by :func:`~django_orm.utils.dateparse.parse_datetime`. Some examples
     are::
 
         * '2006-10-25 14:30:59'
@@ -491,10 +491,10 @@ For each field, we describe the default widget used if you don't specify
     * Empty value: ``None``
     * Normalizes to: A Python ``decimal``.
     * Validates that the given value is a decimal. Uses
-      :class:`~django.core.validators.MaxValueValidator` and
-      :class:`~django.core.validators.MinValueValidator` if ``max_value`` and
+      :class:`~django_orm.core.validators.MaxValueValidator` and
+      :class:`~django_orm.core.validators.MinValueValidator` if ``max_value`` and
       ``min_value`` are provided. Uses
-      :class:`~django.core.validators.StepValueValidator` if ``step_size`` is
+      :class:`~django_orm.core.validators.StepValueValidator` if ``step_size`` is
       provided. Leading and trailing whitespace is ignored.
     * Error message keys: ``required``, ``invalid``, ``max_value``,
       ``min_value``, ``max_digits``, ``max_decimal_places``,
@@ -545,7 +545,7 @@ For each field, we describe the default widget used if you don't specify
     * Error message keys: ``required``, ``invalid``, ``overflow``.
 
     Accepts any format understood by
-    :func:`~django.utils.dateparse.parse_duration`.
+    :func:`~django_orm.utils.dateparse.parse_duration`.
 
 ``EmailField``
 --------------
@@ -555,7 +555,7 @@ For each field, we describe the default widget used if you don't specify
     * Default widget: :class:`EmailInput`
     * Empty value: Whatever you've given as ``empty_value``.
     * Normalizes to: A string.
-    * Uses :class:`~django.core.validators.EmailValidator` to validate that
+    * Uses :class:`~django_orm.core.validators.EmailValidator` to validate that
       the given value is a valid email address, using a moderately complex
       regular expression.
     * Error message keys: ``required``, ``invalid``
@@ -644,10 +644,10 @@ For each field, we describe the default widget used if you don't specify
     * Empty value: ``None``
     * Normalizes to: A Python float.
     * Validates that the given value is a float. Uses
-      :class:`~django.core.validators.MaxValueValidator` and
-      :class:`~django.core.validators.MinValueValidator` if ``max_value`` and
+      :class:`~django_orm.core.validators.MaxValueValidator` and
+      :class:`~django_orm.core.validators.MinValueValidator` if ``max_value`` and
       ``min_value`` are provided. Uses
-      :class:`~django.core.validators.StepValueValidator` if ``step_size`` is
+      :class:`~django_orm.core.validators.StepValueValidator` if ``step_size`` is
       provided. Leading and trailing whitespace is allowed, as in Python's
       ``float()`` function.
     * Error message keys: ``required``, ``invalid``, ``max_value``,
@@ -710,7 +710,7 @@ For each field, we describe the default widget used if you don't specify
     * Normalizes to: An ``UploadedFile`` object that wraps the file content
       and file name into a single object.
     * Validates that file data has been bound to the form. Also uses
-      :class:`~django.core.validators.FileExtensionValidator` to validate that
+      :class:`~django_orm.core.validators.FileExtensionValidator` to validate that
       the file extension is supported by Pillow.
     * Error message keys: ``required``, ``invalid``, ``missing``, ``empty``,
       ``invalid_image``
@@ -734,8 +734,8 @@ For each field, we describe the default widget used if you don't specify
     For example::
 
         >>> from PIL import Image
-        >>> from django import forms
-        >>> from django.core.files.uploadedfile import SimpleUploadedFile
+        >>> from django_orm import forms
+        >>> from django_orm.core.files.uploadedfile import SimpleUploadedFile
         >>> class ImageForm(forms.Form):
         ...     img = forms.ImageField()
         >>> file_data = {'img': SimpleUploadedFile('test.png', <file data>)}
@@ -775,10 +775,10 @@ For each field, we describe the default widget used if you don't specify
     * Empty value: ``None``
     * Normalizes to: A Python integer.
     * Validates that the given value is an integer. Uses
-      :class:`~django.core.validators.MaxValueValidator` and
-      :class:`~django.core.validators.MinValueValidator` if ``max_value`` and
+      :class:`~django_orm.core.validators.MaxValueValidator` and
+      :class:`~django_orm.core.validators.MinValueValidator` if ``max_value`` and
       ``min_value`` are provided. Uses
-      :class:`~django.core.validators.StepValueValidator` if ``step_size`` is
+      :class:`~django_orm.core.validators.StepValueValidator` if ``step_size`` is
       provided. Leading and trailing whitespace is allowed, as in Python's
       ``int()`` function.
     * Error message keys: ``required``, ``invalid``, ``max_value``,
@@ -807,7 +807,7 @@ For each field, we describe the default widget used if you don't specify
 .. class:: JSONField(encoder=None, decoder=None, **kwargs)
 
     A field which accepts JSON encoded data for a
-    :class:`~django.db.models.JSONField`.
+    :class:`~django_orm.db.models.JSONField`.
 
     * Default widget: :class:`Textarea`
     * Empty value: ``None``
@@ -823,7 +823,7 @@ For each field, we describe the default widget used if you don't specify
         A :py:class:`json.JSONEncoder` subclass to serialize data types not
         supported by the standard JSON serializer (e.g. ``datetime.datetime``
         or :class:`~python:uuid.UUID`). For example, you can use the
-        :class:`~django.core.serializers.json.DjangoJSONEncoder` class.
+        :class:`~django_orm.core.serializers.json.DjangoJSONEncoder` class.
 
         Defaults to ``json.JSONEncoder``.
 
@@ -843,8 +843,8 @@ For each field, we describe the default widget used if you don't specify
 
     .. note::
 
-        If you use a :class:`ModelForm <django.forms.ModelForm>`, the
-        ``encoder`` and ``decoder`` from :class:`~django.db.models.JSONField`
+        If you use a :class:`ModelForm <django_orm.forms.ModelForm>`, the
+        ``encoder`` and ``decoder`` from :class:`~django_orm.db.models.JSONField`
         will be used.
 
     .. admonition:: User friendly forms
@@ -881,7 +881,7 @@ For each field, we describe the default widget used if you don't specify
     * Validates nothing (i.e., it never raises a ``ValidationError``).
 
     ``NullBooleanField`` may be used with widgets such as
-    :class:`~django.forms.Select` or :class:`~django.forms.RadioSelect`
+    :class:`~django_orm.forms.Select` or :class:`~django_orm.forms.RadioSelect`
     by providing the widget ``choices``::
 
         NullBooleanField(
@@ -902,7 +902,7 @@ For each field, we describe the default widget used if you don't specify
     * Default widget: :class:`TextInput`
     * Empty value: Whatever you've given as ``empty_value``.
     * Normalizes to: A string.
-    * Uses :class:`~django.core.validators.RegexValidator` to validate that
+    * Uses :class:`~django_orm.core.validators.RegexValidator` to validate that
       the given value matches a certain regular expression.
     * Error message keys: ``required``, ``invalid``
 
@@ -929,13 +929,13 @@ For each field, we describe the default widget used if you don't specify
    * Default widget: :class:`TextInput`
    * Empty value: Whatever you've given as :attr:`empty_value`.
    * Normalizes to: A string.
-   * Uses :class:`~django.core.validators.validate_slug` or
-     :class:`~django.core.validators.validate_unicode_slug` to validate that
+   * Uses :class:`~django_orm.core.validators.validate_slug` or
+     :class:`~django_orm.core.validators.validate_unicode_slug` to validate that
      the given value contains only letters, numbers, underscores, and hyphens.
    * Error messages: ``required``, ``invalid``
 
    This field is intended for use in representing a model
-   :class:`~django.db.models.SlugField` in forms.
+   :class:`~django_orm.db.models.SlugField` in forms.
 
    Takes two optional parameters:
 
@@ -1036,7 +1036,7 @@ For each field, we describe the default widget used if you don't specify
     * Default widget: :class:`URLInput`
     * Empty value: Whatever you've given as ``empty_value``.
     * Normalizes to: A string.
-    * Uses :class:`~django.core.validators.URLValidator` to validate that the
+    * Uses :class:`~django_orm.core.validators.URLValidator` to validate that the
       given value is a valid URL.
     * Error message keys: ``required``, ``invalid``
 
@@ -1078,7 +1078,7 @@ Slightly complex built-in ``Field`` classes
         The list of fields that should be used to validate the field's value (in
         the order in which they are provided).
 
-            >>> from django.forms import ComboField
+            >>> from django_orm.forms import ComboField
             >>> f = ComboField(fields=[CharField(max_length=20), EmailField()])
             >>> f.clean('test@example.com')
             'test@example.com'
@@ -1104,7 +1104,7 @@ Slightly complex built-in ``Field`` classes
 
     This field is abstract and must be subclassed. In contrast with the
     single-value fields, subclasses of :class:`MultiValueField` must not
-    implement :meth:`~django.forms.Field.clean` but instead - implement
+    implement :meth:`~django_orm.forms.Field.clean` but instead - implement
     :meth:`~MultiValueField.compress`.
 
     Takes one extra required argument:
@@ -1134,7 +1134,7 @@ Slightly complex built-in ``Field`` classes
         :class:`MultiValueField` subclass, or different messages can be defined
         on each individual field. For example::
 
-            from django.core.validators import RegexValidator
+            from django_orm.core.validators import RegexValidator
 
             class PhoneField(MultiValueField):
                 def __init__(self, **kwargs):
@@ -1166,8 +1166,8 @@ Slightly complex built-in ``Field`` classes
 
     .. attribute:: MultiValueField.widget
 
-        Must be a subclass of :class:`django.forms.MultiWidget`.
-        Default value is :class:`~django.forms.TextInput`, which
+        Must be a subclass of :class:`django_orm.forms.MultiWidget`.
+        Default value is :class:`~django_orm.forms.TextInput`, which
         probably is not very useful in this case.
 
     .. method:: compress(data_list)
@@ -1285,7 +1285,7 @@ generating choices. See :ref:`iterating-relationship-choices` for details.
         Note that no empty choice is created (regardless of the value of
         ``empty_label``) if a ``ModelChoiceField`` is required and has a
         default initial value, or a ``widget`` is set to
-        :class:`~django.forms.RadioSelect` and the
+        :class:`~django_orm.forms.RadioSelect` and the
         :attr:`~ModelChoiceField.blank` argument is ``False``.
 
     .. attribute:: to_field_name
@@ -1326,7 +1326,7 @@ generating choices. See :ref:`iterating-relationship-choices` for details.
 
     .. attribute:: blank
 
-        When using the :class:`~django.forms.RadioSelect` widget, this optional
+        When using the :class:`~django_orm.forms.RadioSelect` widget, this optional
         boolean argument determines whether an empty choice is created. By
         default, ``blank`` is ``False``, in which case no empty choice is
         created.
@@ -1344,7 +1344,7 @@ generating choices. See :ref:`iterating-relationship-choices` for details.
     ``label_from_instance``. This method will receive a model object and should
     return a string suitable for representing it. For example::
 
-        from django.forms import ModelChoiceField
+        from django_orm.forms import ModelChoiceField
 
         class MyModelChoiceField(ModelChoiceField):
             def label_from_instance(self, obj):
@@ -1414,7 +1414,7 @@ widget implementations, for example, to add `data-* attributes`_ to
 
 For example, consider the following models::
 
-    from django.db import models
+    from django_orm.db import models
 
     class Topping(models.Model):
         name = models.CharField(max_length=100)
@@ -1426,11 +1426,11 @@ For example, consider the following models::
     class Pizza(models.Model):
         topping = models.ForeignKey(Topping, on_delete=models.CASCADE)
 
-You can use a :class:`~django.forms.Select` widget subclass to include
+You can use a :class:`~django_orm.forms.Select` widget subclass to include
 the value of ``Topping.price`` as the HTML attribute ``data-price`` for each
 ``<option>`` element::
 
-    from django import forms
+    from django_orm import forms
 
     class ToppingSelect(forms.Select):
         def create_option(self, name, value, label, selected, index, subindex=None, attrs=None):
@@ -1512,10 +1512,10 @@ Creating custom fields
 ======================
 
 If the built-in ``Field`` classes don't meet your needs, you can create custom
-``Field`` classes. To do this, create a subclass of ``django.forms.Field``. Its
+``Field`` classes. To do this, create a subclass of ``django_orm.forms.Field``. Its
 only requirements are that it implement a ``clean()`` method and that its
 ``__init__()`` method accept the core arguments mentioned above (``required``,
 ``label``, ``initial``, ``widget``, ``help_text``).
 
 You can also customize how a field will be accessed by overriding
-:meth:`~django.forms.Field.get_bound_field()`.
+:meth:`~django_orm.forms.Field.get_bound_field()`.

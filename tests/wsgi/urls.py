@@ -1,5 +1,5 @@
-from django.http import FileResponse, HttpResponse
-from django.urls import path
+from django_orm.http import FileResponse, HttpResponse
+from django_orm.urls import path
 
 
 def helloworld(request):

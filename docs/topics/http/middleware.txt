@@ -8,7 +8,7 @@ or output.
 
 Each middleware component is responsible for doing some specific function. For
 example, Django includes a middleware component,
-:class:`~django.contrib.auth.middleware.AuthenticationMiddleware`, that
+:class:`~django_orm.contrib.auth.middleware.AuthenticationMiddleware`, that
 associates users with requests using sessions.
 
 This document explains how middleware works, how you activate middleware, and
@@ -95,9 +95,9 @@ Marking middleware as unused
 
 It's sometimes useful to determine at startup time whether a piece of
 middleware should be used. In these cases, your middleware's ``__init__()``
-method may raise :exc:`~django.core.exceptions.MiddlewareNotUsed`. Django will
+method may raise :exc:`~django_orm.core.exceptions.MiddlewareNotUsed`. Django will
 then remove that middleware from the middleware process and log a debug message
-to the :ref:`django-request-logger` logger when :setting:`DEBUG` is ``True``.
+to the :ref:`django_orm-request-logger` logger when :setting:`DEBUG` is ``True``.
 
 Activating middleware
 =====================
@@ -107,28 +107,28 @@ your Django settings.
 
 In :setting:`MIDDLEWARE`, each middleware component is represented by a string:
 the full Python path to the middleware factory's class or function name. For
-example, here's the default value created by :djadmin:`django-admin
+example, here's the default value created by :djadmin:`django_orm-admin
 startproject <startproject>`::
 
     MIDDLEWARE = [
-        'django.middleware.security.SecurityMiddleware',
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'django_orm.middleware.security.SecurityMiddleware',
+        'django_orm.contrib.sessions.middleware.SessionMiddleware',
+        'django_orm.middleware.common.CommonMiddleware',
+        'django_orm.middleware.csrf.CsrfViewMiddleware',
+        'django_orm.contrib.auth.middleware.AuthenticationMiddleware',
+        'django_orm.contrib.messages.middleware.MessageMiddleware',
+        'django_orm.middleware.clickjacking.XFrameOptionsMiddleware',
     ]
 
 A Django installation doesn't require any middleware — :setting:`MIDDLEWARE`
 can be empty, if you'd like — but it's strongly suggested that you at least use
-:class:`~django.middleware.common.CommonMiddleware`.
+:class:`~django_orm.middleware.common.CommonMiddleware`.
 
 The order in :setting:`MIDDLEWARE` matters because a middleware can depend on
 other middleware. For instance,
-:class:`~django.contrib.auth.middleware.AuthenticationMiddleware` stores the
+:class:`~django_orm.contrib.auth.middleware.AuthenticationMiddleware` stores the
 authenticated user in the session; therefore, it must run after
-:class:`~django.contrib.sessions.middleware.SessionMiddleware`. See
+:class:`~django_orm.contrib.sessions.middleware.SessionMiddleware`. See
 :ref:`middleware-ordering` for some common hints about ordering of Django
 middleware classes.
 
@@ -163,7 +163,7 @@ can add three other special methods to class-based middleware:
 
 .. method:: process_view(request, view_func, view_args, view_kwargs)
 
-``request`` is an :class:`~django.http.HttpRequest` object. ``view_func`` is
+``request`` is an :class:`~django_orm.http.HttpRequest` object. ``view_func`` is
 the Python function that Django is about to use. (It's the actual function
 object, not the name of the function as a string.) ``view_args`` is a list of
 positional arguments that will be passed to the view, and ``view_kwargs`` is a
@@ -173,25 +173,25 @@ dictionary of keyword arguments that will be passed to the view. Neither
 
 ``process_view()`` is called just before Django calls the view.
 
-It should return either ``None`` or an :class:`~django.http.HttpResponse`
+It should return either ``None`` or an :class:`~django_orm.http.HttpResponse`
 object. If it returns ``None``, Django will continue processing this request,
 executing any other ``process_view()`` middleware and, then, the appropriate
-view. If it returns an :class:`~django.http.HttpResponse` object, Django won't
+view. If it returns an :class:`~django_orm.http.HttpResponse` object, Django won't
 bother calling the appropriate view; it'll apply response middleware to that
-:class:`~django.http.HttpResponse` and return the result.
+:class:`~django_orm.http.HttpResponse` and return the result.
 
 .. note::
 
-    Accessing :attr:`request.POST <django.http.HttpRequest.POST>` inside
+    Accessing :attr:`request.POST <django_orm.http.HttpRequest.POST>` inside
     middleware before the view runs or in ``process_view()`` will prevent any
     view running after the middleware from being able to :ref:`modify the
     upload handlers for the request <modifying_upload_handlers_on_the_fly>`,
     and should normally be avoided.
 
-    The :class:`~django.middleware.csrf.CsrfViewMiddleware` class can be
+    The :class:`~django_orm.middleware.csrf.CsrfViewMiddleware` class can be
     considered an exception, as it provides the
-    :func:`~django.views.decorators.csrf.csrf_exempt` and
-    :func:`~django.views.decorators.csrf.csrf_protect` decorators which allow
+    :func:`~django_orm.views.decorators.csrf.csrf_exempt` and
+    :func:`~django_orm.views.decorators.csrf.csrf_protect` decorators which allow
     views to explicitly control at what point the CSRF validation should occur.
 
 .. _exception-middleware:
@@ -201,13 +201,13 @@ bother calling the appropriate view; it'll apply response middleware to that
 
 .. method:: process_exception(request, exception)
 
-``request`` is an :class:`~django.http.HttpRequest` object. ``exception`` is an
+``request`` is an :class:`~django_orm.http.HttpRequest` object. ``exception`` is an
 ``Exception`` object raised by the view function.
 
 Django calls ``process_exception()`` when a view raises an exception.
 ``process_exception()`` should return either ``None`` or an
-:class:`~django.http.HttpResponse` object. If it returns an
-:class:`~django.http.HttpResponse` object, the template response and response
+:class:`~django_orm.http.HttpResponse` object. If it returns an
+:class:`~django_orm.http.HttpResponse` object, the template response and response
 middleware will be applied and the resulting response returned to the
 browser. Otherwise, :ref:`default exception handling <error-views>` kicks in.
 
@@ -223,18 +223,18 @@ middleware won't be called at all.
 
 .. method:: process_template_response(request, response)
 
-``request`` is an :class:`~django.http.HttpRequest` object. ``response`` is
-the :class:`~django.template.response.TemplateResponse` object (or equivalent)
+``request`` is an :class:`~django_orm.http.HttpRequest` object. ``response`` is
+the :class:`~django_orm.template.response.TemplateResponse` object (or equivalent)
 returned by a Django view or by a middleware.
 
 ``process_template_response()`` is called just after the view has finished
 executing, if the response instance has a ``render()`` method, indicating that
-it is a :class:`~django.template.response.TemplateResponse` or equivalent.
+it is a :class:`~django_orm.template.response.TemplateResponse` or equivalent.
 
 It must return a response object that implements a ``render`` method. It could
 alter the given ``response`` by changing ``response.template_name`` and
 ``response.context_data``, or it could create and return a brand-new
-:class:`~django.template.response.TemplateResponse` or equivalent.
+:class:`~django_orm.template.response.TemplateResponse` or equivalent.
 
 You don't need to explicitly render responses -- responses will be
 automatically rendered once all template response middleware has been
@@ -246,8 +246,8 @@ includes ``process_template_response()``.
 Dealing with streaming responses
 ================================
 
-Unlike :class:`~django.http.HttpResponse`,
-:class:`~django.http.StreamingHttpResponse` does not have a ``content``
+Unlike :class:`~django_orm.http.HttpResponse`,
+:class:`~django_orm.http.StreamingHttpResponse` does not have a ``content``
 attribute. As a result, middleware can no longer assume that all responses
 will have a ``content`` attribute. If they need access to the content, they
 must test for streaming responses and adjust their behavior accordingly::
@@ -282,9 +282,9 @@ calling its ``get_response`` callable. Middleware don't need to worry about
 wrapping their call to ``get_response`` in a ``try/except`` and handling an
 exception that might have been raised by a later middleware or the view. Even
 if the very next middleware in the chain raises an
-:class:`~django.http.Http404` exception, for example, your middleware won't see
-that exception; instead it will get an :class:`~django.http.HttpResponse`
-object with a :attr:`~django.http.HttpResponse.status_code` of 404.
+:class:`~django_orm.http.Http404` exception, for example, your middleware won't see
+that exception; instead it will get an :class:`~django_orm.http.HttpResponse`
+object with a :attr:`~django_orm.http.HttpResponse.status_code` of 404.
 
 You can set :setting:`DEBUG_PROPAGATE_EXCEPTIONS` to ``True`` to skip this
 conversion and propagate exceptions upward.
@@ -314,10 +314,10 @@ converting it. In this case, you can work out if your middleware will receive
 async requests by checking if the ``get_response`` object you are passed is a
 coroutine function, using ``asyncio.iscoroutinefunction``.
 
-The ``django.utils.decorators`` module contains
-:func:`~django.utils.decorators.sync_only_middleware`,
-:func:`~django.utils.decorators.async_only_middleware`, and
-:func:`~django.utils.decorators.sync_and_async_middleware` decorators that
+The ``django_orm.utils.decorators`` module contains
+:func:`~django_orm.utils.decorators.sync_only_middleware`,
+:func:`~django_orm.utils.decorators.async_only_middleware`, and
+:func:`~django_orm.utils.decorators.sync_and_async_middleware` decorators that
 allow you to apply these flags to middleware factory functions.
 
 The returned callable must match the sync or async nature of the
@@ -332,7 +332,7 @@ at an additional performance penalty.
 Here's an example of how to create a middleware function that supports both::
 
     import asyncio
-    from django.utils.decorators import sync_and_async_middleware
+    from django_orm.utils.decorators import sync_and_async_middleware
 
     @sync_and_async_middleware
     def simple_middleware(get_response):
@@ -366,10 +366,10 @@ Here's an example of how to create a middleware function that supports both::
 Upgrading pre-Django 1.10-style middleware
 ==========================================
 
-.. class:: django.utils.deprecation.MiddlewareMixin
+.. class:: django_orm.utils.deprecation.MiddlewareMixin
     :module:
 
-Django provides ``django.utils.deprecation.MiddlewareMixin`` to ease creating
+Django provides ``django_orm.utils.deprecation.MiddlewareMixin`` to ease creating
 middleware classes that are compatible with both :setting:`MIDDLEWARE` and the
 old ``MIDDLEWARE_CLASSES``, and support synchronous and asynchronous requests.
 All middleware classes included with Django are compatible with both settings.
@@ -411,7 +411,7 @@ These are the behavioral differences between using :setting:`MIDDLEWARE` and
    exceptions raised from a middleware ``process_request`` method. Under
    :setting:`MIDDLEWARE`, ``process_exception`` applies only to exceptions
    raised from the view (or from the ``render`` method of a
-   :class:`~django.template.response.TemplateResponse`). Exceptions raised from
+   :class:`~django_orm.template.response.TemplateResponse`). Exceptions raised from
    a middleware are converted to the appropriate HTTP response and then passed
    to the next middleware.
 
@@ -419,7 +419,7 @@ These are the behavioral differences between using :setting:`MIDDLEWARE` and
    an exception, the ``process_response`` methods of all earlier middleware are
    skipped and a ``500 Internal Server Error`` HTTP response is always
    returned (even if the exception raised was e.g. an
-   :class:`~django.http.Http404`). Under :setting:`MIDDLEWARE`, an exception
+   :class:`~django_orm.http.Http404`). Under :setting:`MIDDLEWARE`, an exception
    raised from a middleware will immediately be converted to the appropriate
    HTTP response, and then the next middleware in line will see that
    response. Middleware are never skipped due to a middleware raising an

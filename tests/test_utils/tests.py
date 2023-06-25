@@ -5,12 +5,12 @@ import warnings
 from io import StringIO
 from unittest import mock
 
-from django.conf import settings
-from django.contrib.staticfiles.finders import get_finder, get_finders
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.exceptions import ImproperlyConfigured
-from django.core.files.storage import default_storage
-from django.db import (
+from django_orm.conf import settings
+from django_orm.contrib.staticfiles.finders import get_finder, get_finders
+from django_orm.contrib.staticfiles.storage import staticfiles_storage
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.core.files.storage import default_storage
+from django_orm.db import (
     IntegrityError,
     connection,
     connections,
@@ -18,7 +18,7 @@ from django.db import (
     router,
     transaction,
 )
-from django.forms import (
+from django_orm.forms import (
     CharField,
     EmailField,
     Form,
@@ -26,18 +26,18 @@ from django.forms import (
     ValidationError,
     formset_factory,
 )
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-from django.test import (
+from django_orm.http import HttpResponse
+from django_orm.template.loader import render_to_string
+from django_orm.test import (
     SimpleTestCase,
     TestCase,
     TransactionTestCase,
     skipIfDBFeature,
     skipUnlessDBFeature,
 )
-from django.test.html import HTMLParseError, parse_html
-from django.test.testcases import DatabaseOperationForbidden
-from django.test.utils import (
+from django_orm.test.html import HTMLParseError, parse_html
+from django_orm.test.testcases import DatabaseOperationForbidden
+from django_orm.test.utils import (
     CaptureQueriesContext,
     TestContextDecorator,
     ignore_warnings,
@@ -45,10 +45,10 @@ from django.test.utils import (
     override_settings,
     setup_test_environment,
 )
-from django.urls import NoReverseMatch, path, reverse, reverse_lazy
-from django.utils.deprecation import RemovedInDjango50Warning
-from django.utils.log import DEFAULT_LOGGING
-from django.utils.version import PY311
+from django_orm.urls import NoReverseMatch, path, reverse, reverse_lazy
+from django_orm.utils.deprecation import RemovedInDjango50Warning
+from django_orm.utils.log import DEFAULT_LOGGING
+from django_orm.utils.version import PY311
 
 from .models import Car, Person, PossessedCar
 from .views import empty_response
@@ -68,7 +68,7 @@ class SkippingTestCase(SimpleTestCase):
 
     def test_skip_unless_db_feature(self):
         """
-        Testing the django.test.skipUnlessDBFeature decorator.
+        Testing the django_orm.test.skipUnlessDBFeature decorator.
         """
 
         # Total hack, but it works, just want an attribute that's always true.
@@ -111,7 +111,7 @@ class SkippingTestCase(SimpleTestCase):
 
     def test_skip_if_db_feature(self):
         """
-        Testing the django.test.skipIfDBFeature decorator.
+        Testing the django_orm.test.skipIfDBFeature decorator.
         """
 
         @skipIfDBFeature("__class__")
@@ -258,7 +258,7 @@ class AssertNumQueriesUponConnectionTests(TransactionTestCase):
                     cursor.execute("SELECT 1" + connection.features.bare_select_suffix)
 
         ensure_connection = (
-            "django.db.backends.base.base.BaseDatabaseWrapper.ensure_connection"
+            "django_orm.db.backends.base.base.BaseDatabaseWrapper.ensure_connection"
         )
         with mock.patch(ensure_connection, side_effect=make_configuration_query):
             with self.assertNumQueries(1):
@@ -1203,35 +1203,35 @@ class AssertNoLogsTest(SimpleTestCase):
         cls.addClassCleanup(logging.config.dictConfig, settings.LOGGING)
 
     def setUp(self):
-        self.logger = logging.getLogger("django")
+        self.logger = logging.getLogger("django_orm")
 
     @override_settings(DEBUG=True)
     def test_fails_when_log_emitted(self):
-        msg = "Unexpected logs found: ['INFO:django:FAIL!']"
+        msg = "Unexpected logs found: ['INFO:django_orm:FAIL!']"
         with self.assertRaisesMessage(AssertionError, msg):
-            with self.assertNoLogs("django", "INFO"):
+            with self.assertNoLogs("django_orm", "INFO"):
                 self.logger.info("FAIL!")
 
     @override_settings(DEBUG=True)
     def test_text_level(self):
-        with self.assertNoLogs("django", "INFO"):
+        with self.assertNoLogs("django_orm", "INFO"):
             self.logger.debug("DEBUG logs are ignored.")
 
     @override_settings(DEBUG=True)
     def test_int_level(self):
-        with self.assertNoLogs("django", logging.INFO):
+        with self.assertNoLogs("django_orm", logging.INFO):
             self.logger.debug("DEBUG logs are ignored.")
 
     @override_settings(DEBUG=True)
     def test_default_level(self):
-        with self.assertNoLogs("django"):
+        with self.assertNoLogs("django_orm"):
             self.logger.debug("DEBUG logs are ignored.")
 
     @override_settings(DEBUG=True)
     def test_does_not_hide_other_failures(self):
         msg = "1 != 2"
         with self.assertRaisesMessage(AssertionError, msg):
-            with self.assertNoLogs("django"):
+            with self.assertNoLogs("django_orm"):
                 self.assertEqual(1, 2)
 
 
@@ -1981,7 +1981,7 @@ class SetupTestEnvironmentTests(SimpleTestCase):
         for type_ in (list, tuple):
             with self.subTest(type_=type_):
                 allowed_hosts = type_("*")
-                with mock.patch("django.test.utils._TestState") as x:
+                with mock.patch("django_orm.test.utils._TestState") as x:
                     del x.saved_data
                     with self.settings(ALLOWED_HOSTS=allowed_hosts):
                         setup_test_environment()
@@ -2029,7 +2029,7 @@ class OverrideSettingsTests(SimpleTestCase):
     def test_override_media_root(self):
         """
         Overriding the MEDIA_ROOT setting should be reflected in the
-        base_location attribute of django.core.files.storage.default_storage.
+        base_location attribute of django_orm.core.files.storage.default_storage.
         """
         self.assertEqual(default_storage.base_location, "")
         with self.settings(MEDIA_ROOT="test_value"):
@@ -2038,7 +2038,7 @@ class OverrideSettingsTests(SimpleTestCase):
     def test_override_media_url(self):
         """
         Overriding the MEDIA_URL setting should be reflected in the
-        base_url attribute of django.core.files.storage.default_storage.
+        base_url attribute of django_orm.core.files.storage.default_storage.
         """
         self.assertEqual(default_storage.base_location, "")
         with self.settings(MEDIA_URL="/test_value/"):
@@ -2048,7 +2048,7 @@ class OverrideSettingsTests(SimpleTestCase):
         """
         Overriding the FILE_UPLOAD_PERMISSIONS setting should be reflected in
         the file_permissions_mode attribute of
-        django.core.files.storage.default_storage.
+        django_orm.core.files.storage.default_storage.
         """
         self.assertEqual(default_storage.file_permissions_mode, 0o644)
         with self.settings(FILE_UPLOAD_PERMISSIONS=0o777):
@@ -2058,7 +2058,7 @@ class OverrideSettingsTests(SimpleTestCase):
         """
         Overriding the FILE_UPLOAD_DIRECTORY_PERMISSIONS setting should be
         reflected in the directory_permissions_mode attribute of
-        django.core.files.storage.default_storage.
+        django_orm.core.files.storage.default_storage.
         """
         self.assertIsNone(default_storage.directory_permissions_mode)
         with self.settings(FILE_UPLOAD_DIRECTORY_PERMISSIONS=0o777):
@@ -2076,7 +2076,7 @@ class OverrideSettingsTests(SimpleTestCase):
         """
         Overriding the STATIC_URL setting should be reflected in the
         base_url attribute of
-        django.contrib.staticfiles.storage.staticfiles_storage.
+        django_orm.contrib.staticfiles.storage.staticfiles_storage.
         """
         with self.settings(STATIC_URL="/test/"):
             self.assertEqual(staticfiles_storage.base_url, "/test/")
@@ -2085,7 +2085,7 @@ class OverrideSettingsTests(SimpleTestCase):
         """
         Overriding the STATIC_ROOT setting should be reflected in the
         location attribute of
-        django.contrib.staticfiles.storage.staticfiles_storage.
+        django_orm.contrib.staticfiles.storage.staticfiles_storage.
         """
         with self.settings(STATIC_ROOT="/tmp/test"):
             self.assertEqual(staticfiles_storage.location, os.path.abspath("/tmp/test"))
@@ -2093,21 +2093,21 @@ class OverrideSettingsTests(SimpleTestCase):
     def test_override_staticfiles_storage(self):
         """
         Overriding the STATICFILES_STORAGE setting should be reflected in
-        the value of django.contrib.staticfiles.storage.staticfiles_storage.
+        the value of django_orm.contrib.staticfiles.storage.staticfiles_storage.
         """
         new_class = "ManifestStaticFilesStorage"
-        new_storage = "django.contrib.staticfiles.storage." + new_class
+        new_storage = "django_orm.contrib.staticfiles.storage." + new_class
         with self.settings(STATICFILES_STORAGE=new_storage):
             self.assertEqual(staticfiles_storage.__class__.__name__, new_class)
 
     def test_override_staticfiles_finders(self):
         """
         Overriding the STATICFILES_FINDERS setting should be reflected in
-        the return value of django.contrib.staticfiles.finders.get_finders.
+        the return value of django_orm.contrib.staticfiles.finders.get_finders.
         """
         current = get_finders()
         self.assertGreater(len(list(current)), 1)
-        finders = ["django.contrib.staticfiles.finders.FileSystemFinder"]
+        finders = ["django_orm.contrib.staticfiles.finders.FileSystemFinder"]
         with self.settings(STATICFILES_FINDERS=finders):
             self.assertEqual(len(list(get_finders())), len(finders))
 
@@ -2115,14 +2115,14 @@ class OverrideSettingsTests(SimpleTestCase):
         """
         Overriding the STATICFILES_DIRS setting should be reflected in
         the locations attribute of the
-        django.contrib.staticfiles.finders.FileSystemFinder instance.
+        django_orm.contrib.staticfiles.finders.FileSystemFinder instance.
         """
-        finder = get_finder("django.contrib.staticfiles.finders.FileSystemFinder")
+        finder = get_finder("django_orm.contrib.staticfiles.finders.FileSystemFinder")
         test_path = "/tmp/test"
         expected_location = ("", test_path)
         self.assertNotIn(expected_location, finder.locations)
         with self.settings(STATICFILES_DIRS=[test_path]):
-            finder = get_finder("django.contrib.staticfiles.finders.FileSystemFinder")
+            finder = get_finder("django_orm.contrib.staticfiles.finders.FileSystemFinder")
             self.assertIn(expected_location, finder.locations)
 
 

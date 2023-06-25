@@ -3,10 +3,10 @@ import os
 import tempfile
 import uuid
 
-from django.core import validators
-from django.core.exceptions import ValidationError
-from django.core.files.storage import FileSystemStorage
-from django.db import models
+from django_orm.core import validators
+from django_orm.core.exceptions import ValidationError
+from django_orm.core.files.storage import FileSystemStorage
+from django_orm.db import models
 
 temp_storage_dir = tempfile.mkdtemp()
 temp_storage = FileSystemStorage(temp_storage_dir)

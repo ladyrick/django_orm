@@ -1,10 +1,10 @@
 import math
 from decimal import Decimal
 
-from django.core import validators
-from django.core.exceptions import ValidationError
-from django.db import models
-from django.test import TestCase
+from django_orm.core import validators
+from django_orm.core.exceptions import ValidationError
+from django_orm.db import models
+from django_orm.test import TestCase
 
 from .models import BigD, Foo
 

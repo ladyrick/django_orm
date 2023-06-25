@@ -1,14 +1,14 @@
 import json
 from datetime import datetime
 
-from django.contrib.admin.models import ADDITION, CHANGE, DELETION, LogEntry
-from django.contrib.admin.utils import quote
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
-from django.test import TestCase, override_settings
-from django.urls import reverse
-from django.utils import translation
-from django.utils.html import escape
+from django_orm.contrib.admin.models import ADDITION, CHANGE, DELETION, LogEntry
+from django_orm.contrib.admin.utils import quote
+from django_orm.contrib.auth.models import User
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.test import TestCase, override_settings
+from django_orm.urls import reverse
+from django_orm.utils import translation
+from django_orm.utils.html import escape
 
 from .models import Article, ArticleProxy, Site
 

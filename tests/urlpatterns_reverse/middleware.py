@@ -1,6 +1,6 @@
-from django.http import HttpResponse, StreamingHttpResponse
-from django.urls import reverse
-from django.utils.deprecation import MiddlewareMixin
+from django_orm.http import HttpResponse, StreamingHttpResponse
+from django_orm.urls import reverse
+from django_orm.utils.deprecation import MiddlewareMixin
 
 from . import urlconf_inner
 

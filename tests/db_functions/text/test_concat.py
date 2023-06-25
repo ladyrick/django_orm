@@ -1,11 +1,11 @@
 from unittest import skipUnless
 
-from django.db import connection
-from django.db.models import CharField, TextField
-from django.db.models import Value as V
-from django.db.models.functions import Concat, ConcatPair, Upper
-from django.test import TestCase
-from django.utils import timezone
+from django_orm.db import connection
+from django_orm.db.models import CharField, TextField
+from django_orm.db.models import Value as V
+from django_orm.db.models.functions import Concat, ConcatPair, Upper
+from django_orm.test import TestCase
+from django_orm.utils import timezone
 
 from ..models import Article, Author
 

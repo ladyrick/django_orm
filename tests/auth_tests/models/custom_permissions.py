@@ -3,8 +3,8 @@ The CustomPermissionsUser users email as the identifier, but uses the normal
 Django permissions model. This allows us to check that the PermissionsMixin
 includes everything that is needed to interact with the ModelBackend.
 """
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.db import models
+from django_orm.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django_orm.db import models
 
 from .custom_user import CustomUserManager, RemoveGroupsAndPermissions
 

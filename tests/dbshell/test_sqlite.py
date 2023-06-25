@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from django.db.backends.sqlite3.client import DatabaseClient
-from django.test import SimpleTestCase
+from django_orm.db.backends.sqlite3.client import DatabaseClient
+from django_orm.test import SimpleTestCase
 
 
 class SqliteDbshellCommandTestCase(SimpleTestCase):

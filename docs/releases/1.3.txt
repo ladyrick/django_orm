@@ -72,7 +72,7 @@ extended.
 See :doc:`the documentation on class-based generic views</topics/class-based-views/index>`
 for more details. There is also a document to help you `convert
 your function-based generic views to class-based
-views <https://raw.githubusercontent.com/django/django/ea9dc9f4b03ae034c1dc080730422dda7a9c2e47/docs/topics/generic-views-migration.txt>`_.
+views <https://raw.githubusercontent.com/django_orm/django_orm/ea9dc9f4b03ae034c1dc080730422dda7a9c2e47/docs/topics/generic-views-migration.txt>`_.
 
 Logging
 -------
@@ -89,7 +89,7 @@ Extended static files handling
 ------------------------------
 
 Django 1.3 ships with a new contrib app --
-``django.contrib.staticfiles`` -- to help developers handle the static
+``django_orm.contrib.staticfiles`` -- to help developers handle the static
 media files (images, CSS, JavaScript, etc.) that are needed to render
 a complete web page.
 
@@ -115,7 +115,7 @@ project can benefit from these new features, Django ships with a copy
 of unittest2_, a copy of the Python 2.7 ``unittest`` library, backported
 for Python 2.4 compatibility.
 
-To access this library, Django provides the ``django.utils.unittest``
+To access this library, Django provides the ``django_orm.utils.unittest``
 module alias. If you are using Python 2.7, or you have installed
 ``unittest2`` locally, Django will map the alias to the installed
 version of the ``unittest`` library. Otherwise, Django will use its own
@@ -123,7 +123,7 @@ bundled version of ``unittest2``.
 
 To take advantage of this alias, simply use::
 
-    from django.utils import unittest
+    from django_orm.utils import unittest
 
 wherever you would have historically used::
 
@@ -146,14 +146,14 @@ context managers. For example::
 Configurable delete-cascade
 ---------------------------
 
-:class:`~django.db.models.ForeignKey` and
-:class:`~django.db.models.OneToOneField` now accept an
-:attr:`~django.db.models.ForeignKey.on_delete` argument to customize behavior
+:class:`~django_orm.db.models.ForeignKey` and
+:class:`~django_orm.db.models.OneToOneField` now accept an
+:attr:`~django_orm.db.models.ForeignKey.on_delete` argument to customize behavior
 when the referenced object is deleted. Previously, deletes were always
 cascaded; available alternatives now include set null, set default, set to any
 value, protect, or do nothing.
 
-For more information, see the :attr:`~django.db.models.ForeignKey.on_delete`
+For more information, see the :attr:`~django_orm.db.models.ForeignKey.on_delete`
 documentation.
 
 Contextual markers and comments for translatable strings
@@ -194,17 +194,17 @@ example, you may want to change the template that is used, or put
 additional data into the context.
 
 However, you can't (easily) modify the content of a basic
-:class:`~django.http.HttpResponse` after it has been constructed. To
+:class:`~django_orm.http.HttpResponse` after it has been constructed. To
 overcome this limitation, Django 1.3 adds a new
-:class:`~django.template.response.TemplateResponse` class. Unlike basic
-:class:`~django.http.HttpResponse` objects,
-:class:`~django.template.response.TemplateResponse` objects retain the details
+:class:`~django_orm.template.response.TemplateResponse` class. Unlike basic
+:class:`~django_orm.http.HttpResponse` objects,
+:class:`~django_orm.template.response.TemplateResponse` objects retain the details
 of the template and context that was provided by the view to compute
 the response. The final output of the response is not computed until
 it is needed, later in the response process.
 
 For more details, see the :doc:`documentation </ref/template-response>`
-on the :class:`~django.template.response.TemplateResponse` class.
+on the :class:`~django_orm.template.response.TemplateResponse` class.
 
 Caching changes
 ---------------
@@ -279,39 +279,39 @@ process has been on adding lots of smaller, long standing feature
 requests. These include:
 
 * Improved tools for accessing and manipulating the current
-  :class:`~django.contrib.sites.models.Site` object in
+  :class:`~django_orm.contrib.sites.models.Site` object in
   :doc:`the sites framework </ref/contrib/sites>`.
 
-* A :class:`~django.test.RequestFactory` for mocking requests
+* A :class:`~django_orm.test.RequestFactory` for mocking requests
   in tests.
 
 * A new test assertion --
-  :meth:`~django.test.TransactionTestCase.assertNumQueries` -- making it
+  :meth:`~django_orm.test.TransactionTestCase.assertNumQueries` -- making it
   easier to test the database activity associated with a view.
 
 * Support for lookups spanning relations in admin's
-  :attr:`~django.contrib.admin.ModelAdmin.list_filter`.
+  :attr:`~django_orm.contrib.admin.ModelAdmin.list_filter`.
 
 * Support for HttpOnly_ cookies.
 
-* :meth:`~django.core.mail.mail_admins()` and
-  :meth:`~django.core.mail.mail_managers()` now support easily attaching
+* :meth:`~django_orm.core.mail.mail_admins()` and
+  :meth:`~django_orm.core.mail.mail_managers()` now support easily attaching
   HTML content to messages.
 
-* :class:`~django.core.mail.EmailMessage` now supports CC's.
+* :class:`~django_orm.core.mail.EmailMessage` now supports CC's.
 
 * Error emails now include more of the detail and formatting of the
   debug server error page.
 
-* :meth:`~django.template.Library.simple_tag` now accepts a
+* :meth:`~django_orm.template.Library.simple_tag` now accepts a
   ``takes_context`` argument, making it easier to write simple
   template tags that require access to template context.
 
-* A new :meth:`~django.shortcuts.render()` shortcut -- an alternative
-  to ``django.shortcuts.render_to_response()`` providing a
-  :class:`~django.template.RequestContext` by default.
+* A new :meth:`~django_orm.shortcuts.render()` shortcut -- an alternative
+  to ``django_orm.shortcuts.render_to_response()`` providing a
+  :class:`~django_orm.template.RequestContext` by default.
 
-* Support for combining :class:`F expressions <django.db.models.F>`
+* Support for combining :class:`F expressions <django_orm.db.models.F>`
   with ``timedelta`` values when retrieving or updating database values.
 
 .. _HttpOnly: https://owasp.org/www-community/HttpOnly
@@ -347,12 +347,12 @@ Deleting a model doesn't delete associated files
 ------------------------------------------------
 
 In earlier Django versions, when a model instance containing a
-:class:`~django.db.models.FileField` was deleted,
-:class:`~django.db.models.FileField` took it upon itself to also delete the
+:class:`~django_orm.db.models.FileField` was deleted,
+:class:`~django_orm.db.models.FileField` took it upon itself to also delete the
 file from the backend storage. This opened the door to several data-loss
 scenarios, including rolled-back transactions and fields on different models
 referencing the same file. In Django 1.3, when a model is deleted the
-:class:`~django.db.models.FileField`’s ``delete()`` method won't be called. If
+:class:`~django_orm.db.models.FileField`’s ``delete()`` method won't be called. If
 you need cleanup of orphaned files, you'll need to handle it yourself (for
 instance, with a custom management command that can be run manually or
 scheduled to run periodically via e.g. cron).
@@ -360,7 +360,7 @@ scheduled to run periodically via e.g. cron).
 PasswordInput default rendering behavior
 ----------------------------------------
 
-The :class:`~django.forms.PasswordInput` form widget, intended for use
+The :class:`~django_orm.forms.PasswordInput` form widget, intended for use
 with form fields which represent passwords, accepts a boolean keyword
 argument ``render_value`` indicating whether to send its data back to
 the browser when displaying a submitted form with errors. Prior to
@@ -368,7 +368,7 @@ Django 1.3, this argument defaulted to ``True``, meaning that the
 submitted password would be sent back to the browser as part of the
 form. Developers who wished to add a bit of additional security by
 excluding that value from the redisplayed form could instantiate a
-:class:`~django.forms.PasswordInput` passing ``render_value=False`` .
+:class:`~django_orm.forms.PasswordInput` passing ``render_value=False`` .
 
 Due to the sensitive nature of passwords, however, Django 1.3 takes
 this step automatically; the default value of ``render_value`` is now
@@ -383,8 +383,8 @@ explicitly indicate this. For example::
 Clearable default widget for FileField
 --------------------------------------
 
-Django 1.3 now includes a :class:`~django.forms.ClearableFileInput` form widget
-in addition to :class:`~django.forms.FileInput`. ``ClearableFileInput`` renders
+Django 1.3 now includes a :class:`~django_orm.forms.ClearableFileInput` form widget
+in addition to :class:`~django_orm.forms.FileInput`. ``ClearableFileInput`` renders
 with a checkbox to clear the field's value (if the field has a value and is not
 required); ``FileInput`` provided no means for clearing an existing file from
 a ``FileField``.
@@ -398,7 +398,7 @@ To return to the previous rendering (without the ability to clear the
 ``ClearableFileInput``. For instance, in a ``ModelForm`` for a hypothetical
 ``Document`` model with a ``FileField`` named ``document``::
 
-    from django import forms
+    from django_orm import forms
     from myapp.models import Document
 
     class DocumentForm(forms.ModelForm):
@@ -551,7 +551,7 @@ Work has been done to simplify, rationalize and properly document the algorithm
 used by Django at runtime to build translations from the different translations
 found on disk, namely:
 
-For translatable literals found in Python code and templates (``'django'``
+For translatable literals found in Python code and templates (``'django_orm'``
 gettext domain):
 
 * Priorities of translations included with applications listed in the
@@ -577,7 +577,7 @@ gettext domain):
 For translatable literals found in JavaScript code (``'djangojs'`` gettext
 domain):
 
-* Similarly to the ``'django'`` domain translations: Overriding of
+* Similarly to the ``'django_orm'`` domain translations: Overriding of
   translations shipped with applications by using the :setting:`LOCALE_PATHS`
   setting is now possible for this domain too. These translations have higher
   precedence than the translations of Python packages passed to the
@@ -596,7 +596,7 @@ Transaction management
 When using managed transactions -- that is, anything but the default
 autocommit mode -- it is important when a transaction is marked as
 "dirty". Dirty transactions are committed by the ``commit_on_success``
-decorator or the ``django.middleware.transaction.TransactionMiddleware``, and
+decorator or the ``django_orm.middleware.transaction.TransactionMiddleware``, and
 ``commit_manually`` forces them to be closed explicitly; clean transactions
 "get a pass", which means they are usually rolled back at the end of a request
 when the connection is closed.
@@ -620,7 +620,7 @@ transactions that are being managed using ``commit_manually()``. For example::
 
 Prior to Django 1.3, this would work without error. However, under
 Django 1.3, this will raise a
-:class:`~django.db.transaction.TransactionManagementError` because
+:class:`~django_orm.db.transaction.TransactionManagementError` because
 the read operation that retrieves the ``MyObject`` instance leaves the
 transaction in a dirty state.
 
@@ -634,7 +634,7 @@ message as a nonexistent account.
 Password reset view now accepts ``from_email``
 ----------------------------------------------
 
-The ``django.contrib.auth.views.password_reset()`` view now accepts a
+The ``django_orm.contrib.auth.views.password_reset()`` view now accepts a
 ``from_email`` parameter, which is passed to the ``password_reset_form``’s
 ``save()`` method as a keyword argument. If you are using this view with a
 custom password reset form, then you will need to ensure your form's ``save()``
@@ -686,32 +686,32 @@ As a result of the introduction of class-based generic views, the
 function-based generic views provided by Django have been deprecated.
 The following modules and the views they contain have been deprecated:
 
-* ``django.views.generic.create_update``
-* ``django.views.generic.date_based``
-* ``django.views.generic.list_detail``
-* ``django.views.generic.simple``
+* ``django_orm.views.generic.create_update``
+* ``django_orm.views.generic.date_based``
+* ``django_orm.views.generic.list_detail``
+* ``django_orm.views.generic.simple``
 
 Test client response ``template`` attribute
 -------------------------------------------
 
 Django's :ref:`test client <test-client>` returns
-:class:`~django.test.Response` objects annotated with extra testing
+:class:`~django_orm.test.Response` objects annotated with extra testing
 information. In Django versions prior to 1.3, this included a ``template``
 attribute containing information about templates rendered in generating the
-response: either None, a single :class:`~django.template.Template` object, or a
-list of :class:`~django.template.Template` objects. This inconsistency in
+response: either None, a single :class:`~django_orm.template.Template` object, or a
+list of :class:`~django_orm.template.Template` objects. This inconsistency in
 return values (sometimes a list, sometimes not) made the attribute difficult
 to work with.
 
 In Django 1.3 the ``template`` attribute is deprecated in favor of a new
-:attr:`~django.test.Response.templates` attribute, which is always a
+:attr:`~django_orm.test.Response.templates` attribute, which is always a
 list, even if it has only a single element or no elements.
 
 ``DjangoTestRunner``
 --------------------
 
 As a result of the introduction of support for ``unittest2``, the features
-of ``django.test.simple.DjangoTestRunner`` (including fail-fast
+of ``django_orm.test.simple.DjangoTestRunner`` (including fail-fast
 and Ctrl-C test termination) have been made redundant. In view of this
 redundancy, ``DjangoTestRunner`` has been turned into an empty placeholder
 class, and will be removed entirely in Django 1.5.
@@ -766,10 +766,10 @@ in :commit:`r12634 <c8015052d935a99a5c8f96434b2d0cd16d8a4e14>` to support a
 broader set of characters for usernames.
 
 This release refactors the admin's login mechanism to use a subclass of the
-:class:`~django.contrib.auth.forms.AuthenticationForm` instead of a manual
+:class:`~django_orm.contrib.auth.forms.AuthenticationForm` instead of a manual
 form validation. The previously undocumented method
-``'django.contrib.admin.sites.AdminSite.display_login_form'`` has been removed
-in favor of a new :attr:`~django.contrib.admin.AdminSite.login_form`
+``'django_orm.contrib.admin.sites.AdminSite.display_login_form'`` has been removed
+in favor of a new :attr:`~django_orm.contrib.admin.AdminSite.login_form`
 attribute.
 
 ``reset`` and ``sqlreset`` management commands
@@ -784,16 +784,16 @@ GeoDjango
 ---------
 
 * The function-based :setting:`TEST_RUNNER` previously used to execute
-  the GeoDjango test suite, ``django.contrib.gis.tests.run_gis_tests``, was
+  the GeoDjango test suite, ``django_orm.contrib.gis.tests.run_gis_tests``, was
   deprecated for the class-based runner,
-  ``django.contrib.gis.tests.GeoDjangoTestSuiteRunner``.
+  ``django_orm.contrib.gis.tests.GeoDjangoTestSuiteRunner``.
 
 * Previously, calling
-  :meth:`~django.contrib.gis.geos.GEOSGeometry.transform` would
+  :meth:`~django_orm.contrib.gis.geos.GEOSGeometry.transform` would
   silently do nothing when GDAL wasn't available.  Now, a
-  :class:`~django.contrib.gis.geos.GEOSException` is properly raised
+  :class:`~django_orm.contrib.gis.geos.GEOSException` is properly raised
   to indicate possible faulty application code.  A warning is now
-  raised if :meth:`~django.contrib.gis.geos.GEOSGeometry.transform` is
+  raised if :meth:`~django_orm.contrib.gis.geos.GEOSGeometry.transform` is
   called when the SRID of the geometry is less than 0 or ``None``.
 
 ``CZBirthNumberField.clean``
@@ -807,10 +807,10 @@ now pending deprecation.
 ``CompatCookie``
 ----------------
 
-Previously, ``django.http`` exposed an undocumented ``CompatCookie`` class,
+Previously, ``django_orm.http`` exposed an undocumented ``CompatCookie`` class,
 which was a bugfix wrapper around the standard library ``SimpleCookie``. As the
 fixes are moving upstream, this is now deprecated - you should use ``from
-django.http import SimpleCookie`` instead.
+django_orm.http import SimpleCookie`` instead.
 
 .. _loading_of_project_level_translations:
 
@@ -849,15 +849,15 @@ Rationale for this decision:
   for JavaScript literals. This deprecation removes such
   inconsistency.
 
-``PermWrapper`` moved to ``django.contrib.auth.context_processors``
+``PermWrapper`` moved to ``django_orm.contrib.auth.context_processors``
 -------------------------------------------------------------------
 
 In Django 1.2, we began the process of changing the location of the
-``auth`` context processor from ``django.core.context_processors`` to
-``django.contrib.auth.context_processors``. However, the
+``auth`` context processor from ``django_orm.core.context_processors`` to
+``django_orm.contrib.auth.context_processors``. However, the
 ``PermWrapper`` support class was mistakenly omitted from that
 migration. In Django 1.3, the ``PermWrapper`` class has also been
-moved to ``django.contrib.auth.context_processors``, along with the
+moved to ``django_orm.contrib.auth.context_processors``, along with the
 ``PermLookupDict`` support class. The new classes are functionally
 identical to their old versions; only the module location has changed.
 
@@ -868,7 +868,7 @@ When Django was first released, Django included an ``XMLField`` that performed
 automatic XML validation for any field input. However, this validation function
 hasn't been performed since the introduction of ``newforms``, prior to the 1.0
 release. As a result, ``XMLField`` as currently implemented is functionally
-indistinguishable from a simple :class:`~django.db.models.TextField`.
+indistinguishable from a simple :class:`~django_orm.db.models.TextField`.
 
 For this reason, Django 1.3 has fast-tracked the deprecation of
 ``XMLField`` -- instead of a two-release deprecation, ``XMLField``

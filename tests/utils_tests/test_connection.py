@@ -1,5 +1,5 @@
-from django.test import SimpleTestCase
-from django.utils.connection import BaseConnectionHandler
+from django_orm.test import SimpleTestCase
+from django_orm.utils.connection import BaseConnectionHandler
 
 
 class BaseConnectionHandlerTests(SimpleTestCase):

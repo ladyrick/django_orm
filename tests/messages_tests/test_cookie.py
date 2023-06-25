@@ -1,17 +1,17 @@
 import json
 import random
 
-from django.conf import settings
-from django.contrib.messages import constants
-from django.contrib.messages.storage.base import Message
-from django.contrib.messages.storage.cookie import (
+from django_orm.conf import settings
+from django_orm.contrib.messages import constants
+from django_orm.contrib.messages.storage.base import Message
+from django_orm.contrib.messages.storage.cookie import (
     CookieStorage,
     MessageDecoder,
     MessageEncoder,
 )
-from django.test import SimpleTestCase, override_settings
-from django.utils.crypto import get_random_string
-from django.utils.safestring import SafeData, mark_safe
+from django_orm.test import SimpleTestCase, override_settings
+from django_orm.utils.crypto import get_random_string
+from django_orm.utils.safestring import SafeData, mark_safe
 
 from .base import BaseTests
 

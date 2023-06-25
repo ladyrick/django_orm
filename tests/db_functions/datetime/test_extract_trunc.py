@@ -12,9 +12,9 @@ try:
 except ImportError:
     pytz = None
 
-from django.conf import settings
-from django.db import DataError, OperationalError
-from django.db.models import (
+from django_orm.conf import settings
+from django_orm.db import DataError, OperationalError
+from django_orm.db.models import (
     DateField,
     DateTimeField,
     F,
@@ -24,7 +24,7 @@ from django.db.models import (
     Subquery,
     TimeField,
 )
-from django.db.models.functions import (
+from django_orm.db.models.functions import (
     Extract,
     ExtractDay,
     ExtractHour,
@@ -49,15 +49,15 @@ from django.db.models.functions import (
     TruncWeek,
     TruncYear,
 )
-from django.test import (
+from django_orm.test import (
     TestCase,
     ignore_warnings,
     override_settings,
     skipIfDBFeature,
     skipUnlessDBFeature,
 )
-from django.utils import timezone
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.utils import timezone
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from ..models import Author, DTModel, Fan
 

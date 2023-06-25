@@ -9,7 +9,7 @@ Django 3.0.3 fixes a security issue and several bugs in 3.0.2.
 CVE-2020-7471: Potential SQL injection via ``StringAgg(delimiter)``
 ===================================================================
 
-:class:`~django.contrib.postgres.aggregates.StringAgg` aggregation function was
+:class:`~django_orm.contrib.postgres.aggregates.StringAgg` aggregation function was
 subject to SQL injection, using a suitably crafted ``delimiter``.
 
 Bugfixes
@@ -34,12 +34,12 @@ Bugfixes
   choice, when a named group contains only non-string values (:ticket:`31155`).
 
 * Fixed a regression in Django 2.2 that caused a crash of
-  :class:`~django.contrib.postgres.aggregates.ArrayAgg` and
-  :class:`~django.contrib.postgres.aggregates.StringAgg` with ``filter``
+  :class:`~django_orm.contrib.postgres.aggregates.ArrayAgg` and
+  :class:`~django_orm.contrib.postgres.aggregates.StringAgg` with ``filter``
   argument when used in a ``Subquery`` (:ticket:`31097`).
 
 * Fixed a regression in Django 2.2.7 that caused
-  :meth:`~django.db.models.Model.get_FOO_display` to work incorrectly when
+  :meth:`~django_orm.db.models.Model.get_FOO_display` to work incorrectly when
   overriding inherited choices (:ticket:`31124`).
 
 * Fixed a regression in Django 3.0 that caused a crash of

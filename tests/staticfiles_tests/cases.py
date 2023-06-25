@@ -2,10 +2,10 @@ import os
 import shutil
 import tempfile
 
-from django.conf import settings
-from django.core.management import call_command
-from django.template import Context, Template
-from django.test import SimpleTestCase, override_settings
+from django_orm.conf import settings
+from django_orm.core.management import call_command
+from django_orm.template import Context, Template
+from django_orm.test import SimpleTestCase, override_settings
 
 from .settings import TEST_SETTINGS
 

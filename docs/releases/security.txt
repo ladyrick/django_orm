@@ -274,7 +274,7 @@ Versions affected
 February 19, 2021 - :cve:`2021-23336`
 -------------------------------------
 
-Web cache poisoning via ``django.utils.http.limited_parse_qsl()``. `Full
+Web cache poisoning via ``django_orm.utils.http.limited_parse_qsl()``. `Full
 description
 <https://www.djangoproject.com/weblog/2021/feb/19/security-releases/>`__
 
@@ -407,7 +407,7 @@ Versions affected
 August 1, 2019 - :cve:`2019-14235`
 ----------------------------------
 
-Potential memory exhaustion in ``django.utils.encoding.uri_to_iri()``. `Full
+Potential memory exhaustion in ``django_orm.utils.encoding.uri_to_iri()``. `Full
 description
 <https://www.djangoproject.com/weblog/2019/aug/01/security-releases/>`__
 
@@ -449,7 +449,7 @@ Versions affected
 August 1, 2019 - :cve:`2019-14232`
 ----------------------------------
 
-Denial-of-service possibility in ``django.utils.text.Truncator``. `Full
+Denial-of-service possibility in ``django_orm.utils.text.Truncator``. `Full
 description <https://www.djangoproject.com/weblog/2019/aug/01/security-releases/>`__
 
 Versions affected
@@ -500,7 +500,7 @@ Versions affected
 February 11, 2019 - :cve:`2019-6975`
 ------------------------------------
 
-Memory exhaustion in ``django.utils.numberformat.format()``. `Full description
+Memory exhaustion in ``django_orm.utils.numberformat.format()``. `Full description
 <https://www.djangoproject.com/weblog/2019/feb/11/security-releases/>`__
 
 Versions affected
@@ -603,7 +603,7 @@ Versions affected
 April 4, 2017 - :cve:`2017-7234`
 --------------------------------
 
-Open redirect vulnerability in ``django.views.static.serve()``. `Full
+Open redirect vulnerability in ``django_orm.views.static.serve()``. `Full
 description <https://www.djangoproject.com/weblog/2017/apr/04/security-releases/>`__
 
 Versions affected
@@ -841,7 +841,7 @@ Versions affected
 January 13, 2015 - :cve:`2015-0221`
 -----------------------------------
 
-Denial-of-service attack against ``django.views.static.serve()``. `Full
+Denial-of-service attack against ``django_orm.views.static.serve()``. `Full
 description <https://www.djangoproject.com/weblog/2015/jan/13/security/>`__
 
 Versions affected

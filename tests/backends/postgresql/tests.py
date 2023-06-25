@@ -3,16 +3,16 @@ import unittest
 from io import StringIO
 from unittest import mock
 
-from django.core.exceptions import ImproperlyConfigured
-from django.db import (
+from django_orm.core.exceptions import ImproperlyConfigured
+from django_orm.db import (
     DEFAULT_DB_ALIAS,
     DatabaseError,
     NotSupportedError,
     connection,
     connections,
 )
-from django.db.backends.base.base import BaseDatabaseWrapper
-from django.test import TestCase, override_settings
+from django_orm.db.backends.base.base import BaseDatabaseWrapper
+from django_orm.test import TestCase, override_settings
 
 
 @unittest.skipUnless(connection.vendor == "postgresql", "PostgreSQL tests")
@@ -48,7 +48,7 @@ class Tests(TestCase):
         )
         with self.assertWarnsMessage(RuntimeWarning, msg):
             with mock.patch(
-                "django.db.backends.base.base.BaseDatabaseWrapper.connect",
+                "django_orm.db.backends.base.base.BaseDatabaseWrapper.connect",
                 side_effect=mocked_connect,
                 autospec=True,
             ):
@@ -69,7 +69,7 @@ class Tests(TestCase):
         # Cursor is yielded only for the first PostgreSQL database.
         with self.assertWarnsMessage(RuntimeWarning, msg):
             with mock.patch(
-                "django.db.backends.base.base.BaseDatabaseWrapper.connect",
+                "django_orm.db.backends.base.base.BaseDatabaseWrapper.connect",
                 side_effect=mocked_connect,
                 autospec=True,
             ):
@@ -101,12 +101,12 @@ class Tests(TestCase):
         )
         with self.assertWarnsMessage(RuntimeWarning, msg):
             mocker_connections_all = mock.patch(
-                "django.utils.connection.BaseConnectionHandler.all",
+                "django_orm.utils.connection.BaseConnectionHandler.all",
                 side_effect=mocked_all,
                 autospec=True,
             )
             mocker_connect = mock.patch(
-                "django.db.backends.base.base.BaseDatabaseWrapper.connect",
+                "django_orm.db.backends.base.base.BaseDatabaseWrapper.connect",
                 side_effect=mocked_connect,
                 autospec=True,
             )
@@ -121,7 +121,7 @@ class Tests(TestCase):
                 raise DatabaseError("exception")
 
     def test_database_name_too_long(self):
-        from django.db.backends.postgresql.base import DatabaseWrapper
+        from django_orm.db.backends.postgresql.base import DatabaseWrapper
 
         settings = connection.settings_dict.copy()
         max_name_length = connection.ops.max_name_length()
@@ -135,7 +135,7 @@ class Tests(TestCase):
             DatabaseWrapper(settings).get_connection_params()
 
     def test_database_name_empty(self):
-        from django.db.backends.postgresql.base import DatabaseWrapper
+        from django_orm.db.backends.postgresql.base import DatabaseWrapper
 
         settings = connection.settings_dict.copy()
         settings["NAME"] = ""
@@ -147,7 +147,7 @@ class Tests(TestCase):
             DatabaseWrapper(settings).get_connection_params()
 
     def test_service_name(self):
-        from django.db.backends.postgresql.base import DatabaseWrapper
+        from django_orm.db.backends.postgresql.base import DatabaseWrapper
 
         settings = connection.settings_dict.copy()
         settings["OPTIONS"] = {"service": "my_service"}
@@ -158,7 +158,7 @@ class Tests(TestCase):
 
     def test_service_name_default_db(self):
         # None is used to connect to the default 'postgres' db.
-        from django.db.backends.postgresql.base import DatabaseWrapper
+        from django_orm.db.backends.postgresql.base import DatabaseWrapper
 
         settings = connection.settings_dict.copy()
         settings["NAME"] = None
@@ -225,7 +225,7 @@ class Tests(TestCase):
         """
         from psycopg2.extensions import ISOLATION_LEVEL_SERIALIZABLE as serializable
 
-        # Since this is a django.test.TestCase, a transaction is in progress
+        # Since this is a django_orm.test.TestCase, a transaction is in progress
         # and the isolation level isn't reported as 0. This test assumes that
         # PostgreSQL is configured with the default isolation level.
         # Check the level on the psycopg2 connection, not the Django wrapper.
@@ -266,7 +266,7 @@ class Tests(TestCase):
         self.assertEqual(a[0], b[0])
 
     def test_lookup_cast(self):
-        from django.db.backends.postgresql.operations import DatabaseOperations
+        from django_orm.db.backends.postgresql.operations import DatabaseOperations
 
         do = DatabaseOperations(connection=None)
         lookups = (
@@ -291,7 +291,7 @@ class Tests(TestCase):
                     )
 
     def test_correct_extraction_psycopg2_version(self):
-        from django.db.backends.postgresql.base import psycopg2_version
+        from django_orm.db.backends.postgresql.base import psycopg2_version
 
         with mock.patch("psycopg2.__version__", "4.2.1 (dt dec pq3 ext lo64)"):
             self.assertEqual(psycopg2_version(), (4, 2, 1))

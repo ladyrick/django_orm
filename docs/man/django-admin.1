@@ -2,7 +2,7 @@
 .
 .TH "DJANGO-ADMIN" "1" "November 01, 2022" "4.1" "Django"
 .SH NAME
-django-admin \- Utility script for the Django web framework
+django_orm-admin \- Utility script for the Django web framework
 .
 .nr rst2man-indent-level 0
 .
@@ -50,7 +50,7 @@ Django settings files, use \fBdjango\-admin\fP with
 option.
 .sp
 The command\-line examples throughout this document use \fBdjango\-admin\fP to
-be consistent, but any example can use \fBmanage.py\fP or \fBpython \-m django\fP
+be consistent, but any example can use \fBmanage.py\fP or \fBpython \-m django_orm\fP
 just as well.
 .SH USAGE
 .INDENT 0.0
@@ -58,9 +58,9 @@ just as well.
 .sp
 .nf
 .ft C
-$ django\-admin <command> [options]
+$ django_orm\-admin <command> [options]
 $ manage.py <command> [options]
-$ python \-m django <command> [options]
+$ python \-m django_orm <command> [options]
 .ft P
 .fi
 .UNINDENT
@@ -72,7 +72,7 @@ for the given command.
 .SS Getting runtime help
 .INDENT 0.0
 .TP
-.B django\-admin help
+.B django_orm\-admin help
 .UNINDENT
 .sp
 Run \fBdjango\-admin help\fP to display usage information and a list of the
@@ -91,7 +91,7 @@ contains the string \fB\(aqmysite.blog\(aq\fP, the app name is \fBblog\fP\&.
 .SS Determining the version
 .INDENT 0.0
 .TP
-.B django\-admin version
+.B django_orm\-admin version
 .UNINDENT
 .sp
 Run \fBdjango\-admin version\fP to display the current Django version.
@@ -117,7 +117,7 @@ notification and debug information that \fBdjango\-admin\fP prints to the consol
 .SS \fBcheck\fP
 .INDENT 0.0
 .TP
-.B django\-admin check [app_label [app_label ...]]
+.B django_orm\-admin check [app_label [app_label ...]]
 .UNINDENT
 .sp
 Uses the \fI\%system check framework\fP to inspect the entire
@@ -130,7 +130,7 @@ providing a list of app labels as arguments:
 .sp
 .nf
 .ft C
-django\-admin check auth admin myapp
+django_orm\-admin check auth admin myapp
 .ft P
 .fi
 .UNINDENT
@@ -149,7 +149,7 @@ For example, to perform only models and compatibility checks, run:
 .sp
 .nf
 .ft C
-django\-admin check \-\-tag models \-\-tag compatibility
+django_orm\-admin check \-\-tag models \-\-tag compatibility
 .ft P
 .fi
 .UNINDENT
@@ -165,7 +165,7 @@ Specifies the database to run checks requiring database access:
 .sp
 .nf
 .ft C
-django\-admin check \-\-database default \-\-database other
+django_orm\-admin check \-\-database default \-\-database other
 .ft P
 .fi
 .UNINDENT
@@ -195,7 +195,7 @@ variable, or by passing the \fB\-\-settings\fP option:
 .sp
 .nf
 .ft C
-django\-admin check \-\-deploy \-\-settings=production_settings
+django_orm\-admin check \-\-deploy \-\-settings=production_settings
 .ft P
 .fi
 .UNINDENT
@@ -214,7 +214,7 @@ status. Default is \fBERROR\fP\&.
 .SS \fBcompilemessages\fP
 .INDENT 0.0
 .TP
-.B django\-admin compilemessages
+.B django_orm\-admin compilemessages
 .UNINDENT
 .sp
 Compiles \fB\&.po\fP files created by \fI\%makemessages\fP to \fB\&.mo\fP files for
@@ -245,14 +245,14 @@ Example usage:
 .sp
 .nf
 .ft C
-django\-admin compilemessages \-\-locale=pt_BR
-django\-admin compilemessages \-\-locale=pt_BR \-\-locale=fr \-f
-django\-admin compilemessages \-l pt_BR
-django\-admin compilemessages \-l pt_BR \-l fr \-\-use\-fuzzy
-django\-admin compilemessages \-\-exclude=pt_BR
-django\-admin compilemessages \-\-exclude=pt_BR \-\-exclude=fr
-django\-admin compilemessages \-x pt_BR
-django\-admin compilemessages \-x pt_BR \-x fr
+django_orm\-admin compilemessages \-\-locale=pt_BR
+django_orm\-admin compilemessages \-\-locale=pt_BR \-\-locale=fr \-f
+django_orm\-admin compilemessages \-l pt_BR
+django_orm\-admin compilemessages \-l pt_BR \-l fr \-\-use\-fuzzy
+django_orm\-admin compilemessages \-\-exclude=pt_BR
+django_orm\-admin compilemessages \-\-exclude=pt_BR \-\-exclude=fr
+django_orm\-admin compilemessages \-x pt_BR
+django_orm\-admin compilemessages \-x pt_BR \-x fr
 .ft P
 .fi
 .UNINDENT
@@ -271,7 +271,7 @@ Example usage:
 .sp
 .nf
 .ft C
-django\-admin compilemessages \-\-ignore=cache \-\-ignore=outdated/*/locale
+django_orm\-admin compilemessages \-\-ignore=cache \-\-ignore=outdated/*/locale
 .ft P
 .fi
 .UNINDENT
@@ -279,7 +279,7 @@ django\-admin compilemessages \-\-ignore=cache \-\-ignore=outdated/*/locale
 .SS \fBcreatecachetable\fP
 .INDENT 0.0
 .TP
-.B django\-admin createcachetable
+.B django_orm\-admin createcachetable
 .UNINDENT
 .sp
 Creates the cache tables for use with the database cache backend using the
@@ -302,7 +302,7 @@ customize it or use the migrations framework.
 .SS \fBdbshell\fP
 .INDENT 0.0
 .TP
-.B django\-admin dbshell
+.B django_orm\-admin dbshell
 .UNINDENT
 .sp
 Runs the command\-line client for the database engine specified in your
@@ -342,7 +342,7 @@ command\(aqs \fB\-c\fP flag to execute a raw SQL query directly:
 .sp
 .nf
 .ft C
-$ django\-admin dbshell \-\- \-c \(aqselect current_user\(aq
+$ django_orm\-admin dbshell \-\- \-c \(aqselect current_user\(aq
  current_user
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-
  postgres
@@ -358,7 +358,7 @@ On MySQL/MariaDB, you can do this with the \fBmysql\fP command\(aqs \fB\-e\fP fl
 .sp
 .nf
 .ft C
-$ django\-admin dbshell \-\- \-e "select user()"
+$ django_orm\-admin dbshell \-\- \-e "select user()"
 +\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-+
 | user()               |
 +\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-+
@@ -380,7 +380,7 @@ command\-line client, e.g. \fB\(aqisolation_level\(aq\fP\&.
 .SS \fBdiffsettings\fP
 .INDENT 0.0
 .TP
-.B django\-admin diffsettings
+.B django_orm\-admin diffsettings
 .UNINDENT
 .sp
 Displays differences between the current settings file and Django\(aqs default
@@ -417,7 +417,7 @@ plus sign.
 .SS \fBdumpdata\fP
 .INDENT 0.0
 .TP
-.B django\-admin dumpdata [app_label[.ModelName] [app_label[.ModelName] ...]]
+.B django_orm\-admin dumpdata [app_label[.ModelName] [app_label[.ModelName] ...]]
 .UNINDENT
 .sp
 Outputs to standard output all data in the database associated with the named
@@ -469,7 +469,7 @@ once:
 .sp
 .nf
 .ft C
-django\-admin dumpdata \-\-exclude=auth \-\-exclude=contenttypes
+django_orm\-admin dumpdata \-\-exclude=auth \-\-exclude=contenttypes
 .ft P
 .fi
 .UNINDENT
@@ -526,7 +526,7 @@ For example, to output the data as a compressed JSON file:
 .sp
 .nf
 .ft C
-django\-admin dumpdata \-o mydata.json.gz
+django_orm\-admin dumpdata \-o mydata.json.gz
 .ft P
 .fi
 .UNINDENT
@@ -534,7 +534,7 @@ django\-admin dumpdata \-o mydata.json.gz
 .SS \fBflush\fP
 .INDENT 0.0
 .TP
-.B django\-admin flush
+.B django_orm\-admin flush
 .UNINDENT
 .sp
 Removes all data from the database and re\-executes any post\-synchronization
@@ -557,7 +557,7 @@ Specifies the database to flush. Defaults to \fBdefault\fP\&.
 .SS \fBinspectdb\fP
 .INDENT 0.0
 .TP
-.B django\-admin inspectdb [table [table ...]]
+.B django_orm\-admin inspectdb [table [table ...]]
 .UNINDENT
 .sp
 Introspects the database tables in the database pointed\-to by the
@@ -582,7 +582,7 @@ If \fBinspectdb\fP cannot map a column\(aqs type to a model field type, it\(aqll
 use \fBTextField\fP and will insert the Python comment
 \fB\(aqThis field type is a guess.\(aq\fP next to the field in the generated
 model. The recognized fields may depend on apps listed in
-\fI\%INSTALLED_APPS\fP\&. For example, \fI\%django.contrib.postgres\fP adds
+\fI\%INSTALLED_APPS\fP\&. For example, \fI\%django_orm.contrib.postgres\fP adds
 recognition for several PostgreSQL\-specific field types.
 .IP \(bu 2
 If the database column name is a Python reserved word (such as
@@ -652,7 +652,7 @@ If this option is provided, models are also created for database views.
 .SS \fBloaddata\fP
 .INDENT 0.0
 .TP
-.B django\-admin loaddata fixture [fixture ...]
+.B django_orm\-admin loaddata fixture [fixture ...]
 .UNINDENT
 .sp
 Searches for and loads the contents of the named fixture into the database.
@@ -717,7 +717,7 @@ will be loaded. For example:
 .sp
 .nf
 .ft C
-django\-admin loaddata mydata.json
+django_orm\-admin loaddata mydata.json
 .ft P
 .fi
 .UNINDENT
@@ -734,7 +734,7 @@ for a matching fixture. For example:
 .sp
 .nf
 .ft C
-django\-admin loaddata mydata
+django_orm\-admin loaddata mydata
 .ft P
 .fi
 .UNINDENT
@@ -751,7 +751,7 @@ directories will be included in the search path. For example:
 .sp
 .nf
 .ft C
-django\-admin loaddata foo/bar/mydata.json
+django_orm\-admin loaddata foo/bar/mydata.json
 .ft P
 .fi
 .UNINDENT
@@ -774,7 +774,7 @@ raise an exception:
 .sp
 .nf
 .ft C
-from django.db.models.signals import post_save
+from django_orm.db.models.signals import post_save
 from .models import MyModel
 
 def my_handler(**kwargs):
@@ -835,7 +835,7 @@ format. For example:
 .sp
 .nf
 .ft C
-django\-admin loaddata mydata.json
+django_orm\-admin loaddata mydata.json
 .ft P
 .fi
 .UNINDENT
@@ -878,7 +878,7 @@ example:
 .sp
 .nf
 .ft C
-django\-admin loaddata \-\-format=json \-
+django_orm\-admin loaddata \-\-format=json \-
 .ft P
 .fi
 .UNINDENT
@@ -895,7 +895,7 @@ For example:
 .sp
 .nf
 .ft C
-django\-admin dumpdata \-\-format=json \-\-database=test app_label.ModelName | django\-admin loaddata \-\-format=json \-\-database=prod \-
+django_orm\-admin dumpdata \-\-format=json \-\-database=test app_label.ModelName | django_orm\-admin loaddata \-\-format=json \-\-database=prod \-
 .ft P
 .fi
 .UNINDENT
@@ -903,7 +903,7 @@ django\-admin dumpdata \-\-format=json \-\-database=test app_label.ModelName | d
 .SS \fBmakemessages\fP
 .INDENT 0.0
 .TP
-.B django\-admin makemessages
+.B django_orm\-admin makemessages
 .UNINDENT
 .sp
 Runs over the entire source tree of the current directory and pulls out all
@@ -936,7 +936,7 @@ Example usage:
 .sp
 .nf
 .ft C
-django\-admin makemessages \-\-locale=de \-\-extension xhtml
+django_orm\-admin makemessages \-\-locale=de \-\-extension xhtml
 .ft P
 .fi
 .UNINDENT
@@ -949,7 +949,7 @@ multiple times:
 .sp
 .nf
 .ft C
-django\-admin makemessages \-\-locale=de \-\-extension=html,txt \-\-extension xml
+django_orm\-admin makemessages \-\-locale=de \-\-extension=html,txt \-\-extension xml
 .ft P
 .fi
 .UNINDENT
@@ -974,14 +974,14 @@ Example usage:
 .sp
 .nf
 .ft C
-django\-admin makemessages \-\-locale=pt_BR
-django\-admin makemessages \-\-locale=pt_BR \-\-locale=fr
-django\-admin makemessages \-l pt_BR
-django\-admin makemessages \-l pt_BR \-l fr
-django\-admin makemessages \-\-exclude=pt_BR
-django\-admin makemessages \-\-exclude=pt_BR \-\-exclude=fr
-django\-admin makemessages \-x pt_BR
-django\-admin makemessages \-x pt_BR \-x fr
+django_orm\-admin makemessages \-\-locale=pt_BR
+django_orm\-admin makemessages \-\-locale=pt_BR \-\-locale=fr
+django_orm\-admin makemessages \-l pt_BR
+django_orm\-admin makemessages \-l pt_BR \-l fr
+django_orm\-admin makemessages \-\-exclude=pt_BR
+django_orm\-admin makemessages \-\-exclude=pt_BR \-\-exclude=fr
+django_orm\-admin makemessages \-x pt_BR
+django_orm\-admin makemessages \-x pt_BR \-x fr
 .ft P
 .fi
 .UNINDENT
@@ -1011,7 +1011,7 @@ Example usage:
 .sp
 .nf
 .ft C
-django\-admin makemessages \-\-locale=de \-\-symlinks
+django_orm\-admin makemessages \-\-locale=de \-\-symlinks
 .ft P
 .fi
 .UNINDENT
@@ -1032,7 +1032,7 @@ Example usage:
 .sp
 .nf
 .ft C
-django\-admin makemessages \-\-locale=en_US \-\-ignore=apps/* \-\-ignore=secret/*.html
+django_orm\-admin makemessages \-\-locale=en_US \-\-ignore=apps/* \-\-ignore=secret/*.html
 .ft P
 .fi
 .UNINDENT
@@ -1094,7 +1094,7 @@ the keywords that \fI\%makemessages\fP passes to \fBxgettext\fP\&.
 .SS \fBmakemigrations\fP
 .INDENT 0.0
 .TP
-.B django\-admin makemigrations [app_label [app_label ...]]
+.B django_orm\-admin makemigrations [app_label [app_label ...]]
 .UNINDENT
 .sp
 Creates new migrations based on the changes detected to your models.
@@ -1169,7 +1169,7 @@ generated migration files to \fBstdout\fP\&.
 .SS \fBmigrate\fP
 .INDENT 0.0
 .TP
-.B django\-admin migrate [app_label] [migration_name]
+.B django_orm\-admin migrate [app_label] [migration_name]
 .UNINDENT
 .sp
 Synchronizes the database state with the current set of models and migrations.
@@ -1278,7 +1278,7 @@ See \fI\%Squashing migrations\fP for more details.
 
 .INDENT 0.0
 .TP
-.B django\-admin optimizemigration app_label migration_name
+.B django_orm\-admin optimizemigration app_label migration_name
 .UNINDENT
 .sp
 Optimizes the operations for the named migration and overrides the existing
@@ -1295,7 +1295,7 @@ optimized.
 .SS \fBrunserver\fP
 .INDENT 0.0
 .TP
-.B django\-admin runserver [addrport]
+.B django_orm\-admin runserver [addrport]
 .UNINDENT
 .sp
 Starts a lightweight development web server on the local machine. By default,
@@ -1373,7 +1373,7 @@ If the \fI\%staticfiles\fP contrib app is enabled
 with its own \fI\%runserver\fP command.
 .sp
 Logging of each request and response of the server is sent to the
-\fI\%django.server\fP logger.
+\fI\%django_orm.server\fP logger.
 .INDENT 0.0
 .TP
 .B \-\-noreload
@@ -1407,7 +1407,7 @@ Port 8000 on IP address \fB127.0.0.1\fP:
 .sp
 .nf
 .ft C
-django\-admin runserver
+django_orm\-admin runserver
 .ft P
 .fi
 .UNINDENT
@@ -1419,7 +1419,7 @@ Port 8000 on IP address \fB1.2.3.4\fP:
 .sp
 .nf
 .ft C
-django\-admin runserver 1.2.3.4:8000
+django_orm\-admin runserver 1.2.3.4:8000
 .ft P
 .fi
 .UNINDENT
@@ -1431,7 +1431,7 @@ Port 7000 on IP address \fB127.0.0.1\fP:
 .sp
 .nf
 .ft C
-django\-admin runserver 7000
+django_orm\-admin runserver 7000
 .ft P
 .fi
 .UNINDENT
@@ -1443,7 +1443,7 @@ Port 7000 on IP address \fB1.2.3.4\fP:
 .sp
 .nf
 .ft C
-django\-admin runserver 1.2.3.4:7000
+django_orm\-admin runserver 1.2.3.4:7000
 .ft P
 .fi
 .UNINDENT
@@ -1455,7 +1455,7 @@ Port 8000 on IPv6 address \fB::1\fP:
 .sp
 .nf
 .ft C
-django\-admin runserver \-6
+django_orm\-admin runserver \-6
 .ft P
 .fi
 .UNINDENT
@@ -1467,7 +1467,7 @@ Port 7000 on IPv6 address \fB::1\fP:
 .sp
 .nf
 .ft C
-django\-admin runserver \-6 7000
+django_orm\-admin runserver \-6 7000
 .ft P
 .fi
 .UNINDENT
@@ -1479,7 +1479,7 @@ Port 7000 on IPv6 address \fB2001:0db8:1234:5678::9\fP:
 .sp
 .nf
 .ft C
-django\-admin runserver [2001:0db8:1234:5678::9]:7000
+django_orm\-admin runserver [2001:0db8:1234:5678::9]:7000
 .ft P
 .fi
 .UNINDENT
@@ -1491,7 +1491,7 @@ Port 8000 on IPv4 address of host \fBlocalhost\fP:
 .sp
 .nf
 .ft C
-django\-admin runserver localhost:8000
+django_orm\-admin runserver localhost:8000
 .ft P
 .fi
 .UNINDENT
@@ -1503,7 +1503,7 @@ Port 8000 on IPv6 address of host \fBlocalhost\fP:
 .sp
 .nf
 .ft C
-django\-admin runserver \-6 localhost:8000
+django_orm\-admin runserver \-6 localhost:8000
 .ft P
 .fi
 .UNINDENT
@@ -1517,7 +1517,7 @@ you want to configure Django to serve static media, read
 .SS \fBsendtestemail\fP
 .INDENT 0.0
 .TP
-.B django\-admin sendtestemail [email [email ...]]
+.B django_orm\-admin sendtestemail [email [email ...]]
 .UNINDENT
 .sp
 Sends a test email (to confirm email sending through Django is working) to the
@@ -1527,7 +1527,7 @@ recipient(s) specified. For example:
 .sp
 .nf
 .ft C
-django\-admin sendtestemail foo@example.com bar@example.com
+django_orm\-admin sendtestemail foo@example.com bar@example.com
 .ft P
 .fi
 .UNINDENT
@@ -1552,7 +1552,7 @@ Mails the email addresses specified in \fI\%ADMINS\fP using
 .SS \fBshell\fP
 .INDENT 0.0
 .TP
-.B django\-admin shell
+.B django_orm\-admin shell
 .UNINDENT
 .sp
 Starts the Python interactive interpreter.
@@ -1570,7 +1570,7 @@ IPython:
 .sp
 .nf
 .ft C
-django\-admin shell \-i ipython
+django_orm\-admin shell \-i ipython
 .ft P
 .fi
 .UNINDENT
@@ -1582,7 +1582,7 @@ bpython:
 .sp
 .nf
 .ft C
-django\-admin shell \-i bpython
+django_orm\-admin shell \-i bpython
 .ft P
 .fi
 .UNINDENT
@@ -1595,7 +1595,7 @@ Python interpreter, use \fBpython\fP as the interface name, like so:
 .sp
 .nf
 .ft C
-django\-admin shell \-i python
+django_orm\-admin shell \-i python
 .ft P
 .fi
 .UNINDENT
@@ -1619,7 +1619,7 @@ Lets you pass a command as a string to execute it as Django, like so:
 .sp
 .nf
 .ft C
-django\-admin shell \-\-command="import django; print(django.__version__)"
+django_orm\-admin shell \-\-command="import django_orm; print(django_orm.__version__)"
 .ft P
 .fi
 .UNINDENT
@@ -1631,9 +1631,9 @@ You can also pass code in on standard input to execute it. For example:
 .sp
 .nf
 .ft C
-$ django\-admin shell <<EOF
-> import django
-> print(django.__version__)
+$ django_orm\-admin shell <<EOF
+> import django_orm
+> print(django_orm.__version__)
 > EOF
 .ft P
 .fi
@@ -1645,7 +1645,7 @@ On Windows, the REPL is output due to implementation limits of
 .SS \fBshowmigrations\fP
 .INDENT 0.0
 .TP
-.B django\-admin showmigrations [app_label [app_label ...]]
+.B django_orm\-admin showmigrations [app_label [app_label ...]]
 .UNINDENT
 .sp
 Shows all migrations in a project. You can choose from one of two formats:
@@ -1683,7 +1683,7 @@ Specifies the database to examine. Defaults to \fBdefault\fP\&.
 .SS \fBsqlflush\fP
 .INDENT 0.0
 .TP
-.B django\-admin sqlflush
+.B django_orm\-admin sqlflush
 .UNINDENT
 .sp
 Prints the SQL statements that would be executed for the \fI\%flush\fP
@@ -1697,7 +1697,7 @@ Specifies the database for which to print the SQL. Defaults to \fBdefault\fP\&.
 .SS \fBsqlmigrate\fP
 .INDENT 0.0
 .TP
-.B django\-admin sqlmigrate app_label migration_name
+.B django_orm\-admin sqlmigrate app_label migration_name
 .UNINDENT
 .sp
 Prints the SQL for the named migration. This requires an active database
@@ -1721,7 +1721,7 @@ Specifies the database for which to generate the SQL. Defaults to \fBdefault\fP\
 .SS \fBsqlsequencereset\fP
 .INDENT 0.0
 .TP
-.B django\-admin sqlsequencereset app_label [app_label ...]
+.B django_orm\-admin sqlsequencereset app_label [app_label ...]
 .UNINDENT
 .sp
 Prints the SQL statements for resetting sequences for the given app name(s).
@@ -1740,7 +1740,7 @@ Specifies the database for which to print the SQL. Defaults to \fBdefault\fP\&.
 .SS \fBsquashmigrations\fP
 .INDENT 0.0
 .TP
-.B django\-admin squashmigrations app_label [start_migration_name] migration_name
+.B django_orm\-admin squashmigrations app_label [start_migration_name] migration_name
 .UNINDENT
 .sp
 Squashes the migrations for \fBapp_label\fP up to and including \fBmigration_name\fP
@@ -1751,7 +1751,7 @@ please read \fI\%Squashing migrations\fP\&.
 When \fBstart_migration_name\fP is given, Django will only include migrations
 starting from and including this migration. This helps to mitigate the
 squashing limitation of \fI\%RunPython\fP and
-\fI\%django.db.migrations.operations.RunSQL\fP migration operations.
+\fI\%django_orm.db.migrations.operations.RunSQL\fP migration operations.
 .INDENT 0.0
 .TP
 .B \-\-no\-optimize
@@ -1784,7 +1784,7 @@ Generate squashed migration file without Django version and timestamp header.
 .SS \fBstartapp\fP
 .INDENT 0.0
 .TP
-.B django\-admin startapp name [directory]
+.B django_orm\-admin startapp name [directory]
 .UNINDENT
 .sp
 Creates a Django app directory structure for the given app name in the current
@@ -1804,7 +1804,7 @@ For example:
 .sp
 .nf
 .ft C
-django\-admin startapp myapp /Users/jezdez/Code/myapp
+django_orm\-admin startapp myapp /Users/jezdez/Code/myapp
 .ft P
 .fi
 .UNINDENT
@@ -1826,7 +1826,7 @@ creating the \fBmyapp\fP app:
 .sp
 .nf
 .ft C
-django\-admin startapp \-\-template=/Users/jezdez/Code/my_app_template myapp
+django_orm\-admin startapp \-\-template=/Users/jezdez/Code/my_app_template myapp
 .ft P
 .fi
 .UNINDENT
@@ -1843,7 +1843,7 @@ zip files, you can use a URL like:
 .sp
 .nf
 .ft C
-django\-admin startapp \-\-template=https://github.com/githubuser/django\-app\-template/archive/main.zip myapp
+django_orm\-admin startapp \-\-template=https://github.com/githubuser/django_orm\-app\-template/archive/main.zip myapp
 .ft P
 .fi
 .UNINDENT
@@ -1913,7 +1913,7 @@ will be renamed to \fB\&.py\fP\&.
 .SS \fBstartproject\fP
 .INDENT 0.0
 .TP
-.B django\-admin startproject name [directory]
+.B django_orm\-admin startproject name [directory]
 .UNINDENT
 .sp
 Creates a Django project directory structure for the given project name in
@@ -1937,7 +1937,7 @@ For example:
 .sp
 .nf
 .ft C
-django\-admin startproject myproject /Users/jezdez/Code/myproject_repo
+django_orm\-admin startproject myproject /Users/jezdez/Code/myproject_repo
 .ft P
 .fi
 .UNINDENT
@@ -1997,7 +1997,7 @@ for \fI\%startapp\fP\&.
 .SS \fBtest\fP
 .INDENT 0.0
 .TP
-.B django\-admin test [test_label [test_label ...]]
+.B django_orm\-admin test [test_label [test_label ...]]
 .UNINDENT
 .sp
 Runs tests for all installed apps. See \fI\%Testing in Django\fP for more
@@ -2210,7 +2210,7 @@ Outputs timings, including database setup and total run time.
 .SS \fBtestserver\fP
 .INDENT 0.0
 .TP
-.B django\-admin testserver [fixture [fixture ...]]
+.B django_orm\-admin testserver [fixture [fixture ...]]
 .UNINDENT
 .sp
 Runs a Django development server (as in \fI\%runserver\fP) using data from
@@ -2222,7 +2222,7 @@ For example, this command:
 .sp
 .nf
 .ft C
-django\-admin testserver mydata.json
+django_orm\-admin testserver mydata.json
 .ft P
 .fi
 .UNINDENT
@@ -2276,8 +2276,8 @@ To run the test server on port 7000 with \fBfixture1\fP and \fBfixture2\fP:
 .sp
 .nf
 .ft C
-django\-admin testserver \-\-addrport 7000 fixture1 fixture2
-django\-admin testserver fixture1 fixture2 \-\-addrport 7000
+django_orm\-admin testserver \-\-addrport 7000 fixture1 fixture2
+django_orm\-admin testserver fixture1 fixture2 \-\-addrport 7000
 .ft P
 .fi
 .UNINDENT
@@ -2293,7 +2293,7 @@ To run on 1.2.3.4:7000 with a \fBtest\fP fixture:
 .sp
 .nf
 .ft C
-django\-admin testserver \-\-addrport 1.2.3.4:7000 test
+django_orm\-admin testserver \-\-addrport 1.2.3.4:7000 test
 .ft P
 .fi
 .UNINDENT
@@ -2315,7 +2315,7 @@ their application.
 .SS \fBchangepassword\fP
 .INDENT 0.0
 .TP
-.B django\-admin changepassword [<username>]
+.B django_orm\-admin changepassword [<username>]
 .UNINDENT
 .sp
 This command is only available if Django\(aqs \fI\%authentication system\fP (\fBdjango.contrib.auth\fP) is installed.
@@ -2337,7 +2337,7 @@ Example usage:
 .sp
 .nf
 .ft C
-django\-admin changepassword ringo
+django_orm\-admin changepassword ringo
 .ft P
 .fi
 .UNINDENT
@@ -2345,7 +2345,7 @@ django\-admin changepassword ringo
 .SS \fBcreatesuperuser\fP
 .INDENT 0.0
 .TP
-.B django\-admin createsuperuser
+.B django_orm\-admin createsuperuser
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -2409,10 +2409,10 @@ instance.
 .SS \fBremove_stale_contenttypes\fP
 .INDENT 0.0
 .TP
-.B django\-admin remove_stale_contenttypes
+.B django_orm\-admin remove_stale_contenttypes
 .UNINDENT
 .sp
-This command is only available if Django\(aqs \fI\%contenttypes app\fP (\fI\%django.contrib.contenttypes\fP) is installed.
+This command is only available if Django\(aqs \fI\%contenttypes app\fP (\fI\%django_orm.contrib.contenttypes\fP) is installed.
 .sp
 Deletes stale content types (from deleted models) in your database. Any objects
 that depend on the deleted content types will also be deleted. A list of
@@ -2443,7 +2443,7 @@ documentation.
 .SS \fBclearsessions\fP
 .INDENT 0.0
 .TP
-.B django\-admin clearsessions
+.B django_orm\-admin clearsessions
 .UNINDENT
 .sp
 Can be run as a cron job or directly to clean out expired sessions.
@@ -2488,7 +2488,7 @@ Example usage:
 .sp
 .nf
 .ft C
-django\-admin migrate \-\-pythonpath=\(aq/home/djangoprojects/myproject\(aq
+django_orm\-admin migrate \-\-pythonpath=\(aq/home/djangoprojects/myproject\(aq
 .ft P
 .fi
 .UNINDENT
@@ -2512,7 +2512,7 @@ Example usage:
 .sp
 .nf
 .ft C
-django\-admin migrate \-\-settings=mysite.settings
+django_orm\-admin migrate \-\-settings=mysite.settings
 .ft P
 .fi
 .UNINDENT
@@ -2534,7 +2534,7 @@ Example usage:
 .sp
 .nf
 .ft C
-django\-admin migrate \-\-traceback
+django_orm\-admin migrate \-\-traceback
 .ft P
 .fi
 .UNINDENT
@@ -2565,7 +2565,7 @@ Example usage:
 .sp
 .nf
 .ft C
-django\-admin migrate \-\-verbosity 2
+django_orm\-admin migrate \-\-verbosity 2
 .ft P
 .fi
 .UNINDENT
@@ -2585,7 +2585,7 @@ Example usage:
 .sp
 .nf
 .ft C
-django\-admin runserver \-\-no\-color
+django_orm\-admin runserver \-\-no\-color
 .ft P
 .fi
 .UNINDENT
@@ -2614,7 +2614,7 @@ Example usage:
 .sp
 .nf
 .ft C
-django\-admin migrate \-\-skip\-checks
+django_orm\-admin migrate \-\-skip\-checks
 .ft P
 .fi
 .UNINDENT
@@ -2834,7 +2834,7 @@ Type \fBsql\fP, then [TAB], to see all available options whose names start
 with \fBsql\fP\&.
 .UNINDENT
 .sp
-See \fI\%How to create custom django\-admin commands\fP for how to add customized actions.
+See \fI\%How to create custom django_orm\-admin commands\fP for how to add customized actions.
 .SS Black formatting
 .sp
 
@@ -2851,7 +2851,7 @@ current project, you can set the \fBPATH\fP explicitly:
 .sp
 .nf
 .ft C
-PATH=path/to/venv/bin django\-admin makemigrations
+PATH=path/to/venv/bin django_orm\-admin makemigrations
 .ft P
 .fi
 .UNINDENT
@@ -2863,14 +2863,14 @@ For commands using \fBstdout\fP you can pipe the output to \fBblack\fP if needed
 .sp
 .nf
 .ft C
-django\-admin inspectdb | black \-
+django_orm\-admin inspectdb | black \-
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
-.B django.core.management.call_command(name, *args, **options)
+.B django_orm.core.management.call_command(name, *args, **options)
 .UNINDENT
 .sp
 To call a management command from code use \fBcall_command\fP\&.
@@ -2898,8 +2898,8 @@ Examples:
 .sp
 .nf
 .ft C
-from django.core import management
-from django.core.management.commands import loaddata
+from django_orm.core import management
+from django_orm.core.management.commands import loaddata
 
 management.call_command(\(aqflush\(aq, verbosity=0, interactive=False)
 management.call_command(\(aqloaddata\(aq, \(aqtest_data\(aq, verbosity=0)

@@ -1,10 +1,10 @@
 from datetime import date, datetime, time
 
-from django import forms
-from django.core.exceptions import ValidationError
-from django.test import SimpleTestCase, override_settings
-from django.utils import translation
-from django.utils.translation import activate, deactivate
+from django_orm import forms
+from django_orm.core.exceptions import ValidationError
+from django_orm.test import SimpleTestCase, override_settings
+from django_orm.utils import translation
+from django_orm.utils.translation import activate, deactivate
 
 
 class LocalizedTimeTests(SimpleTestCase):

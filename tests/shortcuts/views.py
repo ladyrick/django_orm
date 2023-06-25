@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django_orm.shortcuts import render
 
 
 def render_view(request):

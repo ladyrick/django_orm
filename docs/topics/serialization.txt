@@ -17,16 +17,16 @@ Serializing data
 
 At the highest level, you can serialize data like this::
 
-    from django.core import serializers
+    from django_orm.core import serializers
     data = serializers.serialize("xml", SomeModel.objects.all())
 
 The arguments to the ``serialize`` function are the format to serialize the data
 to (see `Serialization formats`_) and a
-:class:`~django.db.models.query.QuerySet` to serialize. (Actually, the second
+:class:`~django_orm.db.models.query.QuerySet` to serialize. (Actually, the second
 argument can be any iterator that yields Django model instances, but it'll
 almost always be a QuerySet).
 
-.. function:: django.core.serializers.get_serializer(format)
+.. function:: django_orm.core.serializers.get_serializer(format)
 
 You can also use a serializer object directly::
 
@@ -36,16 +36,16 @@ You can also use a serializer object directly::
     data = xml_serializer.getvalue()
 
 This is useful if you want to serialize data directly to a file-like object
-(which includes an :class:`~django.http.HttpResponse`)::
+(which includes an :class:`~django_orm.http.HttpResponse`)::
 
     with open("file.xml", "w") as out:
         xml_serializer.serialize(SomeModel.objects.all(), stream=out)
 
 .. note::
 
-    Calling :func:`~django.core.serializers.get_serializer` with an unknown
+    Calling :func:`~django_orm.core.serializers.get_serializer` with an unknown
     :ref:`format <serialization-formats>` will raise a
-    ``django.core.serializers.SerializerDoesNotExist`` exception.
+    ``django_orm.core.serializers.SerializerDoesNotExist`` exception.
 
 .. _subset-of-fields:
 
@@ -55,7 +55,7 @@ Subset of fields
 If you only want a subset of fields to be serialized, you can
 specify a ``fields`` argument to the serializer::
 
-    from django.core import serializers
+    from django_orm.core import serializers
     data = serializers.serialize('xml', SomeModel.objects.all(), fields=('name','size'))
 
 In this example, only the ``name`` and ``size`` attributes of each model will
@@ -176,15 +176,15 @@ XML
 The basic XML serialization format looks like this::
 
     <?xml version="1.0" encoding="utf-8"?>
-    <django-objects version="1.0">
+    <django_orm-objects version="1.0">
         <object pk="123" model="sessions.session">
             <field type="DateTimeField" name="expire_date">2013-01-16T08:16:59.844560+00:00</field>
             <!-- ... -->
         </object>
-    </django-objects>
+    </django_orm-objects>
 
 The whole collection of objects that is either serialized or deserialized is
-represented by a ``<django-objects>``-tag which contains multiple
+represented by a ``<django_orm-objects>``-tag which contains multiple
 ``<object>``-elements. Each such object has two attributes: "pk" and "model",
 the latter being represented by the name of the app ("sessions") and the
 lowercase name of the model ("session") separated by a dot.
@@ -259,7 +259,7 @@ For example, if you have some custom type in an object to be serialized, you'll
 have to write a custom :mod:`json` encoder for it. Something like this will
 work::
 
-    from django.core.serializers.json import DjangoJSONEncoder
+    from django_orm.core.serializers.json import DjangoJSONEncoder
 
     class LazyEncoder(DjangoJSONEncoder):
         def default(self, obj):
@@ -270,7 +270,7 @@ work::
 You can then pass ``cls=LazyEncoder`` to the ``serializers.serialize()``
 function::
 
-    from django.core.serializers import serialize
+    from django_orm.core.serializers import serialize
 
     serialize('json', SomeModel.objects.all(), cls=LazyEncoder)
 
@@ -280,7 +280,7 @@ Also note that GeoDjango provides a :doc:`customized GeoJSON serializer
 ``DjangoJSONEncoder``
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. class:: django.core.serializers.json.DjangoJSONEncoder
+.. class:: django_orm.core.serializers.json.DjangoJSONEncoder
 
 The JSON serializer uses ``DjangoJSONEncoder`` for encoding. A subclass of
 :class:`~json.JSONEncoder`, it handles these additional types:
@@ -300,7 +300,7 @@ The JSON serializer uses ``DjangoJSONEncoder`` for encoding. A subclass of
    ``timedelta(days=1, hours=2, seconds=3.4)`` is represented as
    ``'P1DT02H00M03.400000S'``.
 
-:class:`~decimal.Decimal`, ``Promise`` (``django.utils.functional.lazy()`` objects), :class:`~uuid.UUID`
+:class:`~decimal.Decimal`, ``Promise`` (``django_orm.utils.functional.lazy()`` objects), :class:`~uuid.UUID`
    A string representation of the object.
 
 .. _ecma-262: https://262.ecma-international.org/5.1/#sec-15.9.1.15
@@ -346,16 +346,16 @@ This strategy works well for most objects, but it can cause difficulty in some
 circumstances.
 
 Consider the case of a list of objects that have a foreign key referencing
-:class:`~django.contrib.contenttypes.models.ContentType`. If you're going to
+:class:`~django_orm.contrib.contenttypes.models.ContentType`. If you're going to
 serialize an object that refers to a content type, then you need to have a way
 to refer to that content type to begin with. Since ``ContentType`` objects are
 automatically created by Django during the database synchronization process,
 the primary key of a given content type isn't easy to predict; it will
 depend on how and when :djadmin:`migrate` was executed. This is true for all
 models which automatically generate objects, notably including
-:class:`~django.contrib.auth.models.Permission`,
-:class:`~django.contrib.auth.models.Group`, and
-:class:`~django.contrib.auth.models.User`.
+:class:`~django_orm.contrib.auth.models.Permission`,
+:class:`~django_orm.contrib.auth.models.Group`, and
+:class:`~django_orm.contrib.auth.models.User`.
 
 .. warning::
 
@@ -363,7 +363,7 @@ models which automatically generate objects, notably including
     other serialized data. By chance, the primary keys in the fixture
     may match those in the database and loading the fixture will
     have no effect. In the more likely case that they don't match, the fixture
-    loading will fail with an :class:`~django.db.IntegrityError`.
+    loading will fail with an :class:`~django_orm.db.IntegrityError`.
 
 There is also the matter of convenience. An integer id isn't always
 the most convenient way to refer to an object; sometimes, a
@@ -378,7 +378,7 @@ Deserialization of natural keys
 
 Consider the following two models::
 
-    from django.db import models
+    from django_orm.db import models
 
     class Person(models.Model):
         first_name = models.CharField(max_length=100)
@@ -417,7 +417,7 @@ Manager for Person with a ``get_by_natural_key()`` method. In the case
 of a Person, a good natural key might be the pair of first and last
 name::
 
-    from django.db import models
+    from django_orm.db import models
 
     class PersonManager(models.Manager):
         def get_by_natural_key(self, first_name, last_name):

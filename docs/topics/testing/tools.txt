@@ -2,7 +2,7 @@
 Testing tools
 =============
 
-.. currentmodule:: django.test
+.. currentmodule:: django_orm.test
 
 Django provides a small set of tools that come in handy when writing tests.
 
@@ -34,23 +34,23 @@ short:
 * Use Django's test client to establish that the correct template is being
   rendered and that the template is passed the correct context data.
 
-* Use :class:`~django.test.RequestFactory` to test view functions directly,
+* Use :class:`~django_orm.test.RequestFactory` to test view functions directly,
   bypassing the routing and middleware layers.
 
 * Use in-browser frameworks like Selenium_ to test *rendered* HTML and the
   *behavior* of web pages, namely JavaScript functionality. Django also
   provides special support for those frameworks; see the section on
-  :class:`~django.test.LiveServerTestCase` for more details.
+  :class:`~django_orm.test.LiveServerTestCase` for more details.
 
 A comprehensive test suite should use a combination of all of these test types.
 
 Overview and a quick example
 ----------------------------
 
-To use the test client, instantiate ``django.test.Client`` and retrieve
+To use the test client, instantiate ``django_orm.test.Client`` and retrieve
 web pages::
 
-    >>> from django.test import Client
+    >>> from django_orm.test import Client
     >>> c = Client()
     >>> response = c.post('/login/', {'username': 'john', 'password': 'smith'})
     >>> response.status_code
@@ -104,13 +104,13 @@ Note a few important things about how the test client works:
   ``enforce_csrf_checks`` argument when you construct your
   client::
 
-      >>> from django.test import Client
+      >>> from django_orm.test import Client
       >>> csrf_client = Client(enforce_csrf_checks=True)
 
 Making requests
 ---------------
 
-Use the ``django.test.Client`` class to make requests.
+Use the ``django_orm.test.Client`` class to make requests.
 
 .. class:: Client(enforce_csrf_checks=False, raise_request_exception=True, json_encoder=DjangoJSONEncoder, **defaults)
 
@@ -121,8 +121,8 @@ Use the ``django.test.Client`` class to make requests.
         >>> c = Client(HTTP_USER_AGENT='Mozilla/5.0')
 
     The values from the ``extra`` keyword arguments passed to
-    :meth:`~django.test.Client.get()`,
-    :meth:`~django.test.Client.post()`, etc. have precedence over
+    :meth:`~django_orm.test.Client.get()`,
+    :meth:`~django_orm.test.Client.post()`, etc. have precedence over
     the defaults passed to the class constructor.
 
     The ``enforce_csrf_checks`` argument can be used to test CSRF
@@ -162,7 +162,7 @@ Use the ``django.test.Client`` class to make requests.
 
         ...will send the HTTP header ``HTTP_ACCEPT`` to the details view, which
         is a good way to test code paths that use the
-        :meth:`django.http.HttpRequest.accepts()` method.
+        :meth:`django_orm.http.HttpRequest.accepts()` method.
 
         .. admonition:: CGI specification
 
@@ -219,7 +219,7 @@ Use the ``django.test.Client`` class to make requests.
         If you provide ``content_type`` as :mimetype:`application/json`, the
         ``data`` is serialized using :func:`json.dumps` if it's a dict, list,
         or tuple. Serialization is performed with
-        :class:`~django.core.serializers.json.DjangoJSONEncoder` by default,
+        :class:`~django_orm.core.serializers.json.DjangoJSONEncoder` by default,
         and can be overridden by providing a ``json_encoder`` argument to
         :class:`Client`. This serialization also happens for :meth:`put`,
         :meth:`patch`, and :meth:`delete` requests.
@@ -246,7 +246,7 @@ Use the ``django.test.Client`` class to make requests.
         provide the file field name as a key, and a file handle to the file you
         wish to upload as a value. For example, if your form has fields
         ``name`` and ``attachment``, the latter a
-        :class:`~django.forms.FileField`::
+        :class:`~django_orm.forms.FileField`::
 
             >>> c = Client()
             >>> with open('wishlist.doc', 'rb') as fp:
@@ -254,9 +254,9 @@ Use the ``django.test.Client`` class to make requests.
 
         You may also provide any file-like object (e.g., :class:`~io.StringIO` or
         :class:`~io.BytesIO`) as a file handle. If you're uploading to an
-        :class:`~django.db.models.ImageField`, the object needs a ``name``
+        :class:`~django_orm.db.models.ImageField`, the object needs a ``name``
         attribute that passes the
-        :data:`~django.core.validators.validate_image_file_extension` validator.
+        :data:`~django_orm.core.validators.validate_image_file_extension` validator.
         For example::
 
             >>> from io import BytesIO
@@ -395,9 +395,9 @@ Use the ``django.test.Client`` class to make requests.
         fixture. Remember that if you want your test user to have a password,
         you can't set the user's password by setting the password attribute
         directly -- you must use the
-        :meth:`~django.contrib.auth.models.User.set_password()` function to
+        :meth:`~django_orm.contrib.auth.models.User.set_password()` function to
         store a correctly hashed password. Alternatively, you can use the
-        :meth:`~django.contrib.auth.models.UserManager.create_user` helper
+        :meth:`~django_orm.contrib.auth.models.UserManager.create_user` helper
         method to create a new user with a correctly hashed password.
 
     .. method:: Client.force_login(user, backend=None)
@@ -410,13 +410,13 @@ Use the ``django.test.Client`` class to make requests.
 
         Unlike ``login()``, this method skips the authentication and
         verification steps: inactive users (:attr:`is_active=False
-        <django.contrib.auth.models.User.is_active>`) are permitted to login
+        <django_orm.contrib.auth.models.User.is_active>`) are permitted to login
         and the user's credentials don't need to be provided.
 
         The user will have its ``backend`` attribute set to the value of the
         ``backend`` argument (which should be a dotted Python path string), or
         to ``settings.AUTHENTICATION_BACKENDS[0]`` if a value isn't provided.
-        The :func:`~django.contrib.auth.authenticate` function called by
+        The :func:`~django_orm.contrib.auth.authenticate` function called by
         :meth:`login` normally annotates the user like this.
 
         This method is faster than ``login()`` since the expensive
@@ -432,7 +432,7 @@ Use the ``django.test.Client`` class to make requests.
 
         After you call this method, the test client will have all the cookies
         and session data cleared to defaults. Subsequent requests will appear
-        to come from an :class:`~django.contrib.auth.models.AnonymousUser`.
+        to come from an :class:`~django_orm.contrib.auth.models.AnonymousUser`.
 
 Testing responses
 -----------------
@@ -475,9 +475,9 @@ Specifically, a ``Response`` object has the following attributes:
         .. admonition:: Not using Django templates?
 
             This attribute is only populated when using the
-            :class:`~django.template.backends.django.DjangoTemplates` backend.
+            :class:`~django_orm.template.backends.django_orm.DjangoTemplates` backend.
             If you're using another template engine,
-            :attr:`~django.template.response.SimpleTemplateResponse.context_data`
+            :attr:`~django_orm.template.response.SimpleTemplateResponse.context_data`
             may be a suitable alternative on responses with that attribute.
 
     .. attribute:: exc_info
@@ -534,16 +534,16 @@ Specifically, a ``Response`` object has the following attributes:
         .. admonition:: Not using Django templates?
 
             This attribute is only populated when using the
-            :class:`~django.template.backends.django.DjangoTemplates` backend.
+            :class:`~django_orm.template.backends.django_orm.DjangoTemplates` backend.
             If you're using another template engine,
-            :attr:`~django.template.response.SimpleTemplateResponse.template_name`
+            :attr:`~django_orm.template.response.SimpleTemplateResponse.template_name`
             may be a suitable alternative if you only need the name of the
             template used for rendering.
 
     .. attribute:: resolver_match
 
-        An instance of :class:`~django.urls.ResolverMatch` for the response.
-        You can use the :attr:`~django.urls.ResolverMatch.func` attribute, for
+        An instance of :class:`~django_orm.urls.ResolverMatch` for the response.
+        You can use the :attr:`~django_orm.urls.ResolverMatch.func` attribute, for
         example, to verify the view that served the response::
 
             # my_view here is a function based view.
@@ -554,7 +554,7 @@ Specifically, a ``Response`` object has the following attributes:
             self.assertIs(response.resolver_match.func.view_class, MyView)
 
         If the given URL is not found, accessing this attribute will raise a
-        :exc:`~django.urls.Resolver404` exception.
+        :exc:`~django_orm.urls.Resolver404` exception.
 
 As with a normal response, you can also access the headers through
 :attr:`.HttpResponse.headers`. For example, you could determine the content
@@ -569,9 +569,9 @@ in the test case. You can then use a standard ``try ... except`` block or
 :meth:`~unittest.TestCase.assertRaises` to test for exceptions.
 
 The only exceptions that are not visible to the test client are
-:class:`~django.http.Http404`,
-:class:`~django.core.exceptions.PermissionDenied`, :exc:`SystemExit`, and
-:class:`~django.core.exceptions.SuspiciousOperation`. Django catches these
+:class:`~django_orm.http.Http404`,
+:class:`~django_orm.core.exceptions.PermissionDenied`, :exc:`SystemExit`, and
+:class:`~django_orm.core.exceptions.SuspiciousOperation`. Django catches these
 exceptions internally and converts them into the appropriate HTTP response
 codes. In these cases, you can check ``response.status_code`` in your test.
 
@@ -620,12 +620,12 @@ Setting the language
 When testing applications that support internationalization and localization,
 you might want to set the language for a test client request. The method for
 doing so depends on whether or not the
-:class:`~django.middleware.locale.LocaleMiddleware` is enabled.
+:class:`~django_orm.middleware.locale.LocaleMiddleware` is enabled.
 
 If the middleware is enabled, the language can be set by creating a cookie with
 a name of :setting:`LANGUAGE_COOKIE_NAME` and a value of the language code::
 
-    from django.conf import settings
+    from django_orm.conf import settings
 
     def test_language_using_cookie(self):
         self.client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'fr'})
@@ -646,12 +646,12 @@ or by including the ``Accept-Language`` HTTP header in the request::
         def tearDown(self):
             translation.activate(settings.LANGUAGE_CODE)
 
-More details are in :ref:`how-django-discovers-language-preference`.
+More details are in :ref:`how-django_orm-discovers-language-preference`.
 
 If the middleware isn't enabled, the active language may be set using
 :func:`.translation.override`::
 
-    from django.utils import translation
+    from django_orm.utils import translation
 
     def test_language_using_override(self):
         with translation.override('fr'):
@@ -666,7 +666,7 @@ Example
 The following is a unit test using the test client::
 
     import unittest
-    from django.test import Client
+    from django_orm.test import Client
 
     class SimpleTest(unittest.TestCase):
         def setUp(self):
@@ -685,7 +685,7 @@ The following is a unit test using the test client::
 
 .. seealso::
 
-    :class:`django.test.RequestFactory`
+    :class:`django_orm.test.RequestFactory`
 
 .. _django-testcase-subclasses:
 
@@ -740,10 +740,10 @@ A subclass of :class:`unittest.TestCase` that adds this functionality:
     for equality.
 
 * The ability to run tests with :ref:`modified settings <overriding-settings>`.
-* Using the :attr:`~SimpleTestCase.client` :class:`~django.test.Client`.
+* Using the :attr:`~SimpleTestCase.client` :class:`~django_orm.test.Client`.
 
 If your tests make any database queries, use subclasses
-:class:`~django.test.TransactionTestCase` or :class:`~django.test.TestCase`.
+:class:`~django_orm.test.TransactionTestCase` or :class:`~django_orm.test.TestCase`.
 
 .. attribute:: SimpleTestCase.databases
 
@@ -775,7 +775,7 @@ If your tests make any database queries, use subclasses
 
     Be sure to account for Python's behavior if an exception is raised during
     ``setUpClass()``. If that happens, neither the tests in the class nor
-    ``tearDownClass()`` are run. In the case of :class:`django.test.TestCase`,
+    ``tearDownClass()`` are run. In the case of :class:`django_orm.test.TestCase`,
     this will leak the transaction created in ``super()``  which results in
     various symptoms including a segmentation fault on some platforms (reported
     on macOS). If you want to intentionally raise an exception such as
@@ -787,7 +787,7 @@ If your tests make any database queries, use subclasses
 
 .. class:: TransactionTestCase()
 
-``TransactionTestCase`` inherits from :class:`~django.test.SimpleTestCase` to
+``TransactionTestCase`` inherits from :class:`~django_orm.test.SimpleTestCase` to
 add some database-specific features:
 
 * Resetting the database to a known state at the beginning of each test to
@@ -804,7 +804,7 @@ beginning of each test. A consequence of this, however, is that some database
 behaviors cannot be tested within a Django ``TestCase`` class. For instance,
 you cannot test that a block of code is executing within a transaction, as is
 required when using
-:meth:`~django.db.models.query.QuerySet.select_for_update()`. In those cases,
+:meth:`~django_orm.db.models.query.QuerySet.select_for_update()`. In those cases,
 you should use ``TransactionTestCase``.
 
 ``TransactionTestCase`` and ``TestCase`` are identical except for the manner
@@ -843,7 +843,7 @@ If your Django application doesn't use a database, use :class:`SimpleTestCase`.
 
 The class:
 
-* Wraps the tests within two nested :func:`~django.db.transaction.atomic`
+* Wraps the tests within two nested :func:`~django_orm.db.transaction.atomic`
   blocks: one for the whole class and one for each test. Therefore, if you want
   to test some specific database transaction behavior, use
   :class:`TransactionTestCase`.
@@ -860,7 +860,7 @@ It also provides an additional method:
 
     For example::
 
-        from django.test import TestCase
+        from django_orm.test import TestCase
 
         class MyTests(TestCase):
             @classmethod
@@ -888,7 +888,7 @@ It also provides an additional method:
 .. classmethod:: TestCase.captureOnCommitCallbacks(using=DEFAULT_DB_ALIAS, execute=False)
 
     Returns a context manager that captures :func:`transaction.on_commit()
-    <django.db.transaction.on_commit>` callbacks for the given database
+    <django_orm.db.transaction.on_commit>` callbacks for the given database
     connection. It returns a list that contains, on exit of the context, the
     captured callback functions. From this list you can make assertions on the
     callbacks or call them to invoke their side effects, emulating a commit.
@@ -901,8 +901,8 @@ It also provides an additional method:
 
     For example::
 
-        from django.core import mail
-        from django.test import TestCase
+        from django_orm.core import mail
+        from django_orm.test import TestCase
 
 
         class ContactTests(TestCase):
@@ -932,7 +932,7 @@ It also provides an additional method:
 .. class:: LiveServerTestCase()
 
 ``LiveServerTestCase`` does basically the same as
-:class:`~django.test.TransactionTestCase` with one extra feature: it launches a
+:class:`~django_orm.test.TransactionTestCase` with one extra feature: it launches a
 live Django server in the background on setup, and shuts it down on teardown.
 This allows the use of automated test clients other than the
 :ref:`Django dummy client <test-client>` such as, for example, the Selenium_
@@ -953,17 +953,17 @@ path:
 
 Then, add a ``LiveServerTestCase``-based test to your app's tests module
 (for example: ``myapp/tests.py``). For this example, we'll assume you're using
-the :mod:`~django.contrib.staticfiles` app and want to have static files served
+the :mod:`~django_orm.contrib.staticfiles` app and want to have static files served
 during the execution of your tests similar to what we get at development time
 with ``DEBUG=True``, i.e. without having to collect them using
 :djadmin:`collectstatic`. We'll use
-the  :class:`~django.contrib.staticfiles.testing.StaticLiveServerTestCase`
+the  :class:`~django_orm.contrib.staticfiles.testing.StaticLiveServerTestCase`
 subclass which provides that functionality. Replace it with
-``django.test.LiveServerTestCase`` if you don't need that.
+``django_orm.test.LiveServerTestCase`` if you don't need that.
 
 The code for this test may look as follows::
 
-    from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+    from django_orm.contrib.staticfiles.testing import StaticLiveServerTestCase
     from selenium.webdriver.common.by import By
     from selenium.webdriver.firefox.webdriver import WebDriver
 
@@ -1048,7 +1048,7 @@ Default test client
 
 .. attribute:: SimpleTestCase.client
 
-Every test case in a ``django.test.*TestCase`` instance has access to an
+Every test case in a ``django_orm.test.*TestCase`` instance has access to an
 instance of a Django test client. This client can be accessed as
 ``self.client``. This client is recreated for each test, so you don't have to
 worry about state (such as cookies) carrying over from one test to another.
@@ -1056,7 +1056,7 @@ worry about state (such as cookies) carrying over from one test to another.
 This means, instead of instantiating a ``Client`` in each test::
 
     import unittest
-    from django.test import Client
+    from django_orm.test import Client
 
     class SimpleTest(unittest.TestCase):
         def test_details(self):
@@ -1071,7 +1071,7 @@ This means, instead of instantiating a ``Client`` in each test::
 
 ...you can refer to ``self.client``, like so::
 
-    from django.test import TestCase
+    from django_orm.test import TestCase
 
     class SimpleTest(TestCase):
         def test_details(self):
@@ -1091,7 +1091,7 @@ If you want to use a different ``Client`` class (for example, a subclass
 with customized behavior), use the :attr:`~SimpleTestCase.client_class` class
 attribute::
 
-    from django.test import Client, TestCase
+    from django_orm.test import Client, TestCase
 
     class MyTestClient(Client):
         # Specialized methods for your environment
@@ -1127,10 +1127,10 @@ documentation<dumpdata>` for more details.
 
 Once you've created a fixture and placed it in a ``fixtures`` directory in one
 of your :setting:`INSTALLED_APPS`, you can use it in your unit tests by
-specifying a ``fixtures`` class attribute on your :class:`django.test.TestCase`
+specifying a ``fixtures`` class attribute on your :class:`django_orm.test.TestCase`
 subclass::
 
-    from django.test import TestCase
+    from django_orm.test import TestCase
     from myapp.models import Animal
 
     class AnimalTestCase(TestCase):
@@ -1247,7 +1247,7 @@ Overriding settings
 .. warning::
 
     Use the functions below to temporarily alter the value of settings in tests.
-    Don't manipulate ``django.conf.settings`` directly as Django won't restore
+    Don't manipulate ``django_orm.conf.settings`` directly as Django won't restore
     the original values after such manipulations.
 
 .. method:: SimpleTestCase.settings()
@@ -1255,9 +1255,9 @@ Overriding settings
 For testing purposes it's often useful to change a setting temporarily and
 revert to the original value after running the testing code. For this use case
 Django provides a standard Python context manager (see :pep:`343`) called
-:meth:`~django.test.SimpleTestCase.settings`, which can be used like this::
+:meth:`~django_orm.test.SimpleTestCase.settings`, which can be used like this::
 
-    from django.test import TestCase
+    from django_orm.test import TestCase
 
     class LoginTestCase(TestCase):
 
@@ -1279,21 +1279,21 @@ in the ``with`` block and reset its value to the previous state afterward.
 
 It can prove unwieldy to redefine settings that contain a list of values. In
 practice, adding or removing values is often sufficient. Django provides the
-:meth:`~django.test.SimpleTestCase.modify_settings` context manager for easier
+:meth:`~django_orm.test.SimpleTestCase.modify_settings` context manager for easier
 settings changes::
 
-    from django.test import TestCase
+    from django_orm.test import TestCase
 
     class MiddlewareTestCase(TestCase):
 
         def test_cache_middleware(self):
             with self.modify_settings(MIDDLEWARE={
-                'append': 'django.middleware.cache.FetchFromCacheMiddleware',
-                'prepend': 'django.middleware.cache.UpdateCacheMiddleware',
+                'append': 'django_orm.middleware.cache.FetchFromCacheMiddleware',
+                'prepend': 'django_orm.middleware.cache.UpdateCacheMiddleware',
                 'remove': [
-                    'django.contrib.sessions.middleware.SessionMiddleware',
-                    'django.contrib.auth.middleware.AuthenticationMiddleware',
-                    'django.contrib.messages.middleware.MessageMiddleware',
+                    'django_orm.contrib.sessions.middleware.SessionMiddleware',
+                    'django_orm.contrib.auth.middleware.AuthenticationMiddleware',
+                    'django_orm.contrib.messages.middleware.MessageMiddleware',
                 ],
             }):
                 response = self.client.get('/')
@@ -1306,10 +1306,10 @@ neither does ``remove`` when the value doesn't exist.
 .. function:: override_settings(**kwargs)
 
 In case you want to override a setting for a test method, Django provides the
-:func:`~django.test.override_settings` decorator (see :pep:`318`). It's used
+:func:`~django_orm.test.override_settings` decorator (see :pep:`318`). It's used
 like this::
 
-    from django.test import TestCase, override_settings
+    from django_orm.test import TestCase, override_settings
 
     class LoginTestCase(TestCase):
 
@@ -1318,9 +1318,9 @@ like this::
             response = self.client.get('/sekrit/')
             self.assertRedirects(response, '/other/login/?next=/sekrit/')
 
-The decorator can also be applied to :class:`~django.test.TestCase` classes::
+The decorator can also be applied to :class:`~django_orm.test.TestCase` classes::
 
-    from django.test import TestCase, override_settings
+    from django_orm.test import TestCase, override_settings
 
     @override_settings(LOGIN_URL='/other/login/')
     class LoginTestCase(TestCase):
@@ -1331,16 +1331,16 @@ The decorator can also be applied to :class:`~django.test.TestCase` classes::
 
 .. function:: modify_settings(*args, **kwargs)
 
-Likewise, Django provides the :func:`~django.test.modify_settings`
+Likewise, Django provides the :func:`~django_orm.test.modify_settings`
 decorator::
 
-    from django.test import TestCase, modify_settings
+    from django_orm.test import TestCase, modify_settings
 
     class MiddlewareTestCase(TestCase):
 
         @modify_settings(MIDDLEWARE={
-            'append': 'django.middleware.cache.FetchFromCacheMiddleware',
-            'prepend': 'django.middleware.cache.UpdateCacheMiddleware',
+            'append': 'django_orm.middleware.cache.FetchFromCacheMiddleware',
+            'prepend': 'django_orm.middleware.cache.UpdateCacheMiddleware',
         })
         def test_cache_middleware(self):
             response = self.client.get('/')
@@ -1348,11 +1348,11 @@ decorator::
 
 The decorator can also be applied to test case classes::
 
-    from django.test import TestCase, modify_settings
+    from django_orm.test import TestCase, modify_settings
 
     @modify_settings(MIDDLEWARE={
-        'append': 'django.middleware.cache.FetchFromCacheMiddleware',
-        'prepend': 'django.middleware.cache.UpdateCacheMiddleware',
+        'append': 'django_orm.middleware.cache.FetchFromCacheMiddleware',
+        'prepend': 'django_orm.middleware.cache.UpdateCacheMiddleware',
     })
     class MiddlewareTestCase(TestCase):
 
@@ -1367,23 +1367,23 @@ The decorator can also be applied to test case classes::
     tweak the above examples to assign the return value to a different name
     than ``LoginTestCase`` or ``MiddlewareTestCase``, you may be surprised to
     find that the original test case classes are still equally affected by the
-    decorator. For a given class, :func:`~django.test.modify_settings` is
-    always applied after :func:`~django.test.override_settings`.
+    decorator. For a given class, :func:`~django_orm.test.modify_settings` is
+    always applied after :func:`~django_orm.test.override_settings`.
 
 .. warning::
 
     The settings file contains some settings that are only consulted during
     initialization of Django internals. If you change them with
     ``override_settings``, the setting is changed if you access it via the
-    ``django.conf.settings`` module, however, Django's internals access it
-    differently. Effectively, using :func:`~django.test.override_settings` or
-    :func:`~django.test.modify_settings` with these settings is probably not
+    ``django_orm.conf.settings`` module, however, Django's internals access it
+    differently. Effectively, using :func:`~django_orm.test.override_settings` or
+    :func:`~django_orm.test.modify_settings` with these settings is probably not
     going to do what you expect it to do.
 
     We do not recommend altering the :setting:`DATABASES` setting. Altering
     the :setting:`CACHES` setting is possible, but a bit tricky if you are
     using internals that make using of caching, like
-    :mod:`django.contrib.sessions`. For example, you will have to reinitialize
+    :mod:`django_orm.contrib.sessions`. For example, you will have to reinitialize
     the session backend in a test that uses cached sessions and overrides
     :setting:`CACHES`.
 
@@ -1401,7 +1401,7 @@ have been overridden, like this::
 
 When overriding settings, make sure to handle the cases in which your app's
 code uses a cache or similar feature that retains state even if the setting is
-changed. Django provides the :data:`django.test.signals.setting_changed`
+changed. Django provides the :data:`django_orm.test.signals.setting_changed`
 signal that lets you register callbacks to clean up and otherwise reset state
 when settings are changed.
 
@@ -1423,7 +1423,7 @@ Isolating apps
 .. function:: utils.isolate_apps(*app_labels, attr_name=None, kwarg_name=None)
 
     Registers the models defined within a wrapped context into their own
-    isolated :attr:`~django.apps.apps` registry. This functionality is useful
+    isolated :attr:`~django_orm.apps.apps` registry. This functionality is useful
     when creating model classes for tests, as the classes will be cleanly
     deleted afterward, and there is no risk of name collisions.
 
@@ -1431,9 +1431,9 @@ Isolating apps
     individual arguments. You can use ``isolate_apps()`` as a decorator or a
     context manager. For example::
 
-        from django.db import models
-        from django.test import SimpleTestCase
-        from django.test.utils import isolate_apps
+        from django_orm.db import models
+        from django_orm.test import SimpleTestCase
+        from django_orm.test.utils import isolate_apps
 
         class MyModelTests(SimpleTestCase):
 
@@ -1559,7 +1559,7 @@ your test suite.
     on the form).
 
     ``field`` is the name of the field on the form to check. To check the form's
-    :meth:`non-field errors <django.forms.Form.non_field_errors>`, use
+    :meth:`non-field errors <django_orm.forms.Form.non_field_errors>`, use
     ``field=None``.
 
     ``errors`` is a list of all the error strings that the field is expected to
@@ -1611,9 +1611,9 @@ your test suite.
 
 .. method:: SimpleTestCase.assertContains(response, text, count=None, status_code=200, msg_prefix='', html=False)
 
-    Asserts that a :class:`response <django.http.HttpResponse>` produced the
-    given :attr:`~django.http.HttpResponse.status_code` and that ``text``
-    appears in its :attr:`~django.http.HttpResponse.content`. If ``count``
+    Asserts that a :class:`response <django_orm.http.HttpResponse>` produced the
+    given :attr:`~django_orm.http.HttpResponse.status_code` and that ``text``
+    appears in its :attr:`~django_orm.http.HttpResponse.content`. If ``count``
     is provided, ``text`` must occur exactly ``count`` times in the response.
 
     Set ``html`` to ``True`` to handle ``text`` as HTML. The comparison with
@@ -1624,9 +1624,9 @@ your test suite.
 
 .. method:: SimpleTestCase.assertNotContains(response, text, status_code=200, msg_prefix='', html=False)
 
-    Asserts that a :class:`response <django.http.HttpResponse>` produced the
-    given :attr:`~django.http.HttpResponse.status_code` and that ``text`` does
-    *not* appear in its :attr:`~django.http.HttpResponse.content`.
+    Asserts that a :class:`response <django_orm.http.HttpResponse>` produced the
+    given :attr:`~django_orm.http.HttpResponse.status_code` and that ``text`` does
+    *not* appear in its :attr:`~django_orm.http.HttpResponse.content`.
 
     Set ``html`` to ``True`` to handle ``text`` as HTML. The comparison with
     the response content will be based on HTML semantics instead of
@@ -1640,7 +1640,7 @@ your test suite.
     response.
 
     ``response`` must be a response instance returned by the
-    :class:`test client <django.test.Response>`.
+    :class:`test client <django_orm.test.Response>`.
 
     ``template_name`` should be a string such as ``'admin/index.html'``.
 
@@ -1672,8 +1672,8 @@ your test suite.
 
 .. method:: SimpleTestCase.assertRedirects(response, expected_url, status_code=302, target_status_code=200, msg_prefix='', fetch_redirect_response=True)
 
-    Asserts that the :class:`response <django.http.HttpResponse>` returned a
-    :attr:`~django.http.HttpResponse.status_code` redirect status, redirected
+    Asserts that the :class:`response <django_orm.http.HttpResponse>` returned a
+    :attr:`~django_orm.http.HttpResponse.status_code` redirect status, redirected
     to ``expected_url`` (including any ``GET`` data), and that the final page
     was received with ``target_status_code``.
 
@@ -1837,7 +1837,7 @@ Tagging tests
 You can tag your tests so you can easily run a particular subset. For example,
 you might label fast or slow tests::
 
-    from django.test import tag
+    from django_orm.test import tag
 
     class SampleTestCase(TestCase):
 
@@ -1911,7 +1911,7 @@ to give them an asynchronous context). Django will automatically detect
 any ``async def`` tests and wrap them so they run in their own event loop.
 
 If you are testing from an asynchronous function, you must also use the
-asynchronous test client. This is available as ``django.test.AsyncClient``,
+asynchronous test client. This is available as ``django_orm.test.AsyncClient``,
 or as ``self.async_client`` on any test.
 
 .. class:: AsyncClient(enforce_csrf_checks=False, raise_request_exception=True, **defaults)
@@ -1956,7 +1956,7 @@ creates.
     methods with :func:`~asgiref.sync.async_to_sync` *inside* of them instead::
 
         from asgiref.sync import async_to_sync
-        from django.test import TestCase
+        from django_orm.test import TestCase
 
         class MyTests(TestCase):
 
@@ -1982,23 +1982,23 @@ email backend with a testing backend.
 (Don't worry -- this has no effect on any other email senders outside of
 Django, such as your machine's mail server, if you're running one.)
 
-.. currentmodule:: django.core.mail
+.. currentmodule:: django_orm.core.mail
 
-.. data:: django.core.mail.outbox
+.. data:: django_orm.core.mail.outbox
 
 During test running, each outgoing email is saved in
-``django.core.mail.outbox``. This is a list of all
-:class:`~django.core.mail.EmailMessage` instances that have been sent.  The
+``django_orm.core.mail.outbox``. This is a list of all
+:class:`~django_orm.core.mail.EmailMessage` instances that have been sent.  The
 ``outbox`` attribute is a special attribute that is created *only* when the
 ``locmem`` email backend is used. It doesn't normally exist as part of the
-:mod:`django.core.mail` module and you can't import it directly. The code below
+:mod:`django_orm.core.mail` module and you can't import it directly. The code below
 shows how to access this attribute correctly.
 
-Here's an example test that examines ``django.core.mail.outbox`` for length
+Here's an example test that examines ``django_orm.core.mail.outbox`` for length
 and contents::
 
-    from django.core import mail
-    from django.test import TestCase
+    from django_orm.core import mail
+    from django_orm.test import TestCase
 
     class EmailTest(TestCase):
         def test_send_email(self):
@@ -2019,7 +2019,7 @@ As noted :ref:`previously <emptying-test-outbox>`, the test outbox is emptied
 at the start of every test in a Django ``*TestCase``. To empty the outbox
 manually, assign the empty list to ``mail.outbox``::
 
-    from django.core import mail
+    from django_orm.core import mail
 
     # Empty the test outbox
     mail.outbox = []
@@ -2030,12 +2030,12 @@ Management Commands
 ===================
 
 Management commands can be tested with the
-:func:`~django.core.management.call_command` function. The output can be
+:func:`~django_orm.core.management.call_command` function. The output can be
 redirected into a ``StringIO`` instance::
 
     from io import StringIO
-    from django.core.management import call_command
-    from django.test import TestCase
+    from django_orm.core.management import call_command
+    from django_orm.test import TestCase
 
     class ClosepollTest(TestCase):
         def test_command_output(self):
@@ -2048,7 +2048,7 @@ redirected into a ``StringIO`` instance::
 Skipping tests
 ==============
 
-.. currentmodule:: django.test
+.. currentmodule:: django_orm.test
 
 The unittest library provides the :func:`@skipIf <unittest.skipIf>` and
 :func:`@skipUnless <unittest.skipUnless>` decorators to allow you to skip tests
@@ -2068,8 +2068,8 @@ test if the database doesn't support a specific named feature.
 The decorators use a string identifier to describe database features.
 This string corresponds to attributes of the database connection
 features class. See
-:source:`django.db.backends.base.features.BaseDatabaseFeatures class
-<django/db/backends/base/features.py>` for a full list of database features
+:source:`django_orm.db.backends.base.features.BaseDatabaseFeatures class
+<django_orm/db/backends/base/features.py>` for a full list of database features
 that can be used as a basis for skipping tests.
 
 .. function:: skipIfDBFeature(*feature_name_strings)

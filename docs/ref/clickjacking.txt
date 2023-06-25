@@ -2,7 +2,7 @@
 Clickjacking Protection
 ========================
 
-.. module:: django.middleware.clickjacking
+.. module:: django_orm.middleware.clickjacking
    :synopsis: Protects against Clickjacking
 
 The clickjacking middleware and decorators provide easy-to-use protection
@@ -54,12 +54,12 @@ Setting ``X-Frame-Options`` for all responses
 ---------------------------------------------
 
 To set the same ``X-Frame-Options`` value for all responses in your site, put
-``'django.middleware.clickjacking.XFrameOptionsMiddleware'`` to
+``'django_orm.middleware.clickjacking.XFrameOptionsMiddleware'`` to
 :setting:`MIDDLEWARE`::
 
     MIDDLEWARE = [
         ...
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'django_orm.middleware.clickjacking.XFrameOptionsMiddleware',
         ...
     ]
 
@@ -76,8 +76,8 @@ When using the middleware there may be some views where you do **not** want the
 ``X-Frame-Options`` header set. For those cases, you can use a view decorator
 that tells the middleware not to set the header::
 
-    from django.http import HttpResponse
-    from django.views.decorators.clickjacking import xframe_options_exempt
+    from django_orm.http import HttpResponse
+    from django_orm.views.decorators.clickjacking import xframe_options_exempt
 
     @xframe_options_exempt
     def ok_to_load_in_a_frame(request):
@@ -95,9 +95,9 @@ Setting ``X-Frame-Options`` per view
 To set the ``X-Frame-Options`` header on a per view basis, Django provides these
 decorators::
 
-    from django.http import HttpResponse
-    from django.views.decorators.clickjacking import xframe_options_deny
-    from django.views.decorators.clickjacking import xframe_options_sameorigin
+    from django_orm.http import HttpResponse
+    from django_orm.views.decorators.clickjacking import xframe_options_deny
+    from django_orm.views.decorators.clickjacking import xframe_options_sameorigin
 
     @xframe_options_deny
     def view_one(request):

@@ -23,10 +23,10 @@ import itertools
 import tempfile
 from unittest import mock
 
-from django.contrib.auth.models import User
-from django.core import mail
-from django.http import HttpResponse, HttpResponseNotAllowed
-from django.test import (
+from django_orm.contrib.auth.models import User
+from django_orm.core import mail
+from django_orm.http import HttpResponse, HttpResponseNotAllowed
+from django_orm.test import (
     AsyncRequestFactory,
     Client,
     RequestFactory,
@@ -35,9 +35,9 @@ from django.test import (
     modify_settings,
     override_settings,
 )
-from django.urls import reverse_lazy
-from django.utils.decorators import async_only_middleware
-from django.views.generic import RedirectView
+from django_orm.urls import reverse_lazy
+from django_orm.utils.decorators import async_only_middleware
+from django_orm.views.generic import RedirectView
 
 from .views import TwoArgException, get_view, post_view, trace_view
 
@@ -537,8 +537,8 @@ class ClientTest(TestCase):
         self.assertEqual(response.context["user"].username, "testclient")
 
     @override_settings(
-        INSTALLED_APPS=["django.contrib.auth"],
-        SESSION_ENGINE="django.contrib.sessions.backends.file",
+        INSTALLED_APPS=["django_orm.contrib.auth"],
+        SESSION_ENGINE="django_orm.contrib.sessions.backends.file",
     )
     def test_view_with_login_when_sessions_app_is_not_installed(self):
         self.test_view_with_login()
@@ -648,15 +648,15 @@ class ClientTest(TestCase):
 
         with self.settings(
             AUTHENTICATION_BACKENDS=[
-                "django.contrib.auth.backends.AllowAllUsersModelBackend"
+                "django_orm.contrib.auth.backends.AllowAllUsersModelBackend"
             ]
         ):
             self.assertTrue(self.client.login(**credentials))
 
     @override_settings(
         AUTHENTICATION_BACKENDS=[
-            "django.contrib.auth.backends.ModelBackend",
-            "django.contrib.auth.backends.AllowAllUsersModelBackend",
+            "django_orm.contrib.auth.backends.ModelBackend",
+            "django_orm.contrib.auth.backends.AllowAllUsersModelBackend",
         ]
     )
     def test_view_with_inactive_force_login(self):
@@ -668,7 +668,7 @@ class ClientTest(TestCase):
 
         # Log in
         self.client.force_login(
-            self.u2, backend="django.contrib.auth.backends.AllowAllUsersModelBackend"
+            self.u2, backend="django_orm.contrib.auth.backends.AllowAllUsersModelBackend"
         )
 
         # Request a page that requires a login
@@ -712,7 +712,7 @@ class ClientTest(TestCase):
 
     @override_settings(
         AUTHENTICATION_BACKENDS=[
-            "django.contrib.auth.backends.ModelBackend",
+            "django_orm.contrib.auth.backends.ModelBackend",
             "test_client.auth_backends.TestClientBackend",
         ],
     )
@@ -738,7 +738,7 @@ class ClientTest(TestCase):
 
     @override_settings(
         AUTHENTICATION_BACKENDS=[
-            "django.contrib.auth.backends.ModelBackend",
+            "django_orm.contrib.auth.backends.ModelBackend",
             "test_client.auth_backends.TestClientBackend",
         ],
     )
@@ -751,12 +751,12 @@ class ClientTest(TestCase):
         response = self.client.get("/login_protected_view/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["user"].username, "testclient")
-        self.assertEqual(self.u1.backend, "django.contrib.auth.backends.ModelBackend")
+        self.assertEqual(self.u1.backend, "django_orm.contrib.auth.backends.ModelBackend")
 
     @override_settings(
         AUTHENTICATION_BACKENDS=[
             "test_client.auth_backends.BackendWithoutGetUserMethod",
-            "django.contrib.auth.backends.ModelBackend",
+            "django_orm.contrib.auth.backends.ModelBackend",
         ]
     )
     def test_force_login_with_backend_missing_get_user(self):
@@ -764,9 +764,9 @@ class ClientTest(TestCase):
         force_login() skips auth backends without a get_user() method.
         """
         self.client.force_login(self.u1)
-        self.assertEqual(self.u1.backend, "django.contrib.auth.backends.ModelBackend")
+        self.assertEqual(self.u1.backend, "django_orm.contrib.auth.backends.ModelBackend")
 
-    @override_settings(SESSION_ENGINE="django.contrib.sessions.backends.signed_cookies")
+    @override_settings(SESSION_ENGINE="django_orm.contrib.sessions.backends.signed_cookies")
     def test_logout_cookie_sessions(self):
         self.test_logout()
 
@@ -870,14 +870,14 @@ class ClientTest(TestCase):
 
     @override_settings(
         INSTALLED_APPS=[],
-        SESSION_ENGINE="django.contrib.sessions.backends.file",
+        SESSION_ENGINE="django_orm.contrib.sessions.backends.file",
     )
     def test_sessions_app_is_not_installed(self):
         self.test_session_modifying_view()
 
     @override_settings(
         INSTALLED_APPS=[],
-        SESSION_ENGINE="django.contrib.sessions.backends.nonexistent",
+        SESSION_ENGINE="django_orm.contrib.sessions.backends.nonexistent",
     )
     def test_session_engine_is_invalid(self):
         with self.assertRaisesMessage(ImportError, "nonexistent"):
@@ -977,7 +977,7 @@ class ClientTest(TestCase):
 
 
 @override_settings(
-    MIDDLEWARE=["django.middleware.csrf.CsrfViewMiddleware"],
+    MIDDLEWARE=["django_orm.middleware.csrf.CsrfViewMiddleware"],
     ROOT_URLCONF="test_client.urls",
 )
 class CSRFEnabledClientTests(SimpleTestCase):

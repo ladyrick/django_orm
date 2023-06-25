@@ -4,9 +4,9 @@ from math import ceil
 from operator import attrgetter
 from unittest import skipUnless
 
-from django.core.exceptions import FieldError
-from django.db import connection, models
-from django.db.models import (
+from django_orm.core.exceptions import FieldError
+from django_orm.db import connection, models
+from django_orm.db.models import (
     BooleanField,
     Case,
     Exists,
@@ -19,8 +19,8 @@ from django.db.models import (
     Value,
     When,
 )
-from django.db.models.functions import Cast, Substr
-from django.db.models.lookups import (
+from django_orm.db.models.functions import Cast, Substr
+from django_orm.db.models.lookups import (
     Exact,
     GreaterThan,
     GreaterThanOrEqual,
@@ -28,8 +28,8 @@ from django.db.models.lookups import (
     LessThan,
     LessThanOrEqual,
 )
-from django.test import TestCase, skipUnlessDBFeature
-from django.test.utils import isolate_apps
+from django_orm.test import TestCase, skipUnlessDBFeature
+from django_orm.test.utils import isolate_apps
 
 from .models import (
     Article,

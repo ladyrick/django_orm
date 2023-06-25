@@ -1,7 +1,7 @@
-from django.db.models import Q
-from django.http import Http404
-from django.shortcuts import get_list_or_404, get_object_or_404
-from django.test import TestCase
+from django_orm.db.models import Q
+from django_orm.http import Http404
+from django_orm.shortcuts import get_list_or_404, get_object_or_404
+from django_orm.test import TestCase
 
 from .models import Article, Author
 

@@ -1,10 +1,10 @@
 import datetime
 from unittest import mock
 
-from django.contrib.postgres.indexes import OpClass
-from django.core.exceptions import ValidationError
-from django.db import IntegrityError, NotSupportedError, connection, transaction
-from django.db.models import (
+from django_orm.contrib.postgres.indexes import OpClass
+from django_orm.core.exceptions import ValidationError
+from django_orm.db import IntegrityError, NotSupportedError, connection, transaction
+from django_orm.db.models import (
     CheckConstraint,
     Deferrable,
     F,
@@ -14,12 +14,12 @@ from django.db.models import (
     Q,
     UniqueConstraint,
 )
-from django.db.models.fields.json import KeyTextTransform
-from django.db.models.functions import Cast, Left, Lower
-from django.test import ignore_warnings, modify_settings, skipUnlessDBFeature
-from django.test.utils import isolate_apps
-from django.utils import timezone
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.db.models.fields.json import KeyTextTransform
+from django_orm.db.models.functions import Cast, Left, Lower
+from django_orm.test import ignore_warnings, modify_settings, skipUnlessDBFeature
+from django_orm.test.utils import isolate_apps
+from django_orm.utils import timezone
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from . import PostgreSQLTestCase
 from .models import HotelReservation, IntegerArrayModel, RangesModel, Room, Scene
@@ -27,8 +27,8 @@ from .models import HotelReservation, IntegerArrayModel, RangesModel, Room, Scen
 try:
     from psycopg2.extras import DateRange, NumericRange
 
-    from django.contrib.postgres.constraints import ExclusionConstraint
-    from django.contrib.postgres.fields import (
+    from django_orm.contrib.postgres.constraints import ExclusionConstraint
+    from django_orm.contrib.postgres.fields import (
         DateTimeRangeField,
         RangeBoundary,
         RangeOperators,
@@ -37,7 +37,7 @@ except ImportError:
     pass
 
 
-@modify_settings(INSTALLED_APPS={"append": "django.contrib.postgres"})
+@modify_settings(INSTALLED_APPS={"append": "django_orm.contrib.postgres"})
 class SchemaTests(PostgreSQLTestCase):
     get_opclass_query = """
         SELECT opcname, c.relname FROM pg_opclass AS oc
@@ -255,7 +255,7 @@ class SchemaTests(PostgreSQLTestCase):
         Scene.objects.create(scene="ScEnE 10", setting="Sir Bedemir's Castle")
 
 
-@modify_settings(INSTALLED_APPS={"append": "django.contrib.postgres"})
+@modify_settings(INSTALLED_APPS={"append": "django_orm.contrib.postgres"})
 class ExclusionConstraintTests(PostgreSQLTestCase):
     def get_constraints(self, table):
         """Get the constraints on the table using a new cursor."""
@@ -533,7 +533,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         path, args, kwargs = constraint.deconstruct()
         self.assertEqual(
-            path, "django.contrib.postgres.constraints.ExclusionConstraint"
+            path, "django_orm.contrib.postgres.constraints.ExclusionConstraint"
         )
         self.assertEqual(args, ())
         self.assertEqual(
@@ -558,7 +558,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         path, args, kwargs = constraint.deconstruct()
         self.assertEqual(
-            path, "django.contrib.postgres.constraints.ExclusionConstraint"
+            path, "django_orm.contrib.postgres.constraints.ExclusionConstraint"
         )
         self.assertEqual(args, ())
         self.assertEqual(
@@ -584,7 +584,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         path, args, kwargs = constraint.deconstruct()
         self.assertEqual(
-            path, "django.contrib.postgres.constraints.ExclusionConstraint"
+            path, "django_orm.contrib.postgres.constraints.ExclusionConstraint"
         )
         self.assertEqual(args, ())
         self.assertEqual(
@@ -607,7 +607,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         path, args, kwargs = constraint.deconstruct()
         self.assertEqual(
-            path, "django.contrib.postgres.constraints.ExclusionConstraint"
+            path, "django_orm.contrib.postgres.constraints.ExclusionConstraint"
         )
         self.assertEqual(args, ())
         self.assertEqual(
@@ -627,7 +627,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         path, args, kwargs = constraint.deconstruct()
         self.assertEqual(
-            path, "django.contrib.postgres.constraints.ExclusionConstraint"
+            path, "django_orm.contrib.postgres.constraints.ExclusionConstraint"
         )
         self.assertEqual(args, ())
         self.assertEqual(
@@ -648,7 +648,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         path, args, kwargs = constraint.deconstruct()
         self.assertEqual(
-            path, "django.contrib.postgres.constraints.ExclusionConstraint"
+            path, "django_orm.contrib.postgres.constraints.ExclusionConstraint"
         )
         self.assertEqual(args, ())
         self.assertEqual(
@@ -1036,7 +1036,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         with connection.schema_editor() as editor:
             with mock.patch(
-                "django.db.backends.postgresql.features.DatabaseFeatures."
+                "django_orm.db.backends.postgresql.features.DatabaseFeatures."
                 "supports_covering_gist_indexes",
                 False,
             ):
@@ -1057,7 +1057,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         with connection.schema_editor() as editor:
             with mock.patch(
-                "django.db.backends.postgresql.features.DatabaseFeatures."
+                "django_orm.db.backends.postgresql.features.DatabaseFeatures."
                 "supports_covering_spgist_indexes",
                 False,
             ):
@@ -1200,7 +1200,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
 
 
-@modify_settings(INSTALLED_APPS={"append": "django.contrib.postgres"})
+@modify_settings(INSTALLED_APPS={"append": "django_orm.contrib.postgres"})
 class ExclusionConstraintOpclassesDepracationTests(PostgreSQLTestCase):
     def get_constraints(self, table):
         """Get the constraints on the table using a new cursor."""
@@ -1210,7 +1210,7 @@ class ExclusionConstraintOpclassesDepracationTests(PostgreSQLTestCase):
     def test_warning(self):
         msg = (
             "The opclasses argument is deprecated in favor of using "
-            "django.contrib.postgres.indexes.OpClass in "
+            "django_orm.contrib.postgres.indexes.OpClass in "
             "ExclusionConstraint.expressions."
         )
         with self.assertWarnsMessage(RemovedInDjango50Warning, msg):

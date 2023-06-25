@@ -1,7 +1,7 @@
-from django.core.checks import Error
-from django.core.checks.compatibility.django_4_0 import check_csrf_trusted_origins
-from django.test import SimpleTestCase
-from django.test.utils import override_settings
+from django_orm.core.checks import Error
+from django_orm.core.checks.compatibility.django_4_0 import check_csrf_trusted_origins
+from django_orm.test import SimpleTestCase
+from django_orm.test.utils import override_settings
 
 
 class CheckCSRFTrustedOrigins(SimpleTestCase):

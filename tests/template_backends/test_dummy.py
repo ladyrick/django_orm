@@ -1,16 +1,16 @@
 import re
 
-from django.forms import CharField, Form, Media
-from django.http import HttpRequest, HttpResponse
-from django.middleware.csrf import (
+from django_orm.forms import CharField, Form, Media
+from django_orm.http import HttpRequest, HttpResponse
+from django_orm.middleware.csrf import (
     CSRF_TOKEN_LENGTH,
     CsrfViewMiddleware,
     _unmask_cipher_token,
     get_token,
 )
-from django.template import TemplateDoesNotExist, TemplateSyntaxError
-from django.template.backends.dummy import TemplateStrings
-from django.test import SimpleTestCase
+from django_orm.template import TemplateDoesNotExist, TemplateSyntaxError
+from django_orm.template.backends.dummy import TemplateStrings
+from django_orm.test import SimpleTestCase
 
 
 class TemplateStringsTests(SimpleTestCase):

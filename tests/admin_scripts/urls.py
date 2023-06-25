@@ -1,7 +1,7 @@
 import os
 
-from django.urls import path
-from django.views.static import serve
+from django_orm.urls import path
+from django_orm.views.static import serve
 
 here = os.path.dirname(__file__)
 

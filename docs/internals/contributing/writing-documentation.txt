@@ -194,17 +194,17 @@ documentation:
 * The main thing to keep in mind as you write and edit docs is that the
   more semantic markup you can add the better. So::
 
-      Add ``django.contrib.auth`` to your ``INSTALLED_APPS``...
+      Add ``django_orm.contrib.auth`` to your ``INSTALLED_APPS``...
 
   Isn't nearly as helpful as::
 
-      Add :mod:`django.contrib.auth` to your :setting:`INSTALLED_APPS`...
+      Add :mod:`django_orm.contrib.auth` to your :setting:`INSTALLED_APPS`...
 
   This is because Sphinx will generate proper links for the latter, which
   greatly helps readers.
 
   You can prefix the target with a ``~`` (that's a tilde) to get only the
-  "last bit" of that path. So ``:mod:`~django.contrib.auth``` will
+  "last bit" of that path. So ``:mod:`~django_orm.contrib.auth``` will
   display a link with the title "auth".
 
 * Use :mod:`~sphinx.ext.intersphinx` to reference Python's and Sphinx'
@@ -282,15 +282,15 @@ define some extra description units:
 
   To link, use ``:lookup:`exact```.
 
-* ``django-admin`` commands::
+* ``django_orm-admin`` commands::
 
-        .. django-admin:: migrate
+        .. django_orm-admin:: migrate
 
   To link, use ``:djadmin:`migrate```.
 
-* ``django-admin`` command-line options::
+* ``django_orm-admin`` command-line options::
 
-        .. django-admin-option:: --traceback
+        .. django_orm-admin-option:: --traceback
 
   To link, use ``:option:`command_name --traceback``` (or omit ``command_name``
   for the options shared by all commands like ``--verbosity``).
@@ -300,7 +300,7 @@ define some extra description units:
         :ticket:`12345`
 
 Django's documentation uses a custom ``console`` directive for documenting
-command-line examples involving ``django-admin``, ``manage.py``, ``python``,
+command-line examples involving ``django_orm-admin``, ``manage.py``, ``python``,
 etc.). In the HTML documentation, it renders a two-tab UI, with one tab showing
 a Unix-style command prompt and a second tab showing a Windows prompt.
 
@@ -542,16 +542,16 @@ you'd like to help translate the documentation into another language.
 
 .. _django-admin-manpage:
 
-``django-admin`` man page
+``django_orm-admin`` man page
 =========================
 
 Sphinx can generate a manual page for the
-:doc:`django-admin </ref/django-admin>` command. This is configured in
+:doc:`django_orm-admin </ref/django_orm-admin>` command. This is configured in
 ``docs/conf.py``. Unlike other documentation output, this man page should be
 included in the Django repository and the releases as
-``docs/man/django-admin.1``. There isn't a need to update this file when
+``docs/man/django_orm-admin.1``. There isn't a need to update this file when
 updating the documentation, as it's updated once as part of the release process.
 
 To generate an updated version of the man page, run ``make man`` in the
 ``docs`` directory. The new man page will be written in
-``docs/_build/man/django-admin.1``.
+``docs/_build/man/django_orm-admin.1``.

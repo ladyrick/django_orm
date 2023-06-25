@@ -22,7 +22,7 @@ Bugfixes
   temporary file to be closed incorrectly (:ticket:`31240`).
 
 * Fixed a data loss possibility in the
-  :meth:`~django.db.models.query.QuerySet.select_for_update`. When using
+  :meth:`~django_orm.db.models.query.QuerySet.select_for_update`. When using
   related fields or parent link fields with :ref:`multi-table-inheritance` in
   the ``of`` argument, the corresponding models were not locked
   (:ticket:`31246`).

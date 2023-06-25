@@ -1,7 +1,7 @@
-from django.contrib.auth.models import Permission
-from django.contrib.contenttypes.models import ContentType
-from django.core import management
-from django.test import TestCase, override_settings
+from django_orm.contrib.auth.models import Permission
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.core import management
+from django_orm.test import TestCase, override_settings
 
 from .models import Article
 
@@ -10,8 +10,8 @@ class SwappableModelTests(TestCase):
     # Limit memory usage when calling 'migrate'.
     available_apps = [
         "swappable_models",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
+        "django_orm.contrib.auth",
+        "django_orm.contrib.contenttypes",
     ]
 
     @override_settings(TEST_ARTICLE_MODEL="swappable_models.AlternateArticle")

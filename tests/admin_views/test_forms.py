@@ -1,7 +1,7 @@
-from django.contrib.admin.forms import AdminAuthenticationForm
-from django.contrib.admin.helpers import AdminForm
-from django.contrib.auth.models import User
-from django.test import SimpleTestCase, TestCase, override_settings
+from django_orm.contrib.admin.forms import AdminAuthenticationForm
+from django_orm.contrib.admin.helpers import AdminForm
+from django_orm.contrib.auth.models import User
+from django_orm.test import SimpleTestCase, TestCase, override_settings
 
 from .admin import ArticleForm
 
@@ -9,7 +9,7 @@ from .admin import ArticleForm
 # To verify that the login form rejects inactive users, use an authentication
 # backend that allows them.
 @override_settings(
-    AUTHENTICATION_BACKENDS=["django.contrib.auth.backends.AllowAllUsersModelBackend"]
+    AUTHENTICATION_BACKENDS=["django_orm.contrib.auth.backends.AllowAllUsersModelBackend"]
 )
 class AdminAuthenticationFormTests(TestCase):
     @classmethod

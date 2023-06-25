@@ -15,28 +15,28 @@ I can't log in. When I enter a valid username and password, it brings up the log
 ===========================================================================================================================================================
 
 If you're sure your username and password are correct, make sure your user
-account has :attr:`~django.contrib.auth.models.User.is_active` and
-:attr:`~django.contrib.auth.models.User.is_staff` set to True. The admin site
+account has :attr:`~django_orm.contrib.auth.models.User.is_active` and
+:attr:`~django_orm.contrib.auth.models.User.is_staff` set to True. The admin site
 only allows access to users with those two fields both set to True.
 
 How do I automatically set a field's value to the user who last edited the object in the admin?
 ===============================================================================================
 
-The :class:`~django.contrib.admin.ModelAdmin` class provides customization hooks
+The :class:`~django_orm.contrib.admin.ModelAdmin` class provides customization hooks
 that allow you to transform an object as it saved, using details from the
 request. By extracting the current user from the request, and customizing the
-:meth:`~django.contrib.admin.ModelAdmin.save_model` hook, you can update an
+:meth:`~django_orm.contrib.admin.ModelAdmin.save_model` hook, you can update an
 object to reflect the user that edited it. See :ref:`the documentation on
 ModelAdmin methods <model-admin-methods>` for an example.
 
 How do I limit admin access so that objects can only be edited by the users who created them?
 =============================================================================================
 
-The :class:`~django.contrib.admin.ModelAdmin` class also provides customization
+The :class:`~django_orm.contrib.admin.ModelAdmin` class also provides customization
 hooks that allow you to control the visibility and editability of objects in the
 admin. Using the same trick of extracting the user from the request, the
-:meth:`~django.contrib.admin.ModelAdmin.get_queryset` and
-:meth:`~django.contrib.admin.ModelAdmin.has_change_permission` can be used to
+:meth:`~django_orm.contrib.admin.ModelAdmin.get_queryset` and
+:meth:`~django_orm.contrib.admin.ModelAdmin.has_change_permission` can be used to
 control the visibility and editability of objects in the admin.
 
 My admin-site CSS and images showed up fine using the development server, but they're not displaying when using mod_wsgi.
@@ -51,7 +51,7 @@ My "list_filter" contains a ManyToManyField, but the filter doesn't display.
 Django won't bother displaying the filter for a ``ManyToManyField`` if there
 are no related objects.
 
-For example, if your :attr:`~django.contrib.admin.ModelAdmin.list_filter`
+For example, if your :attr:`~django_orm.contrib.admin.ModelAdmin.list_filter`
 includes :doc:`sites </ref/contrib/sites>`, and there are no sites in your
 database, it won't display a "Site" filter. In that case, filtering by site
 would be meaningless.
@@ -61,10 +61,10 @@ Some objects aren't appearing in the admin.
 
 Inconsistent row counts may be caused by missing foreign key values or a
 foreign key field incorrectly set to :attr:`null=False
-<django.db.models.Field.null>`. If you have a record with a
-:class:`~django.db.models.ForeignKey` pointing to a nonexistent object and
+<django_orm.db.models.Field.null>`. If you have a record with a
+:class:`~django_orm.db.models.ForeignKey` pointing to a nonexistent object and
 that foreign key is included is
-:attr:`~django.contrib.admin.ModelAdmin.list_display`, the record will not be
+:attr:`~django_orm.contrib.admin.ModelAdmin.list_display`, the record will not be
 shown in the admin changelist because the Django model is declaring an
 integrity constraint that is not implemented at the database level.
 

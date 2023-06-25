@@ -63,7 +63,7 @@ The ``WSGIAuthUserScript`` directive tells mod_wsgi to execute the
 ``check_password`` function in specified wsgi script, passing the user name and
 password that it receives from the prompt. In this example, the
 ``WSGIAuthUserScript`` is the same as the ``WSGIScriptAlias`` that defines your
-application :doc:`that is created by django-admin startproject
+application :doc:`that is created by django_orm-admin startproject
 </howto/deployment/wsgi/index>`.
 
 .. admonition:: Using Apache 2.2 with authentication
@@ -86,9 +86,9 @@ function::
 
     os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
 
-    from django.contrib.auth.handlers.modwsgi import check_password
+    from django_orm.contrib.auth.handlers.modwsgi import check_password
 
-    from django.core.handlers.wsgi import WSGIHandler
+    from django_orm.core.handlers.wsgi import WSGIHandler
     application = WSGIHandler()
 
 
@@ -131,7 +131,7 @@ returns a list groups the given user belongs to.
 
 .. code-block:: python
 
-    from django.contrib.auth.handlers.modwsgi import check_password, groups_for_user
+    from django_orm.contrib.auth.handlers.modwsgi import check_password, groups_for_user
 
 Requests for ``/secret/`` will now also require user to be a member of the
 "secret-agents" group.

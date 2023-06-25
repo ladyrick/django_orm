@@ -1,5 +1,5 @@
-from django.db import connection
-from django.test import TestCase
+from django_orm.db import connection
+from django_orm.test import TestCase
 
 from .models import A01, A02, B01, B02, C01, C02, Managed1, Unmanaged2
 

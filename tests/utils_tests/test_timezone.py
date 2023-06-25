@@ -12,9 +12,9 @@ try:
 except ImportError:
     from backports import zoneinfo
 
-from django.test import SimpleTestCase, ignore_warnings, override_settings
-from django.utils import timezone
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.test import SimpleTestCase, ignore_warnings, override_settings
+from django_orm.utils import timezone
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 PARIS_ZI = zoneinfo.ZoneInfo("Europe/Paris")
 EAT = timezone.get_fixed_timezone(180)  # Africa/Nairobi
@@ -77,7 +77,7 @@ class TimezoneTests(SimpleTestCase):
         with timezone.override(EAT):
             self.assertEqual(timezone.localdate(aware), datetime.date(2014, 12, 31))
 
-        with mock.patch("django.utils.timezone.now", return_value=aware):
+        with mock.patch("django_orm.utils.timezone.now", return_value=aware):
             self.assertEqual(
                 timezone.localdate(timezone=EAT), datetime.date(2014, 12, 31)
             )

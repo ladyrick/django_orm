@@ -1,9 +1,9 @@
 from unittest import mock
 
-from django.test import SimpleTestCase
-from django.test.utils import ignore_warnings
-from django.utils.deprecation import RemovedInDjango50Warning
-from django.utils.functional import cached_property, classproperty, lazy
+from django_orm.test import SimpleTestCase
+from django_orm.test.utils import ignore_warnings
+from django_orm.utils.deprecation import RemovedInDjango50Warning
+from django_orm.utils.functional import cached_property, classproperty, lazy
 
 
 class FunctionalTests(SimpleTestCase):

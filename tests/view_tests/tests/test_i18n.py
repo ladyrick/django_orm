@@ -2,25 +2,25 @@ import gettext
 import json
 from os import path
 
-from django.conf import settings
-from django.test import (
+from django_orm.conf import settings
+from django_orm.test import (
     RequestFactory,
     SimpleTestCase,
     TestCase,
     modify_settings,
     override_settings,
 )
-from django.test.selenium import SeleniumTestCase
-from django.urls import reverse
-from django.utils.translation import get_language, override
-from django.views.i18n import JavaScriptCatalog, get_formats
+from django_orm.test.selenium import SeleniumTestCase
+from django_orm.urls import reverse
+from django_orm.utils.translation import get_language, override
+from django_orm.views.i18n import JavaScriptCatalog, get_formats
 
 from ..urls import locale_dir
 
 
 @override_settings(ROOT_URLCONF="view_tests.urls")
 class SetLanguageTests(TestCase):
-    """Test the django.views.i18n.set_language view."""
+    """Test the django_orm.views.i18n.set_language view."""
 
     def _get_inactive_language_code(self):
         """Return language code for a language which is not activated."""
@@ -179,7 +179,7 @@ class SetLanguageTests(TestCase):
         # we force saving language to a cookie rather than a session
         # by excluding session middleware and those which do require it
         test_settings = {
-            "MIDDLEWARE": ["django.middleware.common.CommonMiddleware"],
+            "MIDDLEWARE": ["django_orm.middleware.common.CommonMiddleware"],
             "LANGUAGE_COOKIE_NAME": "mylanguage",
             "LANGUAGE_COOKIE_AGE": 3600 * 7 * 2,
             "LANGUAGE_COOKIE_DOMAIN": ".example.com",
@@ -222,7 +222,7 @@ class SetLanguageTests(TestCase):
 
     @modify_settings(
         MIDDLEWARE={
-            "append": "django.middleware.locale.LocaleMiddleware",
+            "append": "django_orm.middleware.locale.LocaleMiddleware",
         }
     )
     def test_lang_from_translated_i18n_pattern(self):
@@ -246,7 +246,7 @@ class SetLanguageTests(TestCase):
 
 @override_settings(ROOT_URLCONF="view_tests.urls")
 class I18NViewTests(SimpleTestCase):
-    """Test django.views.i18n views other than set_language."""
+    """Test django_orm.views.i18n views other than set_language."""
 
     @override_settings(LANGUAGE_CODE="de")
     def test_get_formats(self):
@@ -282,7 +282,7 @@ class I18NViewTests(SimpleTestCase):
         # default plural function
         self.assertContains(
             response,
-            "django.pluralidx = function(count) { return (count == 1) ? 0 : 1; };",
+            "django_orm.pluralidx = function(count) { return (count == 1) ? 0 : 1; };",
         )
         self.assertNotContains(response, "var newcatalog =")
 
@@ -489,9 +489,9 @@ class I18NViewTests(SimpleTestCase):
 class I18nSeleniumTests(SeleniumTestCase):
     # The test cases use fixtures & translations from these apps.
     available_apps = [
-        "django.contrib.admin",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
+        "django_orm.contrib.admin",
+        "django_orm.contrib.auth",
+        "django_orm.contrib.contenttypes",
         "view_tests",
     ]
 

@@ -1,9 +1,9 @@
 from unittest import mock
 
-from django.db import connection, migrations
+from django_orm.db import connection, migrations
 
 try:
-    from django.contrib.postgres.operations import (
+    from django_orm.contrib.postgres.operations import (
         BloomExtension,
         BtreeGinExtension,
         BtreeGistExtension,

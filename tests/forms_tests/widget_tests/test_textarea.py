@@ -1,5 +1,5 @@
-from django.forms import CharField, Form, Textarea
-from django.utils.safestring import mark_safe
+from django_orm.forms import CharField, Form, Textarea
+from django_orm.utils.safestring import mark_safe
 
 from .base import WidgetTest
 

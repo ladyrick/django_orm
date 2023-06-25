@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from django.core.exceptions import ValidationError
-from django.forms import (
+from django_orm.core.exceptions import ValidationError
+from django_orm.forms import (
     CharField,
     Form,
     MultipleChoiceField,
@@ -12,7 +12,7 @@ from django.forms import (
     SplitDateTimeWidget,
     TextInput,
 )
-from django.test import SimpleTestCase
+from django_orm.test import SimpleTestCase
 
 beatles = (("J", "John"), ("P", "Paul"), ("G", "George"), ("R", "Ringo"))
 

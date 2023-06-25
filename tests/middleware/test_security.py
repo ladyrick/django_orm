@@ -1,11 +1,11 @@
-from django.http import HttpResponse
-from django.test import RequestFactory, SimpleTestCase
-from django.test.utils import override_settings
+from django_orm.http import HttpResponse
+from django_orm.test import RequestFactory, SimpleTestCase
+from django_orm.test.utils import override_settings
 
 
 class SecurityMiddlewareTest(SimpleTestCase):
     def middleware(self, *args, **kwargs):
-        from django.middleware.security import SecurityMiddleware
+        from django_orm.middleware.security import SecurityMiddleware
 
         return SecurityMiddleware(self.response(*args, **kwargs))
 

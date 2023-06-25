@@ -1,5 +1,5 @@
-from django.db import connection
-from django.test import SimpleTestCase
+from django_orm.db import connection
+from django_orm.test import SimpleTestCase
 
 
 class TestDatabaseFeatures(SimpleTestCase):

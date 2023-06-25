@@ -2,13 +2,13 @@ from io import BytesIO
 from itertools import chain
 from urllib.parse import urlencode
 
-from django.core.exceptions import DisallowedHost
-from django.core.handlers.wsgi import LimitedStream, WSGIRequest
-from django.http import HttpRequest, RawPostDataException, UnreadablePostError
-from django.http.multipartparser import MultiPartParserError
-from django.http.request import HttpHeaders, split_domain_port
-from django.test import RequestFactory, SimpleTestCase, override_settings
-from django.test.client import FakePayload
+from django_orm.core.exceptions import DisallowedHost
+from django_orm.core.handlers.wsgi import LimitedStream, WSGIRequest
+from django_orm.http import HttpRequest, RawPostDataException, UnreadablePostError
+from django_orm.http.multipartparser import MultiPartParserError
+from django_orm.http.request import HttpHeaders, split_domain_port
+from django_orm.test import RequestFactory, SimpleTestCase, override_settings
+from django_orm.test.client import FakePayload
 
 
 class RequestsTests(SimpleTestCase):

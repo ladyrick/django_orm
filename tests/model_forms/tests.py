@@ -3,26 +3,26 @@ import os
 from decimal import Decimal
 from unittest import mock, skipUnless
 
-from django import forms
-from django.core.exceptions import (
+from django_orm import forms
+from django_orm.core.exceptions import (
     NON_FIELD_ERRORS,
     FieldError,
     ImproperlyConfigured,
     ValidationError,
 )
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.db import connection, models
-from django.db.models.query import EmptyQuerySet
-from django.forms.models import (
+from django_orm.core.files.uploadedfile import SimpleUploadedFile
+from django_orm.db import connection, models
+from django_orm.db.models.query import EmptyQuerySet
+from django_orm.forms.models import (
     ModelFormMetaclass,
     construct_instance,
     fields_for_model,
     model_to_dict,
     modelform_factory,
 )
-from django.template import Context, Template
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
-from django.test.utils import isolate_apps
+from django_orm.template import Context, Template
+from django_orm.test import SimpleTestCase, TestCase, skipUnlessDBFeature
+from django_orm.test.utils import isolate_apps
 
 from .models import (
     Article,

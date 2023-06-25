@@ -1,4 +1,4 @@
-from django.db import migrations, models
+from django_orm.db import migrations, models
 
 
 class Migration(migrations.Migration):

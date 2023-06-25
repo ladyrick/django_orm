@@ -2,7 +2,7 @@
 How to write custom lookups
 ===========================
 
-.. currentmodule:: django.db.models
+.. currentmodule:: django_orm.db.models
 
 Django offers a wide variety of :ref:`built-in lookups <field-lookups>` for
 filtering (for example, ``exact`` and ``icontains``). This documentation
@@ -26,7 +26,7 @@ databases.
 There are two steps to making this work. Firstly we need to implement the
 lookup, then we need to tell Django about it::
 
-  from django.db.models import Lookup
+  from django_orm.db.models import Lookup
 
   class NotEqual(Lookup):
       lookup_name = 'ne'
@@ -42,12 +42,12 @@ the field class we want the lookup to be available for. In this case, the lookup
 makes sense on all ``Field`` subclasses, so we register it with ``Field``
 directly::
 
-  from django.db.models import Field
+  from django_orm.db.models import Field
   Field.register_lookup(NotEqual)
 
 Lookup registration can also be done using a decorator pattern::
 
-    from django.db.models import Field
+    from django_orm.db.models import Field
 
     @Field.register_lookup
     class NotEqualLookup(Lookup):
@@ -113,7 +113,7 @@ or where it did not exceed a certain amount
 We will start by writing an ``AbsoluteValue`` transformer. This will use the SQL
 function ``ABS()`` to transform the value before comparison::
 
-  from django.db.models import Transform
+  from django_orm.db.models import Transform
 
   class AbsoluteValue(Transform):
       lookup_name = 'abs'
@@ -121,7 +121,7 @@ function ``ABS()`` to transform the value before comparison::
 
 Next, let's register it for ``IntegerField``::
 
-  from django.db.models import IntegerField
+  from django_orm.db.models import IntegerField
   IntegerField.register_lookup(AbsoluteValue)
 
 We can now run the queries we had before.
@@ -165,7 +165,7 @@ relative to an origin, or a complex number) then we may have wanted to specify
 that the transform returns a ``FloatField`` type for further lookups. This can
 be done by adding an ``output_field`` attribute to the transform::
 
-    from django.db.models import FloatField, Transform
+    from django_orm.db.models import FloatField, Transform
 
     class AbsoluteValue(Transform):
         lookup_name = 'abs'
@@ -195,7 +195,7 @@ the following SQL:
 
 The implementation is::
 
-  from django.db.models import Lookup
+  from django_orm.db.models import Lookup
 
   class AbsoluteValueLessThan(Lookup):
       lookup_name = 'lt'
@@ -247,10 +247,10 @@ transformations in a database-agnostic way.
 
 We define an ``UpperCase`` transformer which uses the SQL function ``UPPER()`` to
 transform the values before comparison. We define
-:attr:`bilateral = True <django.db.models.Transform.bilateral>` to indicate that
+:attr:`bilateral = True <django_orm.db.models.Transform.bilateral>` to indicate that
 this transformation should apply to both ``lhs`` and ``rhs``::
 
-  from django.db.models import Transform
+  from django_orm.db.models import Transform
 
   class UpperCase(Transform):
       lookup_name = 'upper'
@@ -259,7 +259,7 @@ this transformation should apply to both ``lhs`` and ``rhs``::
 
 Next, let's register it::
 
-  from django.db.models import CharField, TextField
+  from django_orm.db.models import CharField, TextField
   CharField.register_lookup(UpperCase)
   TextField.register_lookup(UpperCase)
 

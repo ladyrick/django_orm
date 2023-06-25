@@ -18,10 +18,10 @@ in a shell prompt (indicated by the $ prefix):
 
 .. console::
 
-    $ python -m django --version
+    $ python -m django_orm --version
 
 If Django is installed, you should see the version of your installation. If it
-isn't, you'll get an error telling "No module named django".
+isn't, you'll get an error telling "No module named django_orm".
 
 This tutorial is written for Django |version|, which supports Python 3.8 and
 later. If the Django version doesn't match, you can refer to the tutorial for
@@ -52,16 +52,16 @@ code, then run the following command:
 
 .. console::
 
-   $ django-admin startproject mysite
+   $ django_orm-admin startproject mysite
 
 This will create a ``mysite`` directory in your current directory. If it didn't
-work, see :ref:`troubleshooting-django-admin`.
+work, see :ref:`troubleshooting-django_orm-admin`.
 
 .. note::
 
     You'll need to avoid naming projects after built-in Python or Django
     components. In particular, this means you should avoid using names like
-    ``django`` (which will conflict with Django itself) or ``test`` (which
+    ``django_orm`` (which will conflict with Django itself) or ``test`` (which
     conflicts with a built-in Python package).
 
 .. admonition:: Where should this code live?
@@ -94,7 +94,7 @@ These files are:
 
 * :file:`manage.py`: A command-line utility that lets you interact with this
   Django project in various ways. You can read all the details about
-  :file:`manage.py` in :doc:`/ref/django-admin`.
+  :file:`manage.py` in :doc:`/ref/django_orm-admin`.
 
 * The inner :file:`mysite/` directory is the actual Python package for your
   project. Its name is the Python package name you'll need to use to import
@@ -247,7 +247,7 @@ and put the following Python code in it:
 .. code-block:: python
     :caption: ``polls/views.py``
 
-    from django.http import HttpResponse
+    from django_orm.http import HttpResponse
 
 
     def index(request):
@@ -275,7 +275,7 @@ In the ``polls/urls.py`` file include the following code:
 .. code-block:: python
     :caption: ``polls/urls.py``
 
-    from django.urls import path
+    from django_orm.urls import path
 
     from . import views
 
@@ -284,32 +284,32 @@ In the ``polls/urls.py`` file include the following code:
     ]
 
 The next step is to point the root URLconf at the ``polls.urls`` module. In
-``mysite/urls.py``, add an import for ``django.urls.include`` and insert an
-:func:`~django.urls.include` in the ``urlpatterns`` list, so you have:
+``mysite/urls.py``, add an import for ``django_orm.urls.include`` and insert an
+:func:`~django_orm.urls.include` in the ``urlpatterns`` list, so you have:
 
 .. code-block:: python
     :caption: ``mysite/urls.py``
 
-    from django.contrib import admin
-    from django.urls import include, path
+    from django_orm.contrib import admin
+    from django_orm.urls import include, path
 
     urlpatterns = [
         path('polls/', include('polls.urls')),
         path('admin/', admin.site.urls),
     ]
 
-The :func:`~django.urls.include` function allows referencing other URLconfs.
-Whenever Django encounters :func:`~django.urls.include`, it chops off whatever
+The :func:`~django_orm.urls.include` function allows referencing other URLconfs.
+Whenever Django encounters :func:`~django_orm.urls.include`, it chops off whatever
 part of the URL matched up to that point and sends the remaining string to the
 included URLconf for further processing.
 
-The idea behind :func:`~django.urls.include` is to make it easy to
+The idea behind :func:`~django_orm.urls.include` is to make it easy to
 plug-and-play URLs. Since polls are in their own URLconf
 (``polls/urls.py``), they can be placed under "/polls/", or under
 "/fun_polls/", or under "/content/polls/", or any other path root, and the
 app will still work.
 
-.. admonition:: When to use :func:`~django.urls.include()`
+.. admonition:: When to use :func:`~django_orm.urls.include()`
 
     You should always use ``include()`` when you include other URL patterns.
     ``admin.site.urls`` is the only exception to this.
@@ -330,11 +330,11 @@ text "*Hello, world. You're at the polls index.*", which you defined in the
     If you get an error page here, check that you're going to
     http://localhost:8000/polls/ and not http://localhost:8000/.
 
-The :func:`~django.urls.path` function is passed four arguments, two required:
+The :func:`~django_orm.urls.path` function is passed four arguments, two required:
 ``route`` and ``view``, and two optional: ``kwargs``, and ``name``.
 At this point, it's worth reviewing what these arguments are for.
 
-:func:`~django.urls.path` argument: ``route``
+:func:`~django_orm.urls.path` argument: ``route``
 ---------------------------------------------
 
 ``route`` is a string that contains a URL pattern. When processing a request,
@@ -347,21 +347,21 @@ in a request to ``https://www.example.com/myapp/``, the URLconf will look for
 ``myapp/``. In a request to ``https://www.example.com/myapp/?page=3``, the
 URLconf will also look for ``myapp/``.
 
-:func:`~django.urls.path` argument: ``view``
+:func:`~django_orm.urls.path` argument: ``view``
 --------------------------------------------
 
 When Django finds a matching pattern, it calls the specified view function with
-an :class:`~django.http.HttpRequest` object as the first argument and any
+an :class:`~django_orm.http.HttpRequest` object as the first argument and any
 "captured" values from the route as keyword arguments. We'll give an example
 of this in a bit.
 
-:func:`~django.urls.path` argument: ``kwargs``
+:func:`~django_orm.urls.path` argument: ``kwargs``
 ----------------------------------------------
 
 Arbitrary keyword arguments can be passed in a dictionary to the target view. We
 aren't going to use this feature of Django in the tutorial.
 
-:func:`~django.urls.path` argument: ``name``
+:func:`~django_orm.urls.path` argument: ``name``
 --------------------------------------------
 
 Naming your URL lets you refer to it unambiguously from elsewhere in Django,

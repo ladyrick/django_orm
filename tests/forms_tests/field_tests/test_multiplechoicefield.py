@@ -1,6 +1,6 @@
-from django.core.exceptions import ValidationError
-from django.forms import MultipleChoiceField
-from django.test import SimpleTestCase
+from django_orm.core.exceptions import ValidationError
+from django_orm.forms import MultipleChoiceField
+from django_orm.test import SimpleTestCase
 
 
 class MultipleChoiceFieldTest(SimpleTestCase):

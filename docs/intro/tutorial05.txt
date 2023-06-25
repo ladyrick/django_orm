@@ -149,7 +149,7 @@ whose date lies in the future:
 .. code-block:: pycon
 
     >>> import datetime
-    >>> from django.utils import timezone
+    >>> from django_orm.utils import timezone
     >>> from polls.models import Question
     >>> # create a Question instance with pub_date 30 days in the future
     >>> future_question = Question(pub_date=timezone.now() + datetime.timedelta(days=30))
@@ -176,8 +176,8 @@ Put the following in the ``tests.py`` file in the ``polls`` application:
 
     import datetime
 
-    from django.test import TestCase
-    from django.utils import timezone
+    from django_orm.test import TestCase
+    from django_orm.utils import timezone
 
     from .models import Question
 
@@ -193,7 +193,7 @@ Put the following in the ``tests.py`` file in the ``polls`` application:
             future_question = Question(pub_date=time)
             self.assertIs(future_question.was_published_recently(), False)
 
-Here we have created a :class:`django.test.TestCase` subclass with a method that
+Here we have created a :class:`django_orm.test.TestCase` subclass with a method that
 creates a ``Question`` instance with a ``pub_date`` in the future. We then check
 the output of ``was_published_recently()`` - which *ought* to be False.
 
@@ -236,7 +236,7 @@ What happened is this:
 
 * ``manage.py test polls`` looked for tests in the ``polls`` application
 
-* it found a subclass of the :class:`django.test.TestCase` class
+* it found a subclass of the :class:`django_orm.test.TestCase` class
 
 * it created a special database for the purpose of testing
 
@@ -348,7 +348,7 @@ Before we try to fix anything, let's have a look at the tools at our disposal.
 The Django test client
 ----------------------
 
-Django provides a test :class:`~django.test.Client` to simulate a user
+Django provides a test :class:`~django_orm.test.Client` to simulate a user
 interacting with the code at the view level.  We can use it in ``tests.py``
 or even in the :djadmin:`shell`.
 
@@ -362,10 +362,10 @@ environment in the :djadmin:`shell`:
 
 .. code-block:: pycon
 
-    >>> from django.test.utils import setup_test_environment
+    >>> from django_orm.test.utils import setup_test_environment
     >>> setup_test_environment()
 
-:meth:`~django.test.utils.setup_test_environment` installs a template renderer
+:meth:`~django_orm.test.utils.setup_test_environment` installs a template renderer
 which will allow us to examine some additional attributes on responses such as
 ``response.context`` that otherwise wouldn't be available. Note that this
 method *does not* set up a test database, so the following will be run against
@@ -375,10 +375,10 @@ questions you already created. You might get unexpected results if your
 it earlier, check it before continuing.
 
 Next we need to import the test client class (later in ``tests.py`` we will use
-the :class:`django.test.TestCase` class, which comes with its own client, so
+the :class:`django_orm.test.TestCase` class, which comes with its own client, so
 this won't be required)::
 
-    >>> from django.test import Client
+    >>> from django_orm.test import Client
     >>> # create an instance of the client for our use
     >>> client = Client()
 
@@ -394,7 +394,7 @@ With that ready, we can ask the client to do some work for us::
     404
     >>> # on the other hand we should expect to find something at '/polls/'
     >>> # we'll use 'reverse()' rather than a hardcoded URL
-    >>> from django.urls import reverse
+    >>> from django_orm.urls import reverse
     >>> response = client.get(reverse('polls:index'))
     >>> response.status_code
     200
@@ -410,7 +410,7 @@ The list of polls shows polls that aren't published yet (i.e. those that have a
 ``pub_date`` in the future). Let's fix that.
 
 In :doc:`Tutorial 4 </intro/tutorial04>` we introduced a class-based view,
-based on :class:`~django.views.generic.list.ListView`:
+based on :class:`~django_orm.views.generic.list.ListView`:
 
 .. code-block:: python
     :caption: ``polls/views.py``
@@ -430,7 +430,7 @@ an import:
 .. code-block:: python
     :caption: ``polls/views.py``
 
-    from django.utils import timezone
+    from django_orm.utils import timezone
 
 and then we must amend the ``get_queryset`` method like so:
 
@@ -465,7 +465,7 @@ Add the following to ``polls/tests.py``:
 .. code-block:: python
     :caption: ``polls/tests.py``
 
-    from django.urls import reverse
+    from django_orm.urls import reverse
 
 and we'll create a shortcut function to create questions as well as a new test
 class:
@@ -548,10 +548,10 @@ repetition out of the process of creating questions.
 
 ``test_no_questions`` doesn't create any questions, but checks the message:
 "No polls are available." and verifies the ``latest_question_list`` is empty.
-Note that the :class:`django.test.TestCase` class provides some additional
+Note that the :class:`django_orm.test.TestCase` class provides some additional
 assertion methods. In these examples, we use
-:meth:`~django.test.SimpleTestCase.assertContains()` and
-:meth:`~django.test.TransactionTestCase.assertQuerysetEqual()`.
+:meth:`~django_orm.test.SimpleTestCase.assertContains()` and
+:meth:`~django_orm.test.TransactionTestCase.assertQuerysetEqual()`.
 
 In ``test_past_question``, we create a question and verify that it appears in
 the list.
@@ -673,7 +673,7 @@ framework such as Selenium_ to test the way your HTML actually renders in a
 browser. These tools allow you to check not just the behavior of your Django
 code, but also, for example, of your JavaScript. It's quite something to see
 the tests launch a browser, and start interacting with your site, as if a human
-being were driving it! Django includes :class:`~django.test.LiveServerTestCase`
+being were driving it! Django includes :class:`~django_orm.test.LiveServerTestCase`
 to facilitate integration with tools like Selenium.
 
 If you have a complex application, you may want to run tests automatically

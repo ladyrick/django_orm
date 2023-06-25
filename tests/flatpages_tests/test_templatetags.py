@@ -1,8 +1,8 @@
-from django.contrib.auth.models import AnonymousUser, User
-from django.contrib.flatpages.models import FlatPage
-from django.contrib.sites.models import Site
-from django.template import Context, Template, TemplateSyntaxError
-from django.test import TestCase
+from django_orm.contrib.auth.models import AnonymousUser, User
+from django_orm.contrib.flatpages.models import FlatPage
+from django_orm.contrib.sites.models import Site
+from django_orm.template import Context, Template, TemplateSyntaxError
+from django_orm.test import TestCase
 
 
 class FlatpageTemplateTagTests(TestCase):

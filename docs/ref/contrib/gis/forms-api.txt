@@ -2,7 +2,7 @@
 GeoDjango Forms API
 ===================
 
-.. module:: django.contrib.gis.forms
+.. module:: django_orm.contrib.gis.forms
     :synopsis: GeoDjango forms API.
 
 GeoDjango provides some specialized form fields and widgets in order to visually
@@ -82,7 +82,7 @@ Form field classes
 Form widgets
 ============
 
-.. module:: django.contrib.gis.forms.widgets
+.. module:: django_orm.contrib.gis.forms.widgets
     :synopsis: GeoDjango widgets API.
 
 GeoDjango form widgets allow you to display and edit geographic data on a
@@ -127,7 +127,7 @@ from other Django widget attributes.
 You can pass widget attributes in the same manner that for any other Django
 widget. For example::
 
-    from django.contrib.gis import forms
+    from django_orm.contrib.gis import forms
 
     class MyGeoForm(forms.Form):
         point = forms.PointField(widget=

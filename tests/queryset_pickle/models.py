@@ -1,7 +1,7 @@
 import datetime
 
-from django.db import DJANGO_VERSION_PICKLE_KEY, models
-from django.utils.translation import gettext_lazy as _
+from django_orm.db import DJANGO_VERSION_PICKLE_KEY, models
+from django_orm.utils.translation import gettext_lazy as _
 
 
 def standalone_number():

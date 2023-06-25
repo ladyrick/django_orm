@@ -2,7 +2,7 @@
 Cross Site Request Forgery protection
 =====================================
 
-.. module:: django.middleware.csrf
+.. module:: django_orm.middleware.csrf
    :synopsis: Protects against Cross Site Request Forgeries
 
 The CSRF middleware and template tag provides easy-to-use protection against
@@ -31,7 +31,7 @@ The CSRF protection is based on the following things:
    access to.
 
    ``CsrfViewMiddleware`` sends this cookie with the response whenever
-   ``django.middleware.csrf.get_token()`` is called. It can also send it in
+   ``django_orm.middleware.csrf.get_token()`` is called. It can also send it in
    other cases. For security reasons, the value of the secret is changed each
    time a user logs in.
 
@@ -139,7 +139,7 @@ idea, and these vulnerabilities cannot easily be fixed with current browsers.
 Utilities
 =========
 
-.. module:: django.views.decorators.csrf
+.. module:: django_orm.views.decorators.csrf
 
 The examples below assume you are using function-based views. If you
 are working with class-based views, you can refer to :ref:`Decorating
@@ -150,8 +150,8 @@ class-based views<decorating-class-based-views>`.
     This decorator marks a view as being exempt from the protection ensured by
     the middleware. Example::
 
-        from django.http import HttpResponse
-        from django.views.decorators.csrf import csrf_exempt
+        from django_orm.http import HttpResponse
+        from django_orm.views.decorators.csrf import csrf_exempt
 
         @csrf_exempt
         def my_view(request):
@@ -163,8 +163,8 @@ class-based views<decorating-class-based-views>`.
 
     Usage::
 
-        from django.shortcuts import render
-        from django.views.decorators.csrf import csrf_protect
+        from django_orm.shortcuts import render
+        from django_orm.views.decorators.csrf import csrf_protect
 
         @csrf_protect
         def my_view(request):
@@ -182,8 +182,8 @@ class-based views<decorating-class-based-views>`.
 
     Example::
 
-        from django.shortcuts import render
-        from django.views.decorators.csrf import requires_csrf_token
+        from django_orm.shortcuts import render
+        from django_orm.views.decorators.csrf import requires_csrf_token
 
         @requires_csrf_token
         def my_view(request):

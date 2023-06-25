@@ -1,4 +1,4 @@
-from django.forms import CharField, Form, HiddenInput
+from django_orm.forms import CharField, Form, HiddenInput
 
 from .base import WidgetTest
 

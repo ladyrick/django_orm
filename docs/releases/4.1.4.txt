@@ -13,8 +13,8 @@ Bugfixes
   when adding a ``ManyToManyField`` on SQLite (:ticket:`34138`).
 
 * Fixed a bug in Django 4.1 that caused a crash of the sitemap index view with
-  an empty :meth:`Sitemap.items() <django.contrib.sitemaps.Sitemap.items>` and
-  a callable :attr:`~django.contrib.sitemaps.Sitemap.lastmod`
+  an empty :meth:`Sitemap.items() <django_orm.contrib.sitemaps.Sitemap.items>` and
+  a callable :attr:`~django_orm.contrib.sitemaps.Sitemap.lastmod`
   (:ticket:`34088`).
 
 * Fixed a bug in Django 4.1 that caused a crash using ``acreate()``,

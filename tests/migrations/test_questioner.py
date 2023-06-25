@@ -2,14 +2,14 @@ import datetime
 from io import StringIO
 from unittest import mock
 
-from django.core.management.base import OutputWrapper
-from django.db.migrations.questioner import (
+from django_orm.core.management.base import OutputWrapper
+from django_orm.db.migrations.questioner import (
     InteractiveMigrationQuestioner,
     MigrationQuestioner,
 )
-from django.db.models import NOT_PROVIDED
-from django.test import SimpleTestCase
-from django.test.utils import override_settings
+from django_orm.db.models import NOT_PROVIDED
+from django_orm.test import SimpleTestCase
+from django_orm.test.utils import override_settings
 
 
 class QuestionerTests(SimpleTestCase):

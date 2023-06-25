@@ -1,5 +1,5 @@
-from django.db import connection, models
-from django.db.models.functions import Lower
+from django_orm.db import connection, models
+from django_orm.db.models.functions import Lower
 
 
 class People(models.Model):

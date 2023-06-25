@@ -3,11 +3,11 @@ import decimal
 import ipaddress
 import uuid
 
-from django.db import models
-from django.template import Context, Template
-from django.test import SimpleTestCase
-from django.utils.functional import Promise
-from django.utils.translation import gettext_lazy as _
+from django_orm.db import models
+from django_orm.template import Context, Template
+from django_orm.test import SimpleTestCase
+from django_orm.utils.functional import Promise
+from django_orm.utils.translation import gettext_lazy as _
 
 
 class Suit(models.IntegerChoices):

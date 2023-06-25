@@ -30,10 +30,10 @@ bindings <database-installation>` and change the following keys in the
 settings:
 
 * :setting:`ENGINE <DATABASE-ENGINE>` -- Either
-  ``'django.db.backends.sqlite3'``,
-  ``'django.db.backends.postgresql'``,
-  ``'django.db.backends.mysql'``, or
-  ``'django.db.backends.oracle'``. Other backends are :ref:`also available
+  ``'django_orm.db.backends.sqlite3'``,
+  ``'django_orm.db.backends.postgresql'``,
+  ``'django_orm.db.backends.mysql'``, or
+  ``'django_orm.db.backends.oracle'``. Other backends are :ref:`also available
   <third-party-notes>`.
 
 * :setting:`NAME` -- The name of your database. If you're using SQLite, the
@@ -71,17 +71,17 @@ distribute them for use by others in their projects.
 By default, :setting:`INSTALLED_APPS` contains the following apps, all of which
 come with Django:
 
-* :mod:`django.contrib.admin` -- The admin site. You'll use it shortly.
+* :mod:`django_orm.contrib.admin` -- The admin site. You'll use it shortly.
 
-* :mod:`django.contrib.auth` -- An authentication system.
+* :mod:`django_orm.contrib.auth` -- An authentication system.
 
-* :mod:`django.contrib.contenttypes` -- A framework for content types.
+* :mod:`django_orm.contrib.contenttypes` -- A framework for content types.
 
-* :mod:`django.contrib.sessions` -- A session framework.
+* :mod:`django_orm.contrib.sessions` -- A session framework.
 
-* :mod:`django.contrib.messages` -- A messaging framework.
+* :mod:`django_orm.contrib.messages` -- A messaging framework.
 
-* :mod:`django.contrib.staticfiles` -- A framework for managing
+* :mod:`django_orm.contrib.staticfiles` -- A framework for managing
   static files.
 
 These applications are included by default as a convenience for the common case.
@@ -143,7 +143,7 @@ These concepts are represented by Python classes. Edit the
 .. code-block:: python
     :caption: ``polls/models.py``
 
-    from django.db import models
+    from django_orm.db import models
 
 
     class Question(models.Model):
@@ -157,38 +157,38 @@ These concepts are represented by Python classes. Edit the
         votes = models.IntegerField(default=0)
 
 Here, each model is represented by a class that subclasses
-:class:`django.db.models.Model`. Each model has a number of class variables,
+:class:`django_orm.db.models.Model`. Each model has a number of class variables,
 each of which represents a database field in the model.
 
-Each field is represented by an instance of a :class:`~django.db.models.Field`
-class -- e.g., :class:`~django.db.models.CharField` for character fields and
-:class:`~django.db.models.DateTimeField` for datetimes. This tells Django what
+Each field is represented by an instance of a :class:`~django_orm.db.models.Field`
+class -- e.g., :class:`~django_orm.db.models.CharField` for character fields and
+:class:`~django_orm.db.models.DateTimeField` for datetimes. This tells Django what
 type of data each field holds.
 
-The name of each :class:`~django.db.models.Field` instance (e.g.
+The name of each :class:`~django_orm.db.models.Field` instance (e.g.
 ``question_text`` or ``pub_date``) is the field's name, in machine-friendly
 format. You'll use this value in your Python code, and your database will use
 it as the column name.
 
 You can use an optional first positional argument to a
-:class:`~django.db.models.Field` to designate a human-readable name. That's used
+:class:`~django_orm.db.models.Field` to designate a human-readable name. That's used
 in a couple of introspective parts of Django, and it doubles as documentation.
 If this field isn't provided, Django will use the machine-readable name. In this
 example, we've only defined a human-readable name for ``Question.pub_date``.
 For all other fields in this model, the field's machine-readable name will
 suffice as its human-readable name.
 
-Some :class:`~django.db.models.Field` classes have required arguments.
-:class:`~django.db.models.CharField`, for example, requires that you give it a
-:attr:`~django.db.models.CharField.max_length`. That's used not only in the
+Some :class:`~django_orm.db.models.Field` classes have required arguments.
+:class:`~django_orm.db.models.CharField`, for example, requires that you give it a
+:attr:`~django_orm.db.models.CharField.max_length`. That's used not only in the
 database schema, but in validation, as we'll soon see.
 
-A :class:`~django.db.models.Field` can also have various optional arguments; in
-this case, we've set the :attr:`~django.db.models.Field.default` value of
+A :class:`~django_orm.db.models.Field` can also have various optional arguments; in
+this case, we've set the :attr:`~django_orm.db.models.Field.default` value of
 ``votes`` to 0.
 
 Finally, note a relationship is defined, using
-:class:`~django.db.models.ForeignKey`. That tells Django each ``Choice`` is
+:class:`~django_orm.db.models.ForeignKey`. That tells Django each ``Choice`` is
 related to a single ``Question``. Django supports all the common database
 relationships: many-to-one, many-to-many, and one-to-one.
 
@@ -221,12 +221,12 @@ this:
 
     INSTALLED_APPS = [
         'polls.apps.PollsConfig',
-        'django.contrib.admin',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
+        'django_orm.contrib.admin',
+        'django_orm.contrib.auth',
+        'django_orm.contrib.contenttypes',
+        'django_orm.contrib.sessions',
+        'django_orm.contrib.messages',
+        'django_orm.contrib.staticfiles',
     ]
 
 Now Django knows to include the ``polls`` app. Let's run another command:
@@ -364,7 +364,7 @@ because you'll commit migrations to your version control system and ship them
 with your app; they not only make your development easier, they're also
 usable by other developers and in production.
 
-Read the :doc:`django-admin documentation </ref/django-admin>` for full
+Read the :doc:`django_orm-admin documentation </ref/django_orm-admin>` for full
 information on what the ``manage.py`` utility can do.
 
 Playing with the API
@@ -393,7 +393,7 @@ Once you're in the shell, explore the :doc:`database API </topics/db/queries>`::
     # Support for time zones is enabled in the default settings file, so
     # Django expects a datetime with tzinfo for pub_date. Use timezone.now()
     # instead of datetime.datetime.now() and it will do the right thing.
-    >>> from django.utils import timezone
+    >>> from django_orm.utils import timezone
     >>> q = Question(question_text="What's new?", pub_date=timezone.now())
 
     # Save the object into the database. You have to call save() explicitly.
@@ -420,13 +420,13 @@ Once you're in the shell, explore the :doc:`database API </topics/db/queries>`::
 Wait a minute. ``<Question: Question object (1)>`` isn't a helpful
 representation of this object. Let's fix that by editing the ``Question`` model
 (in the ``polls/models.py`` file) and adding a
-:meth:`~django.db.models.Model.__str__` method to both ``Question`` and
+:meth:`~django_orm.db.models.Model.__str__` method to both ``Question`` and
 ``Choice``:
 
 .. code-block:: python
     :caption: ``polls/models.py``
 
-    from django.db import models
+    from django_orm.db import models
 
     class Question(models.Model):
         # ...
@@ -438,7 +438,7 @@ representation of this object. Let's fix that by editing the ``Question`` model
         def __str__(self):
             return self.choice_text
 
-It's important to add :meth:`~django.db.models.Model.__str__` methods to your
+It's important to add :meth:`~django_orm.db.models.Model.__str__` methods to your
 models, not only for your own convenience when dealing with the interactive
 prompt, but also because objects' representations are used throughout Django's
 automatically-generated admin.
@@ -452,8 +452,8 @@ Let's also add a custom method to this model:
 
     import datetime
 
-    from django.db import models
-    from django.utils import timezone
+    from django_orm.db import models
+    from django_orm.utils import timezone
 
 
     class Question(models.Model):
@@ -461,9 +461,9 @@ Let's also add a custom method to this model:
         def was_published_recently(self):
             return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
-Note the addition of ``import datetime`` and ``from django.utils import
+Note the addition of ``import datetime`` and ``from django_orm.utils import
 timezone``, to reference Python's standard :mod:`datetime` module and Django's
-time-zone-related utilities in :mod:`django.utils.timezone`, respectively. If
+time-zone-related utilities in :mod:`django_orm.utils.timezone`, respectively. If
 you aren't familiar with time zone handling in Python, you can learn more in
 the :doc:`time zone support docs </topics/i18n/timezones>`.
 
@@ -484,7 +484,7 @@ Save these changes and start a new Python interactive shell by running
     <QuerySet [<Question: What's up?>]>
 
     # Get the question that was published this year.
-    >>> from django.utils import timezone
+    >>> from django_orm.utils import timezone
     >>> current_year = timezone.now().year
     >>> Question.objects.get(pub_date__year=current_year)
     <Question: What's up?>
@@ -633,7 +633,7 @@ You should see the Django admin index page:
    :alt: Django admin index page
 
 You should see a few types of editable content: groups and users. They are
-provided by :mod:`django.contrib.auth`, the authentication framework shipped
+provided by :mod:`django_orm.contrib.auth`, the authentication framework shipped
 by Django.
 
 Make the poll app modifiable in the admin
@@ -648,7 +648,7 @@ edit it to look like this:
 .. code-block:: python
     :caption: ``polls/admin.py``
 
-    from django.contrib import admin
+    from django_orm.contrib import admin
 
     from .models import Question
 
@@ -679,12 +679,12 @@ Things to note here:
 
 * The form is automatically generated from the ``Question`` model.
 
-* The different model field types (:class:`~django.db.models.DateTimeField`,
-  :class:`~django.db.models.CharField`) correspond to the appropriate HTML
+* The different model field types (:class:`~django_orm.db.models.DateTimeField`,
+  :class:`~django_orm.db.models.CharField`) correspond to the appropriate HTML
   input widget. Each type of field knows how to display itself in the Django
   admin.
 
-* Each :class:`~django.db.models.DateTimeField` gets free JavaScript
+* Each :class:`~django_orm.db.models.DateTimeField` gets free JavaScript
   shortcuts. Dates get a "Today" shortcut and calendar popup, and times get
   a "Now" shortcut and a convenient popup that lists commonly entered times.
 

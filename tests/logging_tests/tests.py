@@ -4,15 +4,15 @@ from io import StringIO
 
 from admin_scripts.tests import AdminScriptTestCase
 
-from django.conf import settings
-from django.core import mail
-from django.core.exceptions import DisallowedHost, PermissionDenied, SuspiciousOperation
-from django.core.files.temp import NamedTemporaryFile
-from django.core.management import color
-from django.http.multipartparser import MultiPartParserError
-from django.test import RequestFactory, SimpleTestCase, override_settings
-from django.test.utils import LoggingCaptureMixin
-from django.utils.log import (
+from django_orm.conf import settings
+from django_orm.core import mail
+from django_orm.core.exceptions import DisallowedHost, PermissionDenied, SuspiciousOperation
+from django_orm.core.files.temp import NamedTemporaryFile
+from django_orm.core.management import color
+from django_orm.http.multipartparser import MultiPartParserError
+from django_orm.test import RequestFactory, SimpleTestCase, override_settings
+from django_orm.test.utils import LoggingCaptureMixin
+from django_orm.utils.log import (
     DEFAULT_LOGGING,
     AdminEmailHandler,
     CallbackFilter,
@@ -20,7 +20,7 @@ from django.utils.log import (
     RequireDebugTrue,
     ServerFormatter,
 )
-from django.views.debug import ExceptionReporter
+from django_orm.views.debug import ExceptionReporter
 
 from . import views
 from .logconfig import MyEmailBackend
@@ -65,7 +65,7 @@ class DefaultLoggingTests(
 ):
     def test_django_logger(self):
         """
-        The 'django' base logger only output anything when DEBUG=True.
+        The 'django_orm' base logger only output anything when DEBUG=True.
         """
         self.logger.error("Hey, this is an error.")
         self.assertEqual(self.logger_output.getvalue(), "")
@@ -92,7 +92,7 @@ class DefaultLoggingTests(
 
 class LoggingAssertionMixin:
     def assertLogsRequest(
-        self, url, level, msg, status_code, logger="django.request", exc_class=None
+        self, url, level, msg, status_code, logger="django_orm.request", exc_class=None
     ):
         with self.assertLogs(logger, level) as cm:
             try:
@@ -189,8 +189,8 @@ class HandlerLoggingTests(
     USE_I18N=True,
     LANGUAGES=[("en", "English")],
     MIDDLEWARE=[
-        "django.middleware.locale.LocaleMiddleware",
-        "django.middleware.common.CommonMiddleware",
+        "django_orm.middleware.locale.LocaleMiddleware",
+        "django_orm.middleware.common.CommonMiddleware",
     ],
     ROOT_URLCONF="logging_tests.urls_i18n",
 )
@@ -232,7 +232,7 @@ class CallbackFilterTest(SimpleTestCase):
 
 
 class AdminEmailHandlerTest(SimpleTestCase):
-    logger = logging.getLogger("django")
+    logger = logging.getLogger("django_orm")
     request_factory = RequestFactory()
 
     def get_admin_email_handler(self, logger):
@@ -506,11 +506,11 @@ dictConfig.called = False
 
 class SetupConfigureLogging(SimpleTestCase):
     """
-    Calling django.setup() initializes the logging configuration.
+    Calling django_orm.setup() initializes the logging configuration.
     """
 
     def test_configure_initializes_logging(self):
-        from django import setup
+        from django_orm import setup
 
         try:
             with override_settings(
@@ -531,7 +531,7 @@ class SecurityLoggerTest(LoggingAssertionMixin, SimpleTestCase):
             level="ERROR",
             msg="dubious",
             status_code=400,
-            logger="django.security.SuspiciousOperation",
+            logger="django_orm.security.SuspiciousOperation",
             exc_class=SuspiciousOperation,
         )
 
@@ -541,7 +541,7 @@ class SecurityLoggerTest(LoggingAssertionMixin, SimpleTestCase):
             level="ERROR",
             msg="dubious",
             status_code=400,
-            logger="django.security.DisallowedHost",
+            logger="django_orm.security.DisallowedHost",
             exc_class=DisallowedHost,
         )
 
@@ -625,7 +625,7 @@ class LogFormattersTests(SimpleTestCase):
     def test_server_formatter_default_format(self):
         server_time = "2016-09-25 10:20:30"
         log_msg = "log message"
-        logger = logging.getLogger("django.server")
+        logger = logging.getLogger("django_orm.server")
 
         @contextmanager
         def patch_django_server_logger():

@@ -1,11 +1,11 @@
-from django.core.exceptions import ValidationError
-from django.forms import FloatField, NumberInput
-from django.test import SimpleTestCase
-from django.test.selenium import SeleniumTestCase
-from django.test.utils import ignore_warnings, override_settings
-from django.urls import reverse
-from django.utils import formats, translation
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.core.exceptions import ValidationError
+from django_orm.forms import FloatField, NumberInput
+from django_orm.test import SimpleTestCase
+from django_orm.test.selenium import SeleniumTestCase
+from django_orm.test.utils import ignore_warnings, override_settings
+from django_orm.urls import reverse
+from django_orm.utils import formats, translation
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from . import FormFieldAssertionsMixin
 

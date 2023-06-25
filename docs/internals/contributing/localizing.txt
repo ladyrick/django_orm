@@ -20,7 +20,7 @@ translating or adding a language that isn't yet translated, here's what to do:
 
 * Introduce yourself on the `Django internationalization forum`_.
 
-* Make sure you read the notes about :ref:`specialties-of-django-i18n`.
+* Make sure you read the notes about :ref:`specialties-of-django_orm-i18n`.
 
 * Sign up at `Transifex`_ and visit the `Django project page`_.
 
@@ -68,7 +68,7 @@ Django source tree, as for any code change:
   ``Translations``, and attach the patch to it.
 
 .. _Transifex: https://www.transifex.com/
-.. _Django project page: https://www.transifex.com/django/django/
+.. _Django project page: https://www.transifex.com/django_orm/django_orm/
 .. _Django internationalization forum: https://forum.djangoproject.com/c/internals/i18n/14
 .. _Transifex User Guide: https://docs.transifex.com/
 
@@ -79,12 +79,12 @@ Documentation
 
 There is also an opportunity to translate the documentation, though this is a
 huge undertaking to complete entirely (you have been warned!). We use the same
-`Transifex tool <https://www.transifex.com/django/django-docs/>`_. The
+`Transifex tool <https://www.transifex.com/django_orm/django_orm-docs/>`_. The
 translations will appear at ``https://docs.djangoproject.com/<language_code>/``
 when at least the ``docs/intro/*`` files are fully translated in your language.
 
 Once translations are published, updated versions from Transifex will be
-irregularly ported to the `django/django-docs-translations
-<https://github.com/django/django-docs-translations>`_ repository and to the
+irregularly ported to the `django_orm/django_orm-docs-translations
+<https://github.com/django_orm/django_orm-docs-translations>`_ repository and to the
 documentation website. Only translations for the latest stable Django release
 are updated.

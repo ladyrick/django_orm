@@ -10,7 +10,7 @@ CVE-2018-6188: Information leakage in ``AuthenticationForm``
 ============================================================
 
 A regression in Django 1.11.8 made
-:class:`~django.contrib.auth.forms.AuthenticationForm` run its
+:class:`~django_orm.contrib.auth.forms.AuthenticationForm` run its
 ``confirm_login_allowed()`` method even if an incorrect password is entered.
 This can leak information about a user, depending on what messages
 ``confirm_login_allowed()`` raises. If ``confirm_login_allowed()`` isn't

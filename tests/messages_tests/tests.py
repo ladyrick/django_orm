@@ -1,9 +1,9 @@
 from unittest import mock
 
-from django.contrib.messages import constants
-from django.contrib.messages.storage import base
-from django.contrib.messages.storage.base import Message
-from django.test import SimpleTestCase, override_settings
+from django_orm.contrib.messages import constants
+from django_orm.contrib.messages.storage import base
+from django_orm.contrib.messages.storage.base import Message
+from django_orm.test import SimpleTestCase, override_settings
 
 
 class MessageTests(SimpleTestCase):

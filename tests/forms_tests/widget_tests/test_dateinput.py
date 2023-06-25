@@ -1,7 +1,7 @@
 from datetime import date
 
-from django.forms import CharField, DateInput, Form
-from django.utils import translation
+from django_orm.forms import CharField, DateInput, Form
+from django_orm.utils import translation
 
 from .base import WidgetTest
 

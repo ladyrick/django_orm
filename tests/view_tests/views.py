@@ -4,18 +4,18 @@ import logging
 import sys
 from pathlib import Path
 
-from django.core.exceptions import BadRequest, PermissionDenied, SuspiciousOperation
-from django.http import Http404, HttpResponse, JsonResponse
-from django.shortcuts import render
-from django.template import Context, Template, TemplateDoesNotExist
-from django.urls import get_resolver
-from django.views import View
-from django.views.debug import (
+from django_orm.core.exceptions import BadRequest, PermissionDenied, SuspiciousOperation
+from django_orm.http import Http404, HttpResponse, JsonResponse
+from django_orm.shortcuts import render
+from django_orm.template import Context, Template, TemplateDoesNotExist
+from django_orm.urls import get_resolver
+from django_orm.views import View
+from django_orm.views.debug import (
     ExceptionReporter,
     SafeExceptionReporterFilter,
     technical_500_response,
 )
-from django.views.decorators.debug import sensitive_post_parameters, sensitive_variables
+from django_orm.views.decorators.debug import sensitive_post_parameters, sensitive_variables
 
 TEMPLATES_PATH = Path(__file__).resolve().parent / "templates"
 
@@ -124,7 +124,7 @@ def render_no_template(request):
 
 
 def send_log(request, exc_info):
-    logger = logging.getLogger("django")
+    logger = logging.getLogger("django_orm")
     # The default logging config has a logging filter to ensure admin emails are
     # only sent with DEBUG=False, but since someone might choose to remove that
     # filter, we still want to be able to test the behavior of error emails

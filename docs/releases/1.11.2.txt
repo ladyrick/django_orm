@@ -24,12 +24,12 @@ Bugfixes
   ``GDALException`` if ``gdal`` isn't installed, to allow third-party apps to
   catch that exception (:ticket:`28178`).
 
-* Fixed ``django.utils.http.is_safe_url()`` crash on invalid IPv6 URLs
+* Fixed ``django_orm.utils.http.is_safe_url()`` crash on invalid IPv6 URLs
   (:ticket:`28142`).
 
 * Fixed regression causing pickling of model fields to crash (:ticket:`28188`).
 
-* Fixed ``django.contrib.auth.authenticate()`` when multiple authentication
+* Fixed ``django_orm.contrib.auth.authenticate()`` when multiple authentication
   backends don't accept a positional ``request`` argument (:ticket:`28207`).
 
 * Fixed introspection of index field ordering on PostgreSQL (:ticket:`28197`).
@@ -39,7 +39,7 @@ Bugfixes
   (:ticket:`28210`).
 
 * Allowed ``DjangoJSONEncoder`` to serialize
-  ``django.utils.deprecation.CallableBool`` (:ticket:`28230`).
+  ``django_orm.utils.deprecation.CallableBool`` (:ticket:`28230`).
 
 * Relaxed the validation added in Django 1.11 of the fields in the ``defaults``
   argument of ``QuerySet.get_or_create()`` and ``update_or_create()`` to

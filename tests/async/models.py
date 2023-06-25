@@ -1,5 +1,5 @@
-from django.db import models
-from django.utils import timezone
+from django_orm.db import models
+from django_orm.utils import timezone
 
 
 class RelatedModel(models.Model):

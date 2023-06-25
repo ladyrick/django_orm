@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from django.forms import CharField, DateTimeInput, Form
-from django.test import ignore_warnings
-from django.utils import translation
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.forms import CharField, DateTimeInput, Form
+from django_orm.test import ignore_warnings
+from django_orm.utils import translation
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from .base import WidgetTest
 

@@ -116,7 +116,7 @@ database queries, Django will need permission to create a test database.
 .. _cx_Oracle: https://oracle.github.io/python-cx_Oracle/
 .. _Oracle: https://www.oracle.com/
 
-.. _install-django-code:
+.. _install-django_orm-code:
 
 Install the Django code
 =======================
@@ -191,9 +191,9 @@ latest bug fixes and improvements, follow these instructions:
 
    .. console::
 
-        $ git clone https://github.com/django/django.git
+        $ git clone https://github.com/django_orm/django_orm.git
 
-   This will create a directory ``django`` in your current directory.
+   This will create a directory ``django_orm`` in your current directory.
 
 #. Make sure that the Python interpreter can load Django's code. The most
    convenient way to do this is to use a virtual environment and pip_. The
@@ -205,14 +205,14 @@ latest bug fixes and improvements, follow these instructions:
 
    .. console::
 
-        $ python -m pip install -e django/
+        $ python -m pip install -e django_orm/
 
    This will make Django's code importable, and will also make the
-   ``django-admin`` utility command available. In other words, you're all
+   ``django_orm-admin`` utility command available. In other words, you're all
    set!
 
 When you want to update your copy of the Django source code, run the command
-``git pull`` from within the ``django`` directory. When you do this, Git will
+``git pull`` from within the ``django_orm`` directory. When you do this, Git will
 download any changes.
 
 .. _Git: https://git-scm.com/

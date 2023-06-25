@@ -1,6 +1,6 @@
 import binascii
 
-from django.contrib.gis.geos import (
+from django_orm.contrib.gis.geos import (
     GEOSGeometry,
     Point,
     Polygon,
@@ -9,8 +9,8 @@ from django.contrib.gis.geos import (
     WKTReader,
     WKTWriter,
 )
-from django.contrib.gis.geos.libgeos import geos_version_tuple
-from django.test import SimpleTestCase
+from django_orm.contrib.gis.geos.libgeos import geos_version_tuple
+from django_orm.test import SimpleTestCase
 
 
 class GEOSIOTest(SimpleTestCase):

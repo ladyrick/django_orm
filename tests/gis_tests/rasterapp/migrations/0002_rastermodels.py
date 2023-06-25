@@ -1,6 +1,6 @@
-from django.contrib.gis.db import models
-from django.db import migrations
-from django.db.models import deletion
+from django_orm.contrib.gis.db import models
+from django_orm.db import migrations
+from django_orm.db.models import deletion
 
 
 class Migration(migrations.Migration):

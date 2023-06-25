@@ -1,6 +1,6 @@
-from django import forms
-from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django_orm import forms
+from django_orm.core.exceptions import ValidationError
+from django_orm.test import TestCase
 
 from .models import UUIDPK
 

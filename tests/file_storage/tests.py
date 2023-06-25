@@ -11,24 +11,24 @@ from io import StringIO
 from pathlib import Path
 from urllib.request import urlopen
 
-from django.core.cache import cache
-from django.core.exceptions import SuspiciousFileOperation
-from django.core.files.base import ContentFile, File
-from django.core.files.storage import FileSystemStorage
-from django.core.files.storage import Storage as BaseStorage
-from django.core.files.storage import default_storage, get_storage_class
-from django.core.files.uploadedfile import (
+from django_orm.core.cache import cache
+from django_orm.core.exceptions import SuspiciousFileOperation
+from django_orm.core.files.base import ContentFile, File
+from django_orm.core.files.storage import FileSystemStorage
+from django_orm.core.files.storage import Storage as BaseStorage
+from django_orm.core.files.storage import default_storage, get_storage_class
+from django_orm.core.files.uploadedfile import (
     InMemoryUploadedFile,
     SimpleUploadedFile,
     TemporaryUploadedFile,
 )
-from django.db.models import FileField
-from django.db.models.fields.files import FileDescriptor
-from django.test import LiveServerTestCase, SimpleTestCase, TestCase, override_settings
-from django.test.utils import requires_tz_support
-from django.urls import NoReverseMatch, reverse_lazy
-from django.utils import timezone
-from django.utils._os import symlinks_supported
+from django_orm.db.models import FileField
+from django_orm.db.models.fields.files import FileDescriptor
+from django_orm.test import LiveServerTestCase, SimpleTestCase, TestCase, override_settings
+from django_orm.test.utils import requires_tz_support
+from django_orm.urls import NoReverseMatch, reverse_lazy
+from django_orm.utils import timezone
+from django_orm.utils._os import symlinks_supported
 
 from .models import Storage, callable_storage, temp_storage, temp_storage_location
 
@@ -41,7 +41,7 @@ class GetStorageClassTests(SimpleTestCase):
         get_storage_class returns the class for a storage backend name/path.
         """
         self.assertEqual(
-            get_storage_class("django.core.files.storage.FileSystemStorage"),
+            get_storage_class("django_orm.core.files.storage.FileSystemStorage"),
             FileSystemStorage,
         )
 
@@ -57,24 +57,24 @@ class GetStorageClassTests(SimpleTestCase):
         get_storage_class raises an error if the requested class don't exist.
         """
         with self.assertRaises(ImportError):
-            get_storage_class("django.core.files.storage.NonexistentStorage")
+            get_storage_class("django_orm.core.files.storage.NonexistentStorage")
 
     def test_get_nonexistent_storage_module(self):
         """
         get_storage_class raises an error if the requested module don't exist.
         """
         with self.assertRaisesMessage(
-            ImportError, "No module named 'django.core.files.nonexistent_storage'"
+            ImportError, "No module named 'django_orm.core.files.nonexistent_storage'"
         ):
             get_storage_class(
-                "django.core.files.nonexistent_storage.NonexistentStorage"
+                "django_orm.core.files.nonexistent_storage.NonexistentStorage"
             )
 
 
 class FileSystemStorageTests(unittest.TestCase):
     def test_deconstruction(self):
         path, args, kwargs = temp_storage.deconstruct()
-        self.assertEqual(path, "django.core.files.storage.FileSystemStorage")
+        self.assertEqual(path, "django_orm.core.files.storage.FileSystemStorage")
         self.assertEqual(args, ())
         self.assertEqual(kwargs, {"location": temp_storage_location})
 
@@ -956,7 +956,7 @@ class FieldCallableFileStorageTests(SimpleTestCase):
 
         msg = (
             "FileField.storage must be a subclass/instance of "
-            "django.core.files.storage.Storage"
+            "django_orm.core.files.storage.Storage"
         )
         for invalid_type in (NotStorage, str, list, set, tuple):
             with self.subTest(invalid_type=invalid_type):

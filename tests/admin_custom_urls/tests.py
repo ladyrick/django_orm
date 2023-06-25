@@ -1,9 +1,9 @@
-from django.contrib.admin.utils import quote
-from django.contrib.admin.views.main import IS_POPUP_VAR
-from django.contrib.auth.models import User
-from django.template.response import TemplateResponse
-from django.test import TestCase, override_settings
-from django.urls import reverse
+from django_orm.contrib.admin.utils import quote
+from django_orm.contrib.admin.views.main import IS_POPUP_VAR
+from django_orm.contrib.auth.models import User
+from django_orm.template.response import TemplateResponse
+from django_orm.test import TestCase, override_settings
+from django_orm.urls import reverse
 
 from .models import Action, Car, Person
 

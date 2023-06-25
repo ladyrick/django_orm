@@ -14,11 +14,11 @@ Bugfixes
   (:ticket:`30673`).
 
 * Fixed crash of ``KeyTransform()`` for
-  ``django.contrib.postgres.fields.JSONField`` and
-  :class:`~django.contrib.postgres.fields.HStoreField` when using on
+  ``django_orm.contrib.postgres.fields.JSONField`` and
+  :class:`~django_orm.contrib.postgres.fields.HStoreField` when using on
   expressions with params (:ticket:`30672`).
 
 * Fixed a regression in Django 2.2 where
-  :attr:`ModelAdmin.list_filter <django.contrib.admin.ModelAdmin.list_filter>`
+  :attr:`ModelAdmin.list_filter <django_orm.contrib.admin.ModelAdmin.list_filter>`
   choices to foreign objects don't respect a model's ``Meta.ordering``
   (:ticket:`30449`).

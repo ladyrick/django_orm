@@ -1,11 +1,11 @@
 import copy
 import json
 
-from django.core.exceptions import ValidationError
-from django.forms.utils import ErrorDict, ErrorList, flatatt
-from django.test import SimpleTestCase
-from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy
+from django_orm.core.exceptions import ValidationError
+from django_orm.forms.utils import ErrorDict, ErrorList, flatatt
+from django_orm.test import SimpleTestCase
+from django_orm.utils.safestring import mark_safe
+from django_orm.utils.translation import gettext_lazy
 
 
 class FormsUtilsTestCase(SimpleTestCase):

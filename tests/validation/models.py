@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from django.core.exceptions import ValidationError
-from django.db import models
-from django.db.models.functions import Lower
+from django_orm.core.exceptions import ValidationError
+from django_orm.db import models
+from django_orm.db.models.functions import Lower
 
 
 def validate_answer_to_universe(value):

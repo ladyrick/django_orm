@@ -7,13 +7,13 @@ Custom backends
 
 Here's how to implement a custom template backend in order to use another
 template system. A template backend is a class that inherits
-``django.template.backends.base.BaseEngine``. It must implement
+``django_orm.template.backends.base.BaseEngine``. It must implement
 ``get_template()`` and optionally ``from_string()``. Here's an example for a
 fictional ``foobar`` template library::
 
-    from django.template import TemplateDoesNotExist, TemplateSyntaxError
-    from django.template.backends.base import BaseEngine
-    from django.template.backends.utils import csrf_input_lazy, csrf_token_lazy
+    from django_orm.template import TemplateDoesNotExist, TemplateSyntaxError
+    from django_orm.template.backends.base import BaseEngine
+    from django_orm.template.backends.utils import csrf_input_lazy, csrf_token_lazy
 
     import foobar
 
@@ -76,7 +76,7 @@ traceback information that appears to users. The following hooks are available:
 Template postmortem
 ~~~~~~~~~~~~~~~~~~~
 
-The postmortem appears when :exc:`~django.template.TemplateDoesNotExist` is
+The postmortem appears when :exc:`~django_orm.template.TemplateDoesNotExist` is
 raised. It lists the template engines and loaders that were used when trying to
 find a given template. For example, if two Django engines are configured, the
 postmortem will appear like:
@@ -84,7 +84,7 @@ postmortem will appear like:
 .. image:: _images/postmortem.png
 
 Custom engines can populate the postmortem by passing the ``backend`` and
-``tried`` arguments when raising :exc:`~django.template.TemplateDoesNotExist`.
+``tried`` arguments when raising :exc:`~django_orm.template.TemplateDoesNotExist`.
 Backends that use the postmortem :ref:`should specify an origin
 <template-origin-api>` on the template object.
 
@@ -153,7 +153,7 @@ Given the above template error, ``template_debug`` would look like::
 Origin API and 3rd-party integration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Django templates have an :class:`~django.template.base.Origin` object available
+Django templates have an :class:`~django_orm.template.base.Origin` object available
 through the ``template.origin`` attribute. This enables debug information to be
 displayed in the :ref:`template postmortem <template-postmortem>`, as well as
 in 3rd-party libraries, like the `Django Debug Toolbar`_.
@@ -167,7 +167,7 @@ creating an object that specifies the following attributes:
   template loading methods.
 
 * ``'loader_name'``: An optional string identifying the function or class used
-  to load the template, e.g. ``django.template.loaders.filesystem.Loader``.
+  to load the template, e.g. ``django_orm.template.loaders.filesystem.Loader``.
 
-.. _DEP 182: https://github.com/django/deps/blob/main/final/0182-multiple-template-engines.rst
-.. _Django Debug Toolbar: https://github.com/jazzband/django-debug-toolbar/
+.. _DEP 182: https://github.com/django_orm/deps/blob/main/final/0182-multiple-template-engines.rst
+.. _Django Debug Toolbar: https://github.com/jazzband/django_orm-debug-toolbar/

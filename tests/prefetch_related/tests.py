@@ -1,14 +1,14 @@
 from unittest import mock
 
-from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ObjectDoesNotExist
-from django.db import connection
-from django.db.models import Prefetch, QuerySet, prefetch_related_objects
-from django.db.models.query import get_prefetcher
-from django.db.models.sql import Query
-from django.test import TestCase, override_settings
-from django.test.utils import CaptureQueriesContext, ignore_warnings
-from django.utils.deprecation import RemovedInDjango50Warning
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.core.exceptions import ObjectDoesNotExist
+from django_orm.db import connection
+from django_orm.db.models import Prefetch, QuerySet, prefetch_related_objects
+from django_orm.db.models.query import get_prefetcher
+from django_orm.db.models.sql import Query
+from django_orm.test import TestCase, override_settings
+from django_orm.test.utils import CaptureQueriesContext, ignore_warnings
+from django_orm.utils.deprecation import RemovedInDjango50Warning
 
 from .models import (
     Article,
@@ -707,7 +707,7 @@ class CustomPrefetchTests(TestCase):
 
     def test_generic_rel(self):
         bookmark = Bookmark.objects.create(url="http://www.djangoproject.com/")
-        TaggedItem.objects.create(content_object=bookmark, tag="django")
+        TaggedItem.objects.create(content_object=bookmark, tag="django_orm")
         TaggedItem.objects.create(
             content_object=bookmark, favorite=bookmark, tag="python"
         )
@@ -1173,7 +1173,7 @@ class GenericRelationTests(TestCase):
 
     def test_generic_relation(self):
         bookmark = Bookmark.objects.create(url="http://www.djangoproject.com/")
-        TaggedItem.objects.create(content_object=bookmark, tag="django")
+        TaggedItem.objects.create(content_object=bookmark, tag="django_orm")
         TaggedItem.objects.create(content_object=bookmark, tag="python")
 
         with self.assertNumQueries(2):
@@ -1182,11 +1182,11 @@ class GenericRelationTests(TestCase):
                 for b in Bookmark.objects.prefetch_related("tags")
                 for t in b.tags.all()
             ]
-            self.assertEqual(sorted(tags), ["django", "python"])
+            self.assertEqual(sorted(tags), ["django_orm", "python"])
 
     def test_charfield_GFK(self):
         b = Bookmark.objects.create(url="http://www.djangoproject.com/")
-        TaggedItem.objects.create(content_object=b, tag="django")
+        TaggedItem.objects.create(content_object=b, tag="django_orm")
         TaggedItem.objects.create(content_object=b, favorite=b, tag="python")
 
         with self.assertNumQueries(3):
@@ -1194,18 +1194,18 @@ class GenericRelationTests(TestCase):
                 "tags", "favorite_tags"
             )[0]
             self.assertEqual(
-                sorted(i.tag for i in bookmark.tags.all()), ["django", "python"]
+                sorted(i.tag for i in bookmark.tags.all()), ["django_orm", "python"]
             )
             self.assertEqual([i.tag for i in bookmark.favorite_tags.all()], ["python"])
 
     def test_custom_queryset(self):
         bookmark = Bookmark.objects.create(url="http://www.djangoproject.com/")
-        django_tag = TaggedItem.objects.create(content_object=bookmark, tag="django")
+        django_tag = TaggedItem.objects.create(content_object=bookmark, tag="django_orm")
         TaggedItem.objects.create(content_object=bookmark, tag="python")
 
         with self.assertNumQueries(2):
             bookmark = Bookmark.objects.prefetch_related(
-                Prefetch("tags", TaggedItem.objects.filter(tag="django")),
+                Prefetch("tags", TaggedItem.objects.filter(tag="django_orm")),
             ).get()
 
         with self.assertNumQueries(0):

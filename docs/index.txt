@@ -210,8 +210,8 @@ testing of Django applications:
 * **Exceptions:**
   :doc:`Overview <ref/exceptions>`
 
-* **django-admin and manage.py:**
-  :doc:`Overview <ref/django-admin>` |
+* **django_orm-admin and manage.py:**
+  :doc:`Overview <ref/django_orm-admin>` |
   :doc:`Adding custom commands <howto/custom-management-commands>`
 
 * **Testing:**

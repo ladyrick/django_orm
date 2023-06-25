@@ -1,11 +1,11 @@
 import unittest
 
-from django.contrib.admindocs.utils import (
+from django_orm.contrib.admindocs.utils import (
     docutils_is_available,
     parse_docstring,
     parse_rst,
 )
-from django.test.utils import captured_stderr
+from django_orm.test.utils import captured_stderr
 
 from .tests import AdminDocsSimpleTestCase
 

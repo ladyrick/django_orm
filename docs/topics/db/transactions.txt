@@ -2,7 +2,7 @@
 Database transactions
 =====================
 
-.. module:: django.db.transaction
+.. module:: django_orm.db.transaction
 
 Django gives you a few ways to control how database transactions are managed.
 
@@ -21,7 +21,7 @@ integrity of ORM operations that require multiple queries, especially
 :ref:`delete() <topics-db-queries-delete>` and :ref:`update()
 <topics-db-queries-update>` queries.
 
-Django's :class:`~django.test.TestCase` class also wraps each test in a
+Django's :class:`~django_orm.test.TestCase` class also wraps each test in a
 transaction for performance reasons.
 
 .. _tying-transactions-to-http-requests:
@@ -52,7 +52,7 @@ either all or none of the changes will be committed.
 
 .. admonition:: Per-request transactions and streaming responses
 
-    When a view returns a :class:`~django.http.StreamingHttpResponse`, reading
+    When a view returns a :class:`~django_orm.http.StreamingHttpResponse`, reading
     the contents of the response will often execute code to generate the
     content. Since the view has already returned, such code runs outside of
     the transaction.
@@ -76,7 +76,7 @@ still possible to prevent views from running in a transaction.
     This decorator will negate the effect of :setting:`ATOMIC_REQUESTS
     <DATABASE-ATOMIC_REQUESTS>` for a given view::
 
-        from django.db import transaction
+        from django_orm.db import transaction
 
         @transaction.non_atomic_requests
         def my_view(request):
@@ -113,7 +113,7 @@ Django provides a single API to control database transactions.
 
     ``atomic`` is usable both as a :py:term:`decorator`::
 
-        from django.db import transaction
+        from django_orm.db import transaction
 
         @transaction.atomic
         def viewfunc(request):
@@ -122,7 +122,7 @@ Django provides a single API to control database transactions.
 
     and as a :py:term:`context manager`::
 
-        from django.db import transaction
+        from django_orm.db import transaction
 
         def viewfunc(request):
             # This code executes in autocommit mode (Django's default).
@@ -135,7 +135,7 @@ Django provides a single API to control database transactions.
     Wrapping ``atomic`` in a try/except block allows for natural handling of
     integrity errors::
 
-        from django.db import IntegrityError, transaction
+        from django_orm.db import IntegrityError, transaction
 
         @transaction.atomic
         def viewfunc(request):
@@ -165,12 +165,12 @@ Django provides a single API to control database transactions.
         you may hide from Django the fact that a problem has happened. This
         can result in unexpected behavior.
 
-        This is mostly a concern for :exc:`~django.db.DatabaseError` and its
-        subclasses such as :exc:`~django.db.IntegrityError`. After such an
+        This is mostly a concern for :exc:`~django_orm.db.DatabaseError` and its
+        subclasses such as :exc:`~django_orm.db.IntegrityError`. After such an
         error, the transaction is broken and Django will perform a rollback at
         the end of the ``atomic`` block. If you attempt to run database
         queries before the rollback happens, Django will raise a
-        :class:`~django.db.transaction.TransactionManagementError`. You may
+        :class:`~django_orm.db.transaction.TransactionManagementError`. You may
         also encounter this behavior when an ORM-related signal handler raises
         an exception.
 
@@ -192,7 +192,7 @@ Django provides a single API to control database transactions.
         ensures that the ``if obj.active`` check at the end uses the correct
         value if updating ``active`` to ``True`` fails in the transaction::
 
-            from django.db import DatabaseError, transaction
+            from django_orm.db import DatabaseError, transaction
 
             obj = MyModel(active=False)
             obj.active = True
@@ -241,7 +241,7 @@ Django provides a single API to control database transactions.
 .. versionchanged:: 4.1
 
     In older versions, the durability check was disabled in
-    :class:`django.test.TestCase`.
+    :class:`django_orm.test.TestCase`.
 
 Autocommit
 ==========
@@ -301,7 +301,7 @@ that should be executed after a transaction is successfully committed:
 
 Pass any function (that takes no arguments) to :func:`on_commit`::
 
-    from django.db import transaction
+    from django_orm.db import transaction
 
     def do_something():
         pass  # send a mail, invalidate a cache, fire off a Celery task, etc.
@@ -404,7 +404,7 @@ error.
 Use in tests
 ------------
 
-Django's :class:`~django.test.TestCase` class wraps each test in a transaction
+Django's :class:`~django_orm.test.TestCase` class wraps each test in a transaction
 and rolls back that transaction after each test, in order to provide test
 isolation. This means that no transaction is ever actually committed, thus your
 :func:`on_commit` callbacks will never be run.
@@ -415,11 +415,11 @@ You can overcome this limitation by using
 or emulate the transaction committing by calling them.
 
 Another way to overcome the limitation is to use
-:class:`~django.test.TransactionTestCase` instead of
-:class:`~django.test.TestCase`. This will mean your transactions are committed,
+:class:`~django_orm.test.TransactionTestCase` instead of
+:class:`~django_orm.test.TestCase`. This will mean your transactions are committed,
 and the callbacks will run. However
-:class:`~django.test.TransactionTestCase` flushes the database between tests,
-which is significantly slower than :class:`~django.test.TestCase`\'s isolation.
+:class:`~django_orm.test.TransactionTestCase` flushes the database between tests,
+which is significantly slower than :class:`~django_orm.test.TestCase`\'s isolation.
 
 Why no rollback hook?
 ---------------------
@@ -453,7 +453,7 @@ Low-level APIs
 Autocommit
 ----------
 
-Django provides an API in the :mod:`django.db.transaction` module to manage the
+Django provides an API in the :mod:`django_orm.db.transaction` module to manage the
 autocommit state of each database connection.
 
 .. function:: get_autocommit(using=None)
@@ -489,7 +489,7 @@ start a transaction is to disable autocommit with :func:`set_autocommit`.
 
 Once you're in a transaction, you can choose either to apply the changes
 you've performed until this point with :func:`commit`, or to cancel them with
-:func:`rollback`. These functions are defined in :mod:`django.db.transaction`.
+:func:`rollback`. These functions are defined in :mod:`django_orm.db.transaction`.
 
 .. function:: commit(using=None)
 
@@ -528,7 +528,7 @@ Each of these functions takes a ``using`` argument which should be the name of
 a database for which the behavior applies.  If no ``using`` argument is
 provided then the ``"default"`` database is used.
 
-Savepoints are controlled by three functions in :mod:`django.db.transaction`:
+Savepoints are controlled by three functions in :mod:`django_orm.db.transaction`:
 
 .. function:: savepoint(using=None)
 
@@ -555,7 +555,7 @@ In addition, there's a utility function:
 
 The following example demonstrates the use of savepoints::
 
-    from django.db import transaction
+    from django_orm.db import transaction
 
     # open a transaction
     @transaction.atomic

@@ -1,13 +1,13 @@
 import json
 
-from django.contrib.admin.helpers import ACTION_CHECKBOX_NAME
-from django.contrib.admin.views.main import IS_POPUP_VAR
-from django.contrib.auth.models import Permission, User
-from django.core import mail
-from django.template.loader import render_to_string
-from django.template.response import TemplateResponse
-from django.test import TestCase, override_settings
-from django.urls import reverse
+from django_orm.contrib.admin.helpers import ACTION_CHECKBOX_NAME
+from django_orm.contrib.admin.views.main import IS_POPUP_VAR
+from django_orm.contrib.auth.models import Permission, User
+from django_orm.core import mail
+from django_orm.template.loader import render_to_string
+from django_orm.template.response import TemplateResponse
+from django_orm.test import TestCase, override_settings
+from django_orm.urls import reverse
 
 from .admin import SubscriberAdmin
 from .forms import MediaActionForm

@@ -1,6 +1,6 @@
-from django.contrib.auth import views as auth_views
-from django.urls import path
-from django.views.generic import RedirectView
+from django_orm.contrib.auth import views as auth_views
+from django_orm.urls import path
+from django_orm.views.generic import RedirectView
 
 from . import views
 

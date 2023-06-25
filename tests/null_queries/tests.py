@@ -1,5 +1,5 @@
-from django.core.exceptions import FieldError
-from django.test import TestCase
+from django_orm.core.exceptions import FieldError
+from django_orm.test import TestCase
 
 from .models import Choice, Inner, OuterA, OuterB, Poll
 

@@ -1,7 +1,7 @@
 from decimal import Decimal
 
-from django.db.models.functions import Power
-from django.test import TestCase
+from django_orm.db.models.functions import Power
+from django_orm.test import TestCase
 
 from ..models import DecimalModel, FloatModel, IntegerModel
 

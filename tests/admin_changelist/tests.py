@@ -1,11 +1,11 @@
 import datetime
 
-from django.contrib import admin
-from django.contrib.admin.models import LogEntry
-from django.contrib.admin.options import IncorrectLookupParameters
-from django.contrib.admin.templatetags.admin_list import pagination
-from django.contrib.admin.tests import AdminSeleniumTestCase
-from django.contrib.admin.views.main import (
+from django_orm.contrib import admin
+from django_orm.contrib.admin.models import LogEntry
+from django_orm.contrib.admin.options import IncorrectLookupParameters
+from django_orm.contrib.admin.templatetags.admin_list import pagination
+from django_orm.contrib.admin.tests import AdminSeleniumTestCase
+from django_orm.contrib.admin.views.main import (
     ALL_VAR,
     IS_POPUP_VAR,
     ORDER_VAR,
@@ -13,19 +13,19 @@ from django.contrib.admin.views.main import (
     SEARCH_VAR,
     TO_FIELD_VAR,
 )
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.messages.storage.cookie import CookieStorage
-from django.db import connection, models
-from django.db.models import F, Field, IntegerField
-from django.db.models.functions import Upper
-from django.db.models.lookups import Contains, Exact
-from django.template import Context, Template, TemplateSyntaxError
-from django.test import TestCase, override_settings
-from django.test.client import RequestFactory
-from django.test.utils import CaptureQueriesContext, isolate_apps, register_lookup
-from django.urls import reverse
-from django.utils import formats
+from django_orm.contrib.auth.models import User
+from django_orm.contrib.contenttypes.models import ContentType
+from django_orm.contrib.messages.storage.cookie import CookieStorage
+from django_orm.db import connection, models
+from django_orm.db.models import F, Field, IntegerField
+from django_orm.db.models.functions import Upper
+from django_orm.db.models.lookups import Contains, Exact
+from django_orm.template import Context, Template, TemplateSyntaxError
+from django_orm.test import TestCase, override_settings
+from django_orm.test.client import RequestFactory
+from django_orm.test.utils import CaptureQueriesContext, isolate_apps, register_lookup
+from django_orm.urls import reverse
+from django_orm.utils import formats
 
 from .admin import (
     BandAdmin,

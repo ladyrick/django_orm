@@ -1,8 +1,8 @@
 import copy
 import datetime
 
-from django.contrib.auth.models import User
-from django.db import models
+from django_orm.contrib.auth.models import User
+from django_orm.db import models
 
 
 class RevisionableModel(models.Model):

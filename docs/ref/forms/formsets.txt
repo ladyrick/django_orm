@@ -5,7 +5,7 @@ Formset Functions
 Formset API reference. For introductory material about formsets, see the
 :doc:`/topics/forms/formsets` topic guide.
 
-.. module:: django.forms.formsets
+.. module:: django_orm.forms.formsets
    :synopsis: Django's functions for building formsets.
 
 ``formset_factory``
